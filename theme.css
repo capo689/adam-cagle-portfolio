@@ -1,0 +1,64 @@
+/* ─── LIGHT MODE OVERRIDES ─── */
+[data-theme="light"] {
+  --bg:      #f4efe7;
+  --bg-soft: #ebe4d7;
+  --fg:      #14110f;
+  --fg-2:    rgba(20,17,15,0.7);
+  --fg-3:    rgba(20,17,15,0.42);
+  --rule:    rgba(20,17,15,0.15);
+  --rule-2:  rgba(20,17,15,0.08);
+  --accent:  #ff5b1f;
+}
+
+[data-theme="light"] .rail {
+  background: linear-gradient(180deg, rgba(244,239,231,0.97) 0%, rgba(244,239,231,0.8) 70%, transparent 100%);
+}
+
+[data-theme="light"] ::selection {
+  background: var(--accent); color: #fff;
+}
+
+/* ─── TOGGLE SWITCH ─── */
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 9px;
+  cursor: pointer; background: none; border: none; padding: 0;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--fg-3); transition: color .2s;
+  vertical-align: middle;
+}
+.theme-toggle:hover { color: var(--fg); }
+.theme-toggle:hover .toggle-pill { border-color: var(--fg); }
+
+.toggle-icon {
+  font-size: 13px; line-height: 1;
+  transition: transform .4s ease;
+  display: inline-block;
+}
+[data-theme="light"] .toggle-icon { transform: rotate(180deg); }
+
+.toggle-pill {
+  width: 36px; height: 20px;
+  border: 1px solid var(--fg-3);
+  border-radius: 999px;
+  background: transparent;
+  position: relative;
+  transition: border-color .3s;
+  flex-shrink: 0;
+}
+.toggle-pill::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--fg-3);
+  transition: transform .3s ease, background .3s;
+}
+[data-theme="light"] .toggle-pill {
+  border-color: var(--accent);
+}
+[data-theme="light"] .toggle-pill::after {
+  transform: translateX(16px);
+  background: var(--accent);
+}

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Books — Adam R. Cagle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #ff5b1f;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans);
+    font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02";
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  .rail {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
+    padding: 16px 32px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    background: linear-gradient(180deg, rgba(15,15,14,0.95), rgba(15,15,14,0.7) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .rail .brand { color: var(--fg); font-weight: 500; letter-spacing: 0.14em; }
+  .rail .brand:hover { color: var(--accent); }
+  .rail nav { display: flex; gap: 28px; justify-content: center; }
+  .rail nav a { color: var(--fg-3); transition: color .2s; letter-spacing: 0.1em; }
+  .rail nav a:hover, .rail nav a.active { color: var(--accent); }
+  .rail .right { text-align: right; }
+  .rail .right a { color: var(--fg-3); }
+  .rail .right a:hover { color: var(--accent); }
+
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 80px; }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 40px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-name {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(68px, 12vw, 200px);
+    line-height: 0.84; letter-spacing: -0.055em;
+    margin: 0; max-width: 14ch;
+  }
+  .hero-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -0.03em; }
+  .hero-sub {
+    margin-top: 40px;
+    display: grid; grid-template-columns: 1.2fr 0.8fr;
+    gap: 56px; align-items: end;
+  }
+  .hero-role {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.3;
+    color: var(--fg-2); max-width: 36ch;
+  }
+  .hero-role em { color: var(--accent); font-style: italic; }
+
+  /* ─── CAMPAIGN CARD ─── */
+  section { padding: 96px 0 24px; border-top: 1px solid var(--rule); }
+  .sect-label {
+    display: flex; align-items: baseline; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 28px;
+  }
+  .sect-label .num { color: var(--accent); }
+  .sect-head {
+    font-family: var(--sans); font-weight: 600;
+    font-size: clamp(40px, 5.5vw, 80px); line-height: 0.95;
+    letter-spacing: -0.035em; margin: 0 0 72px;
+    max-width: 22ch;
+  }
+  .sect-head .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+
+  .campaign {
+    display: grid; grid-template-columns: 0.9fr 1.3fr;
+    gap: 64px; padding: 64px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .c-meta { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 100px; }
+  .c-meta .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .c-meta .client { font-family: var(--sans); font-weight: 700; font-size: clamp(36px, 4vw, 62px); line-height: 0.92; letter-spacing: -0.035em; margin: 0; }
+  .c-meta .client .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .c-meta .context { font-size: 14.5px; line-height: 1.55; color: var(--fg-2); max-width: 34ch; margin-top: 10px; }
+  .c-meta .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .c-meta .tags span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; padding: 5px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--fg-2); }
+
+  .c-body { display: flex; flex-direction: column; gap: 32px; }
+
+  /* ─── BOOK COVER ─── */
+  .book-cover {
+    border: 1px solid var(--rule); border-radius: 6px;
+    overflow: hidden; background: var(--bg-soft);
+    display: flex; justify-content: center; align-items: center;
+  }
+  .book-cover img {
+    display: block; width: 100%; max-width: 420px;
+    height: auto; margin: 0 auto;
+    transition: transform .6s ease;
+  }
+  .book-cover:hover img { transform: scale(1.02); }
+
+  /* ─── PULLQUOTE ─── */
+  .pull {
+    background: var(--bg-soft); border: 1px solid var(--rule);
+    border-radius: 6px; padding: 48px 48px 40px; position: relative;
+  }
+  .pull-format {
+    position: absolute; top: -10px; left: 24px;
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
+    background: var(--bg); padding: 2px 10px;
+    border: 1px solid var(--rule); border-radius: 3px;
+  }
+  .pull-line {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(28px, 3.2vw, 48px);
+    line-height: 1.05; letter-spacing: -0.02em;
+    color: var(--fg); margin: 0 0 24px; max-width: 28ch;
+  }
+  .pull-line em { color: var(--accent); font-style: italic; }
+  .pull-body { font-size: 16px; line-height: 1.7; color: var(--fg-2); max-width: 62ch; }
+  .pull-body p { margin: 0 0 14px; }
+  .pull-body p:last-child { margin-bottom: 0; }
+  .pull-sig {
+    margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-3); display: flex; justify-content: space-between; gap: 12px;
+  }
+
+  /* ─── CLOSER ─── */
+  .closer { padding: 120px 0 64px; border-top: 1px solid var(--rule); }
+  .closer .say {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(48px, 7vw, 120px); line-height: 0.98;
+    letter-spacing: -0.035em; color: var(--fg);
+    margin: 0 0 24px; max-width: 16ch;
+  }
+  .closer .say em { color: var(--accent); font-style: italic; }
+  .closer .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-top: 32px; padding: 16px 22px;
+    border: 1px solid var(--fg); border-radius: 999px;
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .closer .cta:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .closer .arrow { display: inline-block; transition: transform .2s; }
+  .closer .cta:hover .arrow { transform: translateX(4px); }
+
+  .foot {
+    padding: 20px 0 40px; border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .foot .center { text-align: center; }
+  .foot .right { text-align: right; }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .rail { padding: 14px 20px; grid-template-columns: 1fr auto; }
+    .rail .right { display: none; }
+    .rail nav { gap: 16px; }
+    .hero { padding: 110px 0 48px; }
+    .hero-sub { grid-template-columns: 1fr; gap: 28px; }
+    .campaign { grid-template-columns: 1fr; gap: 28px; }
+    .c-meta { position: static; }
+    .pull { padding: 32px 24px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="rail">
+  <div class="left"><a href="index.html" class="brand">Adam R. Cagle</a></div>
+  <nav>
+    <a href="index.html">Campaigns</a>
+    <a href="Studio.html">Studio</a>
+    <a href="Books.html" class="active">Books</a>
+    <a href="Resume.html">Résumé</a>
+  </nav>
+  <div class="right"><a href="mailto:adam@agency689.com">adam@agency689.com</a></div>
+</header>
+
+<div class="page">
+
+  <section class="hero" style="border-top:0;">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Books</span>
+      <span>·</span>
+      <span>Fiction</span>
+      <span>·</span>
+      <span>Adam R. Cagle</span>
+    </div>
+    <h1 class="hero-name">Written<br>in the <span class="it">gaps.</span></h1>
+    <div class="hero-sub">
+      <div class="hero-role">
+        The same voice that writes brand manifestos and pitch decks. Just pointed at <em>zombies</em> on a cruise ship.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 01 — SHIP HAPPENS ═════════════ -->
+  <section id="ship-happens">
+    <div class="sect-label">
+      <span class="num">// 01</span><span>Ship Happens</span><span>·</span><span>Novel · 2025</span>
+    </div>
+    <h2 class="sect-head">A Chad Cruz <span class="it">Zombie</span> Adventure.</h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <span class="num">// Novel</span>
+        <h3 class="client">Ship <span class="it">Happens</span></h3>
+        <p class="context">
+          Chad Cruz delivers pizza. The cruise ship delivers zombies. Neither of them asked for this.
+        </p>
+        <div class="tags">
+          <span>Comedy</span><span>Horror</span><span>Adventure</span><span>Series</span>
+        </div>
+      </aside>
+
+      <div class="c-body">
+
+        <div class="book-cover">
+          <img src="books/ship-happens.png" alt="Ship Happens — A Chad Cruz Zombie Adventure by Adam R. Cagle" />
+        </div>
+
+        <div class="pull">
+          <span class="pull-format">From the Book · <em>The Topper</em></span>
+          <p class="pull-line">It read "DOMINI N'S," which sounded like either a <em>discount exorcism</em> or a restaurant where the appetizers scream.</p>
+          <div class="pull-body">
+            <p>The Dominion's Pizzeria delivery topper on my roof was held in place by bungee cords and optimism. It read "DOMINION'S ... WE DELIVER!" in letters that had faded from red to the pinkish hue of a surrendered dream. The "O" had fallen off months ago, so from certain angles it read "DOMINI N'S," which sounded like either a discount exorcism or a restaurant where the appetizers scream.</p>
+          </div>
+          <div class="pull-sig">
+            <span>Ship Happens · Chapter One</span>
+            <span>Adam R. Cagle</span>
+          </div>
+        </div>
+
+        <div class="pull">
+          <span class="pull-format">From the Book · <em>The Wrench of Doom</em></span>
+          <p class="pull-line">The English language does not contain the <em>phonetic architecture</em> necessary to capture what emerged.</p>
+          <div class="pull-body">
+            <p>I don't know how to describe the fart. I don't have the vocabulary. Webster doesn't have the vocabulary. The English language, which has given us Shakespeare and Hemingway and the word "moist," does not contain the phonetic architecture necessary to capture what emerged from the chief engineer's backside in the half-second after the Wrench of Doom made contact with his reproductive geography.</p>
+          </div>
+          <div class="pull-sig">
+            <span>Ship Happens · The Engine Room</span>
+            <span>Adam R. Cagle</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="closer">
+    <p class="say">Get it on <em>Amazon.</em></p>
+    <a href="https://www.amazon.com/s?k=ship+happens+adam+cagle" class="cta" target="_blank" rel="noopener">
+      Find it on Amazon <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <footer class="foot">
+    <div class="left">// Adam R. Cagle · Fiction</div>
+    <div class="center">— More titles coming —</div>
+    <div class="right">agency689.com</div>
+  </footer>
+
+</div>
+</body>
+</html>

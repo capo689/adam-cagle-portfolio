@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Studio — Adam R. Cagle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --accent:  #ff5b1f;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans);
+    font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  .rail {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
+    padding: 16px 32px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    background: linear-gradient(180deg, rgba(15,15,14,0.95), rgba(15,15,14,0.7) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .rail .brand { color: var(--fg); font-weight: 500; letter-spacing: 0.14em; }
+  .rail .brand:hover { color: var(--accent); }
+  .rail nav { display: flex; gap: 28px; justify-content: center; }
+  .rail nav a { color: var(--fg-3); transition: color .2s; letter-spacing: 0.1em; }
+  .rail nav a:hover, .rail nav a.active { color: var(--accent); }
+  .rail .right { text-align: right; }
+  .rail .right a { color: var(--fg-3); }
+  .rail .right a:hover { color: var(--accent); }
+
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 0 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 40px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-name {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(68px, 12vw, 200px);
+    line-height: 0.84; letter-spacing: -0.055em;
+    margin: 0; max-width: 14ch;
+  }
+  .hero-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -0.03em; }
+  .hero-sub {
+    margin-top: 48px;
+    display: grid; grid-template-columns: 1.2fr 0.8fr;
+    gap: 56px; align-items: end;
+  }
+  .hero-role {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(22px, 2.2vw, 32px); line-height: 1.3;
+    color: var(--fg-2); max-width: 36ch;
+  }
+  .hero-role em { color: var(--accent); font-style: italic; }
+
+  .studios {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px;
+    overflow: hidden; margin-top: 56px;
+  }
+  .studio-card {
+    background: var(--bg-soft); padding: 40px 40px 36px;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: background .2s;
+  }
+  .studio-card:hover { background: #181614; }
+  .studio-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .studio-name { font-family: var(--sans); font-weight: 700; font-size: clamp(28px, 3vw, 44px); letter-spacing: -0.03em; line-height: 1; margin: 0; }
+  .studio-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .studio-url { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--fg-3); }
+  .studio-url a:hover { color: var(--accent); }
+  .studio-desc { font-size: 15px; line-height: 1.65; color: var(--fg-2); max-width: 44ch; padding-top: 8px; border-top: 1px solid var(--rule); }
+  .studio-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .studio-tags span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; padding: 5px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--fg-2); }
+
+  .coming {
+    padding: 96px 0; border-top: 1px solid var(--rule);
+    display: flex; align-items: center; gap: 24px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .coming .dash { width: 40px; height: 1px; background: var(--rule); }
+
+  .foot {
+    padding: 20px 0 40px; border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .foot .center { text-align: center; }
+  .foot .right { text-align: right; }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .rail { padding: 14px 20px; grid-template-columns: 1fr auto; }
+    .rail .right { display: none; }
+    .rail nav { gap: 16px; }
+    .hero { padding: 110px 0 48px; min-height: auto; }
+    .hero-sub { grid-template-columns: 1fr; gap: 28px; }
+    .studios { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="rail">
+  <div class="left"><a href="index.html" class="brand">Adam R. Cagle</a></div>
+  <nav>
+    <a href="index.html">Campaigns</a>
+    <a href="Studio.html" class="active">Studio</a>
+    <a href="Books.html">Books</a>
+    <a href="Resume.html">Résumé</a>
+  </nav>
+  <div class="right"><a href="mailto:adam@agency689.com">adam@agency689.com</a></div>
+</header>
+
+<div class="page">
+
+  <section class="hero" style="border-top:0;">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Studio</span>
+      <span>·</span>
+      <span>Bend, OR</span>
+    </div>
+    <h1 class="hero-name">Two studios.<br>One <span class="it">obsession.</span></h1>
+    <div class="hero-sub">
+      <div class="hero-role">
+        Brand craft and AI production, running in parallel since 2001 and <em>2024</em> respectively.
+      </div>
+    </div>
+
+    <div class="studios">
+      <div class="studio-card">
+        <span class="studio-num">// 01</span>
+        <h2 class="studio-name">Agency<span class="it">689</span></h2>
+        <div class="studio-url"><a href="https://agency689.com" target="_blank" rel="noopener">agency689.com</a></div>
+        <p class="studio-desc">Full-service identity and branding studio. Co-founded 2001. Pitch decks, brand systems, launch campaigns, and copywriting for clients across gaming, hospitality, music instruments, and enterprise.</p>
+        <div class="studio-tags">
+          <span>Brand Identity</span><span>Copywriting</span><span>Pitch Decks</span><span>Launch Strategy</span>
+        </div>
+      </div>
+      <div class="studio-card">
+        <span class="studio-num">// 02</span>
+        <h2 class="studio-name">Agentic<span class="it">689</span></h2>
+        <div class="studio-url"><a href="https://agentic689.pages.dev" target="_blank" rel="noopener">agentic689.pages.dev</a></div>
+        <p class="studio-desc">Sister studio to Agency689. Production AI agents on the Claude API. The work is the research — every deployed agent teaches what frontier models can actually make. Founded 2024.</p>
+        <div class="studio-tags">
+          <span>Claude API</span><span>Agent Architecture</span><span>AI Production</span><span>Research</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="coming">
+    <span class="dash"></span>
+    <span>Full studio case studies — coming soon</span>
+  </div>
+
+  <footer class="foot">
+    <div class="left">// Agency689 · Agentic689</div>
+    <div class="center">Bend, Oregon</div>
+    <div class="right"><a href="mailto:adam@agency689.com">adam@agency689.com</a></div>
+  </footer>
+
+</div>
+</body>
+</html>

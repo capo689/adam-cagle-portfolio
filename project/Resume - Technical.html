@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Adam R. Cagle — Resume / Technical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    /* BLUEGLASS — crystalline technical */
+    --bg:        #eef2f6;
+    --panel:     #f7f9fc;
+    --ink:       #0b1220;
+    --ink-2:     #1e293b;
+    --ink-3:     #475569;
+    --ink-4:     #64748b;
+    --ink-5:     #94a3b8;
+    --rule:      #cfd8e3;
+    --rule-2:    #e2e8f0;
+    --accent:    #1d4ed8;    /* cobalt */
+    --accent-2:  #0ea5e9;    /* cyan — rarely used */
+    --ok:        #0f766e;
+    --hot:       #b42318;
+
+    --mono: "JetBrains Mono", ui-monospace, Menlo, "SFMono-Regular", monospace;
+    --sans: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+
+    --col: 1400px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-variant-ligatures: none;
+  }
+
+  /* crystalline grid wash */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, rgba(29,78,216,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(29,78,216,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(29,78,216,0.3); }
+  a:hover { border-bottom-color: var(--accent); }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--col);
+    margin: 0 auto;
+    padding: 32px 40px 72px;
+  }
+
+  /* ─── System bar ─── */
+  .sysbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 24px;
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    padding: 10px 14px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgba(29,78,216,0.04);
+  }
+  .sysbar .center { text-align: center; letter-spacing: 0.22em; color: var(--ink-2); font-weight: 600; }
+  .sysbar .right { text-align: right; }
+  .sysbar .dot {
+    display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(29,78,216,0.15);
+    margin: 0 8px;
+    transform: translateY(-1px);
+  }
+  .sysbar .blink {
+    display:inline-block; width:7px; height:7px; background: var(--ok); border-radius:50%;
+    animation: blink 1.8s ease-in-out infinite;
+    margin-right: 8px; transform: translateY(1px);
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  /* ─── Header / identity card ─── */
+  .id-card {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    background:
+      linear-gradient(180deg, #ffffff 0%, var(--panel) 100%);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .id-left {
+    padding: 32px 36px 28px;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+  .id-left::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(800px 200px at 0% 100%, rgba(29,78,216,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .id-tag {
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .id-tag .chip {
+    font-family: var(--mono);
+    padding: 3px 8px;
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    background: rgba(29,78,216,0.06);
+  }
+  .id-name {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(52px, 8vw, 104px);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    margin: 0 0 22px;
+    color: var(--ink);
+    position: relative; z-index: 1;
+  }
+  .id-name .sub {
+    display: block;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+    font-weight: 400;
+    margin-top: 16px;
+    line-height: 1.5;
+    max-width: 48ch;
+    text-transform: none;
+  }
+  .id-right {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .id-meta {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    border-bottom: 1px solid var(--rule-2);
+    font-size: 11.5px;
+  }
+  .id-meta:last-child { border-bottom: 0; }
+  .id-meta dt {
+    padding: 14px 16px 14px 20px;
+    background: rgba(29,78,216,0.025);
+    color: var(--ink-4);
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-right: 1px solid var(--rule-2);
+    align-content: center;
+    margin: 0;
+  }
+  .id-meta dd {
+    padding: 14px 20px;
+    margin: 0;
+    color: var(--ink-2);
+    align-content: center;
+    font-weight: 500;
+  }
+  .id-meta dd .pill {
+    display: inline-block;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink-4);
+    margin-left: 6px;
+    background: white;
+  }
+
+  /* ─── Section headers ─── */
+  .sect-head {
+    margin: 36px 0 14px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ink-2);
+  }
+  .sect-num {
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .sect-title {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .sect-meta {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-5);
+  }
+
+  /* ─── Panel primitive ─── */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .panel-hd {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    background: rgba(29,78,216,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-hd .idx { color: var(--ink-5); font-family: var(--mono); }
+
+  /* ─── Summary / abstract ─── */
+  .abstract {
+    padding: 26px 32px 28px;
+    font-family: var(--serif);
+    font-size: 17.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 72ch;
+    text-wrap: pretty;
+  }
+  .abstract p { margin: 0 0 14px; }
+  .abstract p:last-child { margin-bottom: 0; }
+  .abstract .mark {
+    background: linear-gradient(180deg, transparent 62%, rgba(29,78,216,0.14) 62%);
+    padding: 0 2px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .abstract .em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* ─── Metrics bar ─── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid var(--rule);
+  }
+  .metric {
+    padding: 18px 20px;
+    border-right: 1px solid var(--rule-2);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .metric:last-child { border-right: 0; }
+  .metric .k {
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    color: var(--ink-4);
+    text-transform: uppercase;
+  }
+  .metric .v {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .metric .v .unit { font-size: 13px; color: var(--ink-4); font-weight: 500; letter-spacing: 0; margin-left: 2px; }
+  .metric .n { font-size: 10.5px; color: var(--ink-4); }
+
+  /* ─── Capabilities grid ─── */
+  .caps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .cap {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 18px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cap::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 36px; height: 2px;
+    background: var(--accent);
+  }
+  .cap-k {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    display: flex; justify-content: space-between;
+  }
+  .cap-k .idx { color: var(--accent); font-weight: 600; }
+  .cap-t {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .cap p {
+    margin: 0;
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: var(--ink-3);
+    font-family: var(--mono);
+  }
+  .cap ul {
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 6px;
+  }
+  .cap li {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    padding: 3px 7px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink-3);
+  }
+  .cap li.hot {
+    color: var(--accent);
+    border-color: rgba(29,78,216,0.35);
+    background: rgba(29,78,216,0.05);
+  }
+
+  /* ─── Experience ─── */
+  .jobs { display: flex; flex-direction: column; gap: 0; }
+  .job {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 28px;
+    padding: 22px 0;
+    border-bottom: 1px dashed var(--rule);
+    align-items: start;
+  }
+  .job:last-child { border-bottom: 0; }
+  .job-side {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .job-years {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  .job-tenure {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .job-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .job-org {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .job-org .sep { color: var(--ink-5); font-weight: 400; margin: 0 8px; }
+  .job-role {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.015em;
+    color: var(--ink-2);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .job-body {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--ink-3);
+    max-width: 76ch;
+  }
+
+  /* ─── Work ledger ─── */
+  .ledger {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .ledger thead th {
+    text-align: left;
+    padding: 10px 14px;
+    background: rgba(29,78,216,0.04);
+    border-bottom: 1px solid var(--rule);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    font-weight: 600;
+  }
+  .ledger tbody tr {
+    border-bottom: 1px solid var(--rule-2);
+  }
+  .ledger tbody tr:last-child { border-bottom: 0; }
+  .ledger tbody tr:hover { background: rgba(29,78,216,0.025); }
+  .ledger td {
+    padding: 14px;
+    vertical-align: top;
+  }
+  .ledger td.client {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    width: 18%;
+    white-space: nowrap;
+  }
+  .ledger td.tag {
+    width: 14%;
+    white-space: nowrap;
+  }
+  .ledger td.tag span {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    padding: 3px 8px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: white;
+  }
+  .ledger td.desc {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: var(--ink-3);
+  }
+  .ledger td.desc .line {
+    display: block;
+    margin-top: 6px;
+    color: var(--accent);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+  .ledger td.out {
+    width: 10%;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-4);
+    white-space: nowrap;
+  }
+
+  /* ─── Systems / stack grid ─── */
+  .stack {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .stack-item {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .stack-k {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .stack-t {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .stack-n {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+
+  /* ─── Tri footer ─── */
+  .tri {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .tri-card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tri-k {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .tri-v {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+  .tri-v .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 2px 7px;
+    border-radius: 3px;
+    color: var(--ink-3);
+    margin: 2px 4px 2px 0;
+    font-weight: 500;
+  }
+  .tri-n {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-4);
+  }
+
+  /* ─── Colophon ─── */
+  .colophon {
+    margin-top: 28px;
+    padding: 14px 20px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .colophon .right { text-align: right; }
+  .colophon .center { text-align: center; color: var(--ink-3); letter-spacing: 0.22em;}
+
+  /* ─── Print ─── */
+  @media print {
+    @page { size: Letter; margin: 0.5in; }
+    body { background: white; font-size: 10.5px; }
+    body::before { display: none; }
+    .page { padding: 0; max-width: none; }
+    .id-card, .panel, .cap, .stack-item, .tri-card, .ledger, .colophon {
+      box-shadow: none;
+    }
+    .sect-head { margin-top: 22px; }
+    .job, .cap, .stack-item, tr { break-inside: avoid; }
+    #tweaks-root { display: none !important; }
+    .id-name { font-size: 56px; }
+    .abstract { font-size: 12.5px; padding: 18px 22px; }
+    .metric .v { font-size: 20px; }
+  }
+
+  @media (max-width: 1000px) {
+    .page { padding: 20px; }
+    .id-card { grid-template-columns: 1fr; }
+    .id-left { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .metric { border-bottom: 1px solid var(--rule-2); }
+    .caps, .stack { grid-template-columns: 1fr 1fr; }
+    .job { grid-template-columns: 1fr; gap: 8px; }
+    .tri { grid-template-columns: 1fr; }
+    .ledger td.client, .ledger td.tag { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<main class="page">
+
+  <!-- system bar -->
+  <div class="sysbar">
+    <div class="left"><span class="blink"></span>RESUME.v2 · ADAM.R.CAGLE · TECHNICAL BUILD</div>
+    <div class="center">// SPEC SHEET — CO-CREATIVE DIRECTOR &amp; AGENT ARCHITECT</div>
+    <div class="right">REV 2026.04 <span class="dot"></span> BEND / OR</div>
+  </div>
+
+  <!-- identity card -->
+  <header class="id-card">
+    <div class="id-left">
+      <div class="id-tag">
+        <span class="chip">/ / 00</span>
+        <span>IDENTITY</span>
+      </div>
+      <h1 class="id-name">
+        Adam R.<br/>Cagle.
+        <span class="sub">Co-Creative Director &amp; Lead Copywriter shipping pitch decks, brand systems, and production AI agents. Twenty-five years compressing engineering input into finished visual arguments.</span>
+      </h1>
+    </div>
+    <div class="id-right">
+      <dl class="id-meta"><dt>Role</dt><dd>Co-Creative Director <span class="pill">Agency689</span></dd></dl>
+      <dl class="id-meta"><dt>Sister</dt><dd>Founder / Agent Architect <span class="pill">Agentic689</span></dd></dl>
+      <dl class="id-meta"><dt>Location</dt><dd>Bend, Oregon · remote global</dd></dl>
+      <dl class="id-meta"><dt>Phone</dt><dd>562.290.2689</dd></dl>
+      <dl class="id-meta"><dt>Email</dt><dd><a href="mailto:adam@agency689.com">adam@agency689.com</a></dd></dl>
+      <dl class="id-meta"><dt>Studio</dt><dd><a href="https://agency689.com">agency689.com</a></dd></dl>
+      <dl class="id-meta"><dt>Agents</dt><dd><a href="https://agentic689.pages.dev">agentic689.pages.dev</a></dd></dl>
+    </div>
+  </header>
+
+  <!-- 01 ABSTRACT -->
+  <div class="sect-head">
+    <span class="sect-num">// 01</span>
+    <h2 class="sect-title">Abstract</h2>
+    <span class="sect-meta">SUMMARY · 3 PARAGRAPHS · 180s READ</span>
+  </div>
+
+  <div class="panel">
+    <div class="panel-hd"><span>/ SUMMARY.md</span><span class="idx">§01</span></div>
+    <div class="abstract">
+      <p><span class="mark">Twenty-five years leading creative for product and brand launches.</span> Pitch decks, speaker decks, investor presentations, and launch presentations — for my own agency's new business and for clients across gaming hardware, hospitality, consumer tech, and music instruments. <span class="em">A deck is a medium I take seriously.</span></p>
+      <p>Co-founder and Co-Creative Director at Agency689. Clients include Xbox, AMD, Microsoft, Sunset Marquis, Hotel Figueroa, Traveler Guitar, Oxford Collection, CLINK Hostels, FileKeepers, and Raleigh Studios. Clio, Ad Club, and Webby awards.</p>
+      <p>Since 2024, extending the same discipline into frontier AI through <span class="em">Agentic689</span>, sister studio to Agency689. Deep working fluency with Claude, the Anthropic API, and AI-assisted design tooling. <span class="mark">Production agents, not demos.</span> That fluency directly compresses the distance from rough engineering input to finished deck.</p>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <span class="k">// Tenure</span>
+        <span class="v">25<span class="unit">yrs</span></span>
+        <span class="n">Creative direction</span>
+      </div>
+      <div class="metric">
+        <span class="k">// Design Systems</span>
+        <span class="v">04</span>
+        <span class="n">Production, full guides</span>
+      </div>
+      <div class="metric">
+        <span class="k">// Production Agents</span>
+        <span class="v">03+</span>
+        <span class="n">Shipped on Claude API</span>
+      </div>
+      <div class="metric">
+        <span class="k">// Product Launches</span>
+        <span class="v">07</span>
+        <span class="n">Traveler Guitar alone</span>
+      </div>
+      <div class="metric">
+        <span class="k">// Awards</span>
+        <span class="v">04</span>
+        <span class="n">Clio · Ad Club · Webby · Netty</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 CAPABILITIES -->
+  <div class="sect-head">
+    <span class="sect-num">// 02</span>
+    <h2 class="sect-title">Capabilities</h2>
+    <span class="sect-meta">FOUR PRACTICE AREAS</span>
+  </div>
+
+  <div class="caps">
+    <div class="cap">
+      <div class="cap-k"><span>PRESENTATION DESIGN</span><span class="idx">2.A</span></div>
+      <div class="cap-t">Decks as deliverables.</div>
+      <p>Pitch, investor, speaker, launch, brand books, sales enablement. Layout, typography, infographics, information design for technical products. Translating rough engineering input into clean visual arguments with narrative pacing.</p>
+      <ul>
+        <li>Keynote</li><li>PowerPoint</li><li>Google Slides</li><li>Figma</li><li>Adobe CS</li>
+      </ul>
+    </div>
+
+    <div class="cap">
+      <div class="cap-k"><span>DESIGN SYSTEMS</span><span class="idx">2.B</span></div>
+      <div class="cap-t">Four production systems.</div>
+      <p>BLUEGLASS (crystalline technical), BRUTALIST (editorial engineering), EDITORIAL SLATE (refined agency), EDITORIAL WHISPER (hospitality and heritage). Type scales, tokens, WCAG contrast, responsive grids.</p>
+      <ul>
+        <li class="hot">BLUEGLASS</li><li>BRUTALIST</li><li>EDITORIAL SLATE</li><li>EDITORIAL WHISPER</li>
+      </ul>
+    </div>
+
+    <div class="cap">
+      <div class="cap-k"><span>LAUNCH CRAFT</span><span class="idx">2.C</span></div>
+      <div class="cap-t">End-to-end ownership.</div>
+      <p>Core creative concept development. Brand voice and tone systems. Naming, taglines, brand books. Video writing and direction including TV spots and launch films. Trade show, experiential, packaging, press.</p>
+      <ul>
+        <li>Naming</li><li>Tagline</li><li>Film</li><li>Trade show</li><li>Packaging</li>
+      </ul>
+    </div>
+
+    <div class="cap">
+      <div class="cap-k"><span>AI-ASSISTED PRODUCTION</span><span class="idx">2.D</span></div>
+      <div class="cap-t">Production agents, not demos.</div>
+      <p>Hands-on fluency with Claude (Sonnet, Opus) and the Anthropic API through production work. System prompt architecture, persona and voice scaffolding, SKILL.md documentation, multi-turn agentic loops, hard-rule governance.</p>
+      <ul>
+        <li class="hot">Claude</li><li class="hot">Anthropic API</li><li>GPT-5</li><li>Grok</li><li>DeepSeek</li><li>Llama</li><li>Ollama+LoRA</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 03 EXPERIENCE -->
+  <div class="sect-head">
+    <span class="sect-num">// 03</span>
+    <h2 class="sect-title">Experience</h2>
+    <span class="sect-meta">THREE STUDIOS · 28 YEARS</span>
+  </div>
+
+  <div class="panel">
+    <div class="panel-hd"><span>/ EMPLOYMENT.LOG</span><span class="idx">§03</span></div>
+    <div class="jobs" style="padding: 8px 24px 16px;">
+
+      <div class="job">
+        <div class="job-side">
+          <span class="job-years">2001 — PRESENT</span>
+          <span class="job-tenure">25 yrs · current</span>
+        </div>
+        <div class="job-main">
+          <div class="job-org">AGENCY689, INC. <span class="sep">/</span> CO-FOUNDER <span class="sep">/</span> BEND, OR · CA</div>
+          <h3 class="job-role">Co-Creative Director &amp; Lead Copywriter</h3>
+          <p class="job-body">Full-service identity and branding studio. Co-lead creative direction with co-founder on every account. Lead copywriter and deck lead on every engagement. Wrote and designed the new-business pitch decks that built the agency's client roster over two decades.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-side">
+          <span class="job-years">2024 — PRESENT</span>
+          <span class="job-tenure">2 yrs · sister studio</span>
+        </div>
+        <div class="job-main">
+          <div class="job-org">AGENTIC689 <span class="sep">/</span> SISTER STUDIO</div>
+          <h3 class="job-role">Founder &amp; AI Agent Architect</h3>
+          <p class="job-body">A studio built to develop deep working fluency with frontier AI by shipping production agents on the Claude API. The work is the research. Every system built teaches what these models can actually make — which has directly changed how fast and how well I produce deck design, infographics, and technical visuals. Sole author of every system prompt, persona file, and SKILL.md across deployments.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-side">
+          <span class="job-years">1998 — 2001</span>
+          <span class="job-tenure">3 yrs · prior</span>
+        </div>
+        <div class="job-main">
+          <div class="job-org">DGWB ADVERTISING</div>
+          <h3 class="job-role">Operations Director &amp; Lead Copywriter, Interactive</h3>
+          <p class="job-body">Directed interactive strategy and production across an integrated agency. Copywriting and deck work across campaigns and early digital experiences.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 04 SELECTED WORK -->
+  <div class="sect-head">
+    <span class="sect-num">// 04</span>
+    <h2 class="sect-title">Selected Work</h2>
+    <span class="sect-meta">CLIENT LEDGER · ABRIDGED</span>
+  </div>
+
+  <a href="Selected Work.html" style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 18px; margin: 0 0 18px; border: 1px solid var(--rule); background: white; text-decoration: none; color: var(--ink-1); font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; transition: border-color .2s, background .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='rgba(29,78,216,0.04)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='white'">
+    <span style="display: flex; gap: 18px; align-items: baseline;">
+      <span style="color: var(--accent); letter-spacing: 0.26em; text-transform: uppercase;">// portfolio</span>
+      <span><strong style="font-weight: 600;">Full-page print archive</strong> &mdash; Traveler Guitar · Sunset Marquis · Killer NIC</span>
+    </span>
+    <span style="color: var(--accent); letter-spacing: 0.24em; text-transform: uppercase;">OPEN →</span>
+  </a>
+
+  <table class="ledger">
+    <thead>
+      <tr>
+        <th>CLIENT / PROJECT</th>
+        <th>CATEGORY</th>
+        <th>BRIEF</th>
+        <th style="text-align:right">OUTPUT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="client">Killer Network</td>
+        <td class="tag"><span>Gaming NIC · Launch</span></td>
+        <td class="desc">Gaming network interface card. Built the brand from zero. Wrote the launch. Designed packaging, launch deck, and NAMM-adjacent trade show presence. Produced the TV spots. <strong>Designed the heat sink on the card itself.</strong> Full launch, end to end.</td>
+        <td class="out">Brand · Deck · Packaging · TV · Booth · Hardware</td>
+      </tr>
+      <tr>
+        <td class="client">Sunset Marquis</td>
+        <td class="tag"><span>Hospitality · Relaunch</span></td>
+        <td class="desc">West Hollywood rock-and-roll hotel. Relaunched with new Villas, Spa, and restaurant. Netty Award.
+          <span class="line">"Legendary Nights Begin at Sunset."</span></td>
+        <td class="out">Brand · Web · Print</td>
+      </tr>
+      <tr>
+        <td class="client">Traveler Guitar</td>
+        <td class="tag"><span>Music · 15-yr AOR</span></td>
+        <td class="desc">Proprietary in-body tuning system; instruments on Mount Everest and on submarines. Seven product launches and five NAMM trade show booths across fifteen years — booth design, speaker decks, dealer presentations, product copy.
+          <span class="line">"The World's Most Adventurous Guitar."</span></td>
+        <td class="out">Deck · Copy · Booth · Launch ×7</td>
+      </tr>
+      <tr>
+        <td class="client">Xbox Elite Club</td>
+        <td class="tag"><span>Gaming · Brand System</span></td>
+        <td class="desc">Brand system and merchandise platform for Microsoft's competitive-gaming tier.</td>
+        <td class="out">Brand · System</td>
+      </tr>
+      <tr>
+        <td class="client">AMD</td>
+        <td class="tag"><span>Silicon · Launch</span></td>
+        <td class="desc">Comic-Con launch strategy and launch comic book.</td>
+        <td class="out">Launch · Editorial</td>
+      </tr>
+      <tr>
+        <td class="client">FileKeepers</td>
+        <td class="tag"><span>B2B · Identity</span></td>
+        <td class="desc">SoCal B2B records management.
+          <span class="line">"Space. The File Frontier."</span></td>
+        <td class="out">Brand · Tagline</td>
+      </tr>
+      <tr>
+        <td class="client">CLAW</td>
+        <td class="tag"><span>Agent · Equities</span></td>
+        <td class="desc">Two production agents tracking Vertiv and Credo Technology. Autonomous daily loops that score weighted hypotheses, learn which signals predict moves, and kill the ones that don't. Output includes auto-generated investor-style briefings — the same decision logic that drives the agent produces the deck that communicates the decision.</td>
+        <td class="out">Claude · API · Deck pipeline</td>
+      </tr>
+      <tr>
+        <td class="client">CLAW-Book</td>
+        <td class="tag"><span>Agent · Marketing</span></td>
+        <td class="desc">Closed-loop book-marketing agent across Reddit, Instagram, Facebook, X, and TikTok. Tracks real sales through the KDP API. Taught me how an agentic loop can serve a design and narrative pipeline, not just a data pipeline.</td>
+        <td class="out">Claude · Multi-platform · KDP API</td>
+      </tr>
+      <tr>
+        <td class="client">AuScan</td>
+        <td class="tag"><span>Agent · Geospatial</span></td>
+        <td class="desc">React-based satellite terrain analysis. Trains Claude Vision on the color and structural signatures of ten world-class gold deposits, then scans any region for matches. <strong>Surfaced a 72%-confidence porphyry-epithermal hit at the Pueblo Mining District, Oregon.</strong> Heavy infographic and prospectivity-grid visualization.</td>
+        <td class="out">Claude Vision · React · Infographic</td>
+      </tr>
+      <tr>
+        <td class="client">agentic689.pages.dev</td>
+        <td class="tag"><span>Site · Shipped by Agent</span></td>
+        <td class="desc">The studio website was built and shipped by one of the agents.</td>
+        <td class="out">Agent-authored</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 05 SYSTEMS / STACK -->
+  <div class="sect-head">
+    <span class="sect-num">// 05</span>
+    <h2 class="sect-title">Authored Systems</h2>
+    <span class="sect-meta">DESIGN SYSTEMS · FULL STYLE GUIDES</span>
+  </div>
+
+  <div class="stack">
+    <div class="stack-item">
+      <span class="stack-k">// 5.A</span>
+      <div class="stack-t">BLUEGLASS</div>
+      <div class="stack-n">Crystalline technical. Cobalt, cool neutrals, dense grid. Built for silicon and frontier-AI audiences. <em>(The system this resume is set in.)</em></div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-k">// 5.B</span>
+      <div class="stack-t">BRUTALIST</div>
+      <div class="stack-n">Editorial engineering. Monospace accents, heavy rules, newsprint logic. Opinion carried as structure.</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-k">// 5.C</span>
+      <div class="stack-t">EDITORIAL SLATE</div>
+      <div class="stack-n">Refined agency. Type-led, generous whitespace, restrained palette. The day-to-day workhorse.</div>
+    </div>
+    <div class="stack-item">
+      <span class="stack-k">// 5.D</span>
+      <div class="stack-t">EDITORIAL WHISPER</div>
+      <div class="stack-n">Hospitality and heritage. Warm whites, serif body, long breath. Built for rooms you want to stay in.</div>
+    </div>
+  </div>
+
+  <!-- 06 AWARDS / EDU / BOARD -->
+  <div class="sect-head">
+    <span class="sect-num">// 06</span>
+    <h2 class="sect-title">Awards, Education &amp; Board</h2>
+    <span class="sect-meta">SHELF · SCHOOL · SERVICE</span>
+  </div>
+
+  <div class="tri">
+    <div class="tri-card">
+      <span class="tri-k">// AWARDS</span>
+      <div class="tri-v">Clio · Ad Club · Webby · Netty.</div>
+      <div class="tri-n">
+        <span class="tag">Clio</span><span class="tag">Ad Club</span><span class="tag">Webby</span><span class="tag">Netty</span>
+        <br/>Copywriting, all three. Netty for the Sunset Marquis site.
+      </div>
+    </div>
+    <div class="tri-card">
+      <span class="tri-k">// EDUCATION</span>
+      <div class="tri-v">Academy of Art, San Francisco.</div>
+      <div class="tri-n">Design and Art Direction.</div>
+    </div>
+    <div class="tri-card">
+      <span class="tri-k">// BOARD</span>
+      <div class="tri-v">Autism Research Project.</div>
+      <div class="tri-n">Board member.</div>
+    </div>
+  </div>
+
+  <!-- colophon -->
+  <footer class="colophon">
+    <div class="left">// SET IN INTER, JETBRAINS MONO &amp; NEWSREADER</div>
+    <div class="center">— END OF SPEC —</div>
+    <div class="right">ADAM.R.CAGLE · REV 2026.04 · BLUEGLASS</div>
+  </footer>
+
+</main>
+
+<div id="tweaks-root"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "accent": "cobalt",
+    "density": "regular",
+    "showGrid": true,
+    "systemLabel": "BLUEGLASS"
+  }/*EDITMODE-END*/;
+
+  const ACCENT_PRESETS = {
+    cobalt:   { accent: "#1d4ed8", ink: "#0b1220", bg: "#eef2f6", panel: "#f7f9fc", name: "BLUEGLASS" },
+    cyan:     { accent: "#0891b2", ink: "#0b1220", bg: "#edf4f7", panel: "#f7fafc", name: "CYAN-GLASS" },
+    violet:   { accent: "#6d28d9", ink: "#120f24", bg: "#efecf7", panel: "#f9f7fc", name: "ULTRAVIOLET" },
+    graphite: { accent: "#111827", ink: "#0b1220", bg: "#eceff3", panel: "#f6f7f9", name: "GRAPHITE" },
+    dark:     { accent: "#60a5fa", ink: "#e5e7eb", bg: "#0b1220", panel: "#0f1a2e", name: "BLUEGLASS / NIGHT" }
+  };
+
+  function App() {
+    const [t, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
+
+    React.useEffect(() => {
+      const r = document.documentElement;
+      const p = ACCENT_PRESETS[t.accent] || ACCENT_PRESETS.cobalt;
+      r.style.setProperty('--accent', p.accent);
+      r.style.setProperty('--bg', p.bg);
+      r.style.setProperty('--panel', p.panel);
+      const isDark = t.accent === 'dark';
+      if (isDark) {
+        r.style.setProperty('--ink', '#e5e7eb');
+        r.style.setProperty('--ink-2', '#cbd5e1');
+        r.style.setProperty('--ink-3', '#94a3b8');
+        r.style.setProperty('--ink-4', '#64748b');
+        r.style.setProperty('--ink-5', '#475569');
+        r.style.setProperty('--rule', '#1e293b');
+        r.style.setProperty('--rule-2', '#162033');
+      } else {
+        r.style.setProperty('--ink', '#0b1220');
+        r.style.setProperty('--ink-2', '#1e293b');
+        r.style.setProperty('--ink-3', '#475569');
+        r.style.setProperty('--ink-4', '#64748b');
+        r.style.setProperty('--ink-5', '#94a3b8');
+        r.style.setProperty('--rule', '#cfd8e3');
+        r.style.setProperty('--rule-2', '#e2e8f0');
+      }
+
+      document.body.style.fontSize = t.density === 'compact' ? '11.5px' : t.density === 'loose' ? '13.5px' : '12.5px';
+      document.body.classList.toggle('no-grid', !t.showGrid);
+    }, [t]);
+
+    const P = window.TweaksPanel;
+    const S = window.TweakSection;
+    const R = window.TweakRadio;
+    const T = window.TweakToggle;
+    const B = window.TweakButton;
+
+    return (
+      <P>
+        <S label="Palette" />
+        <R
+          label="System"
+          value={t.accent}
+          onChange={(v) => setTweak('accent', v)}
+          options={[
+            { value: "cobalt",   label: "BLUEGLASS" },
+            { value: "cyan",     label: "Cyan" },
+            { value: "violet",   label: "Ultraviolet" },
+            { value: "graphite", label: "Graphite" },
+            { value: "dark",     label: "Night" }
+          ]}
+        />
+
+        <S label="Density" />
+        <R
+          label="Type scale"
+          value={t.density}
+          onChange={(v) => setTweak('density', v)}
+          options={[
+            { value: "compact", label: "Tight" },
+            { value: "regular", label: "Regular" },
+            { value: "loose",   label: "Loose" }
+          ]}
+        />
+
+        <S label="Chrome" />
+        <T label="Grid wash" value={t.showGrid} onChange={(v) => setTweak('showGrid', v)} />
+
+        <S label="Export" />
+        <B label="Print / Save as PDF" onClick={() => window.print()} />
+      </P>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('tweaks-root'));
+  root.render(<App />);
+</script>
+
+<style>
+  body.no-grid::before { display: none !important; }
+</style>
+
+</body>
+</html>

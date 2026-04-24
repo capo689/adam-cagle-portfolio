@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Selected Work — Adam Cagle</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Geist:wght@300..700&family=Geist+Mono:wght@300..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14110f;
+    --ink-soft: #3a332d;
+    --ink-mute: #776d63;
+    --rule: #d8ceba;
+    --rule-2: #e6dcc6;
+    --paper: #f4efe7;
+    --paper-deep: #ebe4d7;
+    --paper-deeper: #e1d7c2;
+    --accent: #b8451f;
+    --accent-soft: #d9663d;
+    --display-font: "Fraunces", "Times New Roman", serif;
+    --body-font: "Geist", "Helvetica Neue", Arial, sans-serif;
+    --italic-font: "Newsreader", "Times New Roman", serif;
+    --mono-font: "Geist Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body-font);
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: var(--accent); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    opacity: 0.05; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 56px 80px;
+  }
+
+  /* ─── masthead ─── */
+  .mast {
+    display: flex; align-items: baseline; justify-content: space-between;
+    font-family: var(--mono-font);
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mast .l, .mast .r { display: flex; gap: 22px; align-items: baseline; }
+  .mast .dot { display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin: 0 4px; transform: translateY(-1px); }
+  .mast a:hover { color: var(--accent); }
+
+  /* ─── hero ─── */
+  .hero {
+    display: grid; grid-template-columns: 1fr auto; align-items: end;
+    gap: 40px; padding: 72px 0 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-kicker {
+    font-family: var(--mono-font);
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .hero-kicker .bar { width: 40px; height: 1px; background: var(--accent); }
+  .hero-title {
+    font-family: var(--display-font);
+    font-weight: 300;
+    font-size: clamp(64px, 9vw, 148px);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    margin: 0;
+    font-variation-settings: "opsz" 144;
+  }
+  .hero-title em {
+    font-family: var(--italic-font);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .hero-right {
+    text-align: right;
+    font-family: var(--italic-font);
+    font-style: italic;
+    font-size: 17px; line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 36ch;
+    padding-bottom: 16px;
+  }
+  .hero-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 32px;
+    font-family: var(--mono-font);
+    font-size: 10.5px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .hero-meta .num { color: var(--accent); margin-right: 6px; }
+
+  /* ─── intro ─── */
+  .intro {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 80px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .intro-label {
+    font-family: var(--mono-font);
+    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .intro-body {
+    font-family: var(--display-font);
+    font-weight: 300;
+    font-size: 22px; line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 56ch; text-wrap: pretty;
+    font-variation-settings: "opsz" 28;
+  }
+  .intro-body em {
+    font-family: var(--italic-font);
+    font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+
+  /* ─── case study frame ─── */
+  .case {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case:last-of-type { border-bottom: 0; }
+
+  .case-head {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 80px;
+    margin-bottom: 56px;
+  }
+  .case-index {
+    font-family: var(--mono-font);
+    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-mute);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .case-index .num {
+    font-family: var(--display-font);
+    font-weight: 300;
+    font-size: 64px; line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    font-variation-settings: "opsz" 72;
+  }
+  .case-title {
+    font-family: var(--display-font);
+    font-weight: 300;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    margin: 0 0 18px;
+    font-variation-settings: "opsz" 96;
+    text-wrap: balance;
+  }
+  .case-title em {
+    font-family: var(--italic-font);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .case-deck {
+    font-family: var(--italic-font);
+    font-style: italic;
+    font-size: 20px; line-height: 1.45;
+    color: var(--ink-soft);
+    max-width: 50ch; text-wrap: pretty;
+    margin: 0 0 24px;
+  }
+  .case-rail {
+    display: flex; flex-wrap: wrap; gap: 8px 24px;
+    font-family: var(--mono-font);
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .case-rail b { font-weight: 500; color: var(--ink); letter-spacing: 0.12em; }
+
+  /* ─── copy pullout ─── */
+  .pullout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 80px;
+    margin-bottom: 56px;
+  }
+  .pullout-label {
+    font-family: var(--mono-font);
+    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .pullout-body {
+    font-family: var(--display-font);
+    font-weight: 300;
+    font-size: clamp(28px, 3.2vw, 44px);
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 22ch; text-wrap: balance;
+    font-variation-settings: "opsz" 48;
+    margin: 0;
+  }
+  .pullout-body em {
+    font-family: var(--italic-font);
+    font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+  .pullout-attr {
+    display: block;
+    font-family: var(--mono-font);
+    font-style: normal;
+    font-size: 10.5px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 20px;
+  }
+
+  /* ─── gallery ─── */
+  .gallery {
+    display: grid;
+    gap: 24px;
+  }
+  .gallery.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .gallery.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .gallery.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .gallery.feature {
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .frame {
+    position: relative;
+    background: var(--paper-deeper);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+  }
+  .frame img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .frame .tag {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 10px 14px;
+    background: rgba(20, 17, 15, 0.78);
+    color: var(--paper);
+    font-family: var(--mono-font);
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    opacity: 0; transition: opacity .25s;
+  }
+  .frame:hover .tag { opacity: 1; }
+  .frame .tag .name em {
+    font-family: var(--italic-font);
+    font-style: italic;
+    color: var(--accent-soft);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    font-size: 12px;
+  }
+
+  /* copy strip — list of all headlines under a campaign */
+  .headlines {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule-2);
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 80px;
+  }
+  .headlines-label {
+    font-family: var(--mono-font);
+    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .headlines-list {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 20px 40px;
+    list-style: none; padding: 0; margin: 0;
+  }
+  .headlines-list li {
+    display: flex; flex-direction: column; gap: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule-2);
+  }
+  .headlines-list .hl {
+    font-family: var(--italic-font);
+    font-style: italic;
+    font-size: 22px; line-height: 1.2;
+    color: var(--ink);
+  }
+  .headlines-list .loc {
+    font-family: var(--mono-font);
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  /* ─── verb stack (Killer NIC) ─── */
+  .verbstack {
+    margin-top: 40px; padding-top: 32px;
+    border-top: 1px solid var(--rule-2);
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 80px;
+  }
+  .verbstack-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+  .verbstack-col {
+    display: flex; flex-direction: column;
+  }
+  .verbstack-col .class {
+    font-family: var(--mono-font);
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-mute);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule-2);
+    margin-bottom: 14px;
+  }
+  .verbstack-col .verb {
+    font-family: var(--display-font);
+    font-weight: 300;
+    font-size: 28px; line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    padding: 4px 0;
+    font-variation-settings: "opsz" 32;
+  }
+  .verbstack-col .kill {
+    font-family: var(--display-font);
+    font-weight: 600;
+    font-size: 36px;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule-2);
+  }
+  .verbstack-col .kill em {
+    font-family: var(--italic-font);
+    font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+
+  /* ─── closer ─── */
+  .closer {
+    padding: 80px 0 20px;
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: end; gap: 40px;
+    border-top: 1px solid var(--rule);
+  }
+  .closer-title {
+    font-family: var(--display-font);
+    font-weight: 300;
+    font-size: clamp(44px, 6vw, 84px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    margin: 0;
+    max-width: 20ch; text-wrap: balance;
+    font-variation-settings: "opsz" 84;
+  }
+  .closer-title em {
+    font-family: var(--italic-font);
+    font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+  .closer-cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 14px 22px;
+    border: 1px solid var(--ink);
+    font-family: var(--mono-font);
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink);
+    transition: background .2s, color .2s;
+  }
+  .closer-cta:hover { background: var(--ink); color: var(--paper); }
+  .closer-cta .arrow { transition: transform .2s; }
+  .closer-cta:hover .arrow { transform: translateX(4px); }
+
+  .colophon {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    font-family: var(--mono-font);
+    font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  @media (max-width: 900px) {
+    .wrap { padding: 32px 24px; }
+    .intro, .case-head, .pullout, .headlines, .verbstack { grid-template-columns: 1fr; gap: 24px; }
+    .gallery.cols-3, .gallery.cols-4, .gallery.feature { grid-template-columns: repeat(2, 1fr); }
+    .gallery.cols-2 { grid-template-columns: 1fr; }
+    .verbstack-grid { grid-template-columns: 1fr; gap: 32px; }
+    .headlines-list { grid-template-columns: 1fr; }
+    .closer { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .grain, .mast { display: none; }
+    body { font-size: 11.5px; }
+    .case { break-inside: avoid; padding: 32px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="wrap">
+
+  <!-- masthead -->
+  <header class="mast">
+    <div class="l">
+      <span><b>Cagle<span class="dot"></span></b></span>
+      <span>Selected Work</span>
+    </div>
+    <div class="r">
+      <a href="Resume - Editorial.html">Résumé</a>
+      <span>·</span>
+      <a href="mailto:adam@agency689.com">adam@agency689.com</a>
+    </div>
+  </header>
+
+  <!-- hero -->
+  <section class="hero">
+    <div>
+      <div class="hero-kicker"><span class="bar"></span>Campaigns <span>·</span> Copy <span>·</span> Art Direction</div>
+      <h1 class="hero-title">Words that <em>move</em><br>products.</h1>
+    </div>
+    <div class="hero-right">
+      Three brands, three audiences, three registers — guitars on the open road, a rock-and-roll hideaway above the Strip, and a network card for gamers who count milliseconds.
+    </div>
+  </section>
+
+  <div class="hero-meta">
+    <span><span class="num">03</span> Campaigns</span>
+    <span><span class="num">12</span> Executions</span>
+    <span><span class="num">2001—</span>Present</span>
+    <span>Print <span>·</span> OOH <span>·</span> Digital</span>
+  </div>
+
+  <!-- intro -->
+  <section class="intro">
+    <div class="intro-label">On this page</div>
+    <p class="intro-body">
+      A working archive of full-page print work — the kind of ads where a line has to carry the <em>whole room</em>. Each campaign below ran as a system: one voice, one visual grammar, many executions. Copy sits beside the scans so the writing still reads even when the art is small.
+    </p>
+  </section>
+
+  <!-- ═══════════════════════ CASE 01 — TRAVELER GUITAR ═══════════════════════ -->
+  <section class="case">
+    <div class="case-head">
+      <div class="case-index">
+        <span class="num">01</span>
+        <span>Traveler Guitar</span>
+        <span style="color:var(--ink-soft)">Campaign &middot; 2020—2024</span>
+      </div>
+      <div>
+        <h2 class="case-title">The World's Most <em>Adventurous</em> Guitars.</h2>
+        <p class="case-deck">A campaign system built around a promise — that a Traveler goes where a regular guitar can't. One tagline, one visual grammar, seven executions spanning subways, storm fronts, jungles, jetstreams, and the open road.</p>
+        <div class="case-rail">
+          <span><b>Client</b> Traveler Guitar</span>
+          <span><b>Format</b> Full-Page Print + Digital</span>
+          <span><b>Scope</b> Concept, Copy, Art Direction</span>
+          <span><b>Run</b> 2020 — Present</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- hero ad -->
+    <div class="gallery cols-2" style="margin-bottom: 24px;">
+      <div class="frame" style="grid-column: span 2;">
+        <img src="ads/traveler-road.webp" alt="Traveler Guitar — The Road">
+        <div class="tag"><span class="name"><em>The Road</em> · Escape Mark III Mahogany</span><span>25th Anniversary</span></div>
+      </div>
+    </div>
+
+    <!-- pullout copy — primary body from The Road -->
+    <div class="pullout">
+      <div class="pullout-label">The Body Copy<br>(The Road)</div>
+      <div>
+        <p class="pullout-body">Willie couldn't wait to get back on it. Roger was the king of it. And Sheryl found it <em>winding</em> everyday.</p>
+        <p class="pullout-body" style="margin-top:28px; font-size: clamp(20px, 2.2vw, 28px); color: var(--ink-soft);">Musicians have been traveling the open road since the days when bards heralded fair maidens in taverns of old. For 25 years Traveler Guitar has been making instruments that fit in tiny spaces, play with giant sound, and let you practice, play, or record wherever the road takes you.</p>
+        <span class="pullout-attr">Full-Page Print · Sweetwater Co-op · 2023</span>
+      </div>
+    </div>
+
+    <!-- rest of campaign in a grid -->
+    <div class="gallery cols-3">
+      <div class="frame"><img src="ads/traveler-sonic-bloom.webp" alt="Sonic Bloom"><div class="tag"><span class="name"><em>Sonic Bloom</em></span><span>Forest</span></div></div>
+      <div class="frame"><img src="ads/traveler-jungle.webp" alt="Hey Jungle, Welcome to Me"><div class="tag"><span class="name"><em>Hey Jungle, Welcome to Me.</em></span><span>Vaibrant</span></div></div>
+      <div class="frame"><img src="ads/traveler-greatness.jpg" alt="Next Stop, Greatness"><div class="tag"><span class="name"><em>Next Stop, Greatness.</em></span><span>Transit</span></div></div>
+      <div class="frame"><img src="ads/traveler-force.webp" alt="A Force of Nature"><div class="tag"><span class="name"><em>A Force of Nature.</em></span><span>Storm</span></div></div>
+      <div class="frame"><img src="ads/traveler-flying-solo.webp" alt="Flying Solo"><div class="tag"><span class="name"><em>Flying Solo.</em></span><span>Cockpit</span></div></div>
+      <div class="frame"><img src="ads/traveler-endless-strummer.webp" alt="Endless Strummer"><div class="tag"><span class="name"><em>Endless Strummer.</em></span><span>Surf</span></div></div>
+    </div>
+
+    <!-- full headline index -->
+    <div class="headlines">
+      <div class="headlines-label">Campaign<br>Headlines</div>
+      <ul class="headlines-list">
+        <li><span class="hl">The Road.</span><span class="loc">Patagonia highway · Escape Mk III</span></li>
+        <li><span class="hl">Sonic Bloom.</span><span class="loc">Rainforest · Redlands Concert</span></li>
+        <li><span class="hl">Hey Jungle, Welcome to Me.</span><span class="loc">Tropical · Vaibrant Electric</span></li>
+        <li><span class="hl">Next Stop, Greatness.</span><span class="loc">Subway · Ultra-Light Electric</span></li>
+        <li><span class="hl">A Force of Nature.</span><span class="loc">Tempest · Vaibrant Teal Burst</span></li>
+        <li><span class="hl">Flying Solo.</span><span class="loc">Cessna cockpit · Ultra-Light</span></li>
+        <li><span class="hl">Endless Strummer.</span><span class="loc">Surf break · Redlands Mini</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ CASE 02 — SUNSET MARQUIS ═══════════════════════ -->
+  <section class="case">
+    <div class="case-head">
+      <div class="case-index">
+        <span class="num">02</span>
+        <span>Sunset Marquis</span>
+        <span style="color:var(--ink-soft)">Campaign &middot; 2019—2024</span>
+      </div>
+      <div>
+        <h2 class="case-title">A <em>hideaway</em> with a Grammy on the nightstand.</h2>
+        <p class="case-deck">West Hollywood's rock-and-roll hotel in two registers — a Magritte-style visual pun for the quiet confident reader, and a full-bleed double-exposure that lets the property's gardens live inside the guest. Same brand, two tempos.</p>
+        <div class="case-rail">
+          <span><b>Client</b> Sunset Marquis Hotel</span>
+          <span><b>Format</b> Full-Page Print</span>
+          <span><b>Scope</b> Concept, Copy, Art Direction</span>
+          <span><b>Run</b> 2019 — Present</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- two ads side by side, equal weight -->
+    <div class="gallery cols-2">
+      <div class="frame"><img src="ads/sunset-yes-that-beautiful.jpg" alt="Yes, that beautiful."><div class="tag"><span class="name"><em>Legendary Nights Begin at Sunset.</em></span><span>Hotel · Restaurant · Spa</span></div></div>
+      <div class="frame"><img src="ads/sunset-legendary-nights.webp" alt="Legendary Nights Begin at Sunset"><div class="tag"><span class="name"><em>Yes, that beautiful.</em></span><span>Srint · 2022</span></div></div>
+    </div>
+
+    <!-- two pullouts stacked -->
+    <div class="pullout" style="margin-top: 48px;">
+      <div class="pullout-label">The Headline<br>(Gallery)</div>
+      <div>
+        <p class="pullout-body">Yes, <em>that</em> beautiful.</p>
+        <span class="pullout-attr">Full-Page Print · The Room as Artwork · 2020</span>
+        <p style="font-family: var(--italic-font); font-style: italic; font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 48ch; margin: 22px 0 0;">Two words and a yes. The joke is the gilt frame — a hotel room hung like a museum painting, witnessed by a man in a bowler hat. Room tours, annotated by Magritte.</p>
+      </div>
+    </div>
+
+    <div class="pullout" style="margin-top: 56px;">
+      <div class="pullout-label">The Tagline<br>(Rock-and-Roll)</div>
+      <div>
+        <p class="pullout-body"><em>Legendary</em> nights begin at Sunset.</p>
+        <span class="pullout-attr">Full-Page Print · Double-Exposure · 2022</span>
+        <p style="font-family: var(--italic-font); font-style: italic; font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 48ch; margin: 22px 0 0;">A rock-star silhouette filled with the property's garden paths and bungalow bridges — every night at the Marquis is somebody's best story, and the hotel is the stage the story gets told from.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ CASE 03 — KILLER NIC ═══════════════════════ -->
+  <section class="case">
+    <div class="case-head">
+      <div class="case-index">
+        <span class="num">03</span>
+        <span>Killer NIC</span>
+        <span style="color:var(--ink-soft)">Triptych &middot; 2007</span>
+      </div>
+      <div>
+        <h2 class="case-title">Kill <em>Faster.</em></h2>
+        <p class="case-deck">The world's first network interface card built for online gamers. Three ads, three character classes, three color-coded palettes — sniper green, mage red, warrior purple — each escalating a verb stack into the same two-word punchline. Same mechanic, different tribes.</p>
+        <div class="case-rail">
+          <span><b>Client</b> Bigfoot Networks / Killer NIC</span>
+          <span><b>Format</b> Full-Page Print · Enthusiast Press</span>
+          <span><b>Scope</b> Concept, Copy, Art Direction</span>
+          <span><b>Tagline</b> "Less lag. More frag."</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- triptych -->
+    <div class="gallery cols-3">
+      <div class="frame"><img src="ads/killer-sniper.webp?v=2026" alt="Killer NIC — Sniper"><div class="tag"><span class="name">Sniper · <em>Kill Faster.</em></span><span>K1</span></div></div>
+      <div class="frame"><img src="ads/killer-mage.webp?v=2026" alt="Killer NIC — Mage"><div class="tag"><span class="name">Mage · <em>Kill Faster.</em></span><span>K1</span></div></div>
+      <div class="frame"><img src="ads/killer-warrior.webp?v=2026" alt="Killer NIC — Warrior"><div class="tag"><span class="name">Warrior · <em>Kill Faster.</em></span><span>K1</span></div></div>
+    </div>
+
+    <!-- verb stack -->
+    <div class="verbstack">
+      <div class="pullout-label">The Copy<br>(Verb Stacks)</div>
+      <div class="verbstack-grid">
+        <div class="verbstack-col">
+          <div class="class">01 · Sniper</div>
+          <div class="verb">Spot</div>
+          <div class="verb">Follow</div>
+          <div class="verb">Target</div>
+          <div class="verb">Crouch</div>
+          <div class="verb">Zoom</div>
+          <div class="verb">Aim</div>
+          <div class="kill">Kill <em>Faster.</em></div>
+        </div>
+        <div class="verbstack-col">
+          <div class="class">02 · Mage</div>
+          <div class="verb">Scorch</div>
+          <div class="verb">Frost</div>
+          <div class="verb">Sheep</div>
+          <div class="verb">Ignite</div>
+          <div class="verb">Pyroblast</div>
+          <div class="verb">Incinerate</div>
+          <div class="kill">Kill <em>Faster.</em></div>
+        </div>
+        <div class="verbstack-col">
+          <div class="class">03 · Warrior</div>
+          <div class="verb">Charge</div>
+          <div class="verb">Overpower</div>
+          <div class="verb">Slam</div>
+          <div class="verb">Rend</div>
+          <div class="verb">Execute</div>
+          <div class="verb">Cleave</div>
+          <div class="kill">Kill <em>Faster.</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullout" style="margin-top: 56px;">
+      <div class="pullout-label">The Body Line</div>
+      <div>
+        <p class="pullout-body" style="font-size: clamp(22px, 2.6vw, 34px);">The only network interface cards built for online gamers. Less lag. <em>More frag.</em></p>
+        <span class="pullout-attr">Full-Page Print · Enthusiast Press · $159</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- closer -->
+  <section class="closer">
+    <h2 class="closer-title">More where <em>this</em><br>came from.</h2>
+    <a class="closer-cta" href="mailto:adam@agency689.com">
+      Let's work <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <div class="colophon">
+    <span>Agency 689 <span class="dot" style="background:var(--accent); display:inline-block; width:6px; height:6px; border-radius:50%; margin:0 6px; transform:translateY(-1px);"></span> Adam Cagle, Creative Director</span>
+    <span>Selected Work v1.0</span>
+  </div>
+
+</div>
+</body>
+</html>

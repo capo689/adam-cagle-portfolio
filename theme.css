@@ -1,20 +1,29 @@
-/* ─── LIGHT MODE OVERRIDES ─── */
-[data-theme="light"] {
+/* ─── LIGHT MODE OVERRIDES ───
+   html[data-theme] beats :root (0,1,1 vs 0,1,0) so these
+   variables win regardless of where this file loads relative
+   to each page's inline <style> block.
+─────────────────────────────── */
+html[data-theme="light"] {
   --bg:      #f4efe7;
   --bg-soft: #ebe4d7;
   --fg:      #14110f;
   --fg-2:    rgba(20,17,15,0.7);
   --fg-3:    rgba(20,17,15,0.42);
-  --rule:    rgba(20,17,15,0.15);
-  --rule-2:  rgba(20,17,15,0.08);
+  --rule:    rgba(20,17,15,0.16);
+  --rule-2:  rgba(20,17,15,0.09);
   --accent:  #ff5b1f;
 }
 
-[data-theme="light"] .rail {
-  background: linear-gradient(180deg, rgba(244,239,231,0.97) 0%, rgba(244,239,231,0.8) 70%, transparent 100%);
+html[data-theme="light"] body {
+  background: var(--bg);
+  color: var(--fg);
 }
 
-[data-theme="light"] ::selection {
+html[data-theme="light"] .rail {
+  background: linear-gradient(180deg, rgba(244,239,231,0.97) 0%, rgba(244,239,231,0.82) 70%, transparent 100%);
+}
+
+html[data-theme="light"] ::selection {
   background: var(--accent); color: #fff;
 }
 
@@ -35,7 +44,7 @@
   transition: transform .4s ease;
   display: inline-block;
 }
-[data-theme="light"] .toggle-icon { transform: rotate(180deg); }
+html[data-theme="light"] .toggle-icon { transform: rotate(180deg); }
 
 .toggle-pill {
   width: 36px; height: 20px;
@@ -55,10 +64,10 @@
   background: var(--fg-3);
   transition: transform .3s ease, background .3s;
 }
-[data-theme="light"] .toggle-pill {
+html[data-theme="light"] .toggle-pill {
   border-color: var(--accent);
 }
-[data-theme="light"] .toggle-pill::after {
+html[data-theme="light"] .toggle-pill::after {
   transform: translateX(16px);
   background: var(--accent);
 }

@@ -659,6 +659,93 @@
     </div>
   </section>
 
+  <!-- ═════════════ 04 — HOTEL FIGUEROA ═════════════ -->
+  <style>
+    .bb-label {
+      display: flex; align-items: center; gap: 16px;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--fg-3); margin-bottom: 12px; margin-top: 8px;
+    }
+    .bb-label .num { color: var(--accent); }
+    .bb-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 3px; background: var(--rule);
+      border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+    }
+    .bb-page {
+      aspect-ratio: 3/4; overflow: hidden;
+      background: #0a0a09; cursor: zoom-in;
+    }
+    .bb-page img {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.88; transition: opacity .2s, transform .35s ease;
+      display: block;
+    }
+    .bb-page:hover img { opacity: 1; transform: scale(1.05); }
+    .hf-cover-wrap {
+      width: 100%; background: #0a0a09;
+      border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      cursor: zoom-in;
+    }
+    .hf-cover-wrap img {
+      max-height: 680px; width: 100%; object-fit: contain; display: block;
+    }
+    @media (max-width: 960px) { .bb-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .bb-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+
+  <section id="figueroa">
+    <div class="sect-label">
+      <span class="num">// 04</span><span>Hotel Figueroa</span><span>·</span><span>Brand Book · DTLA Relaunch</span>
+    </div>
+    <h2 class="sect-head">To relate to artists, <span class="it">we must be artists.</span></h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <span class="num">// Brand Book</span>
+        <h3 class="client">Hotel <span class="it">Figueroa</span></h3>
+        <p class="context">
+          Full brand identity and editorial system for the 1925 DTLA icon's reopening as a luxury hotel for creative minds. Six brand pillars, mission, promise, vision. Signature Logo system in two-color, metallic, and red variants. Twelve Pantone palettes, Din OT and Xtreem typography, the Blue Fig Leaf graphic mark, and a three-tier imagery system that sets how every shoot gets art-directed. Complete Editorial Voice guide written end to end. Full collateral across stationery, merchandise, trade show, email, and web. Agency689 retained as governance authority through launch.
+        </p>
+        <div class="tags">
+          <span>Brand Platform</span><span>Identity System</span><span>Voice Guide</span><span>Design System</span><span>Collateral</span>
+        </div>
+      </aside>
+
+      <div class="c-body">
+
+        <!-- cover hero -->
+        <div class="hf-cover-wrap ad" data-gallery="figueroa" data-index="0">
+          <img src="HF/HotelFigueroa%2062.jpeg" alt="Hotel Figueroa Brand Book — Cover">
+          <div class="overlay"><div class="overlay-inner"><span class="hl">Hotel Figueroa Brand Book.</span><span>Agency689 · DTLA · 2018</span></div></div>
+        </div>
+
+        <!-- pull -->
+        <div class="pull">
+          <span class="pull-format">The Brand Thesis · <em>Platform</em></span>
+          <p class="pull-line"><em>To relate to artists,</em> we must be artists.</p>
+          <div class="pull-body">
+            <p>The single sentence that holds the entire brand. Written as the mission foundation for a 1925 DTLA hotel reopening as a home for the creative class. Six brand pillars, a complete voice guide, and sixty-one pages of identity work flow from this one line.</p>
+          </div>
+          <div class="pull-sig">
+            <span>Brand Platform · Agency689 · 2018</span>
+            <span>Hotel Figueroa · Downtown Los Angeles</span>
+          </div>
+        </div>
+
+        <!-- brand book grid -->
+        <div class="bb-label">
+          <span class="num">// 61 Pages</span>
+          <span>Browse the Brand Book</span>
+        </div>
+        <div class="bb-grid" id="hf-grid"></div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- CLOSER -->
   <section class="closer">
     <p class="say">More where <em>this</em><br>came from.</p>
@@ -771,6 +858,11 @@
       { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1 · 2026' },
       { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1 · 2026' },
     ],
+    figueroa: Array.from({length: 61}, (_, i) => ({
+      src: `HF/HotelFigueroa%20${62 + i}.jpeg`,
+      hl: 'Hotel Figueroa Brand Book.',
+      meta: `Agency689 · DTLA · Page ${i + 1} of 61`,
+    })),
   };
   const lb = document.getElementById('lightbox');
   const img = lb.querySelector('.lb-img');
@@ -804,6 +896,19 @@
     if (!arr) return;
     current.idx = (current.idx + d + arr.length) % arr.length;
     render();
+  }
+
+  // Build Hotel Figueroa brand book grid
+  const hfGrid = document.getElementById('hf-grid');
+  if (hfGrid) {
+    galleries.figueroa.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'bb-page';
+      div.dataset.index = i;
+      div.innerHTML = `<img src="${item.src}" alt="Hotel Figueroa Brand Book page ${i + 1}" loading="lazy">`;
+      div.addEventListener('click', () => open('figueroa', i));
+      hfGrid.appendChild(div);
+    });
   }
 
   document.querySelectorAll('.ad[data-gallery]').forEach(el => {

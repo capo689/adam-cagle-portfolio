@@ -661,39 +661,15 @@
 
   <!-- ═════════════ 04 — HOTEL FIGUEROA ═════════════ -->
   <style>
-    .bb-label {
-      display: flex; align-items: center; gap: 16px;
-      font-family: var(--mono); font-size: 11px;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--fg-3); margin-bottom: 12px; margin-top: 8px;
-    }
-    .bb-label .num { color: var(--accent); }
-    .bb-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 3px; background: var(--rule);
-      border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
-    }
-    .bb-page {
-      aspect-ratio: 3/4; overflow: hidden;
-      background: #0a0a09; cursor: zoom-in;
-    }
-    .bb-page img {
-      width: 100%; height: 100%; object-fit: cover;
-      opacity: 0.88; transition: opacity .2s, transform .35s ease;
-      display: block;
-    }
-    .bb-page:hover img { opacity: 1; transform: scale(1.05); }
     .hf-cover-wrap {
       width: 100%; background: #0a0a09;
       border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
-      cursor: zoom-in;
+      cursor: pointer; position: relative;
     }
     .hf-cover-wrap img {
       max-height: 680px; width: 100%; object-fit: contain; display: block;
     }
-    @media (max-width: 960px) { .bb-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 600px) { .bb-grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 
   <section id="figueroa">
@@ -717,9 +693,9 @@
       <div class="c-body">
 
         <!-- cover hero -->
-        <div class="hf-cover-wrap ad" data-gallery="figueroa" data-index="0">
+        <div class="hf-cover-wrap" id="hf-cover">
           <img src="HF/HotelFigueroa%2062.jpeg" alt="Hotel Figueroa Brand Book — Cover">
-          <div class="overlay"><div class="overlay-inner"><span class="hl">Hotel Figueroa Brand Book.</span><span>Agency689 · DTLA · 2018</span></div></div>
+          <div class="overlay"><div class="overlay-inner"><span class="hl">Open Brand Book →</span><span>61 Pages · Agency689 · DTLA</span></div></div>
         </div>
 
         <!-- pull -->
@@ -735,12 +711,6 @@
           </div>
         </div>
 
-        <!-- brand book grid -->
-        <div class="bb-label">
-          <span class="num">// 61 Pages</span>
-          <span>Browse the Brand Book</span>
-        </div>
-        <div class="bb-grid" id="hf-grid"></div>
 
       </div>
     </div>
@@ -761,6 +731,82 @@
   </div>
 
 </div>
+
+<!-- BRAND BOOK VIEWER -->
+<div id="hf-viewer" aria-hidden="true">
+  <button class="hf-btn hf-close-btn" aria-label="Close">✕</button>
+  <button class="hf-btn hf-nav hf-prev" aria-label="Previous">←</button>
+  <button class="hf-btn hf-nav hf-next" aria-label="Next">→</button>
+  <div class="hf-spread-wrap">
+    <div id="hf-spread"></div>
+    <div class="hf-footer">
+      <span id="hf-counter"></span>
+      <span class="hf-hint">← → navigate · esc close</span>
+    </div>
+  </div>
+</div>
+<style>
+  #hf-viewer {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(6,6,5,0.97); backdrop-filter: blur(20px);
+    display: none; align-items: center; justify-content: center;
+    flex-direction: column; padding: 56px 80px 56px;
+    opacity: 0; transition: opacity .2s;
+  }
+  #hf-viewer.open { display: flex; }
+  #hf-viewer.visible { opacity: 1; }
+  .hf-spread-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    width: 100%;
+  }
+  #hf-spread {
+    display: flex; gap: 3px; align-items: stretch; justify-content: center;
+    max-height: calc(100vh - 160px); width: 100%;
+    transition: opacity .15s ease;
+  }
+  #hf-spread.fading { opacity: 0; }
+  .hf-pg {
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; background: #0d0d0c;
+  }
+  .hf-pg.solo { max-width: min(50vw, 580px); }
+  .hf-pg.pair { flex: 1; max-width: min(44vw, 520px); }
+  .hf-pg img {
+    display: block; max-width: 100%; max-height: calc(100vh - 160px);
+    object-fit: contain;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .hf-spine { width: 2px; background: rgba(246,243,236,0.05); align-self: stretch; flex-shrink: 0; }
+  .hf-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; max-width: 1100px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  #hf-counter { color: var(--accent); }
+  .hf-hint { color: var(--fg-3); }
+  .hf-btn {
+    position: absolute; background: rgba(18,17,16,0.9);
+    border: 1px solid rgba(246,243,236,0.16); color: var(--fg);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 15px; cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s, transform .2s; z-index: 2;
+  }
+  .hf-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .hf-close-btn { top: 20px; right: 20px; }
+  .hf-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+  .hf-next { right: 20px; top: 50%; transform: translateY(-50%); }
+  .hf-prev:hover { transform: translateY(-50%) translateX(-2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .hf-next:hover { transform: translateY(-50%) translateX(2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  @media (max-width: 760px) {
+    #hf-viewer { padding: 56px 12px 48px; }
+    #hf-spread { flex-direction: column; align-items: center; gap: 4px; overflow-y: auto; }
+    .hf-pg.pair { max-width: 100%; width: 100%; }
+    .hf-spine { display: none; }
+    .hf-hint { display: none; }
+  }
+</style>
 
 <!-- LIGHTBOX -->
 <div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
@@ -858,11 +904,6 @@
       { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1 · 2026' },
       { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1 · 2026' },
     ],
-    figueroa: Array.from({length: 61}, (_, i) => ({
-      src: `HF/HotelFigueroa%20${62 + i}.jpeg`,
-      hl: 'Hotel Figueroa Brand Book.',
-      meta: `Agency689 · DTLA · Page ${i + 1} of 61`,
-    })),
   };
   const lb = document.getElementById('lightbox');
   const img = lb.querySelector('.lb-img');
@@ -898,19 +939,6 @@
     render();
   }
 
-  // Build Hotel Figueroa brand book grid
-  const hfGrid = document.getElementById('hf-grid');
-  if (hfGrid) {
-    galleries.figueroa.forEach((item, i) => {
-      const div = document.createElement('div');
-      div.className = 'bb-page';
-      div.dataset.index = i;
-      div.innerHTML = `<img src="${item.src}" alt="Hotel Figueroa Brand Book page ${i + 1}" loading="lazy">`;
-      div.addEventListener('click', () => open('figueroa', i));
-      hfGrid.appendChild(div);
-    });
-  }
-
   document.querySelectorAll('.ad[data-gallery]').forEach(el => {
     el.addEventListener('click', () => {
       open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10));
@@ -923,6 +951,93 @@
   document.addEventListener('keydown', e => {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+
+// ── HOTEL FIGUEROA BRAND BOOK VIEWER ──────────────────────
+(function() {
+  // Build views: single cover, interior spreads, single back cover
+  const views = [{ type: 'single', files: [62] }];
+  for (let f = 63; f < 121; f += 2) views.push({ type: 'spread', files: [f, f + 1] });
+  views.push({ type: 'single', files: [121] }); // odd interior page
+  views.push({ type: 'single', files: [122] }); // back cover
+  const total = views.length;
+
+  let cur = 0;
+  const viewer  = document.getElementById('hf-viewer');
+  const spreadEl = document.getElementById('hf-spread');
+  const counter  = document.getElementById('hf-counter');
+
+  function src(n) { return `HF/HotelFigueroa%20${n}.jpeg`; }
+
+  function makeImg(n) {
+    const img = document.createElement('img');
+    img.src = src(n); img.alt = 'Hotel Figueroa Brand Book';
+    return img;
+  }
+
+  function render(instant) {
+    const v = views[cur];
+    if (!instant) { spreadEl.classList.add('fading'); }
+
+    const draw = () => {
+      spreadEl.innerHTML = '';
+      if (v.type === 'single') {
+        const pg = document.createElement('div');
+        pg.className = 'hf-pg solo';
+        pg.appendChild(makeImg(v.files[0]));
+        spreadEl.appendChild(pg);
+      } else {
+        const left  = document.createElement('div'); left.className  = 'hf-pg pair'; left.appendChild(makeImg(v.files[0]));
+        const spine = document.createElement('div'); spine.className = 'hf-spine';
+        const right = document.createElement('div'); right.className = 'hf-pg pair'; right.appendChild(makeImg(v.files[1]));
+        spreadEl.appendChild(left); spreadEl.appendChild(spine); spreadEl.appendChild(right);
+      }
+      spreadEl.classList.remove('fading');
+    };
+
+    instant ? draw() : setTimeout(draw, 150);
+
+    const label = cur === 0 ? 'Cover' : cur === total - 1 ? 'Back Cover' : `Spread ${cur} of ${total - 2}`;
+    counter.textContent = `${label}  ·  ${cur + 1} / ${total}`;
+
+    // Preload adjacent
+    [cur - 1, cur + 1].forEach(i => {
+      if (i >= 0 && i < total) views[i].files.forEach(f => { new Image().src = src(f); });
+    });
+  }
+
+  function openViewer() {
+    cur = 0; render(true);
+    viewer.classList.add('open');
+    requestAnimationFrame(() => viewer.classList.add('visible'));
+    viewer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+  }
+
+  function closeViewer() {
+    viewer.classList.remove('open', 'visible');
+    viewer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+  }
+
+  function step(d) {
+    cur = Math.max(0, Math.min(total - 1, cur + d));
+    render(false);
+  }
+
+  const cover = document.getElementById('hf-cover');
+  if (cover) cover.addEventListener('click', openViewer);
+
+  viewer.querySelector('.hf-close-btn').addEventListener('click', closeViewer);
+  viewer.querySelector('.hf-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  viewer.querySelector('.hf-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+  viewer.addEventListener('click', e => { if (e.target === viewer) closeViewer(); });
+  document.addEventListener('keydown', e => {
+    if (!viewer.classList.contains('open')) return;
+    if (e.key === 'Escape') closeViewer();
     else if (e.key === 'ArrowLeft') step(-1);
     else if (e.key === 'ArrowRight') step(1);
   });

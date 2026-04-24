@@ -117,6 +117,52 @@
   }
   .coming .dash { width: 40px; height: 1px; background: var(--rule); }
 
+  /* ─── BANNER SECTION ─── */
+  .banner-section {
+    padding: 72px 0 64px;
+    border-top: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .banner-section-label {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  }
+  .banner-section-title {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(28px, 3vw, 44px);
+    letter-spacing: -0.03em; line-height: 1; margin: 0;
+  }
+  .banner-section-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .banner-section-meta {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3);
+    margin-top: -16px;
+  }
+  .banner-wrap {
+    position: relative; width: 728px; height: 90px; max-width: 100%;
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+    background: var(--bg-soft);
+  }
+  .banner-wrap iframe {
+    display: block; width: 728px; height: 90px;
+    border: none; background: transparent;
+  }
+  .banner-controls {
+    display: flex; gap: 12px; align-items: center; margin-top: 4px;
+  }
+  .b-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-2); background: none;
+    border: 1px solid var(--rule); border-radius: 999px;
+    padding: 9px 20px; cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .b-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .b-btn.active { border-color: var(--accent); color: var(--accent); }
+  .b-btn .b-icon { font-size: 10px; }
+
   .foot {
     padding: 20px 0 40px; border-top: 1px solid var(--rule);
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
@@ -192,6 +238,26 @@
     </div>
   </section>
 
+  <!-- BANNER -->
+  <div class="banner-section">
+    <div>
+      <div class="banner-section-label">// Ad Creative · HTML5 Banner</div>
+      <h3 class="banner-section-title" style="margin-top:12px;">Sunset <span class="it">Marquis</span></h3>
+      <div class="banner-section-meta" style="margin-top:8px;">728 × 90 Leaderboard · Creatopy</div>
+    </div>
+    <div>
+      <div class="banner-wrap">
+        <iframe id="banner-iframe" src="banners/index.html" width="728" height="90" scrolling="no"></iframe>
+      </div>
+      <div class="banner-controls">
+        <button class="b-btn" id="banner-btn" onclick="toggleBanner()">
+          <span class="b-icon" id="banner-icon">▶</span>
+          <span id="banner-label">Play</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="coming">
     <span class="dash"></span>
     <span>Full studio case studies — coming soon</span>
@@ -204,6 +270,60 @@
   </footer>
 
 </div>
+<script>
+(function () {
+  var iframe = document.getElementById('banner-iframe');
+  var btn    = document.getElementById('banner-btn');
+  var icon   = document.getElementById('banner-icon');
+  var label  = document.getElementById('banner-label');
+  var playing = false;
+
+  function getBanner() {
+    try {
+      var win  = iframe.contentWindow;
+      var data = win.creatopyEmbed && win.creatopyEmbed.designData;
+      if (!data) return null;
+      var slides = data.animations.filter(function(a){ return a.type === 'slide'; });
+      var slide  = slides[0];
+      return {
+        E:     win.creatopyEmbed.eventManager,
+        slide: slide,
+        el:    win.document.getElementById('slide-' + slide.id)
+      };
+    } catch(e) { return null; }
+  }
+
+  function pause() {
+    var b = getBanner(); if (!b) return;
+    b.E.dispatchEvent(new CustomEvent('stopSlide', {
+      detail: { slide: b.slide, slideIndex: 0, currentLoopCount: 0 }
+    }));
+    playing = false;
+    icon.textContent  = '▶';
+    label.textContent = 'Play';
+    btn.classList.remove('active');
+  }
+
+  function play() {
+    var b = getBanner(); if (!b) return;
+    b.E.dispatchEvent(new CustomEvent('playSlide', {
+      detail: { slide: b.slide, slideIndex: 0, slideElement: b.el,
+                currentLoopCount: 0, source: 'external', advanceTime: 0 }
+    }));
+    playing = true;
+    icon.textContent  = '⏸';
+    label.textContent = 'Pause';
+    btn.classList.add('active');
+  }
+
+  window.toggleBanner = function() { playing ? pause() : play(); };
+
+  // Pause on arrival once iframe has fully loaded
+  iframe.addEventListener('load', function () {
+    setTimeout(pause, 200);
+  });
+})();
+</script>
 <script src="theme.js"></script>
 </body>
 </html>

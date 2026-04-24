@@ -246,8 +246,8 @@
       <div class="banner-section-meta" style="margin-top:8px;">728 × 90 Leaderboard · Creatopy</div>
     </div>
     <div>
-      <div class="banner-wrap">
-        <iframe id="banner-iframe" src="banners/index.html" width="728" height="90" scrolling="no"></iframe>
+      <div class="banner-wrap" id="banner-wrap">
+        <img id="banner-thumb" src="banners/media/fallback-image.jpg" width="728" height="90" style="display:block;width:728px;height:90px;object-fit:cover;">
       </div>
       <div class="banner-controls">
         <button class="b-btn" id="banner-btn" onclick="toggleBanner()">
@@ -272,56 +272,47 @@
 </div>
 <script>
 (function () {
-  var iframe = document.getElementById('banner-iframe');
-  var btn    = document.getElementById('banner-btn');
-  var icon   = document.getElementById('banner-icon');
-  var label  = document.getElementById('banner-label');
+  var wrap  = document.getElementById('banner-wrap');
+  var btn   = document.getElementById('banner-btn');
+  var icon  = document.getElementById('banner-icon');
+  var label = document.getElementById('banner-label');
   var playing = false;
 
-  function getBanner() {
-    try {
-      var win  = iframe.contentWindow;
-      var data = win.creatopyEmbed && win.creatopyEmbed.designData;
-      if (!data) return null;
-      var slides = data.animations.filter(function(a){ return a.type === 'slide'; });
-      var slide  = slides[0];
-      return {
-        E:     win.creatopyEmbed.eventManager,
-        slide: slide,
-        el:    win.document.getElementById('slide-' + slide.id)
-      };
-    } catch(e) { return null; }
+  function setUI(isPlaying) {
+    playing = isPlaying;
+    icon.textContent  = isPlaying ? '⏸' : '▶';
+    label.textContent = isPlaying ? 'Pause' : 'Play';
+    btn.classList.toggle('active', isPlaying);
   }
 
-  function pause() {
-    var b = getBanner(); if (!b) return;
-    b.E.dispatchEvent(new CustomEvent('stopSlide', {
-      detail: { slide: b.slide, slideIndex: 0, currentLoopCount: 0 }
-    }));
-    playing = false;
-    icon.textContent  = '▶';
-    label.textContent = 'Play';
-    btn.classList.remove('active');
+  function showThumb() {
+    var f = document.getElementById('banner-iframe');
+    if (f) f.remove();
+    if (!document.getElementById('banner-thumb')) {
+      var img = document.createElement('img');
+      img.id = 'banner-thumb';
+      img.src = 'banners/media/fallback-image.jpg';
+      img.style.cssText = 'display:block;width:728px;height:90px;object-fit:cover;';
+      wrap.appendChild(img);
+    }
   }
 
-  function play() {
-    var b = getBanner(); if (!b) return;
-    b.E.dispatchEvent(new CustomEvent('playSlide', {
-      detail: { slide: b.slide, slideIndex: 0, slideElement: b.el,
-                currentLoopCount: 0, source: 'external', advanceTime: 0 }
-    }));
-    playing = true;
-    icon.textContent  = '⏸';
-    label.textContent = 'Pause';
-    btn.classList.add('active');
+  function showBanner() {
+    var t = document.getElementById('banner-thumb');
+    if (t) t.remove();
+    var f = document.createElement('iframe');
+    f.id = 'banner-iframe';
+    f.src = 'banners/index.html';
+    f.width = 728; f.height = 90;
+    f.setAttribute('scrolling', 'no');
+    f.style.cssText = 'display:block;border:none;background:transparent;';
+    wrap.appendChild(f);
   }
 
-  window.toggleBanner = function() { playing ? pause() : play(); };
-
-  // Pause on arrival once iframe has fully loaded
-  iframe.addEventListener('load', function () {
-    setTimeout(pause, 200);
-  });
+  window.toggleBanner = function() {
+    if (playing) { showThumb(); setUI(false); }
+    else         { showBanner(); setUI(true); }
+  };
 })();
 </script>
 <script src="theme.js"></script>

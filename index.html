@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Selected Work — Adam R. Cagle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0f0f0e;
+    --bg-soft:  #141312;
+    --fg:       #f6f3ec;
+    --fg-2:     rgba(246,243,236,0.72);
+    --fg-3:     rgba(246,243,236,0.45);
+    --rule:     rgba(246,243,236,0.14);
+    --rule-2:   rgba(246,243,236,0.08);
+    --accent:   #ff5b1f;
+    --sans:   "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:   "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic: "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans);
+    font-size: 15px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "ss02";
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  .rail {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
+    padding: 16px 32px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.04em; color: var(--fg-2); text-transform: uppercase;
+    background: linear-gradient(180deg, rgba(15,15,14,0.92), rgba(15,15,14,0.6) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .rail .center { text-align: center; color: var(--fg); font-weight: 500; letter-spacing: 0.18em; }
+  .rail .right { text-align: right; }
+  .rail a:hover { color: var(--accent); }
+  .rail .live { display: inline-flex; align-items: center; gap: 8px; }
+  .rail .live i {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.45;transform:scale(.75);} }
+
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 80px; }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 40px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-name {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(68px, 12vw, 200px);
+    line-height: 0.84; letter-spacing: -0.055em;
+    margin: 0; max-width: 14ch; text-wrap: balance;
+  }
+  .hero-name .it {
+    font-family: var(--italic); font-style: italic;
+    font-weight: 400; color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+  .hero-name .dot { color: var(--accent); }
+  .hero-sub {
+    margin-top: 40px;
+    display: grid; grid-template-columns: 1.2fr 0.8fr;
+    gap: 56px; align-items: end;
+  }
+  .hero-role {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.3;
+    color: var(--fg-2); max-width: 36ch; text-wrap: balance;
+  }
+  .hero-role em { color: var(--accent); font-style: italic; }
+  .hero-links {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px 24px; font-family: var(--mono); font-size: 13px;
+    align-content: end;
+  }
+  .hero-links a, .hero-links span {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 10px 0; border-top: 1px solid var(--rule);
+  }
+  .hero-links a:hover { color: var(--accent); }
+  .hero-links .k {
+    color: var(--fg-3); font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase; min-width: 62px;
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 96px 0 24px; border-top: 1px solid var(--rule); }
+  .sect-label {
+    display: flex; align-items: baseline; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 28px;
+  }
+  .sect-label .num { color: var(--accent); }
+  .sect-head {
+    font-family: var(--sans); font-weight: 600;
+    font-size: clamp(40px, 5.5vw, 80px); line-height: 0.95;
+    letter-spacing: -0.035em; margin: 0 0 72px;
+    max-width: 22ch; text-wrap: balance;
+  }
+  .sect-head .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+
+  /* ─── CAMPAIGN CARD (sticky meta + body) ─── */
+  .campaign {
+    display: grid;
+    grid-template-columns: 0.9fr 1.3fr;
+    gap: 64px;
+    padding: 64px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .campaign:last-of-type { border-bottom: 1px solid var(--rule); }
+  .c-meta {
+    display: flex; flex-direction: column; gap: 14px;
+    position: sticky; top: 100px;
+  }
+  .c-meta .num {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .c-meta .client {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(36px, 4vw, 62px);
+    line-height: 0.92; letter-spacing: -0.035em;
+    margin: 0;
+  }
+  .c-meta .client .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .c-meta .context {
+    font-size: 14.5px; line-height: 1.55; color: var(--fg-2);
+    max-width: 34ch; margin-top: 10px;
+  }
+  .c-meta .tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
+  }
+  .c-meta .tags span {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.06em; padding: 5px 10px;
+    border: 1px solid var(--rule); border-radius: 999px;
+    color: var(--fg-2);
+  }
+
+  .c-body { display: flex; flex-direction: column; gap: 32px; }
+
+  /* image grid */
+  .ad-grid {
+    display: grid; gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .ad-grid.g-1 { grid-template-columns: 1fr; }
+  .ad-grid.g-2 { grid-template-columns: 1fr 1fr; }
+  .ad-grid.g-3 { grid-template-columns: repeat(3, 1fr); }
+  .ad-grid.g-featured {
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-auto-rows: auto;
+  }
+  .ad {
+    position: relative; background: var(--bg-soft);
+    aspect-ratio: 4 / 5; overflow: hidden;
+  }
+  .ad img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease, filter .3s ease;
+    filter: saturate(0.92);
+  }
+  .ad:hover img { transform: scale(1.02); filter: saturate(1); }
+  .ad .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(15,15,14,0.88) 100%);
+    display: flex; align-items: flex-end;
+    padding: 20px 22px;
+    opacity: 0; transition: opacity .25s;
+  }
+  .ad:hover .overlay { opacity: 1; }
+  .ad .overlay-inner {
+    width: 100%;
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-2);
+  }
+  .ad .overlay-inner .hl {
+    font-family: var(--italic); font-style: italic;
+    font-size: 17px; letter-spacing: -0.01em; text-transform: none;
+    color: var(--accent);
+  }
+
+  /* ─── pullquote block (like manifesto pullquote) ─── */
+  .pull {
+    background: var(--bg-soft);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 48px 48px 40px;
+    position: relative;
+  }
+  .pull-format {
+    position: absolute;
+    top: -10px; left: 24px;
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent);
+    background: var(--bg); padding: 2px 10px;
+    border: 1px solid var(--rule); border-radius: 3px;
+  }
+  .pull-line {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1; letter-spacing: -0.025em;
+    color: var(--fg); margin: 0 0 24px;
+    max-width: 18ch; text-wrap: balance;
+  }
+  .pull-line em, .pull-line .hot { color: var(--accent); font-style: italic; }
+  .pull-body {
+    font-size: 17px; line-height: 1.6; color: var(--fg-2);
+    max-width: 58ch;
+  }
+  .pull-body p { margin: 0 0 14px; text-wrap: pretty; }
+  .pull-body p:last-child { margin-bottom: 0; }
+  .pull-body em { font-family: var(--italic); font-style: italic; color: var(--fg); }
+  .pull-sig {
+    margin-top: 28px; padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-3);
+    display: flex; justify-content: space-between; gap: 12px;
+  }
+
+  /* ─── headline grid (all Traveler taglines) ─── */
+  .hl-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .hl-tile {
+    background: var(--bg);
+    padding: 32px 28px 24px;
+    display: flex; flex-direction: column; gap: 14px;
+    min-height: 220px;
+    transition: background .25s;
+  }
+  .hl-tile:hover { background: #15100e; }
+  .hl-tile .meta {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-3);
+    display: flex; justify-content: space-between;
+  }
+  .hl-tile .meta .num { color: var(--accent); }
+  .hl-tile .line {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(24px, 2.3vw, 34px);
+    line-height: 1; letter-spacing: -0.01em;
+    color: var(--fg); margin: auto 0 0;
+    text-wrap: balance;
+  }
+  .hl-tile .attr {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.1em;
+    color: var(--fg-2);
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+  }
+
+  /* ─── verb stack (Killer NIC) ─── */
+  .verbs {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .verb-col {
+    background: var(--bg);
+    padding: 36px 32px 28px;
+    display: flex; flex-direction: column;
+  }
+  .verb-col .class {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 16px;
+    display: flex; justify-content: space-between;
+  }
+  .verb-col .class .n { color: var(--accent); }
+  .verb-col .v {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(22px, 2vw, 28px);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    padding: 3px 0;
+  }
+  .verb-col .kill {
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(28px, 2.6vw, 38px);
+    letter-spacing: -0.03em;
+  }
+  .verb-col .kill .it {
+    font-family: var(--italic); font-style: italic;
+    font-weight: 400; color: var(--accent);
+  }
+
+  /* ─── CLOSER ─── */
+  .closer { padding: 120px 0 64px; border-top: 1px solid var(--rule); }
+  .closer .say {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(48px, 7vw, 120px); line-height: 0.98;
+    letter-spacing: -0.035em; color: var(--fg);
+    margin: 0 0 24px; max-width: 16ch; text-wrap: balance;
+  }
+  .closer .say em { color: var(--accent); font-style: italic; }
+  .closer .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-top: 32px; padding: 16px 22px;
+    border: 1px solid var(--fg); border-radius: 999px;
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .closer .cta:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .closer .arrow { display: inline-block; transition: transform .2s; }
+  .closer .cta:hover .arrow { transform: translateX(4px); }
+
+  .foot {
+    padding: 20px 0 40px;
+    border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .foot .center { text-align: center; }
+  .foot .right { text-align: right; }
+
+  @media print {
+    @page { size: Letter; margin: 0.45in; }
+    :root { --bg:#fff; --fg:#0f0f0e; --fg-2:#3b3b38; --fg-3:#7a7771; --rule:#d9d6cd; --rule-2:#e8e5dc; --bg-soft:#fafaf7; }
+    html, body { background: #fff; color: #0f0f0e; }
+    .rail { display: none !important; }
+    .ad:hover img { transform: none; filter: saturate(1); }
+    .campaign, .pull, .hl-tile, .verb-col { break-inside: avoid; }
+    section { padding: 28px 0 12px; }
+  }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .rail { padding: 14px 20px; grid-template-columns: 1fr; }
+    .rail .center, .rail .right { display: none; }
+    .hero { padding: 110px 0 48px; }
+    .hero-sub { grid-template-columns: 1fr; gap: 28px; }
+    .campaign { grid-template-columns: 1fr; gap: 28px; }
+    .c-meta { position: static; }
+    .ad-grid.g-3, .ad-grid.g-featured { grid-template-columns: 1fr 1fr; }
+    .ad-grid.g-2 { grid-template-columns: 1fr; }
+    .hl-grid, .verbs { grid-template-columns: 1fr; }
+    .pull { padding: 32px 24px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- rail -->
+<header class="rail">
+  <div class="left"><a href="Writing Portfolio.html">← Writing Portfolio</a></div>
+  <div class="center">Selected Work · Print Campaigns</div>
+  <div class="right"><span class="live"><i></i>Archive · Since 2007</span></div>
+</header>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top: 0;">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Campaigns</span>
+      <span>·</span>
+      <span>Copy</span>
+      <span>·</span>
+      <span>Art Direction</span>
+    </div>
+    <h1 class="hero-name">Words that<br>move<br><span class="it">products<span class="dot">.</span></span></h1>
+    <div class="hero-sub">
+      <div class="hero-role">
+        Three brands, three audiences, three registers: guitars on the <em>open road</em>, a rock-and-roll hideaway above the Strip, and a network card for gamers who count milliseconds.
+      </div>
+      <div class="hero-links">
+        <a href="Writing Portfolio.html"><span class="k">Main</span><span>Writing Portfolio</span></a>
+        <a href="Resume - Editorial.html"><span class="k">CV</span><span>Résumé — Editorial</span></a>
+        <a href="Resume - Technical.html"><span class="k">CV</span><span>Résumé — Technical</span></a>
+        <a href="mailto:adam@agency689.com"><span class="k">Mail</span><span>adam@agency689.com</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 01 — TRAVELER GUITAR ═════════════ -->
+  <section id="traveler">
+    <div class="sect-label">
+      <span class="num">// 01</span><span>Traveler Guitar</span><span>·</span><span>Campaign · 2020 to Present</span>
+    </div>
+    <h2 class="sect-head">The world's most <span class="it">adventurous</span> guitars.</h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <span class="num">// Campaign</span>
+        <h3 class="client">Traveler <span class="it">Guitar</span></h3>
+        <p class="context">
+          A campaign system built around a promise: a Traveler goes where a regular guitar can't. One tagline, one visual grammar, seven executions spanning subways, storm fronts, jungles, jetstreams, and the open road.
+        </p>
+        <div class="tags">
+          <span>Concept</span><span>Copy</span><span>Art Direction</span><span>Print</span><span>OOH</span><span>Digital</span>
+        </div>
+      </aside>
+
+      <div class="c-body">
+
+        <!-- hero ad full-width -->
+        <div class="ad-grid g-1">
+          <div class="ad" style="aspect-ratio: 4 / 3;" data-gallery="traveler" data-index="0">
+            <img src="ads/traveler-road.webp" alt="The Road — Escape Mark III Mahogany">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">The Road.</span><span>Escape Mk III · 25 Years</span></div></div>
+          </div>
+        </div>
+
+        <!-- body copy pullout -->
+        <div class="pull">
+          <span class="pull-format">The Body Copy · <em>The Road</em></span>
+          <p class="pull-line">Willie couldn't wait to get back on it. Roger was the king of it. And Sheryl found it <em>winding</em> everyday.</p>
+          <div class="pull-body">
+            <p>Musicians have been traveling the open road since the days when bards heralded fair maidens in taverns of old. For 25 years Traveler Guitar has been making instruments that fit in tiny spaces, play with giant sound, and let you practice, play, or record wherever the road takes you.</p>
+          </div>
+          <div class="pull-sig">
+            <span>Full-Page Print · Sweetwater Co-op · 2023</span>
+            <span>Traveler Guitar</span>
+          </div>
+        </div>
+
+        <!-- remaining six ads in 3x2 -->
+        <div class="ad-grid g-3">
+          <div class="ad" data-gallery="traveler" data-index="1"><img src="ads/traveler-sonic-bloom.webp" alt="Sonic Bloom"><div class="overlay"><div class="overlay-inner"><span class="hl">Sonic Bloom.</span><span>Forest</span></div></div></div>
+          <div class="ad" data-gallery="traveler" data-index="2"><img src="ads/traveler-jungle.webp" alt="Hey Jungle, Welcome to Me."><div class="overlay"><div class="overlay-inner"><span class="hl">Hey Jungle, Welcome to Me.</span><span>Vaibrant</span></div></div></div>
+          <div class="ad" data-gallery="traveler" data-index="3"><img src="ads/traveler-greatness.jpg" alt="Next Stop, Greatness."><div class="overlay"><div class="overlay-inner"><span class="hl">Next Stop, Greatness.</span><span>Transit</span></div></div></div>
+          <div class="ad" data-gallery="traveler" data-index="4"><img src="ads/traveler-force.webp" alt="A Force of Nature."><div class="overlay"><div class="overlay-inner"><span class="hl">A Force of Nature.</span><span>Storm</span></div></div></div>
+          <div class="ad" data-gallery="traveler" data-index="5"><img src="ads/traveler-flying-solo.webp" alt="Flying Solo."><div class="overlay"><div class="overlay-inner"><span class="hl">Flying Solo.</span><span>Cockpit</span></div></div></div>
+          <div class="ad" data-gallery="traveler" data-index="6"><img src="ads/traveler-endless-strummer.webp" alt="Endless Strummer."><div class="overlay"><div class="overlay-inner"><span class="hl">Endless Strummer.</span><span>Surf</span></div></div></div>
+        </div>
+
+        <!-- headline index -->
+        <div class="hl-grid">
+          <div class="hl-tile">
+            <div class="meta"><span class="num">01</span><span>Patagonia</span></div>
+            <div class="line">The Road.</div>
+            <div class="attr"><span>Escape Mk III</span><span>Mahogany</span></div>
+          </div>
+          <div class="hl-tile">
+            <div class="meta"><span class="num">02</span><span>Rainforest</span></div>
+            <div class="line">Sonic Bloom.</div>
+            <div class="attr"><span>Redlands</span><span>Concert</span></div>
+          </div>
+          <div class="hl-tile">
+            <div class="meta"><span class="num">03</span><span>Tropical</span></div>
+            <div class="line">Hey Jungle, Welcome to Me.</div>
+            <div class="attr"><span>Vaibrant</span><span>Electric</span></div>
+          </div>
+          <div class="hl-tile">
+            <div class="meta"><span class="num">04</span><span>Subway</span></div>
+            <div class="line">Next Stop, Greatness.</div>
+            <div class="attr"><span>Ultra-Light</span><span>Electric</span></div>
+          </div>
+          <div class="hl-tile">
+            <div class="meta"><span class="num">05</span><span>Tempest</span></div>
+            <div class="line">A Force of Nature.</div>
+            <div class="attr"><span>Vaibrant</span><span>Teal Burst</span></div>
+          </div>
+          <div class="hl-tile">
+            <div class="meta"><span class="num">06</span><span>Cockpit</span></div>
+            <div class="line">Flying Solo.</div>
+            <div class="attr"><span>Ultra-Light</span><span>·</span></div>
+          </div>
+          <div class="hl-tile">
+            <div class="meta"><span class="num">07</span><span>Surf</span></div>
+            <div class="line">Endless Strummer.</div>
+            <div class="attr"><span>Redlands</span><span>Mini</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 02 — SUNSET MARQUIS ═════════════ -->
+  <section id="sunset">
+    <div class="sect-label">
+      <span class="num">// 02</span><span>Sunset Marquis</span><span>·</span><span>Campaign · 2019 to Present</span>
+    </div>
+    <h2 class="sect-head">A <span class="it">hideaway</span> with a Grammy on the nightstand.</h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <span class="num">// Campaign</span>
+        <h3 class="client">Sunset <span class="it">Marquis</span></h3>
+        <p class="context">
+          West Hollywood's rock-and-roll hotel in two registers: a Magritte-style visual pun for the quiet confident reader, and a full-bleed double-exposure that lets the property's gardens live inside the guest. Same brand, two tempos.
+        </p>
+        <div class="tags">
+          <span>Concept</span><span>Copy</span><span>Art Direction</span><span>Hospitality</span><span>Print</span>
+        </div>
+      </aside>
+
+      <div class="c-body">
+
+        <!-- two ads side by side -->
+        <div class="ad-grid g-2">
+          <div class="ad" data-gallery="sunset" data-index="0"><img src="ads/sunset-yes-that-beautiful.jpg" alt="Yes, that beautiful."><div class="overlay"><div class="overlay-inner"><span class="hl">Legendary Nights Begin at Sunset.</span><span>2022</span></div></div></div>
+          <div class="ad" data-gallery="sunset" data-index="1"><img src="ads/sunset-legendary-nights.webp" alt="Legendary Nights Begin at Sunset."><div class="overlay"><div class="overlay-inner"><span class="hl">Yes, that beautiful.</span><span>2020</span></div></div></div>
+        </div>
+
+        <!-- first pullquote — Yes that beautiful -->
+        <div class="pull">
+          <span class="pull-format">The Headline · <em>Gallery</em></span>
+          <p class="pull-line">Yes, <em>that</em> beautiful.</p>
+          <div class="pull-body">
+            <p>Two words and a yes. The joke is the gilt frame; a hotel room hung like a museum painting, witnessed by a man in a bowler hat. Room tours, annotated by Magritte.</p>
+          </div>
+          <div class="pull-sig">
+            <span>Full-Page Print · 2020</span>
+            <span>Hotel · Restaurant · Spa</span>
+          </div>
+        </div>
+
+        <!-- second pullquote — Legendary Nights -->
+        <div class="pull">
+          <span class="pull-format">The Tagline · <em>Rock & Roll</em></span>
+          <p class="pull-line"><em>Legendary</em> nights begin at Sunset.</p>
+          <div class="pull-body">
+            <p>A rock-star silhouette filled with the property's garden paths and bungalow bridges. Every night at the Marquis is somebody's best story, and the hotel is the stage the story gets told from.</p>
+          </div>
+          <div class="pull-sig">
+            <span>Full-Page Print · 2022</span>
+            <span>1200 Alta Loma · WeHo</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 03 — KILLER NIC ═════════════ -->
+  <section id="killer">
+    <div class="sect-label">
+      <span class="num">// 03</span><span>Killer NIC</span><span>·</span><span>Triptych · 2007</span>
+    </div>
+    <h2 class="sect-head">Kill <span class="it">faster.</span></h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <span class="num">// Triptych</span>
+        <h3 class="client">Killer <span class="it">NIC</span></h3>
+        <p class="context">
+          The world's first network interface card built for online gamers. Three ads, three character classes, three color-coded palettes (sniper green, mage red, warrior purple), each escalating a verb stack into the same two-word punchline.
+        </p>
+        <div class="tags">
+          <span>Concept</span><span>Copy</span><span>Art Direction</span><span>Gaming</span><span>Enthusiast Press</span>
+        </div>
+      </aside>
+
+      <div class="c-body">
+
+        <!-- 3-up triptych -->
+        <div class="ad-grid g-3">
+          <div class="ad" data-gallery="killer" data-index="0"><img src="ads/killer-sniper.webp?v=2026" alt="Killer NIC — Sniper"><div class="overlay"><div class="overlay-inner"><span class="hl">Warrior.</span><span>K1</span></div></div></div>
+          <div class="ad" data-gallery="killer" data-index="1"><img src="ads/killer-mage.webp?v=2026" alt="Killer NIC — Mage"><div class="overlay"><div class="overlay-inner"><span class="hl">Mage.</span><span>K1</span></div></div></div>
+          <div class="ad" data-gallery="killer" data-index="2"><img src="ads/killer-warrior.webp?v=2026" alt="Killer NIC — Warrior"><div class="overlay"><div class="overlay-inner"><span class="hl">Sniper.</span><span>K1</span></div></div></div>
+        </div>
+
+        <!-- verb stacks -->
+        <div class="verbs">
+          <div class="verb-col">
+            <div class="class"><span>Warrior</span><span class="n">01</span></div>
+            <div class="v">Charge</div>
+            <div class="v">Overpower</div>
+            <div class="v">Slam</div>
+            <div class="v">Rend</div>
+            <div class="v">Execute</div>
+            <div class="v">Cleave</div>
+            <div class="kill">Kill <span class="it">Faster.</span></div>
+          </div>
+          <div class="verb-col">
+            <div class="class"><span>Mage</span><span class="n">02</span></div>
+            <div class="v">Scorch</div>
+            <div class="v">Frost</div>
+            <div class="v">Sheep</div>
+            <div class="v">Ignite</div>
+            <div class="v">Pyroblast</div>
+            <div class="v">Incinerate</div>
+            <div class="kill">Kill <span class="it">Faster.</span></div>
+          </div>
+          <div class="verb-col">
+            <div class="class"><span>Sniper</span><span class="n">03</span></div>
+            <div class="v">Spot</div>
+            <div class="v">Follow</div>
+            <div class="v">Target</div>
+            <div class="v">Crouch</div>
+            <div class="v">Zoom</div>
+            <div class="v">Aim</div>
+            <div class="kill">Kill <span class="it">Faster.</span></div>
+          </div>
+        </div>
+
+        <!-- body pull -->
+        <div class="pull">
+          <span class="pull-format">The Body Line</span>
+          <p class="pull-line" style="font-size: clamp(28px, 3.6vw, 52px);">The only network interface cards built for online gamers. Less lag. <em>More frag.</em></p>
+          <div class="pull-sig">
+            <span>Full-Page Print · Enthusiast Press · $159</span>
+            <span>Bigfoot Networks</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <section class="closer">
+    <p class="say">More where <em>this</em><br>came from.</p>
+    <a class="cta" href="mailto:adam@agency689.com">
+      Let's work <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <div class="foot">
+    <div>© Agency 689 · Adam R. Cagle</div>
+    <div class="center">Selected Work v1.0</div>
+    <div class="right">Set in Geist &amp; Instrument Serif</div>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="lb-close" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" aria-label="Previous">←</button>
+  <button class="lb-nav lb-next" aria-label="Next">→</button>
+  <figure class="lb-figure">
+    <img class="lb-img" alt="">
+    <figcaption class="lb-cap">
+      <span class="lb-cap-l"></span>
+      <span class="lb-cap-r"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<style>
+  #lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10, 10, 9, 0.94);
+    backdrop-filter: blur(12px);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 48px 64px 80px;
+    opacity: 0; transition: opacity .2s ease;
+  }
+  #lightbox.open { display: flex; opacity: 1; }
+  #lightbox .lb-figure {
+    margin: 0; max-width: 100%; max-height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px;
+  }
+  #lightbox .lb-img {
+    max-width: 100%; max-height: calc(100vh - 180px);
+    object-fit: contain;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(246,243,236,0.08);
+    background: #141312;
+  }
+  #lightbox .lb-cap {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 24px; width: min(920px, 100%);
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-2);
+  }
+  #lightbox .lb-cap-l { color: var(--accent); }
+  #lightbox button {
+    position: absolute;
+    background: rgba(20,19,18,0.85);
+    border: 1px solid rgba(246,243,236,0.18);
+    color: var(--fg);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 16px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s, transform .2s;
+    z-index: 2;
+  }
+  #lightbox button:hover {
+    background: var(--accent); border-color: var(--accent); color: var(--bg);
+  }
+  #lightbox .lb-close { top: 20px; right: 20px; }
+  #lightbox .lb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+  #lightbox .lb-next { right: 20px; top: 50%; transform: translateY(-50%); }
+  #lightbox .lb-prev:hover { transform: translateY(-50%) translateX(-2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  #lightbox .lb-next:hover { transform: translateY(-50%) translateX(2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .ad { cursor: zoom-in; }
+  body.lb-open { overflow: hidden; }
+  @media (max-width: 600px) {
+    #lightbox { padding: 60px 12px 60px; }
+    #lightbox .lb-prev { left: 8px; }
+    #lightbox .lb-next { right: 8px; }
+  }
+</style>
+
+<script>
+(function() {
+  const galleries = {
+    traveler: [
+      { src: 'ads/traveler-road.webp',             hl: 'The Road.',                     meta: 'Escape Mk III · 25 Years' },
+      { src: 'ads/traveler-sonic-bloom.webp',      hl: 'Sonic Bloom.',                  meta: 'Redlands Concert · Forest' },
+      { src: 'ads/traveler-jungle.webp',           hl: 'Hey Jungle, Welcome to Me.',    meta: 'Vaibrant Electric · Tropical' },
+      { src: 'ads/traveler-greatness.jpg',         hl: 'Next Stop, Greatness.',         meta: 'Ultra-Light · Subway' },
+      { src: 'ads/traveler-force.webp',            hl: 'A Force of Nature.',            meta: 'Vaibrant Teal Burst · Tempest' },
+      { src: 'ads/traveler-flying-solo.webp',      hl: 'Flying Solo.',                  meta: 'Ultra-Light · Cockpit' },
+      { src: 'ads/traveler-endless-strummer.webp', hl: 'Endless Strummer.',             meta: 'Redlands Mini · Surf' },
+    ],
+    sunset: [
+      { src: 'ads/sunset-yes-that-beautiful.jpg',  hl: 'Legendary Nights Begin at Sunset.', meta: 'Sunset Marquis · 2022' },
+      { src: 'ads/sunset-legendary-nights.webp',   hl: 'Yes, that beautiful.',              meta: 'Sunset Marquis · 2020' },
+    ],
+    killer: [
+      { src: 'ads/killer-sniper.webp?v=2026',  hl: 'Warrior.', meta: 'Killer NIC K1 · 2026' },
+      { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1 · 2026' },
+      { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1 · 2026' },
+    ],
+  };
+  const lb = document.getElementById('lightbox');
+  const img = lb.querySelector('.lb-img');
+  const capL = lb.querySelector('.lb-cap-l');
+  const capR = lb.querySelector('.lb-cap-r');
+  let current = { gal: null, idx: 0 };
+
+  function render() {
+    const arr = galleries[current.gal];
+    if (!arr) return;
+    const item = arr[current.idx];
+    img.src = item.src;
+    img.alt = item.hl;
+    capL.textContent = item.hl;
+    capR.textContent = `${item.meta}  ·  ${current.idx + 1} / ${arr.length}`;
+  }
+  function open(gal, idx) {
+    current.gal = gal; current.idx = idx;
+    render();
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+  }
+  function close() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+  }
+  function step(d) {
+    const arr = galleries[current.gal];
+    if (!arr) return;
+    current.idx = (current.idx + d + arr.length) % arr.length;
+    render();
+  }
+
+  document.querySelectorAll('.ad[data-gallery]').forEach(el => {
+    el.addEventListener('click', () => {
+      open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10));
+    });
+  });
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -527,6 +527,112 @@
   </section>
 
   <!-- ═════════════ 02 — SUNSET MARQUIS ═════════════ -->
+  <style>
+    /* movement label */
+    .sm-mvmt {
+      display: flex; align-items: baseline; gap: 16px;
+      padding: 16px 0 4px;
+      font-family: var(--mono); font-size: 10.5px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    .sm-mvmt:first-child { padding-top: 0; }
+    .sm-mvmt .roman { color: var(--accent); font-weight: 500; }
+    .sm-mvmt .rule { flex: 1; height: 1px; background: var(--rule); }
+    .sm-mvmt .label { color: var(--fg-2); }
+
+    /* image-pull pair */
+    .sm-pair {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 28px; align-items: stretch;
+    }
+    .sm-pair.reverse > .ad { order: 2; }
+    .sm-pair.apex { grid-template-columns: 1.05fr 0.95fr; gap: 36px; }
+
+    .sm-pair > .pull {
+      margin: 0;
+      display: flex; flex-direction: column;
+      padding: 44px 40px 36px;
+    }
+    .sm-pair > .pull .pull-line {
+      font-size: clamp(34px, 4vw, 54px);
+      max-width: none;
+      margin: 0 0 22px;
+    }
+    .sm-pair.apex > .pull .pull-line {
+      font-size: clamp(40px, 4.8vw, 64px);
+    }
+    .sm-pair > .pull .pull-body {
+      font-size: 15.5px; line-height: 1.6;
+      max-width: none;
+    }
+    .sm-pair > .pull .pull-sig { margin-top: auto; }
+
+    /* sub-brand architecture panel */
+    .sm-arch {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); border-radius: 6px;
+      overflow: hidden;
+    }
+    .sm-arch-cell {
+      background: var(--bg-soft);
+      padding: 44px 38px 38px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: background .25s;
+    }
+    .sm-arch-cell:hover { background: #181614; }
+    .sm-arch-cell .num {
+      font-family: var(--mono); font-size: 10.5px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .sm-arch-cell .name {
+      font-family: var(--sans); font-weight: 700;
+      font-size: clamp(26px, 2.8vw, 40px);
+      letter-spacing: -0.03em; line-height: 1;
+      margin: 2px 0 0;
+    }
+    .sm-arch-cell .name .it {
+      font-family: var(--italic); font-style: italic;
+      font-weight: 400; color: var(--accent);
+    }
+    .sm-arch-cell .line {
+      font-family: var(--italic); font-style: italic;
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.12; letter-spacing: -0.015em;
+      margin: 8px 0 6px; color: var(--fg);
+      text-wrap: balance;
+    }
+    .sm-arch-cell .line em { color: var(--accent); font-style: italic; }
+    .sm-arch-cell .body {
+      font-size: 14.5px; line-height: 1.65; color: var(--fg-2);
+      padding-top: 14px; border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+    .sm-arch-cell .sig {
+      margin-top: auto; padding-top: 22px;
+      font-family: var(--mono); font-size: 10.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fg-3);
+      display: flex; justify-content: space-between; gap: 12px;
+    }
+
+    /* live site tile */
+    .sm-site {
+      display: block; text-decoration: none;
+      cursor: pointer;
+    }
+    .sm-site img { transition: transform .8s ease, filter .3s ease; }
+    .sm-site:hover img { filter: brightness(1.05); }
+
+    @media (max-width: 960px) {
+      .sm-pair, .sm-pair.apex { grid-template-columns: 1fr; gap: 14px; }
+      .sm-pair.reverse > .ad { order: 0; }
+      .sm-pair > .pull { padding: 36px 28px 28px; }
+      .sm-arch { grid-template-columns: 1fr; }
+    }
+  </style>
+
   <section id="sunset">
     <div class="sect-label">
       <span class="num">// 02</span><span>Sunset Marquis</span><span>·</span><span>Brand System · 2019 to Present</span>
@@ -538,7 +644,7 @@
         <span class="num">// Brand System</span>
         <h3 class="client">Sunset <span class="it">Marquis</span></h3>
         <p class="context">
-          West Hollywood's rock-and-roll hotel. Campaigns, web, print, OOH, email, in-room, plus the sub-brands the property runs underneath. Cavatina. LIVE@SunsetMarquis. Bar 1200. The Spa. The Morrison Gallery. The home away from home for rock stars, road dogs, and the occasional free radical.
+          West Hollywood's rock-and-roll hotel. Campaigns, web, print, OOH, email, in-room. Plus the sub-brands the property runs underneath: Cavatina. LIVE@SunsetMarquis. Bar 1200. The Spa. The Morrison Gallery. Home away from home for rock stars, road dogs, and the occasional free radical.
         </p>
         <div class="tags">
           <span>Concept</span><span>Copy System</span><span>Brand Voice</span><span>Art Direction</span><span>Naming</span><span>Editorial</span>
@@ -547,95 +653,135 @@
 
       <div class="c-body">
 
-        <!-- ── Pair 01 · The Headline + The Tagline ── -->
-        <div class="ad-grid g-2">
-          <div class="ad" data-gallery="sunset" data-index="0"><img src="ads/sunset-legendary-nights.webp" alt="Legendary Nights Begin at Sunset."><div class="overlay"><div class="overlay-inner"><span class="hl">Legendary Nights Begin at Sunset.</span><span>2022</span></div></div></div>
-          <div class="ad" data-gallery="sunset" data-index="1"><img src="ads/sunset-yes-that-beautiful.jpg" alt="Yes, that beautiful."><div class="overlay"><div class="overlay-inner"><span class="hl">Yes, that beautiful.</span><span>2020</span></div></div></div>
+        <!-- ─── MOVEMENT I · THE APEX ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">I</span>
+          <span class="rule"></span>
+          <span class="label">The Apex · Property Tagline</span>
         </div>
 
-        <div class="pull">
-          <span class="pull-format">The Headline · <em>Gallery</em></span>
-          <p class="pull-line">Yes, <em>that</em> beautiful.</p>
-          <div class="pull-body">
-            <p>The launch ad for the renovated suites. Two words and a yes. A hotel room framed and hung like a museum painting, witnessed by a man in a bowler hat. Room tours, annotated by Magritte.</p>
+        <div class="sm-pair apex">
+          <div class="ad" data-gallery="sunset" data-index="0">
+            <img src="ads/sunset-legendary-nights.webp" alt="Legendary Nights Begin at Sunset.">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Legendary Nights Begin at Sunset.</span><span>2022</span></div></div>
           </div>
-          <div class="pull-sig">
-            <span>Full-Page Print · 2020</span>
-            <span>Hotel · Restaurant · Spa</span>
-          </div>
-        </div>
-
-        <div class="pull">
-          <span class="pull-format">The Tagline · <em>Rock & Roll</em></span>
-          <p class="pull-line"><em>Legendary</em> nights begin at Sunset.</p>
-          <div class="pull-body">
-            <p>The property tagline. Ten years on the door, the print, the email, the sign-off. The line the rest of the brand ladders up to.</p>
-          </div>
-          <div class="pull-sig">
-            <span>Property Tagline · 2015 to Present</span>
-            <span>1200 Alta Loma · WeHo</span>
+          <div class="pull">
+            <span class="pull-format">The Tagline · <em>Rock & Roll</em></span>
+            <p class="pull-line"><em>Legendary</em> nights begin at Sunset.</p>
+            <div class="pull-body">
+              <p>Ten years on the door, the print, the email, the sign-off. The line the rest of the brand ladders up to.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Property Tagline · 2015 to Present</span>
+              <span>1200 Alta Loma · WeHo</span>
+            </div>
           </div>
         </div>
 
-        <!-- ── Pair 02 · The Wink + The B2B ── -->
-        <div class="ad-grid g-2">
-          <div class="ad" data-gallery="sunset" data-index="2"><img src="ads/ACM-Awards-2025.jpg" alt="Sure, it's California, but it's the southern part."><div class="overlay"><div class="overlay-inner"><span class="hl">Sure, it's California.</span><span>ACM 2025</span></div></div></div>
-          <div class="ad" data-gallery="sunset" data-index="3"><img src="ads/SMBrochure.jpg" alt="Unique. Even by Hollywood standards."><div class="overlay"><div class="overlay-inner"><span class="hl">Unique. Even by Hollywood standards.</span><span>GDS One-Sheet</span></div></div></div>
+        <!-- ─── MOVEMENT II · THE RANGE ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">II</span>
+          <span class="rule"></span>
+          <span class="label">The Range · Print Campaigns</span>
         </div>
 
-        <div class="pull">
-          <span class="pull-format">The Wink · <em>ACM Awards Guide</em></span>
-          <p class="pull-line">Sure, it's California, but it's the <em>southern</em> part.</p>
-          <div class="pull-body">
-            <p>A full-page run in the Academy of Country Music Awards Guide. The pun does the work. California reads as west coast until you remember Southern California is a real place, which the country music reader already knew.</p>
+        <!-- 02a · Yes That Beautiful (image left) -->
+        <div class="sm-pair">
+          <div class="ad" data-gallery="sunset" data-index="1">
+            <img src="ads/sunset-yes-that-beautiful.jpg" alt="Yes, that beautiful.">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Yes, that beautiful.</span><span>2020</span></div></div>
           </div>
-          <div class="pull-sig">
-            <span>Full-Page Print · ACM 2025</span>
-            <span>Country Music Reader</span>
-          </div>
-        </div>
-
-        <div class="pull">
-          <span class="pull-format">The B2B · <em>GDS One-Sheet</em></span>
-          <p class="pull-line">Unique. Even by <em>Hollywood</em> standards.<sup style="font-size:0.4em;vertical-align:super;letter-spacing:0;">®</sup></p>
-          <div class="pull-body">
-            <p>A one-page sell sheet for travel agents booking through the GDS, the format where most hotel copy goes to die under bullet points. The headline carries the brand. The body keeps Cavatina, the Spa, and Bar 1200 sounding like themselves instead of like amenities on a checklist.</p>
-          </div>
-          <div class="pull-sig">
-            <span>Trade Sell Sheet · 2024</span>
-            <span>Global Distribution System</span>
+          <div class="pull">
+            <span class="pull-format">The Headline · <em>Gallery</em></span>
+            <p class="pull-line">Yes, <em>that</em> beautiful.</p>
+            <div class="pull-body">
+              <p>Two words and a yes. The launch ad for the renovated suites: a hotel room framed like a museum painting, witnessed by a man in a bowler hat. Room tours, annotated by Magritte.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Full-Page Print · 2020</span>
+              <span>Hotel · Restaurant · Spa</span>
+            </div>
           </div>
         </div>
 
-        <!-- ── Sub-brands · Cavatina + LIVE@ ── -->
-        <div class="pull">
-          <span class="pull-format">The Restaurant · <em>Cavatina</em></span>
-          <p class="pull-line">Beauty in <em>simplicity.</em></p>
-          <div class="pull-body">
-            <p>The hotel's restaurant in its own register. Chef Luis Morales, garden-set, Californian with an Italian twist. Menus, web, in-room dining, tasting events, and private events written so the food sounds the way it tastes. The restaurant gets to speak for itself, not through the hotel's mouth.</p>
+        <!-- 02b · ACM (image right · zigzag) -->
+        <div class="sm-pair reverse">
+          <div class="ad" data-gallery="sunset" data-index="2">
+            <img src="ads/ACM-Awards-2025.jpg" alt="Sure, it's California, but it's the southern part.">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Sure, it's California.</span><span>ACM 2025</span></div></div>
           </div>
-          <div class="pull-sig">
-            <span>Sub-Brand · Cavatina</span>
-            <span>Garden-Set · WeHo</span>
-          </div>
-        </div>
-
-        <div class="pull">
-          <span class="pull-format">The Concert Series · <em>LIVE@SunsetMarquis</em></span>
-          <p class="pull-line">For those about to rock, we put you on <em>stage.</em></p>
-          <div class="pull-body">
-            <p>Named, branded, and written from the first show. A concert series staged at the hotel. Year one headlined Gary Clark Jr. the season before he won his first Grammys.</p>
-          </div>
-          <div class="pull-sig">
-            <span>Sub-Brand · LIVE@SunsetMarquis</span>
-            <span>Year One · Gary Clark Jr.</span>
+          <div class="pull">
+            <span class="pull-format">The Wink · <em>ACM Awards Guide</em></span>
+            <p class="pull-line">Sure, it's California, but it's the <em>southern</em> part.</p>
+            <div class="pull-body">
+              <p>The pun does the work. California reads as west coast until you remember Southern California is a real place, which the country music reader already knew.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Full-Page Print · ACM 2025</span>
+              <span>Country Music Reader</span>
+            </div>
           </div>
         </div>
 
-        <!-- ── Live Site ── -->
-        <a class="hf-cover-wrap sm-site" href="https://sunsetmarquis.com" target="_blank" rel="noopener" style="text-decoration:none;">
-          <img src="ads/Sunset-Marquis.jpg" alt="SunsetMarquis.com — Live Site">
-          <div class="overlay"><div class="overlay-inner"><span class="hl">Visit sunsetmarquis.com →</span><span>Live Site · The Brand at Work</span></div></div>
+        <!-- 02c · Brochure (image left) -->
+        <div class="sm-pair">
+          <div class="ad" data-gallery="sunset" data-index="3">
+            <img src="ads/SMBrochure.jpg" alt="Unique. Even by Hollywood standards.">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Unique. Even by Hollywood standards.</span><span>GDS One-Sheet</span></div></div>
+          </div>
+          <div class="pull">
+            <span class="pull-format">The B2B · <em>GDS One-Sheet</em></span>
+            <p class="pull-line">Unique. Even by <em>Hollywood</em> standards.<sup style="font-size:0.4em;vertical-align:super;letter-spacing:0;">®</sup></p>
+            <div class="pull-body">
+              <p>The format where most hotel copy goes to die under bullet points. The headline carries the brand. The body keeps Cavatina, the Spa, and Bar 1200 sounding like themselves, not like amenities on a checklist.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Trade Sell Sheet · 2024</span>
+              <span>Global Distribution System</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── MOVEMENT III · THE ARCHITECTURE ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">III</span>
+          <span class="rule"></span>
+          <span class="label">The Architecture · Sub-Brands</span>
+        </div>
+
+        <div class="sm-arch">
+          <div class="sm-arch-cell">
+            <span class="num">// Restaurant</span>
+            <h4 class="name">Cavatina</h4>
+            <p class="line">Beauty in <em>simplicity.</em></p>
+            <p class="body">The restaurant in its own register. Chef Luis Morales. Garden-set. Californian with an Italian twist. Menus, web, in-room dining, and private events written so the food sounds the way it tastes. The restaurant speaks for itself, not through the hotel's mouth.</p>
+            <div class="sig">
+              <span>Sub-Brand</span>
+              <span>Garden-Set · WeHo</span>
+            </div>
+          </div>
+          <div class="sm-arch-cell">
+            <span class="num">// Concert Series</span>
+            <h4 class="name">LIVE@<span class="it">SunsetMarquis</span></h4>
+            <p class="line">For those about to rock, we put you on <em>stage.</em></p>
+            <p class="body">Named, branded, and written from the first show. A concert series staged at the hotel. Year one headlined Gary Clark Jr., the season before he won his first Grammys.</p>
+            <div class="sig">
+              <span>Sub-Brand</span>
+              <span>Year One · Gary Clark Jr.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── MOVEMENT IV · THE BRAND AT WORK ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">IV</span>
+          <span class="rule"></span>
+          <span class="label">The Brand at Work · Live Site</span>
+        </div>
+
+        <a class="hf-cover-wrap sm-site" href="https://sunsetmarquis.com" target="_blank" rel="noopener">
+          <img src="ads/Sunset-Marquis.jpg" alt="SunsetMarquis.com Live Site">
+          <div class="overlay"><div class="overlay-inner"><span class="hl">Visit sunsetmarquis.com →</span><span>The Brand Operating in the Wild</span></div></div>
         </a>
 
       </div>

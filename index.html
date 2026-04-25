@@ -732,6 +732,50 @@
     </div>
   </section>
 
+  <!-- CLINK HOSTELS -->
+  <section id="clink">
+    <div class="sect-label">
+      <span class="num">// 05</span><span>Clink Hostels</span><span>·</span><span>Brand System · 2023 to Present</span>
+    </div>
+    <h2 class="sect-head">Friends, <span class="it">not miles.</span></h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <span class="num">// Brand System</span>
+        <h3 class="client">Clink <span class="it">Hostels</span></h3>
+        <p class="context">
+          Full website copy and messaging architecture for an international hostel brand with properties in London, Amsterdam, Dublin, and beyond. Built the brand voice from the ground up — positioning Clink as the hostel for people who travel to connect, not just to arrive. Homepage, property pages, groups, offers, and city guides, all written in a single voice that's warm, irreverent, and quietly aspirational. The tagline: a line that redefines how a hostel earns loyalty.
+        </p>
+        <div class="tags">
+          <span>Strategy</span><span>Brand Architecture</span><span>Copy System</span><span>Creative Direction</span><span>Naming</span>
+        </div>
+      </aside>
+
+      <div class="c-body">
+
+        <!-- cover hero -->
+        <div class="hf-cover-wrap" id="clink-cover">
+          <img src="CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg" alt="Clink Hostels — Amsterdam">
+          <div class="overlay"><div class="overlay-inner"><span class="hl">View Site Screens →</span><span>9 Screens · Agency689 · 2023</span></div></div>
+        </div>
+
+        <!-- pull -->
+        <div class="pull">
+          <span class="pull-format">The Brand Tagline · <em>Copy</em></span>
+          <p class="pull-line"><em>Measure your journey</em> in friends, not miles.</p>
+          <div class="pull-body">
+            <p>The line that reframes what a hostel is for. Not a bed, not a budget — a place where the people you meet become the reason you went. Written as the core of a full brand voice system spanning homepage, property pages, groups, offers, and city guides across four European cities.</p>
+          </div>
+          <div class="pull-sig">
+            <span>Brand Copy · Agency689 · 2023</span>
+            <span>Clink Hostels · London · Amsterdam · Dublin</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- CLOSER -->
   <section class="closer">
     <p class="say">More where <em>this</em><br>came from.</p>
@@ -920,6 +964,17 @@
       { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1 · 2026' },
       { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1 · 2026' },
     ],
+    clink: [
+      { src: 'CLINK/ws-panel_0000_homepage.jpg',                                                                        hl: 'Homepage.',      meta: 'Clink Hostels · 2023' },
+      { src: 'CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',                          hl: 'Clink78.',       meta: 'London · 2023' },
+      { src: 'CLINK/ws-panel_0002_screencapture-clinkhostels-clink261-2023-09-13-09_57_53.jpg',                         hl: 'Clink261.',      meta: 'London · 2023' },
+      { src: 'CLINK/ws-panel_0003_screencapture-clinkhostels-london-2023-09-13-09_53_57.jpg',                           hl: 'London.',        meta: 'Clink Hostels · 2023' },
+      { src: 'CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg',                        hl: 'Amsterdam.',     meta: 'Clink Hostels · 2023' },
+      { src: 'CLINK/ws-panel_0005_screencapture-clinkhostels-dublin-2023-09-13-09_56_27.jpg',                           hl: 'Dublin.',        meta: 'Clink Hostels · 2023' },
+      { src: 'CLINK/ws-panel_0006_screencapture-clinkhostels-groups-2023-09-13-09_56_05.jpg',                           hl: 'Groups.',        meta: 'Clink Hostels · 2023' },
+      { src: 'CLINK/ws-panel_0007_screencapture-clinkhostels-category-offers-2023-09-13-09_55_39.jpg',                  hl: 'Offers.',        meta: 'Clink Hostels · 2023' },
+      { src: 'CLINK/ws-panel_0008_screencapture-clinkhostels-category-city-tips-2023-09-13-09_57_06.jpg',               hl: 'City Tips.',     meta: 'Clink Hostels · 2023' },
+    ],
   };
   const lb = document.getElementById('lightbox');
   const img = lb.querySelector('.lb-img');
@@ -960,6 +1015,8 @@
       open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10));
     });
   });
+  const clinkCover = document.getElementById('clink-cover');
+  if (clinkCover) clinkCover.addEventListener('click', () => open('clink', 4));
   lb.querySelector('.lb-close').addEventListener('click', close);
   lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
   lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); step(1); });

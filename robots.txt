@@ -20,4 +20,4 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://adamrcagle.com/sitemap.xml
+Sitemap: https://adamcagle.com/sitemap.xml

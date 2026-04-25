@@ -224,10 +224,19 @@
     .rail .right { display: none; }
     .rail nav { gap: 16px; }
     .hero { padding: 110px 0 48px; }
-    .book { grid-template-columns: 1fr; gap: 32px; }
-    .book-left { position: static; flex-direction: row; flex-wrap: wrap; gap: 16px; align-items: start; }
-    .book-cover { width: 160px; flex-shrink: 0; }
-    .quote { padding: 28px 24px 24px; }
+    .book { grid-template-columns: 1fr; gap: 28px; }
+    .book-left {
+      position: static;
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      grid-template-rows: auto auto auto;
+      column-gap: 20px; row-gap: 6px;
+    }
+    .book-cover { grid-column: 1; grid-row: 1 / 4; width: 100%; align-self: start; }
+    .book-genre { grid-column: 2; grid-row: 1; align-self: start; }
+    .book-title { grid-column: 2; grid-row: 2; font-size: clamp(18px, 5vw, 26px); align-self: start; }
+    .book-subtitle { grid-column: 2; grid-row: 3; align-self: start; }
+    .quote { padding: 28px 20px 24px; }
   }
 
   /* ── mobile nav ── */

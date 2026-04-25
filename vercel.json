@@ -1,4 +1,12 @@
 {
   "cleanUrls": false,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "adam-cagle-portfolio.vercel.app" }],
+      "destination": "https://adamrcagle.com/$1",
+      "permanent": true
+    }
+  ]
 }

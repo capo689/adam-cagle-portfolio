@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Selected Work — Adam R. Cagle</title>
+<title>Résumé — Adam R. Cagle</title>
 <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,26 +11,26 @@
 <link rel="stylesheet" href="theme.css">
 <style>
   :root {
-    --bg:       #0f0f0e;
-    --bg-soft:  #141312;
-    --fg:       #f6f3ec;
-    --fg-2:     rgba(246,243,236,0.72);
-    --fg-3:     rgba(246,243,236,0.45);
-    --rule:     rgba(246,243,236,0.14);
-    --rule-2:   rgba(246,243,236,0.08);
-    --accent:   #ff5b1f;
-    --sans:   "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
-    --mono:   "Geist Mono", ui-monospace, Menlo, monospace;
-    --italic: "Instrument Serif", Georgia, serif;
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #ff5b1f;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
   body {
     font-family: var(--sans);
-    font-size: 15px; line-height: 1.5;
+    font-size: 15px; line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    font-feature-settings: "ss01", "ss02";
+    font-feature-settings: "ss01","ss02";
     overflow-x: hidden;
   }
   ::selection { background: var(--accent); color: var(--bg); }
@@ -42,371 +42,178 @@
     align-items: center; gap: 24px;
     padding: 16px 32px;
     font-family: var(--mono); font-size: 13px;
-    letter-spacing: 0.06em; color: var(--fg-2); text-transform: uppercase;
-    background: linear-gradient(180deg, rgba(15,15,14,0.92), rgba(15,15,14,0.6) 70%, transparent);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: linear-gradient(180deg, rgba(15,15,14,0.95), rgba(15,15,14,0.7) 70%, transparent);
     backdrop-filter: blur(8px);
   }
-  .rail .center { text-align: center; color: var(--fg); font-weight: 500; letter-spacing: 0.18em; }
+  .rail .brand { color: var(--fg); font-weight: 500; letter-spacing: 0.14em; }
+  .rail .brand:hover { color: var(--accent); }
+  .rail nav { display: flex; gap: 28px; justify-content: center; }
+  .rail nav a { color: var(--fg-3); transition: color .2s; letter-spacing: 0.1em; }
+  .rail nav a:hover, .rail nav a.active { color: var(--accent); }
   .rail .right { text-align: right; }
-  .rail a:hover { color: var(--accent); }
-  .rail .live { display: inline-flex; align-items: center; gap: 8px; }
-  .rail .live i {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.45;transform:scale(.75);} }
+  .rail .right a { color: var(--fg-3); }
+  .rail .right a:hover { color: var(--accent); }
 
-  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+  .page { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
 
-  /* ─── HERO ─── */
-  .hero { padding: 140px 0 80px; }
+  .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
   .hero-kicker {
     display: flex; align-items: center; gap: 16px;
     font-family: var(--mono); font-size: 12px;
     letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--fg-3); margin-bottom: 40px;
+    color: var(--fg-3); margin-bottom: 36px;
   }
   .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
   .hero-kicker .accent { color: var(--accent); }
   .hero-name {
-    font-family: var(--sans);
-    font-weight: 800;
-    font-size: clamp(68px, 12vw, 200px);
-    line-height: 0.84; letter-spacing: -0.055em;
-    margin: 0; max-width: 14ch; text-wrap: balance;
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(64px, 11vw, 180px);
+    line-height: 0.84; letter-spacing: -0.055em; margin: 0;
   }
   .hero-name .it {
     font-family: var(--italic); font-style: italic;
-    font-weight: 400; color: var(--accent);
-    letter-spacing: -0.03em;
+    font-weight: 400; color: var(--accent); letter-spacing: -0.03em;
   }
-  .hero-name .dot { color: var(--accent); }
   .hero-sub {
     margin-top: 40px;
     display: grid; grid-template-columns: 1.2fr 0.8fr;
-    gap: 56px; align-items: end;
+    gap: 56px; align-items: start;
   }
   .hero-role {
     font-family: var(--italic); font-style: italic;
-    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.3;
-    color: var(--fg-2); max-width: 36ch; text-wrap: balance;
+    font-size: clamp(20px, 2vw, 28px); line-height: 1.35;
+    color: var(--fg-2); max-width: 38ch;
   }
   .hero-role em { color: var(--accent); font-style: italic; }
-  .hero-links {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px 24px; font-family: var(--mono); font-size: 13px;
-    align-content: end;
-  }
-  .hero-links a, .hero-links span {
+  .hero-meta { display: grid; gap: 0; font-family: var(--mono); font-size: 13px; align-content: end; align-self: end; }
+  .hero-meta a, .hero-meta span {
     display: flex; align-items: baseline; gap: 10px;
     padding: 10px 0; border-top: 1px solid var(--rule);
   }
-  .hero-links a:hover { color: var(--accent); }
-  .hero-links .k {
-    color: var(--fg-3); font-size: 10.5px;
-    letter-spacing: 0.18em; text-transform: uppercase; min-width: 62px;
-  }
+  .hero-meta a:hover { color: var(--accent); }
+  .hero-meta .k { color: var(--fg-3); font-size: 10.5px; letter-spacing: 0.18em; min-width: 68px; }
 
-  /* ─── SECTIONS ─── */
-  section { padding: 96px 0 24px; border-top: 1px solid var(--rule); }
-  .sect-label {
-    display: flex; align-items: baseline; gap: 16px;
-    font-family: var(--mono); font-size: 12px;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--fg-3); margin-bottom: 28px;
-  }
-  .sect-label .num { color: var(--accent); }
-  .sect-head {
-    font-family: var(--sans); font-weight: 600;
-    font-size: clamp(40px, 5.5vw, 80px); line-height: 0.95;
-    letter-spacing: -0.035em; margin: 0 0 72px;
-    max-width: 22ch; text-wrap: balance;
-  }
-  .sect-head .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
-
-  /* ─── CAMPAIGN CARD (sticky meta + body) ─── */
-  .campaign {
-    display: grid;
-    grid-template-columns: 0.9fr 1.3fr;
-    gap: 64px;
-    padding: 64px 0;
-    border-top: 1px solid var(--rule);
-    align-items: start;
-  }
-  .campaign:last-of-type { border-bottom: 1px solid var(--rule); }
-  .c-meta {
-    display: flex; flex-direction: column; gap: 14px;
-    position: sticky; top: 100px;
-  }
-  .c-meta .num {
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent);
-  }
-  .c-meta .client {
-    font-family: var(--sans); font-weight: 700;
-    font-size: clamp(36px, 4vw, 62px);
-    line-height: 0.92; letter-spacing: -0.035em;
-    margin: 0;
-  }
-  .c-meta .client .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
-  .c-meta .context {
-    font-size: 14.5px; line-height: 1.55; color: var(--fg-2);
-    max-width: 34ch; margin-top: 10px;
-  }
-  .c-meta .tags {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
-  }
-  .c-meta .tags span {
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.06em; padding: 5px 10px;
-    border: 1px solid var(--rule); border-radius: 999px;
-    color: var(--fg-2);
-  }
-
-  .c-body { display: flex; flex-direction: column; gap: 32px; }
-
-  /* image grid */
-  .ad-grid {
-    display: grid; gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .ad-grid.g-1 { grid-template-columns: 1fr; }
-  .ad-grid.g-2 { grid-template-columns: 1fr 1fr; }
-  .ad-grid.g-3 { grid-template-columns: repeat(3, 1fr); }
-  .ad-grid.g-featured {
-    grid-template-columns: 1.4fr 1fr 1fr;
-    grid-auto-rows: auto;
-  }
-  .ad {
-    position: relative; background: var(--bg-soft);
-    aspect-ratio: 4 / 5; overflow: hidden;
-  }
-  .ad img {
-    display: block; width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform .6s ease, filter .3s ease;
-    filter: saturate(0.92);
-  }
-  .ad:hover img { transform: scale(1.02); filter: saturate(1); }
-  .ad .overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 50%, rgba(15,15,14,0.88) 100%);
-    display: flex; align-items: flex-end;
-    padding: 20px 22px;
-    opacity: 0; transition: opacity .25s;
-  }
-  .ad:hover .overlay { opacity: 1; }
-  .ad .overlay-inner {
-    width: 100%;
-    display: flex; justify-content: space-between; align-items: baseline;
-    gap: 10px;
-    font-family: var(--mono);
-    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--fg-2);
-  }
-  .ad .overlay-inner .hl {
-    font-family: var(--italic); font-style: italic;
-    font-size: 17px; letter-spacing: -0.01em; text-transform: none;
-    color: var(--accent);
-  }
-
-  /* ─── pullquote block (like manifesto pullquote) ─── */
-  .pull {
-    background: var(--bg-soft);
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-    padding: 48px 48px 40px;
-    position: relative;
-  }
-  .pull-format {
-    position: absolute;
-    top: -10px; left: 24px;
-    font-family: var(--mono); font-size: 10.5px;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent);
-    background: var(--bg); padding: 2px 10px;
-    border: 1px solid var(--rule); border-radius: 3px;
-  }
-  .pull-line {
-    font-family: var(--italic); font-style: italic;
-    font-size: clamp(40px, 5vw, 72px);
-    line-height: 1; letter-spacing: -0.025em;
-    color: var(--fg); margin: 0 0 24px;
-    max-width: 18ch; text-wrap: balance;
-  }
-  .pull-line em, .pull-line .hot { color: var(--accent); font-style: italic; }
-  .pull-body {
-    font-size: 17px; line-height: 1.6; color: var(--fg-2);
-    max-width: 58ch;
-  }
-  .pull-body p { margin: 0 0 14px; text-wrap: pretty; }
-  .pull-body p:last-child { margin-bottom: 0; }
-  .pull-body em { font-family: var(--italic); font-style: italic; color: var(--fg); }
-  .pull-sig {
-    margin-top: 28px; padding-top: 18px;
-    border-top: 1px solid var(--rule);
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--fg-3);
-    display: flex; justify-content: space-between; gap: 12px;
-  }
-
-  /* ─── headline grid (all Traveler taglines) ─── */
-  .hl-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .hl-tile {
-    background: var(--bg);
-    padding: 32px 28px 24px;
-    display: flex; flex-direction: column; gap: 14px;
-    min-height: 220px;
-    transition: background .25s;
-  }
-  .hl-tile:hover { background: #15100e; }
-  .hl-tile .meta {
-    font-family: var(--mono); font-size: 10.5px;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--fg-3);
-    display: flex; justify-content: space-between;
-  }
-  .hl-tile .meta .num { color: var(--accent); }
-  .hl-tile .line {
-    font-family: var(--italic); font-style: italic;
-    font-size: clamp(24px, 2.3vw, 34px);
-    line-height: 1; letter-spacing: -0.01em;
-    color: var(--fg); margin: auto 0 0;
-    text-wrap: balance;
-  }
-  .hl-tile .attr {
-    font-family: var(--mono); font-size: 10.5px;
-    letter-spacing: 0.1em;
-    color: var(--fg-2);
-    padding-top: 14px;
-    border-top: 1px solid var(--rule);
-    display: flex; justify-content: space-between;
-  }
-
-  /* ─── verb stack (Killer NIC) ─── */
-  .verbs {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .verb-col {
-    background: var(--bg);
-    padding: 36px 32px 28px;
-    display: flex; flex-direction: column;
-  }
-  .verb-col .class {
-    font-family: var(--mono); font-size: 10.5px;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--fg-3);
-    padding-bottom: 12px;
+  .section {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 64px; padding: 72px 0;
     border-bottom: 1px solid var(--rule);
-    margin-bottom: 16px;
-    display: flex; justify-content: space-between;
   }
-  .verb-col .class .n { color: var(--accent); }
-  .verb-col .v {
+  .section:last-of-type { border-bottom: 0; }
+  .s-head { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 14px; }
+  .s-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .s-title {
     font-family: var(--sans); font-weight: 700;
-    font-size: clamp(22px, 2vw, 28px);
-    letter-spacing: -0.025em;
-    line-height: 1.15;
-    padding: 3px 0;
+    font-size: clamp(32px, 3.5vw, 52px);
+    line-height: 0.95; letter-spacing: -0.04em; margin: 0;
   }
-  .verb-col .kill {
-    margin-top: 14px; padding-top: 12px;
-    border-top: 1px solid var(--rule);
-    font-family: var(--sans); font-weight: 700;
-    font-size: clamp(28px, 2.6vw, 38px);
-    letter-spacing: -0.03em;
-  }
-  .verb-col .kill .it {
-    font-family: var(--italic); font-style: italic;
-    font-weight: 400; color: var(--accent);
-  }
+  .s-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .s-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); line-height: 1.7; margin-top: 4px; }
+  .s-body { display: flex; flex-direction: column; gap: 32px; }
 
-  /* ─── CLOSER ─── */
-  .closer { padding: 120px 0 64px; border-top: 1px solid var(--rule); }
-  .closer .say {
-    font-family: var(--italic); font-style: italic;
-    font-size: clamp(48px, 7vw, 120px); line-height: 0.98;
-    letter-spacing: -0.035em; color: var(--fg);
-    margin: 0 0 24px; max-width: 16ch; text-wrap: balance;
+  .summary p {
+    font-family: var(--italic);
+    font-size: clamp(19px, 1.8vw, 24px);
+    line-height: 1.45; color: var(--fg-2);
+    margin: 0 0 20px; max-width: 62ch;
   }
-  .closer .say em { color: var(--accent); font-style: italic; }
-  .closer .cta {
-    display: inline-flex; align-items: center; gap: 12px;
-    margin-top: 32px; padding: 16px 22px;
-    border: 1px solid var(--fg); border-radius: 999px;
-    font-family: var(--mono); font-size: 13px;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    transition: background .2s, color .2s, border-color .2s;
+  .summary p:last-child { margin-bottom: 0; }
+  .summary p em { color: var(--accent); font-style: italic; }
+  .summary p strong { color: var(--fg); font-style: normal; font-family: var(--sans); font-weight: 600; font-size: 0.85em; }
+
+  .caps {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
   }
-  .closer .cta:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  .closer .arrow { display: inline-block; transition: transform .2s; }
-  .closer .cta:hover .arrow { transform: translateX(4px); }
+  .cap { background: var(--bg-soft); padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .cap-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+  .cap-name { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; color: var(--fg); }
+  .cap-num { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; }
+  .cap p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--fg-2); }
+  .cap p strong { color: var(--fg); font-weight: 600; }
+
+  .job { padding: 28px 0; border-top: 1px solid var(--rule-2); }
+  .job:first-child { border-top: 0; padding-top: 0; }
+  .job-head { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: baseline; margin-bottom: 6px; }
+  .job-title { font-family: var(--sans); font-weight: 700; font-size: clamp(22px, 2vw, 30px); line-height: 1.1; letter-spacing: -0.03em; margin: 0; }
+  .job-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--fg-2); }
+  .job-years { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--accent); white-space: nowrap; }
+  .job-org { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 14px; }
+  .job-body { font-size: 14.5px; line-height: 1.65; color: var(--fg-2); max-width: 66ch; }
+
+  .work-intro { font-family: var(--italic); font-style: italic; font-size: 18px; line-height: 1.5; color: var(--fg-3); margin: 0 0 8px; }
+  .work-cta {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 20px 24px; margin-bottom: 4px;
+    border: 1px solid var(--rule); border-radius: 6px; background: var(--bg-soft);
+    transition: border-color .2s, background .2s;
+  }
+  .work-cta:hover { border-color: var(--accent); background: var(--bg); }
+  .work-cta .cta-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .work-cta .cta-title { font-family: var(--sans); font-weight: 600; font-size: 20px; letter-spacing: -0.02em; color: var(--fg); }
+  .work-cta .cta-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .work-cta .arrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-3); }
+  .works {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .work { background: var(--bg-soft); padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; transition: background .2s; }
+  .work:hover { background: #181614; }
+  .work-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .work-name { font-family: var(--sans); font-weight: 700; font-size: 20px; letter-spacing: -0.025em; margin: 0; }
+  .work-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+  .work p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--fg-2); }
+  .work .line { font-family: var(--italic); font-style: italic; font-size: 15px; color: var(--fg); }
+
+  .tri { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+  .tri-item { display: flex; flex-direction: column; gap: 10px; }
+  .tri-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); }
+  .tri-value { font-family: var(--sans); font-weight: 700; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.2; letter-spacing: -0.025em; }
+  .tri-value .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--fg-2); }
+  .tri-note { font-size: 13.5px; color: var(--fg-3); line-height: 1.5; }
 
   .foot {
-    padding: 20px 0 40px;
-    border-top: 1px solid var(--rule);
+    padding: 20px 0 48px; border-top: 1px solid var(--rule);
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
     font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--fg-3);
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
   }
   .foot .center { text-align: center; }
   .foot .right { text-align: right; }
 
   @media print {
-    @page { size: Letter; margin: 0.45in; }
-    :root { --bg:#fff; --fg:#0f0f0e; --fg-2:#3b3b38; --fg-3:#7a7771; --rule:#d9d6cd; --rule-2:#e8e5dc; --bg-soft:#fafaf7; }
+    @page { size: Letter; margin: 0.5in; }
+    :root { --bg:#fff; --bg-soft:#f8f8f6; --fg:#0f0f0e; --fg-2:#3b3b38; --fg-3:#7a7771; --rule:#d9d6cd; --rule-2:#e8e5dc; --accent:#c94b18; }
     html, body { background: #fff; color: #0f0f0e; }
     .rail { display: none !important; }
-    .ad:hover img { transform: none; filter: saturate(1); }
-    .campaign, .pull, .hl-tile, .verb-col { break-inside: avoid; }
-    section { padding: 28px 0 12px; }
+    .hero { padding: 32px 0 48px; }
+    .section, .job, .cap, .work { break-inside: avoid; }
   }
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
-    .rail { padding: 14px 20px; grid-template-columns: 1fr; }
-    .rail .center, .rail .right { display: none; }
+    .rail { padding: 14px 20px; grid-template-columns: 1fr auto; }
+    .rail .right { display: none; }
+    .rail nav { gap: 16px; }
     .hero { padding: 110px 0 48px; }
     .hero-sub { grid-template-columns: 1fr; gap: 28px; }
-    .campaign { grid-template-columns: 1fr; gap: 28px; }
-    .c-meta { position: static; }
-    .ad-grid.g-3, .ad-grid.g-featured { grid-template-columns: 1fr 1fr; }
-    .ad-grid.g-2 { grid-template-columns: 1fr; }
-    .hl-grid, .verbs { grid-template-columns: 1fr; }
-    .pull { padding: 32px 24px 28px; }
+    .section { grid-template-columns: 1fr; gap: 28px; }
+    .s-head { position: static; }
+    .caps, .works, .tri { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- rail -->
 <header class="rail">
-  <div class="left"><a href="index.html" style="color:var(--fg);font-weight:500;letter-spacing:0.14em;">Adam R. Cagle</a></div>
-  <nav style="display:flex;gap:28px;justify-content:center;">
-    <a href="index.html" style="color:var(--accent);letter-spacing:0.1em;">Campaigns</a>
-    <a href="Studio.html" style="color:var(--fg-3);letter-spacing:0.1em;">Studio</a>
-    <a href="Books.html" style="color:var(--fg-3);letter-spacing:0.1em;">Books</a>
-    <a href="Resume.html" style="color:var(--fg-3);letter-spacing:0.1em;">Résumé</a>
+  <div class="left"><a href="index.html" class="brand">Adam R. Cagle</a></div>
+  <nav>
+    <a href="index.html" class="active">Résumé</a>
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Books.html">Books</a>
+    <!-- <a href="Studio.html">Studio</a> -->
   </nav>
   <div class="right" style="display:flex;align-items:center;justify-content:flex-end;gap:20px;">
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"><span class="toggle-icon">◐</span><span class="toggle-pill"></span></button>
@@ -416,904 +223,205 @@
 
 <div class="page">
 
-  <!-- HERO -->
-  <section class="hero" style="border-top: 0;">
+  <div class="hero">
     <div class="hero-kicker">
       <span class="dash"></span>
       <span class="accent">//</span>
-      <span>Campaigns</span>
+      <span>Résumé</span>
       <span>·</span>
-      <span>Copy</span>
+      <span>2026</span>
       <span>·</span>
-      <span>Creative Direction</span>
+      <span>Bend, OR</span>
     </div>
-    <h1 class="hero-name">Words that<br>move<br><span class="it">products<span class="dot">.</span></span></h1>
+    <h1 class="hero-name">Adam R<span style="color:var(--accent)">.</span><br>Cagle</h1>
+    <img src="neonx.png" alt="NeonX" style="display:block;width:520px;max-width:70%;height:auto;margin:20px 0 -20px;opacity:0.9;">
     <div class="hero-sub">
       <div class="hero-role">
-        Three brands, three audiences, three registers: guitars on the <em>open road</em>, a rock-and-roll hideaway above the Strip, and a network card for gamers who count milliseconds.
+        Creative Director &amp; Lead Copywriter. Brands, Strategy, Pitches, Launches, and production<br><em>AI Agents</em>.
+      </div>
+      <div class="hero-meta">
+        <span><span class="k">Based</span><span>Bend, Oregon</span></span>
+        <span><span class="k">Phone</span><span>562.290.2689</span></span>
+        <a href="mailto:adam@agency689.com"><span class="k">Email</span><span>adam@agency689.com</span></a>
+        <a href="https://agency689.com"><span class="k">Studio</span><span>agency689.com</span></a>
+        <a href="https://agentic689.pages.dev"><span class="k">Agents</span><span>agentic689.pages.dev</span></a>
       </div>
     </div>
-  </section>
-
-  <!-- ═════════════ 01 — TRAVELER GUITAR ═════════════ -->
-  <section id="traveler">
-    <div class="sect-label">
-      <span class="num">// 01</span><span>Traveler Guitar</span><span>·</span><span>Campaign</span>
-    </div>
-    <h2 class="sect-head">The world's most <span class="it">adventurous</span> guitars.</h2>
-    <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg-3);margin-top:10px;">// Their registered trademark · Written by Adam R. Cagle</div>
-
-    <div class="campaign">
-      <aside class="c-meta">
-        <span class="num">// Campaign</span>
-        <h3 class="client">Traveler <span class="it">Guitar</span></h3>
-        <p class="context">
-          A campaign system built around a promise: a Traveler goes where a regular guitar can't. One tagline, one visual grammar, seven executions spanning subways, storm fronts, jungles, jetstreams, and the open road.
-        </p>
-        <div class="tags">
-          <span>Concept</span><span>Copy</span><span>Art Direction</span><span>Print</span><span>OOH</span><span>Digital</span>
-        </div>
-      </aside>
-
-      <div class="c-body">
-
-        <!-- hero ad full-width -->
-        <div class="ad-grid g-1">
-          <div class="ad" style="aspect-ratio: 4 / 3;" data-gallery="traveler" data-index="0">
-            <img src="ads/traveler-road.webp" alt="The Road — Escape Mark III Mahogany">
-            <div class="overlay"><div class="overlay-inner"><span class="hl">The Road.</span><span>Escape Mk III · 25 Years</span></div></div>
-          </div>
-        </div>
-
-        <!-- body copy pullout -->
-        <div class="pull">
-          <span class="pull-format">The Body Copy · <em>The Road</em></span>
-          <p class="pull-line">Willie couldn't wait to get back on it. Roger was the king of it. And Sheryl found it <em>winding</em> everyday.</p>
-          <div class="pull-body">
-            <p>Musicians have been traveling the open road since the days when bards heralded fair maidens in taverns of old. For 25 years Traveler Guitar has been making instruments that fit in tiny spaces, play with giant sound, and let you practice, play, or record wherever the road takes you.</p>
-          </div>
-          <div class="pull-sig">
-            <span>Full-Page Print · Sweetwater Co-op</span>
-          </div>
-        </div>
-
-        <!-- remaining six ads in 3x2 -->
-        <div class="ad-grid g-3">
-          <div class="ad" data-gallery="traveler" data-index="1"><img src="ads/traveler-sonic-bloom.webp" alt="Sonic Bloom"><div class="overlay"><div class="overlay-inner"><span class="hl">Sonic Bloom.</span><span>Forest</span></div></div></div>
-          <div class="ad" data-gallery="traveler" data-index="2"><img src="ads/traveler-jungle.webp" alt="Hey Jungle, Welcome to Me."><div class="overlay"><div class="overlay-inner"><span class="hl">Hey Jungle, Welcome to Me.</span><span>Vaibrant</span></div></div></div>
-          <div class="ad" data-gallery="traveler" data-index="3"><img src="ads/traveler-greatness.jpg" alt="Next Stop, Greatness."><div class="overlay"><div class="overlay-inner"><span class="hl">Next Stop, Greatness.</span><span>Transit</span></div></div></div>
-          <div class="ad" data-gallery="traveler" data-index="4"><img src="ads/traveler-force.webp" alt="A Force of Nature."><div class="overlay"><div class="overlay-inner"><span class="hl">A Force of Nature.</span><span>Storm</span></div></div></div>
-          <div class="ad" data-gallery="traveler" data-index="5"><img src="ads/traveler-flying-solo.webp" alt="Flying Solo."><div class="overlay"><div class="overlay-inner"><span class="hl">Flying Solo.</span><span>Cockpit</span></div></div></div>
-          <div class="ad" data-gallery="traveler" data-index="6"><img src="ads/traveler-endless-strummer.webp" alt="Endless Strummer."><div class="overlay"><div class="overlay-inner"><span class="hl">Endless Strummer.</span><span>Surf</span></div></div></div>
-        </div>
-
-        <!-- headline index -->
-        <div class="hl-grid">
-          <div class="hl-tile">
-            <div class="meta"><span class="num">01</span><span>Rainforest</span></div>
-            <div class="line">Sonic Bloom.</div>
-            <div class="attr"><span>Redlands</span><span>Concert</span></div>
-          </div>
-          <div class="hl-tile">
-            <div class="meta"><span class="num">02</span><span>Tropical</span></div>
-            <div class="line">Hey Jungle, Welcome to Me.</div>
-            <div class="attr"><span>Vaibrant</span><span>Electric</span></div>
-          </div>
-          <div class="hl-tile">
-            <div class="meta"><span class="num">03</span><span>Subway</span></div>
-            <div class="line">Next Stop, Greatness.</div>
-            <div class="attr"><span>Ultra-Light</span><span>Electric</span></div>
-          </div>
-          <div class="hl-tile">
-            <div class="meta"><span class="num">04</span><span>Tempest</span></div>
-            <div class="line">A Force of Nature.</div>
-            <div class="attr"><span>Vaibrant</span><span>Teal Burst</span></div>
-          </div>
-          <div class="hl-tile">
-            <div class="meta"><span class="num">05</span><span>Cockpit</span></div>
-            <div class="line">Flying Solo.</div>
-            <div class="attr"><span>Ultra-Light</span><span>·</span></div>
-          </div>
-          <div class="hl-tile">
-            <div class="meta"><span class="num">06</span><span>Surf</span></div>
-            <div class="line">Endless Strummer.</div>
-            <div class="attr"><span>Redlands</span><span>Mini</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═════════════ 02 — SUNSET MARQUIS ═════════════ -->
-  <style>
-    /* movement label */
-    .sm-mvmt {
-      display: flex; align-items: baseline; gap: 16px;
-      padding: 16px 0 4px;
-      font-family: var(--mono); font-size: 10.5px;
-      letter-spacing: 0.22em; text-transform: uppercase;
-    }
-    .sm-mvmt:first-child { padding-top: 0; }
-    .sm-mvmt .roman { color: var(--accent); font-weight: 500; }
-    .sm-mvmt .rule { flex: 1; height: 1px; background: var(--rule); }
-    .sm-mvmt .label { color: var(--fg-2); }
-
-    /* image-pull pair */
-    .sm-pair {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 28px; align-items: stretch;
-    }
-    .sm-pair.reverse > .ad { order: 2; }
-    .sm-pair.apex { grid-template-columns: 1.05fr 0.95fr; gap: 36px; }
-
-    .sm-pair > .pull {
-      margin: 0;
-      display: flex; flex-direction: column;
-      padding: 44px 40px 36px;
-    }
-    .sm-pair > .pull .pull-line {
-      font-size: clamp(34px, 4vw, 54px);
-      max-width: none;
-      margin: 0 0 22px;
-    }
-    .sm-pair.apex > .pull .pull-line {
-      font-size: clamp(40px, 4.8vw, 64px);
-    }
-    .sm-pair > .pull .pull-body {
-      font-size: 15.5px; line-height: 1.6;
-      max-width: none;
-    }
-    .sm-pair > .pull .pull-sig { margin-top: auto; }
-
-    /* sub-brand architecture panel */
-    .sm-arch {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1px; background: var(--rule);
-      border: 1px solid var(--rule); border-radius: 6px;
-      overflow: hidden;
-    }
-    .sm-arch-cell {
-      background: var(--bg-soft);
-      padding: 44px 38px 38px;
-      display: flex; flex-direction: column; gap: 12px;
-      transition: background .25s;
-    }
-    .sm-arch-cell:hover { background: #181614; }
-    .sm-arch-cell .num {
-      font-family: var(--mono); font-size: 10.5px;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--accent);
-    }
-    .sm-arch-cell .name {
-      font-family: var(--sans); font-weight: 700;
-      font-size: clamp(26px, 2.8vw, 40px);
-      letter-spacing: -0.03em; line-height: 1;
-      margin: 2px 0 0;
-    }
-    .sm-arch-cell .name .it {
-      font-family: var(--italic); font-style: italic;
-      font-weight: 400; color: var(--accent);
-    }
-    .sm-arch-cell .line {
-      font-family: var(--italic); font-style: italic;
-      font-size: clamp(24px, 2.6vw, 36px);
-      line-height: 1.12; letter-spacing: -0.015em;
-      margin: 8px 0 6px; color: var(--fg);
-      text-wrap: balance;
-    }
-    .sm-arch-cell .line em { color: var(--accent); font-style: italic; }
-    .sm-arch-cell .body {
-      font-size: 14.5px; line-height: 1.65; color: var(--fg-2);
-      padding-top: 14px; border-top: 1px solid var(--rule);
-      margin: 0;
-    }
-    .sm-arch-cell .sig {
-      margin-top: auto; padding-top: 22px;
-      font-family: var(--mono); font-size: 10.5px;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--fg-3);
-      display: flex; justify-content: space-between; gap: 12px;
-    }
-
-    /* live site tile */
-    .sm-site {
-      display: block; text-decoration: none;
-      cursor: pointer;
-    }
-    .sm-site img { transition: transform .8s ease, filter .3s ease; }
-    .sm-site:hover img { filter: brightness(1.05); }
-
-    @media (max-width: 960px) {
-      .sm-pair, .sm-pair.apex { grid-template-columns: 1fr; gap: 14px; }
-      .sm-pair.reverse > .ad { order: 0; }
-      .sm-pair > .pull { padding: 36px 28px 28px; }
-      .sm-arch { grid-template-columns: 1fr; }
-    }
-  </style>
-
-  <section id="sunset">
-    <div class="sect-label">
-      <span class="num">// 02</span><span>Sunset Marquis</span><span>·</span><span>Brand System</span>
-    </div>
-    <h2 class="sect-head">A <span class="it">hideaway</span> with a Grammy on the nightstand.</h2>
-
-    <div class="campaign">
-      <aside class="c-meta">
-        <span class="num">// Brand System</span>
-        <h3 class="client">Sunset <span class="it">Marquis</span></h3>
-        <p class="context">
-          West Hollywood's rock-and-roll hotel. Campaigns, web, print, OOH, email, in-room. Plus the sub-brands the property runs underneath: Cavatina. LIVE@SunsetMarquis. Bar 1200. The Spa. The Morrison Gallery. Home away from home for rock stars, road dogs, and the occasional free radical.
-        </p>
-        <div class="tags">
-          <span>Concept</span><span>Copy System</span><span>Brand Voice</span><span>Art Direction</span><span>Naming</span><span>Editorial</span>
-        </div>
-      </aside>
-
-      <div class="c-body">
-
-        <!-- ─── MOVEMENT I · THE APEX ─── -->
-        <div class="sm-mvmt">
-          <span class="roman">I</span>
-          <span class="rule"></span>
-          <span class="label">The Apex · Property Tagline</span>
-        </div>
-
-        <div class="sm-pair apex">
-          <div class="ad" data-gallery="sunset" data-index="0">
-            <img src="ads/sunset-legendary-nights.webp" alt="Legendary Nights Begin at Sunset.">
-            <div class="overlay"><div class="overlay-inner"><span class="hl">Legendary Nights Begin at Sunset.</span></div></div>
-          </div>
-          <div class="pull">
-            <span class="pull-format">The Tagline · <em>Rock & Roll</em></span>
-            <p class="pull-line"><em>Legendary</em> nights begin at Sunset.</p>
-            <div class="pull-body">
-              <p>Ten years on the door, the print, the email, the sign-off. The line the rest of the brand ladders up to.</p>
-            </div>
-            <div class="pull-sig">
-              <span>Full-Page Print</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─── MOVEMENT II · THE RANGE ─── -->
-        <div class="sm-mvmt">
-          <span class="roman">II</span>
-          <span class="rule"></span>
-          <span class="label">The Range · Print Campaigns</span>
-        </div>
-
-        <!-- 02a · Yes That Beautiful (image left) -->
-        <div class="sm-pair">
-          <div class="ad" data-gallery="sunset" data-index="1">
-            <img src="ads/sunset-yes-that-beautiful.jpg" alt="Yes, that beautiful.">
-            <div class="overlay"><div class="overlay-inner"><span class="hl">Yes, that beautiful.</span></div></div>
-          </div>
-          <div class="pull">
-            <span class="pull-format">The Headline · <em>Gallery</em></span>
-            <p class="pull-line">Yes, <em>that</em> beautiful.</p>
-            <div class="pull-body">
-              <p>Two words and a yes. The launch ad for the renovated suites: a hotel room framed like a museum painting, witnessed by a man in a bowler hat. Room tours, annotated by Magritte.</p>
-            </div>
-            <div class="pull-sig">
-              <span>Full-Page Print</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 02b · ACM (image right · zigzag) -->
-        <div class="sm-pair reverse">
-          <div class="ad" data-gallery="sunset" data-index="2">
-            <img src="ads/ACM-Awards-2025.jpg" alt="Sure, it's California, but it's the southern part.">
-            <div class="overlay"><div class="overlay-inner"><span class="hl">Sure, it's California.</span><span>ACM</span></div></div>
-          </div>
-          <div class="pull">
-            <span class="pull-format">The Wink · <em>ACM Awards Guide</em></span>
-            <p class="pull-line">Sure, it's California, but it's the <em>southern</em> part.</p>
-            <div class="pull-body">
-              <p>The pun does the work. California reads as west coast until you remember Southern California is a real place, which the country music reader already knew.</p>
-            </div>
-            <div class="pull-sig">
-              <span>Full-Page Print · ACM</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 02c · Brochure (image left) -->
-        <div class="sm-pair">
-          <div class="ad" data-gallery="sunset" data-index="3">
-            <img src="ads/SMBrochure.jpg" alt="Unique. Even by Hollywood standards.">
-            <div class="overlay"><div class="overlay-inner"><span class="hl">Unique. Even by Hollywood standards.</span><span>GDS One-Sheet</span></div></div>
-          </div>
-          <div class="pull">
-            <span class="pull-format">The B2B · <em>GDS One-Sheet</em></span>
-            <p class="pull-line">Unique. Even by <em>Hollywood</em> standards.<sup style="font-size:0.4em;vertical-align:super;letter-spacing:0;">®</sup></p>
-            <div class="pull-body">
-              <p>The format where most hotel copy goes to die under bullet points. The headline carries the brand. The body keeps Cavatina, the Spa, and Bar 1200 sounding like themselves, not like amenities on a checklist.</p>
-            </div>
-            <div class="pull-sig">
-              <span>Trade Sell Sheet</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─── MOVEMENT III · THE ARCHITECTURE ─── -->
-        <div class="sm-mvmt">
-          <span class="roman">III</span>
-          <span class="rule"></span>
-          <span class="label">The Architecture · Sub-Brands</span>
-        </div>
-
-        <div class="sm-arch">
-          <div class="sm-arch-cell">
-            <span class="num">// Restaurant</span>
-            <h4 class="name">Cavatina</h4>
-            <p class="line">Beauty in <em>simplicity.</em></p>
-            <p class="body">The restaurant in its own register. Chef Luis Morales. Garden-set. Californian with an Italian twist. Menus, web, in-room dining, and private events written so the food sounds the way it tastes. The restaurant speaks for itself, not through the hotel's mouth.</p>
-            <div class="sig">
-              <span>Sub-Brand</span>
-            </div>
-          </div>
-          <div class="sm-arch-cell">
-            <span class="num">// Concert Series</span>
-            <h4 class="name">LIVE@<span class="it">SunsetMarquis</span></h4>
-            <p class="line">For those about to rock, we put you on <em>stage.</em></p>
-            <p class="body">Named, branded, and written from the first show. A concert series staged at the hotel. Year one headlined Gary Clark Jr., the season before he won his first Grammys.</p>
-            <div class="sig">
-              <span>Sub-Brand</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- ─── MOVEMENT IV · THE BRAND AT WORK ─── -->
-        <div class="sm-mvmt">
-          <span class="roman">IV</span>
-          <span class="rule"></span>
-          <span class="label">The Brand at Work · Live Site</span>
-        </div>
-
-        <a class="hf-cover-wrap sm-site" href="https://sunsetmarquis.com" target="_blank" rel="noopener">
-          <img src="ads/Sunset-Marquis.jpg" alt="SunsetMarquis.com Live Site">
-          <div class="overlay"><div class="overlay-inner"><span class="hl">Visit sunsetmarquis.com →</span><span>The Brand Operating in the Wild</span></div></div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═════════════ 03 — KILLER NIC ═════════════ -->
-  <section id="killer">
-    <div class="sect-label">
-      <span class="num">// 03</span><span>Killer NIC</span><span>·</span><span>Triptych</span>
-    </div>
-    <h2 class="sect-head">Kill <span class="it">faster.</span></h2>
-
-    <div class="campaign">
-      <aside class="c-meta">
-        <span class="num">// Triptych</span>
-        <h3 class="client">Killer <span class="it">NIC</span></h3>
-        <p class="context">
-          The world's first network interface card built for online gamers. Three ads, three character classes, three color-coded palettes (sniper green, mage red, warrior purple), each escalating a verb stack into the same two-word punchline.
-        </p>
-        <div class="tags">
-          <span>Concept</span><span>Copy</span><span>Art Direction</span><span>Gaming</span><span>Enthusiast Press</span>
-        </div>
-      </aside>
-
-      <div class="c-body">
-
-        <!-- 3-up triptych -->
-        <div class="ad-grid g-3">
-          <div class="ad" data-gallery="killer" data-index="0"><img src="ads/killer-sniper.webp?v=2026" alt="Killer NIC — Sniper"><div class="overlay"><div class="overlay-inner"><span class="hl">Warrior.</span><span>K1</span></div></div></div>
-          <div class="ad" data-gallery="killer" data-index="1"><img src="ads/killer-mage.webp?v=2026" alt="Killer NIC — Mage"><div class="overlay"><div class="overlay-inner"><span class="hl">Mage.</span><span>K1</span></div></div></div>
-          <div class="ad" data-gallery="killer" data-index="2"><img src="ads/killer-warrior.webp?v=2026" alt="Killer NIC — Warrior"><div class="overlay"><div class="overlay-inner"><span class="hl">Sniper.</span><span>K1</span></div></div></div>
-        </div>
-
-        <!-- verb stacks -->
-        <div class="verbs">
-          <div class="verb-col">
-            <div class="class"><span>Warrior</span><span class="n">01</span></div>
-            <div class="v">Charge</div>
-            <div class="v">Overpower</div>
-            <div class="v">Slam</div>
-            <div class="v">Rend</div>
-            <div class="v">Execute</div>
-            <div class="v">Cleave</div>
-            <div class="kill">Kill <span class="it">Faster.</span></div>
-          </div>
-          <div class="verb-col">
-            <div class="class"><span>Mage</span><span class="n">02</span></div>
-            <div class="v">Scorch</div>
-            <div class="v">Frost</div>
-            <div class="v">Sheep</div>
-            <div class="v">Ignite</div>
-            <div class="v">Pyroblast</div>
-            <div class="v">Incinerate</div>
-            <div class="kill">Kill <span class="it">Faster.</span></div>
-          </div>
-          <div class="verb-col">
-            <div class="class"><span>Sniper</span><span class="n">03</span></div>
-            <div class="v">Spot</div>
-            <div class="v">Follow</div>
-            <div class="v">Target</div>
-            <div class="v">Crouch</div>
-            <div class="v">Zoom</div>
-            <div class="v">Aim</div>
-            <div class="kill">Kill <span class="it">Faster.</span></div>
-          </div>
-        </div>
-
-        <!-- body pull -->
-        <div class="pull">
-          <span class="pull-format">The Body Line</span>
-          <p class="pull-line" style="font-size: clamp(28px, 3.6vw, 52px);">The only network interface cards built for online gamers. Less lag. <em>More frag.</em></p>
-          <div class="pull-sig">
-            <span>Full-Page Print · Enthusiast Press · $159</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═════════════ 04 — HOTEL FIGUEROA ═════════════ -->
-  <style>
-    .hf-cover-wrap {
-      width: 100%; background: #0a0a09;
-      border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; position: relative;
-    }
-    .hf-cover-wrap img {
-      max-height: 680px; width: 100%; object-fit: contain; display: block;
-    }
-    .hf-cover-wrap .overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 50%, rgba(15,15,14,0.88) 100%);
-      display: flex; align-items: flex-end; padding: 20px 22px;
-      opacity: 0; transition: opacity .25s;
-    }
-    .hf-cover-wrap:hover .overlay { opacity: 1; }
-    .hf-cover-wrap .overlay-inner {
-      width: 100%; display: flex; justify-content: space-between; align-items: baseline;
-      gap: 10px; font-family: var(--mono);
-      font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-2);
-    }
-    .hf-cover-wrap .overlay-inner .hl {
-      font-family: var(--italic); font-style: italic;
-      font-size: 17px; letter-spacing: -0.01em; text-transform: none; color: var(--accent);
-    }
-  </style>
-
-  <section id="figueroa">
-    <div class="sect-label">
-      <span class="num">// 04</span><span>Hotel Figueroa</span><span>·</span><span>Brand Book · DTLA Relaunch</span>
-    </div>
-    <h2 class="sect-head">To relate to artists, <span class="it">we must be artists.</span></h2>
-
-    <div class="campaign">
-      <aside class="c-meta">
-        <span class="num">// Brand Book</span>
-        <h3 class="client">Hotel <span class="it">Figueroa</span></h3>
-        <p class="context">
-          Full brand identity and editorial system for the 1925 DTLA icon's reopening as a luxury hotel for creative minds. Six brand pillars, mission, promise, vision. Signature Logo system in two-color, metallic, and red variants. Twelve Pantone palettes, Din OT and Xtreem typography, the Blue Fig Leaf graphic mark, and a three-tier imagery system that sets how every shoot gets art-directed. Complete Editorial Voice guide written end to end. Full collateral across stationery, merchandise, trade show, email, and web. Agency689 retained as governance authority through launch.
-        </p>
-        <div class="tags">
-          <span>Brand Platform</span><span>Identity System</span><span>Voice Guide</span><span>Design System</span><span>Collateral</span>
-        </div>
-      </aside>
-
-      <div class="c-body">
-
-        <!-- cover hero -->
-        <div class="hf-cover-wrap" id="hf-cover">
-          <img src="HF/HotelFigueroa%2062.jpeg" alt="Hotel Figueroa Brand Book — Cover">
-          <div class="overlay"><div class="overlay-inner"><span class="hl">Open Brand Book →</span><span>61 Pages · Agency689 · DTLA</span></div></div>
-        </div>
-
-        <!-- pull -->
-        <div class="pull">
-          <span class="pull-format">The Brand Thesis · <em>Platform</em></span>
-          <p class="pull-line"><em>To relate to artists,</em> we must be artists.</p>
-          <div class="pull-body">
-            <p>The single sentence that holds the entire brand. Written as the mission foundation for a 1925 DTLA hotel reopening as a home for the creative class. Six brand pillars, a complete voice guide, and sixty-one pages of identity work flow from this one line.</p>
-          </div>
-          <div class="pull-sig">
-            <span>Brand Platform · Agency689</span>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CLINK HOSTELS -->
-  <section id="clink">
-    <div class="sect-label">
-      <span class="num">// 05</span><span>Clink Hostels</span><span>·</span><span>Brand System</span>
-    </div>
-    <h2 class="sect-head">Friends, <span class="it">not miles.</span></h2>
-
-    <div class="campaign">
-      <aside class="c-meta">
-        <span class="num">// Brand System</span>
-        <h3 class="client">Clink <span class="it">Hostels</span></h3>
-        <p class="context">
-          Full website copy and messaging architecture for an international hostel brand with properties in London, Amsterdam, Dublin, and beyond. Built the brand voice from the ground up, positioning Clink as the hostel for people who travel to connect, not just to arrive. Homepage, property pages, groups, offers, and city guides, all written in a single voice that's warm, irreverent, and quietly aspirational. The tagline: a line that redefines how a hostel earns loyalty.
-        </p>
-        <div class="tags">
-          <span>Strategy</span><span>Brand Architecture</span><span>Copy System</span><span>Creative Direction</span><span>Naming</span>
-        </div>
-      </aside>
-
-      <div class="c-body">
-
-        <!-- cover hero -->
-        <div class="hf-cover-wrap" id="clink-cover">
-          <img src="CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg" alt="Clink Hostels — Amsterdam">
-          <div class="overlay"><div class="overlay-inner"><span class="hl">View Site Screens →</span><span>9 Screens · Agency689</span></div></div>
-        </div>
-
-        <!-- pull -->
-        <div class="pull">
-          <span class="pull-format">The Brand Tagline · <em>Copy</em></span>
-          <p class="pull-line"><em>Measure your journey</em> in friends, not miles.</p>
-          <div class="pull-body">
-            <p>The line that reframes what a hostel is for. Not a bed, not a budget — a place where the people you meet become the reason you went. Written as the core of a full brand voice system spanning homepage, property pages, groups, offers, and city guides across four European cities.</p>
-          </div>
-          <div class="pull-sig">
-            <span>Brand Copy · Agency689</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CLOSER -->
-  <section class="closer">
-    <p class="say">More where <em>this</em><br>came from.</p>
-    <a class="cta" href="mailto:adam@agency689.com">
-      Let's work <span class="arrow">→</span>
-    </a>
-  </section>
-
-  <div class="foot">
-    <div>© Agency 689 · Adam R. Cagle</div>
-    <div class="center">Selected Work v1.0</div>
-    <div class="right">Set in Geist &amp; Instrument Serif</div>
   </div>
 
-</div>
-
-<!-- BRAND BOOK VIEWER -->
-<div id="hf-viewer" aria-hidden="true">
-  <button class="hf-btn hf-close-btn" aria-label="Close">✕</button>
-  <button class="hf-btn hf-nav hf-prev" aria-label="Previous">←</button>
-  <button class="hf-btn hf-nav hf-next" aria-label="Next">→</button>
-  <div class="hf-spread-wrap">
-    <div id="hf-spread"></div>
-    <div class="hf-footer">
-      <span id="hf-counter"></span>
-      <span class="hf-hint">← → navigate · esc close</span>
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 01</span>
+      <h2 class="s-title">Summary<span class="it">.</span></h2>
+      <div class="s-kicker">Twenty-five years.<br>One medium<br>taken seriously.</div>
+    </div>
+    <div class="s-body">
+      <div class="summary">
+        <p>Twenty-five years leading creative for product and brand launches. Co-founder, Creative Director, and Lead Copywriter at <span style="color:var(--accent)">Agency689</span>, where every launch runs through me end to end: concept, copy, campaign, video, packaging, trade show, web, and social. Clients include Xbox, AMD, Microsoft, Sunset Marquis, Hotel Figueroa, Traveler Guitar, Oxford Collection, CLINK Hostels, FileKeepers, and Raleigh Studios. Clio, Ad Club, and Webby awards for copy.</p>
+        <p>Since 2024, sister studio <span style="color:var(--accent)">Agentic689</span> extends the same discipline into frontier AI. Seven production agents shipped on the Anthropic Claude API, sole author of every system prompt, persona, and SKILL.md across the suite. That technical depth is what lets me find the story in an AI product that goes past feature listing, and it has sharpened how fast and how well we ship the work at <span style="color:var(--accent)">Agency689</span>.</p>
+      </div>
     </div>
   </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 02</span>
+      <h2 class="s-title">Capabilities<span class="it">.</span></h2>
+      <div class="s-kicker">Four practice areas.<br>All shipping.</div>
+    </div>
+    <div class="s-body">
+      <div class="caps">
+        <div class="cap">
+          <div class="cap-head"><span class="cap-name">Creative Direction</span><span class="cap-num">/ a</span></div>
+          <p><strong>Brand development from zero: naming, positioning, voice, visual system, launch.</strong> Concept and campaign leadership across launches. Video writing and direction, including TV spots and launch films. Trade show and experiential. Packaging and product copy. Press, web, social, long-form. Launch decks, pitch decks, and speaker decks.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-head"><span class="cap-name">Copy Systems</span><span class="cap-num">/ b</span></div>
+          <p><strong>Voice architecture as a system, not a style.</strong> Tone and style guides, persona documents, governance rules that hold a brand's voice consistent across writers, channels, and AI agents. SKILL.md voice scaffolding for production use inside model workflows. Brand voices that scale without drifting.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-head"><span class="cap-name">Design Systems</span><span class="cap-num">/ c</span></div>
+          <p><strong>Brand books, style guides, component libraries, typography and color systems,</strong> templates that hold across teams and channels. SKILL.md design scaffolds that let AI tools produce on-brand output at speed. WCAG contrast auditing, responsive grids, SEO architecture.</p>
+        </div>
+        <div class="cap">
+          <div class="cap-head"><span class="cap-name">AI Systems</span><span class="cap-num">/ d</span></div>
+          <p><strong>Architect of production agents on the Anthropic Claude API.</strong> System prompt architecture, multi-turn agentic loops, persona scaffolding, SKILL.md documentation, hard-rule governance, tool-use patterns. Seven production agents shipped across stock intelligence, book marketing, music release strategy, and satellite terrain analysis. Working knowledge of Claude (Sonnet, Opus), GPT, Grok, DeepSeek, Llama, and local Ollama + LoRA.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 03</span>
+      <h2 class="s-title">Experience<span class="it">.</span></h2>
+      <div class="s-kicker">Twenty-eight years<br>across three studios.</div>
+    </div>
+    <div class="s-body">
+      <div class="job">
+        <div class="job-head">
+          <h3 class="job-title">Co-Creative Director &amp; <span class="it">Lead Copywriter</span></h3>
+          <span class="job-years">2001 — Present</span>
+        </div>
+        <div class="job-org">Agency689, Inc. · Co-Founder · Bend, OR · California</div>
+        <p class="job-body">Full-service identity and branding studio. Research-based naming, brand development, creative direction, identity design, and the content, packaging, and digital work that launches a brand into the world. Twenty-five years leading creative and copy on every engagement. Sixty-plus brands shipped, with deep benches in hospitality (Sunset Marquis as Agency of Record, Hotel Figueroa, CLINK Hostels, Oxford Collection, Hotel Nikko, Hotel Sax Chicago, Maison 140, Zaza Dallas, Le Montrose, House of Blues Hotel, Magnolia, Lexington), gaming and consumer tech (Xbox, AMD, Microsoft, Blizzard, Killer Network, Rivet Networks, ViewSonic, Traveler Guitar), studios and entertainment (Raleigh Studios, Manhattan Beach Studios, Orbital Virtual Studios, Red Touch Media), restaurants (Cavatina, Playa Rivera, ANZU, Josh Slocum's), wineries (Rosenthal Estates, Bianchi, Beverly Hills Vineyard), and conservation (Coastal Corridor Alliance). Wrote and designed the new-business pitch decks that built the roster.</p>
+      </div>
+      <div class="job">
+        <div class="job-head">
+          <h3 class="job-title">Founder &amp; <span class="it">AI Agent Architect</span></h3>
+          <span class="job-years">2024 — Present</span>
+        </div>
+        <div class="job-org">Agentic689 · Sister Studio to Agency689</div>
+        <p class="job-body">A studio built to develop deep working fluency with frontier AI by shipping production agents on the Claude API. The work is the research. I learn what these models can actually make by making them make it, against real objectives, with real outcomes on the line. Sole author of every system prompt, persona file, SKILL.md, and governance doc across seven shipped agents: two single-stock intelligence platforms (CRDO, VRT) with tiered hypotheses, regime detection, and drawdown protocols; a multi-asset anomaly correlation engine (COOK) with a steakhouse-themed pyramid UI; closed-loop book and music marketing systems (Book, Music); a Reddit persona builder with validated .md persona specs (Red); and AuScan, a Claude-Vision satellite prospecting tool that surfaced a 72% confidence gold hit in Harney County, Oregon. Documented the architecture in a 7,400-word whitepaper. The work has directly sharpened how fast and how well I produce deck design, infographics, and technical visuals. The design discipline the agents demand is the same design discipline that makes pitch work land.</p>
+      </div>
+      <div class="job">
+        <div class="job-head">
+          <h3 class="job-title">Creative Director &amp; <span class="it">Lead Copywriter, Interactive</span></h3>
+          <span class="job-years">1998 — 2001</span>
+        </div>
+        <div class="job-org">DGWB Advertising</div>
+        <p class="job-body">Led creative direction and copy inside DGWB's interactive practice during the first wave of agency digital. Wrote and led the new-business pitches. Managed copy and creative direction across accounts including IndyMac Bank, Toshiba Computers, Toshiba Copiers, Yamaha Music, Avery Dennison, Clarion, and Wienerschnitzel.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 04</span>
+      <h2 class="s-title">Selected <span class="it">Work</span></h2>
+      <div class="s-kicker">Launches, systems,<br>agents.<br>End-to-end ownership.</div>
+    </div>
+    <div class="s-body">
+      <p class="work-intro">A cross-section. Gaming hardware. Hospitality. Music instruments. Enterprise. Autonomous agents. Each one written, designed, and shipped.</p>
+      <a href="index.html" class="work-cta">
+        <div>
+          <div class="cta-label">See the Campaigns</div>
+          <div class="cta-title">Full print portfolio — <span class="it">Traveler, Sunset Marquis, Killer NIC</span></div>
+        </div>
+        <div class="arrow">Open →</div>
+      </a>
+      <div class="works">
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Killer Network</h3><span class="work-tag">Gaming · Launch · Exit</span></div>
+          <p>Built the brand from zero through Qualcomm acquisition in three years. Named the KILLER Network Interface Card, wrote the launch, designed the packaging, ran the trade show presence, produced the TV spots, and designed the heat sink on the card itself. End Lag Now protest campaign and the Blizzard World of Warcraft coin partnership, still collector-valued today.</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Sunset Marquis</h3><span class="work-tag">Hospitality · Agency of Record · 10+ Years</span></div>
+          <p>West Hollywood rock-and-roll hotel. Agency of Record on one of the most iconic boutique hotel brands in the world. Held the rock-and-roll soul of the property through a luxury repositioning, then extended the voice across Restaurant Cavatina, the Spa, Bar 1200, the LIVE@SunsetMarquis concert series, and the Sunset Marquis Motorcycle Club. Eighty-plus printed pieces, full property photography, and every ad the brand has run in a decade. Netty Award.</p>
+          <p class="line">"Legendary Nights Begin at Sunset."</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Traveler Guitar</h3><span class="work-tag">Music · Brand · 15+ Years</span></div>
+          <p>Seven product launches and five NAMM trade show booths across fifteen years: booth design, speaker decks, dealer presentations, product copy, print campaigns. "The World's Most Adventurous Guitars" is their registered trademark, written in the room.</p>
+          <p class="line">"The World's Most Adventurous Guitar."</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Xbox Elite Club</h3><span class="work-tag">Gaming · Membership Program · Strategy</span></div>
+          <p>Strategic membership program design for Microsoft's elite gamer tier. Authored the full ideation framework: membership benefits, hardware discount and early access structure, Elite merchandise platform, gamer identity and skills profiles, "Guns for Hire" mentor marketplace, education and training system, one-on-one coaching, Xbox Coaches concierge support, an annual LEET Week holiday launch, a Game of Legends mega-contest, Elite community governance, focus-group infrastructure, partnership strategy across Adidas, Nike, and ESPN, and the badge and achievement system that sits on top of all of it. A full product and brand program, not just a logo.</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">AMD</h3><span class="work-tag">Tech · Launch · Comic-Con</span></div>
+          <p>Comic-Con launch strategy and launch comic book. Referred in by the Killer Network team after the Qualcomm exit.</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">FileKeepers</h3><span class="work-tag">B2B · Brand</span></div>
+          <p>SoCal B2B records management brand, built and launched end to end.</p>
+          <p class="line">"Space. The File Frontier."</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Single Stock Intelligence</h3><span class="work-tag">Agent · Equities</span></div>
+          <p>Two production agents tracking Vertiv and Credo Technology. Autonomous daily loops score weighted hypotheses, detect market regime, size positions, and kill signals that fail their backtest gates.</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Book Agent</h3><span class="work-tag">Agent · Marketing</span></div>
+          <p>Closed-loop book marketing across Reddit, Instagram, Facebook, X, and TikTok with a human approval queue. Tracks real sales through the KDP API and learns which platforms actually convert.</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Goldfinger Agent</h3><span class="work-tag">Agent · Geospatial</span></div>
+          <p>React satellite terrain analysis. Trains Claude Vision on spectral and structural signatures of ten world-class gold deposits, then scores any region on a prospectivity grid. Surfaced a 72% hit in Oregon.</p>
+        </article>
+        <article class="work">
+          <div class="work-head"><h3 class="work-name">Agentic689 Site</h3><span class="work-tag">Site · Shipped by Agent</span></div>
+          <p>The studio's own website designed, written, coded, and shipped by one of the agents. Proof of thesis: the storefront is itself an honest sample of the work these systems produce.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 05</span>
+      <h2 class="s-title">Awards, Ed &amp; <span class="it">Board</span></h2>
+      <div class="s-kicker">The shelf.<br>The school.<br>The service.</div>
+    </div>
+    <div class="s-body">
+      <div class="tri">
+        <div class="tri-item">
+          <span class="tri-label">// Awards</span>
+          <div class="tri-value"><span class="it">Clio. Ad Club. Webby.</span></div>
+          <div class="tri-note">All for copywriting. Netty for the Sunset Marquis site.</div>
+        </div>
+        <div class="tri-item">
+          <span class="tri-label">// Education</span>
+          <div class="tri-value">Academy of Art,<br><span class="it">San Francisco.</span></div>
+          <div class="tri-note">Design and Art Direction.</div>
+        </div>
+        <div class="tri-item">
+          <span class="tri-label">// Board</span>
+          <div class="tri-value">Autism <span class="it">Research</span> Project.</div>
+          <div class="tri-note">Board member.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="left">// Set in Geist &amp; Instrument Serif</div>
+    <div class="center">— End of Document —</div>
+    <div class="right">Adam R. Cagle · 2026</div>
+  </footer>
+
 </div>
-<style>
-  #hf-viewer {
-    position: fixed; inset: 0; z-index: 300;
-    background: rgba(6,6,5,0.97); backdrop-filter: blur(20px);
-    display: none; align-items: center; justify-content: center;
-    flex-direction: column; padding: 56px 80px 56px;
-    opacity: 0; transition: opacity .2s;
-  }
-  #hf-viewer.open { display: flex; }
-  #hf-viewer.visible { opacity: 1; }
-  .hf-spread-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 20px;
-    width: 100%;
-  }
-  #hf-spread {
-    display: flex; gap: 3px; align-items: stretch; justify-content: center;
-    max-height: calc(100vh - 160px); width: 100%;
-    transition: opacity .15s ease;
-  }
-  #hf-spread.fading { opacity: 0; }
-  .hf-pg {
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden; background: #0d0d0c;
-  }
-  .hf-pg.solo { max-width: min(90vw, 1400px); }
-  .hf-pg.pair { flex: 1; min-width: 0; }
-  .hf-pg img {
-    display: block; max-width: 100%; max-height: calc(100vh - 160px);
-    object-fit: contain;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06);
-  }
-  .hf-spine { width: 2px; background: rgba(246,243,236,0.05); align-self: stretch; flex-shrink: 0; }
-  .hf-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    width: 100%; max-width: 1100px;
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.16em; text-transform: uppercase;
-  }
-  #hf-counter { color: var(--accent); }
-  .hf-hint { color: var(--fg-3); }
-  .hf-btn {
-    position: absolute; background: rgba(18,17,16,0.9);
-    border: 1px solid rgba(246,243,236,0.16); color: var(--fg);
-    width: 44px; height: 44px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 15px; cursor: pointer;
-    transition: background .2s, border-color .2s, color .2s, transform .2s; z-index: 2;
-  }
-  .hf-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  .hf-close-btn { top: 20px; right: 20px; }
-  .hf-prev { left: 20px; top: 50%; transform: translateY(-50%); }
-  .hf-next { right: 20px; top: 50%; transform: translateY(-50%); }
-  .hf-prev:hover { transform: translateY(-50%) translateX(-2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  .hf-next:hover { transform: translateY(-50%) translateX(2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  @media (max-width: 760px) {
-    #hf-viewer { padding: 56px 12px 48px; }
-    #hf-spread { flex-direction: column; align-items: center; gap: 4px; overflow-y: auto; }
-    .hf-pg.pair { max-width: 100%; width: 100%; }
-    .hf-spine { display: none; }
-    .hf-hint { display: none; }
-  }
-</style>
-
-<!-- LIGHTBOX -->
-<div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-  <button class="lb-close" aria-label="Close">✕</button>
-  <button class="lb-nav lb-prev" aria-label="Previous">←</button>
-  <button class="lb-nav lb-next" aria-label="Next">→</button>
-  <figure class="lb-figure">
-    <img class="lb-img" alt="">
-    <figcaption class="lb-cap">
-      <span class="lb-cap-l"></span>
-      <span class="lb-cap-r"></span>
-    </figcaption>
-  </figure>
-</div>
-
-<style>
-  #lightbox {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(10, 10, 9, 0.94);
-    backdrop-filter: blur(12px);
-    display: none;
-    align-items: center; justify-content: center;
-    padding: 48px 64px 80px;
-    opacity: 0; transition: opacity .2s ease;
-  }
-  #lightbox.open { display: flex; opacity: 1; }
-  #lightbox .lb-figure {
-    margin: 0; max-width: 100%; max-height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 16px;
-  }
-  #lightbox .lb-img {
-    max-width: 100%; max-height: calc(100vh - 180px);
-    object-fit: contain;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(246,243,236,0.08);
-    background: #141312;
-  }
-  #lightbox .lb-cap {
-    display: flex; justify-content: space-between; align-items: baseline;
-    gap: 24px; width: min(920px, 100%);
-    font-family: var(--mono); font-size: 12px;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--fg-2);
-  }
-  #lightbox .lb-cap-l { color: var(--accent); }
-  #lightbox button {
-    position: absolute;
-    background: rgba(20,19,18,0.85);
-    border: 1px solid rgba(246,243,236,0.18);
-    color: var(--fg);
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 16px;
-    cursor: pointer;
-    transition: background .2s, border-color .2s, color .2s, transform .2s;
-    z-index: 2;
-  }
-  #lightbox button:hover {
-    background: var(--accent); border-color: var(--accent); color: var(--bg);
-  }
-  #lightbox .lb-close { top: 20px; right: 20px; }
-  #lightbox .lb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
-  #lightbox .lb-next { right: 20px; top: 50%; transform: translateY(-50%); }
-  #lightbox .lb-prev:hover { transform: translateY(-50%) translateX(-2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  #lightbox .lb-next:hover { transform: translateY(-50%) translateX(2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  .ad { cursor: zoom-in; }
-  body.lb-open { overflow: hidden; }
-  @media (max-width: 600px) {
-    #lightbox { padding: 60px 12px 60px; }
-    #lightbox .lb-prev { left: 8px; }
-    #lightbox .lb-next { right: 8px; }
-  }
-</style>
-
-<script>
-(function() {
-  const galleries = {
-    traveler: [
-      { src: 'ads/traveler-road.webp',             hl: 'The Road.',                     meta: 'Escape Mk III · 25 Years' },
-      { src: 'ads/traveler-sonic-bloom.webp',      hl: 'Sonic Bloom.',                  meta: 'Redlands Concert · Forest' },
-      { src: 'ads/traveler-jungle.webp',           hl: 'Hey Jungle, Welcome to Me.',    meta: 'Vaibrant Electric · Tropical' },
-      { src: 'ads/traveler-greatness.jpg',         hl: 'Next Stop, Greatness.',         meta: 'Ultra-Light · Subway' },
-      { src: 'ads/traveler-force.webp',            hl: 'A Force of Nature.',            meta: 'Vaibrant Teal Burst · Tempest' },
-      { src: 'ads/traveler-flying-solo.webp',      hl: 'Flying Solo.',                  meta: 'Ultra-Light · Cockpit' },
-      { src: 'ads/traveler-endless-strummer.webp', hl: 'Endless Strummer.',             meta: 'Redlands Mini · Surf' },
-    ],
-    sunset: [
-      { src: 'ads/sunset-legendary-nights.webp',   hl: 'Legendary Nights Begin at Sunset.',                   meta: 'Sunset Marquis' },
-      { src: 'ads/sunset-yes-that-beautiful.jpg',  hl: 'Yes, that beautiful.',                                 meta: 'Sunset Marquis' },
-      { src: 'ads/ACM-Awards-2025.jpg',            hl: 'Sure, it\'s California, but it\'s the southern part.', meta: 'ACM Awards Guide' },
-      { src: 'ads/SMBrochure.jpg',                 hl: 'Unique. Even by Hollywood standards.®',               meta: 'GDS One-Sheet' },
-    ],
-    killer: [
-      { src: 'ads/killer-sniper.webp?v=2026',  hl: 'Warrior.', meta: 'Killer NIC K1' },
-      { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1' },
-      { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1' },
-    ],
-    clink: [
-      { src: 'CLINK/ws-panel_0000_homepage.jpg',                                                                        hl: 'Homepage.',      meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',                          hl: 'Clink78.',       meta: 'London' },
-      { src: 'CLINK/ws-panel_0002_screencapture-clinkhostels-clink261-2023-09-13-09_57_53.jpg',                         hl: 'Clink261.',      meta: 'London' },
-      { src: 'CLINK/ws-panel_0003_screencapture-clinkhostels-london-2023-09-13-09_53_57.jpg',                           hl: 'London.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg',                        hl: 'Amsterdam.',     meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0005_screencapture-clinkhostels-dublin-2023-09-13-09_56_27.jpg',                           hl: 'Dublin.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0006_screencapture-clinkhostels-groups-2023-09-13-09_56_05.jpg',                           hl: 'Groups.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0007_screencapture-clinkhostels-category-offers-2023-09-13-09_55_39.jpg',                  hl: 'Offers.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0008_screencapture-clinkhostels-category-city-tips-2023-09-13-09_57_06.jpg',               hl: 'City Tips.',     meta: 'Clink Hostels' },
-    ],
-  };
-  const lb = document.getElementById('lightbox');
-  const img = lb.querySelector('.lb-img');
-  const capL = lb.querySelector('.lb-cap-l');
-  const capR = lb.querySelector('.lb-cap-r');
-  let current = { gal: null, idx: 0 };
-
-  function render() {
-    const arr = galleries[current.gal];
-    if (!arr) return;
-    const item = arr[current.idx];
-    img.src = item.src;
-    img.alt = item.hl;
-    capL.textContent = item.hl;
-    capR.textContent = `${item.meta}  ·  ${current.idx + 1} / ${arr.length}`;
-  }
-  function open(gal, idx) {
-    current.gal = gal; current.idx = idx;
-    render();
-    lb.classList.add('open');
-    lb.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('lb-open');
-  }
-  function close() {
-    lb.classList.remove('open');
-    lb.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('lb-open');
-  }
-  function step(d) {
-    const arr = galleries[current.gal];
-    if (!arr) return;
-    current.idx = (current.idx + d + arr.length) % arr.length;
-    render();
-  }
-
-  document.querySelectorAll('.ad[data-gallery]').forEach(el => {
-    el.addEventListener('click', () => {
-      open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10));
-    });
-  });
-  const clinkCover = document.getElementById('clink-cover');
-  if (clinkCover) clinkCover.addEventListener('click', () => open('clink', 4));
-  lb.querySelector('.lb-close').addEventListener('click', close);
-  lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
-  lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
-  lb.addEventListener('click', e => { if (e.target === lb) close(); });
-  document.addEventListener('keydown', e => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowLeft') step(-1);
-    else if (e.key === 'ArrowRight') step(1);
-  });
-})();
-
-// ── HOTEL FIGUEROA BRAND BOOK VIEWER ──────────────────────
-(function() {
-  // Build views: single cover, interior spreads, single back cover
-  const views = [{ type: 'single', files: [62] }];
-  for (let f = 63; f < 121; f += 2) views.push({ type: 'spread', files: [f, f + 1] });
-  views.push({ type: 'single', files: [121] }); // odd interior page
-  views.push({ type: 'single', files: [122] }); // back cover
-  const total = views.length;
-
-  let cur = 0;
-  const viewer  = document.getElementById('hf-viewer');
-  const spreadEl = document.getElementById('hf-spread');
-  const counter  = document.getElementById('hf-counter');
-
-  function src(n) { return `HF/HotelFigueroa%20${n}.jpeg`; }
-
-  function makeImg(n) {
-    const img = document.createElement('img');
-    img.src = src(n); img.alt = 'Hotel Figueroa Brand Book';
-    return img;
-  }
-
-  function render(instant) {
-    const v = views[cur];
-    if (!instant) { spreadEl.classList.add('fading'); }
-
-    const draw = () => {
-      spreadEl.innerHTML = '';
-      if (v.type === 'single') {
-        const pg = document.createElement('div');
-        pg.className = 'hf-pg solo';
-        pg.appendChild(makeImg(v.files[0]));
-        spreadEl.appendChild(pg);
-      } else {
-        const left  = document.createElement('div'); left.className  = 'hf-pg pair'; left.appendChild(makeImg(v.files[0]));
-        const spine = document.createElement('div'); spine.className = 'hf-spine';
-        const right = document.createElement('div'); right.className = 'hf-pg pair'; right.appendChild(makeImg(v.files[1]));
-        spreadEl.appendChild(left); spreadEl.appendChild(spine); spreadEl.appendChild(right);
-      }
-      spreadEl.classList.remove('fading');
-    };
-
-    instant ? draw() : setTimeout(draw, 150);
-
-    const label = cur === 0 ? 'Cover' : cur === total - 1 ? 'Back Cover' : `Spread ${cur} of ${total - 2}`;
-    counter.textContent = `${label}  ·  ${cur + 1} / ${total}`;
-
-    // Preload adjacent
-    [cur - 1, cur + 1].forEach(i => {
-      if (i >= 0 && i < total) views[i].files.forEach(f => { new Image().src = src(f); });
-    });
-  }
-
-  function openViewer() {
-    cur = 0; render(true);
-    viewer.classList.add('open');
-    requestAnimationFrame(() => viewer.classList.add('visible'));
-    viewer.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('lb-open');
-  }
-
-  function closeViewer() {
-    viewer.classList.remove('open', 'visible');
-    viewer.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('lb-open');
-  }
-
-  function step(d) {
-    cur = Math.max(0, Math.min(total - 1, cur + d));
-    render(false);
-  }
-
-  const cover = document.getElementById('hf-cover');
-  if (cover) cover.addEventListener('click', openViewer);
-
-  viewer.querySelector('.hf-close-btn').addEventListener('click', closeViewer);
-  viewer.querySelector('.hf-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
-  viewer.querySelector('.hf-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
-  viewer.addEventListener('click', e => { if (e.target === viewer) closeViewer(); });
-  document.addEventListener('keydown', e => {
-    if (!viewer.classList.contains('open')) return;
-    if (e.key === 'Escape') closeViewer();
-    else if (e.key === 'ArrowLeft') step(-1);
-    else if (e.key === 'ArrowRight') step(1);
-  });
-})();
-</script>
-
 <script src="theme.js"></script>
 </body>
 </html>

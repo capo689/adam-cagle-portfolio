@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agents — Adam R. Cagle | Production AI Agents on the Claude API</title>
+<meta name="description" content="Five production AI agents shipped on the Anthropic Claude API. Stock intelligence, satellite prospecting, multi-asset anomaly correlation, closed-loop book and music marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-2: #111111;
+    --ink: #e9e6df;
+    --ink-dim: #8a857a;
+    --ink-quiet: #4a4640;
+    --rule: #1f1d1a;
+    --accent: #d9b65b;
+    --accent-soft: #b89841;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Geist', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  em, .serif {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .mono { font-family: 'Geist Mono', ui-monospace, monospace; }
+
+  /* ───────── nav ───────── */
+  nav.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 56px;
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+  }
+  nav.top .logo {
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  nav.top .links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  nav.top .links a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  nav.top .links a.current { color: var(--accent); }
+  nav.top .links a:hover { color: var(--ink); }
+  nav.top .contact {
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-dim);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  nav.top .contact:hover { color: var(--ink); }
+  nav.top .contact .moon { color: var(--accent); }
+
+  /* ───────── header ───────── */
+  header.page {
+    padding: 96px 56px 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .breadcrumb {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    margin-bottom: 32px;
+  }
+  .breadcrumb .slash { color: var(--accent); }
+  h1.page-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+  h1.page-title em { color: var(--accent); }
+  .page-subtitle {
+    margin-top: 28px;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-dim);
+    max-width: 62ch;
+  }
+  .page-subtitle em { color: var(--ink); }
+
+  /* ───────── section ───────── */
+  section.work {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    margin-bottom: 32px;
+  }
+  .sec-head .num { color: var(--accent); }
+  .sec-head .name { color: var(--ink); }
+
+  h2.sec-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    max-width: 22ch;
+    margin-bottom: 48px;
+  }
+  h2.sec-title em { color: var(--accent); }
+
+  .sec-meta {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px;
+    margin-bottom: 56px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .sec-meta { grid-template-columns: 1fr; gap: 24px; }
+    section.work { padding: 64px 32px; }
+    header.page { padding: 64px 32px 48px; }
+    nav.top { padding: 20px 32px; }
+  }
+  .sec-meta .label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+  }
+  .sec-meta .label .accent { color: var(--accent); }
+  h3.brand-name {
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.005em;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .sec-body {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .sec-body em { color: var(--accent); }
+
+  .tags {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+  }
+  .tags span {
+    border: 1px solid var(--rule);
+    padding: 6px 10px;
+    border-radius: 2px;
+  }
+
+  /* ───────── image grid ───────── */
+  .gallery {
+    display: grid;
+    gap: 16px;
+  }
+  .gallery.one  { grid-template-columns: 1fr; }
+  .gallery.two  { grid-template-columns: repeat(2, 1fr); }
+  .gallery.four { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 880px) {
+    .gallery.two, .gallery.four { grid-template-columns: 1fr; }
+  }
+
+  .shot {
+    position: relative;
+    background: var(--bg-2);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    cursor: zoom-in;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .shot:hover {
+    border-color: var(--accent-soft);
+  }
+  .shot img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .shot-cap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 18px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .shot:hover .shot-cap { opacity: 1; }
+  .shot-cap .role { color: var(--accent); }
+
+  /* ───────── outro ───────── */
+  section.outro {
+    padding: 128px 56px;
+    text-align: left;
+  }
+  .outro h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+  .outro h2 em { color: var(--accent); }
+  .outro a.cta {
+    display: inline-block;
+    margin-top: 32px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .outro a.cta:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ───────── footer ───────── */
+  footer.site {
+    padding: 32px 56px 56px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+  }
+  @media (max-width: 880px) {
+    footer.site { padding: 24px 32px 40px; }
+    section.outro { padding: 80px 32px; }
+  }
+
+  /* ───────── lightbox ───────── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 5, 0.96);
+    backdrop-filter: blur(16px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 56px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    user-select: none;
+  }
+  .lightbox .ctrl {
+    position: absolute;
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: 'Geist Mono', monospace;
+    font-size: 16px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .lightbox .ctrl:hover { border-color: var(--accent); color: var(--accent); }
+  .lightbox .close { top: 28px; right: 28px; }
+  .lightbox .prev { left: 28px; top: 50%; transform: translateY(-50%); }
+  .lightbox .next { right: 28px; top: 50%; transform: translateY(-50%); }
+  .lightbox .meta {
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+  }
+  .lightbox .meta .accent { color: var(--accent); }
+  @media (max-width: 720px) {
+    .lightbox { padding: 16px; }
+    .lightbox .prev { left: 8px; }
+    .lightbox .next { right: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="index.html" class="logo">Adam R. Cagle</a>
+  <div class="links">
+    <a href="index.html">Résumé</a>
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Agents.html" class="current">Agents</a>
+    <a href="Books.html">Books</a>
+  </div>
+  <a href="mailto:adam@agency689.com" class="contact">
+    <span class="moon">◐</span>adam@agency689.com
+  </a>
+</nav>
+
+<header class="page">
+  <div class="breadcrumb">
+    <span class="slash">//</span> Agents · Production · Claude API
+  </div>
+  <h1 class="page-title">Agents that ship <em>work</em>, not features.</h1>
+  <p class="page-subtitle">
+    Five production agents on the Anthropic Claude API. Sole author of every system prompt, persona file, and SKILL.md across the suite. Stock intelligence on a hypothesis stack with a kill-switch. Satellite prospecting trained on the famous, pointed at the forgotten. Closed-loop marketing that <em>reports back</em>.
+  </p>
+</header>
+
+<!-- ────────── 01 SSIA ────────── -->
+<section class="work">
+  <div class="sec-head">
+    <span class="num">// 01</span>
+    <span>Single Stock Intelligence Agent</span>
+    <span>·</span>
+    <span class="name">Equities</span>
+  </div>
+
+  <h2 class="sec-title">Whatever the math will <em>defend</em> in writing.</h2>
+
+  <div class="sec-meta">
+    <div>
+      <div class="label"><span class="accent">//</span> Production · Vertiv & Credo</div>
+      <h3 class="brand-name">SSIA — Vertiv & Credo</h3>
+    </div>
+    <div class="sec-body">
+      Two production agents, one architecture. SSIA runs an eighteen-hypothesis stack against four regime indicators every morning, scores a composite, sizes the position, and arms a drawdown kill-switch before the first dollar moves. The system audits itself nightly and culls signals that miss their own hit-rate gate. A sixty-day paper-trading lock stands between any new hypothesis and live capital. <em>No drift. No hope trades.</em> Just whatever the math will defend in writing.
+      <div class="tags">
+        <span>Hypothesis Stack</span>
+        <span>Regime Detection</span>
+        <span>Composite Scoring</span>
+        <span>Backtest Gate</span>
+        <span>Drawdown Protocol</span>
+        <span>Position Sizing</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery four" data-group="ssia">
+    <figure class="shot" data-full="agents/ssia-vrt-dashboard.png" data-cap="VRT · Dashboard" data-role="Loop #391">
+      <img src="agents/ssia-vrt-dashboard.png" alt="SSIA dashboard for Vertiv (VRT) showing composite score, hypothesis stack, regime detection, position sizing, and drawdown protocol">
+      <figcaption class="shot-cap"><span>VRT · Dashboard</span><span class="role">Loop #391</span></figcaption>
+    </figure>
+    <figure class="shot" data-full="agents/ssia-vrt-graphs.png" data-cap="VRT · Graphs" data-role="90D · Daily">
+      <img src="agents/ssia-vrt-graphs.png" alt="SSIA price and signal chart for VRT, equity curve, hit rate by hypothesis, and decision trail">
+      <figcaption class="shot-cap"><span>VRT · Graphs</span><span class="role">90D · Daily</span></figcaption>
+    </figure>
+    <figure class="shot" data-full="agents/ssia-crdo-dashboard.png" data-cap="CRDO · Dashboard" data-role="Loop #418">
+      <img src="agents/ssia-crdo-dashboard.png" alt="SSIA dashboard for Credo (CRDO) showing accumulate verdict, eighteen-hypothesis stack, and risk-on regime">
+      <figcaption class="shot-cap"><span>CRDO · Dashboard</span><span class="role">Loop #418</span></figcaption>
+    </figure>
+    <figure class="shot" data-full="agents/ssia-crdo-graphs.png" data-cap="CRDO · Graphs" data-role="90D · Daily">
+      <img src="agents/ssia-crdo-graphs.png" alt="SSIA price chart for CRDO with signal fires, paper equity curve, hit rate by hypothesis, and 90-day regime replay">
+      <figcaption class="shot-cap"><span>CRDO · Graphs</span><span class="role">90D · Daily</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ────────── 02 BOOK AGENT ────────── -->
+<section class="work">
+  <div class="sec-head">
+    <span class="num">// 02</span>
+    <span>Book Agent</span>
+    <span>·</span>
+    <span class="name">Marketing</span>
+  </div>
+
+  <h2 class="sec-title">Marketing is a guess until <em>KDP</em> says otherwise.</h2>
+
+  <div class="sec-meta">
+    <div>
+      <div class="label"><span class="accent">//</span> Closed Loop · KDP</div>
+      <h3 class="brand-name">Book Agent</h3>
+    </div>
+    <div class="sec-body">
+      A closed-loop marketing agent for KDP titles. Drafts and queues platform-native content for Reddit, Instagram, Facebook, X, and TikTok, holds every post for human approval, and ships only the ones that earn a yes. Then it pulls real sales through the KDP API and tells you which platform actually moved units. The platforms that don't earn their slot get cut. The ones that do get <em>fed.</em>
+      <div class="tags">
+        <span>Closed Loop</span>
+        <span>Approval Queue</span>
+        <span>Channel Attribution</span>
+        <span>KDP Sales API</span>
+        <span>Platform-Native Drafting</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery one" data-group="book">
+    <figure class="shot" data-full="agents/book-agent.png" data-cap="Book Agent · Daily Cycle" data-role="2 Active Titles">
+      <img src="agents/book-agent.png" alt="Book Agent dashboard with titles in market, approval queue, channel attribution by platform, and 30-day sales chart">
+      <figcaption class="shot-cap"><span>Daily Cycle</span><span class="role">2 Active Titles</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ────────── 03 AUSCAN ────────── -->
+<section class="work">
+  <div class="sec-head">
+    <span class="num">// 03</span>
+    <span>AuScan</span>
+    <span>·</span>
+    <span class="name">Geospatial</span>
+  </div>
+
+  <h2 class="sec-title">Train it on the famous. Point it at the <em>forgotten</em>.</h2>
+
+  <div class="sec-meta">
+    <div>
+      <div class="label"><span class="accent">//</span> Claude Vision · Prospecting</div>
+      <h3 class="brand-name">AuScan — Claude Vision Prospecting</h3>
+    </div>
+    <div class="sec-body">
+      A satellite terrain analysis agent that learns the spectral and structural signature of ten world-class gold deposits, Witwatersrand, Carlin, Kalgoorlie, seven more, synthesizes the pattern set, and scores any region you point it at on a prospectivity grid. First live run surfaced a <em>72% high-confidence hit</em> in Harney County, Oregon, on a closed-claim section of the Pueblo Mining District. The system doesn't fail. It returns a completeness score.
+      <div class="tags">
+        <span>Claude Vision</span>
+        <span>Pattern Synthesis</span>
+        <span>Prospectivity Grid</span>
+        <span>MRDS Lookup</span>
+        <span>EMIT · Sentinel-2 · ASTER · Landsat</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery two" data-group="auscan">
+    <figure class="shot" data-full="agents/auscan-dashboard.png" data-cap="Region 04 · Harney Co." data-role="Tile Scan Active">
+      <img src="agents/auscan-dashboard.png" alt="AuScan prospecting dashboard with training set of ten world-class deposits, Harney County prospectivity grid, and ranked hits for the day">
+      <figcaption class="shot-cap"><span>Region 04 · Harney Co.</span><span class="role">Tile Scan Active</span></figcaption>
+    </figure>
+    <figure class="shot" data-full="agents/auscan-report.png" data-cap="Pueblo Mining District" data-role="72% · Top Hit">
+      <img src="agents/auscan-report.png" alt="AuScan tile report for Pueblo Mining District, Harney County, Oregon, 72 percent confidence, with pattern match, spectral signature, and MRDS history">
+      <figcaption class="shot-cap"><span>Pueblo Mining District</span><span class="role">72% · Top Hit</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ────────── 04 BEEF ────────── -->
+<section class="work">
+  <div class="sec-head">
+    <span class="num">// 04</span>
+    <span>BEEF</span>
+    <span>·</span>
+    <span class="name">Multi-Asset Anomaly</span>
+  </div>
+
+  <h2 class="sec-title">Wagyu is rare for a <em>reason</em>.</h2>
+
+  <div class="sec-meta">
+    <div>
+      <div class="label"><span class="accent">//</span> Anomaly Correlation · 68 Assets</div>
+      <h3 class="brand-name">BEEF — Anomaly Correlation Engine</h3>
+    </div>
+    <div class="sec-body">
+      A sixty-eight-asset anomaly correlation engine that hunts eight-percent-plus moves inside a two-to-thirty-day window. Hypotheses are generated cheap, briefed by the premium model, and graded across four cuts, <em>Wagyu, Filet, T-Bone, Burger</em>, by conviction and expected payoff. Wagyu is rare on purpose. The kitchen runs on margin, and the menu changes every morning.
+      <div class="tags">
+        <span>Cross-Asset</span>
+        <span>Hypothesis Pyramid</span>
+        <span>Token Routing</span>
+        <span>Daily Brief</span>
+        <span>Equities · ETFs · Metals · Crypto</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery one" data-group="beef">
+    <figure class="shot" data-full="agents/beef-dashboard.png" data-cap="Today's Menu · Brief #284" data-role="Cycle Complete">
+      <img src="agents/beef-dashboard.png" alt="BEEF anomaly correlation dashboard with conviction pyramid, today's cuts, the pantry of 68 assets, today's brief, and kitchen economics">
+      <figcaption class="shot-cap"><span>Today's Menu · Brief #284</span><span class="role">Cycle Complete</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ────────── 05 MUSIC AGENT ────────── -->
+<section class="work">
+  <div class="sec-head">
+    <span class="num">// 05</span>
+    <span>Music Agent</span>
+    <span>·</span>
+    <span class="name">Marketing</span>
+  </div>
+
+  <h2 class="sec-title">Posting is the job. Selling is the <em>point</em>.</h2>
+
+  <div class="sec-meta">
+    <div>
+      <div class="label"><span class="accent">//</span> Closed Loop · Multi-DSP</div>
+      <h3 class="brand-name">Music Agent</h3>
+    </div>
+    <div class="sec-body">
+      A closed-loop marketing agent for music releases. Drafts and queues platform-native content across the channels artists actually live on, holds every post for human approval, and ships only what earns a yes. Then it watches what the data does, saves, follows, paid streams, link-clicks, and reroutes the next cycle to whatever earned its keep. <em>Promotion that reports back.</em>
+      <div class="tags">
+        <span>Closed Loop</span>
+        <span>Approval Queue</span>
+        <span>Multi-DSP Tracking</span>
+        <span>Conversion Routing</span>
+        <span>Release Cadence</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery one" data-group="music">
+    <figure class="shot" data-full="agents/music-agent.png" data-cap="Cycle 042 · Day 14" data-role="11 of 18 Posted">
+      <img src="agents/music-agent.png" alt="Music Agent dashboard for the After Hours Pt II release with approval queue, multi-DSP attribution by platform, and next-cycle reallocation">
+      <figcaption class="shot-cap"><span>Cycle 042 · Day 14</span><span class="role">11 of 18 Posted</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ────────── outro ────────── -->
+<section class="outro">
+  <h2>Want one <em>built</em><br>for your shop?</h2>
+  <a href="mailto:adam@agency689.com" class="cta">Let's work →</a>
+</section>
+
+<footer class="site">
+  <div>© Agency 689 · Adam R. Cagle</div>
+  <div>Agents v1.0</div>
+  <div>Set in Geist & Instrument Serif</div>
+</footer>
+
+<!-- ────────── lightbox ────────── -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="ctrl close" aria-label="Close">✕</button>
+  <button class="ctrl prev" aria-label="Previous">←</button>
+  <button class="ctrl next" aria-label="Next">→</button>
+  <img id="lb-img" alt="">
+  <div class="meta">← → navigate · esc close · <span class="accent" id="lb-meta"></span></div>
+</div>
+
+<script>
+(function () {
+  const lb     = document.getElementById('lightbox');
+  const lbImg  = document.getElementById('lb-img');
+  const lbMeta = document.getElementById('lb-meta');
+  const shots  = Array.from(document.querySelectorAll('.shot'));
+  let active   = -1;
+
+  function open(i) {
+    active = i;
+    const s = shots[i];
+    lbImg.src = s.dataset.full;
+    lbImg.alt = s.querySelector('img').alt;
+    lbMeta.textContent = (s.dataset.cap || '') + (s.dataset.role ? ' · ' + s.dataset.role : '');
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    active = -1;
+  }
+  function step(d) {
+    if (active < 0) return;
+    open((active + d + shots.length) % shots.length);
+  }
+
+  shots.forEach((s, i) => s.addEventListener('click', () => open(i)));
+  lb.querySelector('.close').addEventListener('click', close);
+  lb.querySelector('.prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  lb.querySelector('.next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')    close();
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight')step(1);
+  });
+})();
+</script>
+
+</body>
+</html>

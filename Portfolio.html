@@ -414,15 +414,15 @@
   .closer .cta:hover .arrow { transform: translateX(4px); }
 
   .foot {
-    padding: 20px 0 40px;
-    border-top: 1px solid var(--rule);
+    padding: 36px 0 56px; border-top: 1px solid var(--rule);
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--fg-3);
+    font-family: var(--sans); font-size: 14px;
+    color: var(--fg-2); align-items: center;
   }
-  .foot .center { text-align: center; }
+  .foot .center { text-align: center; color: var(--fg-3); }
   .foot .right { text-align: right; }
+  .foot a { color: var(--fg-2); transition: color .2s; }
+  .foot a:hover { color: var(--accent); }
 
   @media print {
     @page { size: Letter; margin: 0.45in; }
@@ -1080,11 +1080,11 @@
     </a>
   </section>
 
-  <div class="foot">
-    <div>© Agency 689 · Adam R. Cagle</div>
-    <div class="center">Selected Work v1.0</div>
-    <div class="right">Set in Geist &amp; Instrument Serif</div>
-  </div>
+  <footer class="foot">
+    <div class="left">Adam R. Cagle</div>
+    <div class="center">© 2026</div>
+    <div class="right"><a href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a></div>
+  </footer>
 
 </div>
 

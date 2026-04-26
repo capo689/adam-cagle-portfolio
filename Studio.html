@@ -219,13 +219,15 @@
   .b-btn .b-icon { font-size: 10px; }
 
   .foot {
-    padding: 20px 0 40px; border-top: 1px solid var(--rule);
+    padding: 36px 0 56px; border-top: 1px solid var(--rule);
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+    font-family: var(--sans); font-size: 14px;
+    color: var(--fg-2); align-items: center;
   }
-  .foot .center { text-align: center; }
+  .foot .center { text-align: center; color: var(--fg-3); }
   .foot .right { text-align: right; }
+  .foot a { color: var(--fg-2); transition: color .2s; }
+  .foot a:hover { color: var(--accent); }
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
@@ -367,8 +369,8 @@
   </div>
 
   <footer class="foot">
-    <div class="left">// Agency689 · Agentic689</div>
-    <div class="center">Bend, Oregon</div>
+    <div class="left">Adam R. Cagle</div>
+    <div class="center">© 2026</div>
     <div class="right"><a href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a></div>
   </footer>
 

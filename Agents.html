@@ -243,6 +243,18 @@
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
   }
 
+  /* ─── FOOTER ─── */
+  .foot {
+    padding: 36px 0 56px; border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+    font-family: var(--sans); font-size: 14px;
+    color: var(--fg-2); align-items: center;
+  }
+  .foot .center { text-align: center; color: var(--fg-3); }
+  .foot .right { text-align: right; }
+  .foot a { color: var(--fg-2); transition: color .2s; }
+  .foot a:hover { color: var(--accent); }
+
   /* ─── PRINT / RESPONSIVE ─── */
   @media print {
     .rail, .mob-nav, .hamburger, #lightbox { display: none !important; }
@@ -569,6 +581,12 @@
       </div>
     </div>
   </section>
+
+  <footer class="foot">
+    <div class="left">Adam R. Cagle</div>
+    <div class="center">© 2026</div>
+    <div class="right"><a href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a></div>
+  </footer>
 
 </div><!-- /.page -->
 

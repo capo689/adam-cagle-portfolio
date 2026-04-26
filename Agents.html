@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agents — Adam R. Cagle | AI Agents & Autonomous Systems</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
+<link rel="icon" type="image/png" href="cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta name="description" content="Production AI agents by Adam R. Cagle — equities intelligence, book marketing, satellite prospecting, anomaly correlation, music promotion.">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<link rel="canonical" href="https://adamcagle.com/Agents.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="Agents — Adam R. Cagle | AI Agents & Autonomous Systems">
+<meta property="og:description" content="Production AI agents — equities intelligence, book marketing, satellite prospecting, anomaly correlation, music promotion.">
+<meta property="og:url" content="https://adamcagle.com/Agents.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agents — Adam R. Cagle">
+<meta name="twitter:description" content="Production AI agents built on Claude — SSIA, Book Agent, AuScan, BEEF, Music Agent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<style>
+  :root {
+    --bg:       #0f0f0e;
+    --bg-soft:  #141312;
+    --fg:       #f6f3ec;
+    --fg-2:     rgba(246,243,236,0.72);
+    --fg-3:     rgba(246,243,236,0.45);
+    --rule:     rgba(246,243,236,0.14);
+    --rule-2:   rgba(246,243,236,0.08);
+    --accent:   #ff5b1f;
+    --sans:   "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:   "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic: "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans);
+    font-size: 15px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "ss02";
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ─── NAV RAIL ─── */
+  .rail {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
+    padding: 16px 32px;
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.06em; color: var(--fg-2); text-transform: uppercase;
+    background: linear-gradient(180deg, rgba(15,15,14,0.92), rgba(15,15,14,0.6) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .rail .center { text-align: center; color: var(--fg); font-weight: 500; letter-spacing: 0.18em; }
+  .rail .right { text-align: right; }
+  .rail nav { display: flex; gap: 28px; justify-content: center; }
+  .rail nav a { transition: color .2s; }
+  .rail nav a:hover, .rail nav a.active { color: var(--accent); }
+  .rail-email { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--fg-3); transition: color .2s; }
+  .rail-email:hover { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1px solid var(--rule); color: var(--fg-2);
+    cursor: pointer; padding: 5px 10px; border-radius: 20px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 6px; transition: border-color .2s, color .2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .toggle-pill { width: 24px; height: 12px; border-radius: 6px; background: var(--rule); position: relative; }
+
+  /* ─── PAGE WRAPPER ─── */
+  .page { padding-top: 72px; max-width: 1100px; margin: 0 auto; padding-left: 32px; padding-right: 32px; padding-bottom: 120px; }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+    color: var(--fg-3); text-transform: uppercase; margin-bottom: 28px;
+  }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-kicker .dash { width: 28px; height: 1px; background: var(--fg-3); }
+  .hero-name {
+    font-size: clamp(48px, 8vw, 96px); line-height: 0.95;
+    font-weight: 800; letter-spacing: -0.03em; margin: 0 0 32px;
+  }
+  .hero-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .hero-name .dot { color: var(--accent); }
+  .hero-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+  .hero-role { font-size: 16px; line-height: 1.6; color: var(--fg-2); }
+  .hero-role em { font-family: var(--italic); font-style: italic; color: var(--fg); }
+  .hero-stat-row {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 20px; border: 1px solid var(--rule); border-radius: 4px;
+    background: var(--bg-soft);
+  }
+  .hero-stat {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+  }
+  .hero-stat .label { color: var(--fg-3); text-transform: uppercase; }
+  .hero-stat .val { color: var(--accent); font-weight: 500; }
+
+  /* ─── SECTION LABELS ─── */
+  .sect-label {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--fg-3); text-transform: uppercase; margin-bottom: 14px;
+  }
+  .sect-label .num { color: var(--accent); }
+  .sect-head {
+    font-size: clamp(26px, 3.5vw, 38px); font-weight: 700;
+    letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 36px;
+  }
+  .sect-head .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+
+  /* ─── AGENT CAMPAIGN LAYOUT ─── */
+  .campaign {
+    display: grid; grid-template-columns: 0.9fr 1.3fr;
+    gap: 0 48px; border-top: 1px solid var(--rule);
+    padding: 52px 0 64px; position: relative;
+  }
+  .campaign:last-of-type { border-bottom: 1px solid var(--rule); }
+  .c-meta { position: sticky; top: 96px; align-self: start; }
+  .c-meta .num {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .c-meta .client {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+    line-height: 1.2; margin-bottom: 6px;
+  }
+  .c-meta .client .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .c-meta .context {
+    font-size: 13px; line-height: 1.55; color: var(--fg-2); margin-bottom: 20px;
+  }
+  .c-meta .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .c-meta .tags span {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-3);
+    border: 1px solid var(--rule); padding: 3px 8px; border-radius: 2px;
+  }
+  .c-body { display: flex; flex-direction: column; gap: 32px; }
+
+  /* ─── AD / SCREENSHOT TILES ─── */
+  .ad {
+    display: block; overflow: hidden; border-radius: 4px;
+    background: var(--bg-soft); position: relative;
+    border: 1px solid var(--rule-2);
+  }
+  .ad[data-gallery] { cursor: zoom-in; }
+  .ad img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .ad[data-gallery]:hover img { transform: scale(1.02); }
+  .overlay {
+    position: absolute; inset: 0; background: linear-gradient(160deg, transparent 40%, rgba(15,15,14,0.85));
+    opacity: 0; transition: opacity .3s; display: flex; align-items: flex-end; padding: 14px;
+  }
+  .ad:hover .overlay { opacity: 1; }
+  .overlay-inner { display: flex; flex-direction: column; gap: 2px; }
+  .overlay-inner .hl { font-family: var(--italic); font-style: italic; font-size: 15px; color: var(--fg); }
+  .overlay-inner span:not(.hl) { font-family: var(--mono); font-size: 11px; color: var(--fg-3); letter-spacing: 0.06em; }
+
+  /* ─── AD GRID VARIANTS ─── */
+  .ad-grid { display: grid; gap: 10px; }
+  .ad-grid.g-1 { grid-template-columns: 1fr; }
+  .ad-grid.g-2 { grid-template-columns: 1fr 1fr; }
+  .ad-grid.g-4 { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+  .ad-grid.g-featured { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+  .ad-grid.g-featured .ad:first-child { grid-column: 1 / -1; }
+
+  /* ─── PULL QUOTE BLOCKS ─── */
+  .pull {
+    border: 1px solid var(--rule); padding: 36px 32px 32px;
+    position: relative; background: var(--bg-soft); border-radius: 2px;
+  }
+  .pull-format {
+    position: absolute; top: -1px; left: 20px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--fg-3);
+    background: var(--bg); padding: 0 8px; transform: translateY(-50%);
+  }
+  .pull-format em { color: var(--accent); font-style: italic; }
+  .pull-line {
+    font-size: clamp(18px, 2.2vw, 24px); line-height: 1.4; font-weight: 600;
+    letter-spacing: -0.01em; margin: 0 0 18px;
+    font-family: var(--italic); font-style: italic;
+  }
+  .pull-line em, .pull-line .hot { color: var(--accent); font-style: italic; }
+  .pull-body { font-size: 14px; line-height: 1.65; color: var(--fg-2); }
+  .pull-body p { margin: 0 0 14px; text-wrap: pretty; }
+  .pull-body p:last-child { margin-bottom: 0; }
+  .pull-body em { font-family: var(--italic); font-style: italic; color: var(--fg); }
+  .pull-sig {
+    margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--rule-2);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--fg-3);
+  }
+
+  /* ─── STATUS DOT ─── */
+  .status-live {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #4ade80;
+  }
+  .status-live::before {
+    content: ''; display: block; width: 6px; height: 6px; border-radius: 50%;
+    background: #4ade80; box-shadow: 0 0 6px #4ade80;
+    animation: pulse-live 2s ease-in-out infinite;
+  }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ─── MOBILE NAV ─── */
+  .hamburger {
+    display: none; flex-direction: column; gap: 4px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--fg); transition: background .2s; }
+  .hamburger:hover span { background: var(--accent); }
+  .mob-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,15,14,0.97); backdrop-filter: blur(12px);
+    padding: 20px 24px 28px;
+    opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  .mob-nav.open { opacity: 1; pointer-events: all; }
+  .mob-nav nav { display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--rule); }
+  .mob-nav nav a {
+    font-family: var(--mono); font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--fg-2); padding: 16px 0; width: 100%; text-align: center;
+    border-bottom: 1px solid var(--rule-2); transition: color .2s;
+  }
+  .mob-nav nav a.active, .mob-nav nav a:hover { color: var(--accent); }
+  .mob-close {
+    display: block; width: 100%; text-align: right; margin-bottom: 12px;
+    background: none; border: none; color: var(--fg-3); cursor: pointer;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ─── PRINT / RESPONSIVE ─── */
+  @media print {
+    .rail, .mob-nav, .hamburger, #lightbox { display: none !important; }
+    .page { padding-top: 0; }
+    .campaign, .pull { break-inside: avoid; }
+  }
+  @media (max-width: 860px) {
+    .hero-sub { grid-template-columns: 1fr; }
+    .hero-stat-row { display: none; }
+    .campaign { grid-template-columns: 1fr; gap: 28px; }
+    .c-meta { position: static; }
+    .pull { padding: 32px 24px 28px; }
+    .ad-grid.g-2, .ad-grid.g-4, .ad-grid.g-featured { grid-template-columns: 1fr; }
+    .ad-grid.g-featured .ad:first-child { grid-column: 1; }
+  }
+  @media (max-width: 640px) {
+    .page { padding-left: 20px; padding-right: 20px; }
+    .rail { padding: 14px 20px; }
+    .rail nav { display: none; }
+    .rail-email { display: none; }
+    .hamburger { display: flex; }
+    .hero { padding: 60px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- rail -->
+<header class="rail">
+  <div class="left"><a href="index.html" style="color:var(--fg);font-weight:500;letter-spacing:0.14em;">Adam R. Cagle</a></div>
+  <nav>
+    <a href="index.html">Résumé</a>
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Agents.html" class="active">Agents</a>
+    <a href="Books.html">Books</a>
+    <!-- <a href="Studio.html">Studio</a> -->
+  </nav>
+  <div class="right" style="display:flex;align-items:center;justify-content:flex-end;gap:20px;">
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"><span class="toggle-icon">◐</span><span class="toggle-pill"></span></button>
+    <a href="mailto:adam@agency689.com" class="rail-email">adam@agency689.com</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mob-nav" id="mob-nav">
+  <button class="mob-close" id="mob-close" aria-label="Close menu">✕ close</button>
+  <nav>
+    <a href="index.html">Résumé</a>
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Agents.html" class="active">Agents</a>
+    <a href="Books.html">Books</a>
+  </nav>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Production</span>
+      <span>·</span>
+      <span>Autonomous</span>
+      <span>·</span>
+      <span>Built on Claude</span>
+    </div>
+    <h1 class="hero-name">Systems that<br>work while<br>you <span class="it">sleep<span class="dot">.</span></span></h1>
+    <div class="hero-sub">
+      <div class="hero-role">
+        Five production agents across equities, publishing, geospatial prospecting, multi-asset anomaly, and music marketing. Each one closes the loop — <em>drafts, scores, reports, and culls</em> — without waiting to be asked.
+      </div>
+      <div class="hero-stat-row">
+        <div class="hero-stat"><span class="label">Models</span><span class="val">Claude 3.5 · Claude 3 Haiku</span></div>
+        <div class="hero-stat"><span class="label">Agents in Production</span><span class="val">05</span></div>
+        <div class="hero-stat"><span class="label">Architecture</span><span class="val">Closed-loop · Human-in-loop</span></div>
+        <div class="hero-stat"><span class="label">Deployment</span><span class="val">Live · Paper · Beta</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 01 — SSIA ═════════════ -->
+  <section id="ssia">
+    <div class="sect-label" style="margin-top:52px;">
+      <span class="num">// 01</span><span>Single Stock Intelligence Agent</span><span>·</span><span>Equities</span>
+    </div>
+    <h2 class="sect-head">Whatever the math will <span class="it">defend</span> in writing.</h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <div class="num">// 01 — SSIA</div>
+        <div class="client">SSIA — <span class="it">Vertiv &amp; Credo</span></div>
+        <div class="context">
+          Two production agents, one architecture. Runs an eighteen-hypothesis stack against four regime indicators every morning, scores a composite, sizes the position, and arms a drawdown kill-switch before the first dollar moves.
+        </div>
+        <div class="tags">
+          <span>Hypothesis Stack</span>
+          <span>Regime Detection</span>
+          <span>Composite Scoring</span>
+          <span>Backtest Gate</span>
+          <span>Drawdown Protocol</span>
+          <span>Position Sizing</span>
+        </div>
+        <div style="margin-top:16px;"><span class="status-live">Live · Paper Lock</span></div>
+      </aside>
+
+      <div class="c-body">
+        <div class="pull">
+          <span class="pull-format">The Architecture · <em>Morning Run</em></span>
+          <p class="pull-line">No drift. No hope trades. <em>Just whatever the math will defend in writing.</em></p>
+          <div class="pull-body">
+            <p>The system audits itself nightly and culls signals that miss their own hit-rate gate. A sixty-day paper-trading lock stands between any new hypothesis and live capital — no shortcut past the gate, no matter how clean the backtest looks.</p>
+            <p>Vertiv and Credo run as two independent deployments sharing the same scoring engine. Each gets its own regime model tuned to the sector's volatility signature.</p>
+          </div>
+          <div class="pull-sig">SSIA · Equities · Two Deployments · One Engine</div>
+        </div>
+
+        <!-- 2×2 screenshot grid — all four images lightboxed -->
+        <div class="ad-grid g-4">
+          <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="0">
+            <img src="agents/ssia-vrt-dashboard.png" alt="SSIA Vertiv — morning intelligence dashboard">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">VRT Dashboard.</span><span>Vertiv · Morning Run</span></div></div>
+          </div>
+          <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="1">
+            <img src="agents/ssia-vrt-graphs.png" alt="SSIA Vertiv — hypothesis scoring graphs">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">VRT Signals.</span><span>Vertiv · Regime Graphs</span></div></div>
+          </div>
+          <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="2">
+            <img src="agents/ssia-crdo-dashboard.png" alt="SSIA Credo — morning intelligence dashboard">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">CRDO Dashboard.</span><span>Credo · Morning Run</span></div></div>
+          </div>
+          <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="3">
+            <img src="agents/ssia-crdo-graphs.png" alt="SSIA Credo — hypothesis scoring graphs">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">CRDO Signals.</span><span>Credo · Regime Graphs</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 02 — BOOK AGENT ═════════════ -->
+  <section id="book-agent">
+    <div class="sect-label" style="margin-top:52px;">
+      <span class="num">// 02</span><span>Book Agent</span><span>·</span><span>Marketing</span>
+    </div>
+    <h2 class="sect-head">Marketing is a guess until <span class="it">KDP says otherwise.</span></h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <div class="num">// 02 — Book Agent</div>
+        <div class="client">Book <span class="it">Agent</span></div>
+        <div class="context">
+          A closed-loop marketing agent for KDP titles. Drafts and queues platform-native content across five channels, holds every post for human approval, and ships only the ones that earn a yes. Then it pulls real sales through the KDP API and tells you which platform actually moved units.
+        </div>
+        <div class="tags">
+          <span>Closed Loop</span>
+          <span>Approval Queue</span>
+          <span>Channel Attribution</span>
+          <span>KDP Sales API</span>
+          <span>Platform-Native Drafting</span>
+        </div>
+        <div style="margin-top:16px;"><span class="status-live">Live</span></div>
+      </aside>
+
+      <div class="c-body">
+        <div class="ad-grid g-1">
+          <div class="ad" style="aspect-ratio:16/9;" data-gallery="book" data-index="0">
+            <img src="agents/book-agent.png" alt="Book Agent — KDP marketing closed-loop dashboard">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Book Agent.</span><span>KDP · Closed Loop</span></div></div>
+          </div>
+        </div>
+
+        <div class="pull">
+          <span class="pull-format">The Logic · <em>Attribution</em></span>
+          <p class="pull-line">The platforms that don't earn their slot get cut. The ones that do get <em>fed.</em></p>
+          <div class="pull-body">
+            <p>Drafts platform-native content for Reddit, Instagram, Facebook, X, and TikTok — then waits. Every post holds in an approval queue until a human says yes. Nothing ships on autopilot.</p>
+            <p>After each cycle, the agent pulls real sales data from the KDP API and scores each channel against the units it drove. No attribution guesswork. The data runs the editorial calendar.</p>
+          </div>
+          <div class="pull-sig">Book Agent · KDP · Five Channels · One Source of Truth</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 03 — AUSCAN ═════════════ -->
+  <section id="auscan">
+    <div class="sect-label" style="margin-top:52px;">
+      <span class="num">// 03</span><span>AuScan</span><span>·</span><span>Geospatial</span>
+    </div>
+    <h2 class="sect-head">Train it on the famous. <span class="it">Point it at the forgotten.</span></h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <div class="num">// 03 — AuScan</div>
+        <div class="client">AuScan — <span class="it">Claude Vision</span></div>
+        <div class="context">
+          A satellite terrain analysis agent that learns the spectral and structural signature of ten world-class gold deposits, synthesizes the pattern set, and scores any region on a prospectivity grid. First live run: a 72% high-confidence hit in Harney County, Oregon.
+        </div>
+        <div class="tags">
+          <span>Claude Vision</span>
+          <span>Pattern Synthesis</span>
+          <span>Prospectivity Grid</span>
+          <span>MRDS Lookup</span>
+          <span>EMIT · Sentinel-2</span>
+          <span>ASTER · Landsat</span>
+        </div>
+        <div style="margin-top:16px;"><span class="status-live">Beta</span></div>
+      </aside>
+
+      <div class="c-body">
+        <!-- 2-up screenshots with lightbox -->
+        <div class="ad-grid g-2">
+          <div class="ad" style="aspect-ratio:4/3;" data-gallery="auscan" data-index="0">
+            <img src="agents/auscan-dashboard.png" alt="AuScan — prospectivity scoring dashboard">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">AuScan Dashboard.</span><span>Prospectivity Grid</span></div></div>
+          </div>
+          <div class="ad" style="aspect-ratio:4/3;" data-gallery="auscan" data-index="1">
+            <img src="agents/auscan-report.png" alt="AuScan — terrain analysis report output">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Field Report.</span><span>Harney County · Oregon</span></div></div>
+          </div>
+        </div>
+
+        <div class="pull">
+          <span class="pull-format">The Result · <em>First Live Run</em></span>
+          <p class="pull-line">A <em>72% high-confidence hit</em> in Harney County, Oregon, on a closed-claim section of the Pueblo Mining District.</p>
+          <div class="pull-body">
+            <p>Witwatersrand, Carlin, Kalgoorlie, seven more — AuScan learns the spectral and structural signature of the world's most-studied deposits, then applies that synthesis to terrain that's never been scored.</p>
+            <p>The system doesn't fail. It returns a completeness score. Every result is a deliverable, even if that deliverable is "insufficient data — here's what's missing."</p>
+          </div>
+          <div class="pull-sig">AuScan · Claude Vision · Ten Reference Deposits · EMIT + Sentinel-2 + ASTER + Landsat</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 04 — BEEF ═════════════ -->
+  <section id="beef">
+    <div class="sect-label" style="margin-top:52px;">
+      <span class="num">// 04</span><span>BEEF</span><span>·</span><span>Multi-Asset Anomaly</span>
+    </div>
+    <h2 class="sect-head">Wagyu is rare <span class="it">for a reason.</span></h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <div class="num">// 04 — BEEF</div>
+        <div class="client">BEEF — <span class="it">Anomaly Engine</span></div>
+        <div class="context">
+          A sixty-eight-asset anomaly correlation engine that hunts eight-percent-plus moves inside a two-to-thirty-day window. Hypotheses are generated cheap, briefed by the premium model, and graded across four conviction cuts.
+        </div>
+        <div class="tags">
+          <span>Cross-Asset</span>
+          <span>Hypothesis Pyramid</span>
+          <span>Token Routing</span>
+          <span>Daily Brief</span>
+          <span>Equities · ETFs</span>
+          <span>Metals · Crypto</span>
+        </div>
+        <div style="margin-top:16px;"><span class="status-live">Live</span></div>
+      </aside>
+
+      <div class="c-body">
+        <div class="ad-grid g-1">
+          <div class="ad" style="aspect-ratio:16/9;" data-gallery="beef" data-index="0">
+            <img src="agents/beef-dashboard.png" alt="BEEF — multi-asset anomaly correlation engine dashboard">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">BEEF Dashboard.</span><span>68 Assets · Daily Brief</span></div></div>
+          </div>
+        </div>
+
+        <div class="pull">
+          <span class="pull-format">The Menu · <em>Four Cuts</em></span>
+          <p class="pull-line"><em>Wagyu. Filet. T-Bone. Burger.</em> Conviction and expected payoff determine the cut.</p>
+          <div class="pull-body">
+            <p>Hypotheses are generated cheap, briefed by the premium model, and graded across four cuts by conviction and expected payoff. Wagyu is rare on purpose.</p>
+            <p>The kitchen runs on margin, and the menu changes every morning. Sixty-eight assets across equities, ETFs, metals, and crypto — anything with an eight-percent move in the window gets a scorecard.</p>
+          </div>
+          <div class="pull-sig">BEEF · 68 Assets · Token Routing · Daily Brief</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 05 — MUSIC AGENT ═════════════ -->
+  <section id="music-agent">
+    <div class="sect-label" style="margin-top:52px;">
+      <span class="num">// 05</span><span>Music Agent</span><span>·</span><span>Marketing</span>
+    </div>
+    <h2 class="sect-head">Posting is the job. <span class="it">Selling is the point.</span></h2>
+
+    <div class="campaign">
+      <aside class="c-meta">
+        <div class="num">// 05 — Music Agent</div>
+        <div class="client">Music <span class="it">Agent</span></div>
+        <div class="context">
+          A closed-loop marketing agent for music releases. Drafts and queues platform-native content across the channels artists actually live on, holds every post for human approval, and ships only what earns a yes.
+        </div>
+        <div class="tags">
+          <span>Closed Loop</span>
+          <span>Approval Queue</span>
+          <span>Multi-DSP Tracking</span>
+          <span>Conversion Routing</span>
+          <span>Release Cadence</span>
+        </div>
+        <div style="margin-top:16px;"><span class="status-live">Beta</span></div>
+      </aside>
+
+      <div class="c-body">
+        <div class="ad-grid g-1">
+          <div class="ad" style="aspect-ratio:16/9;" data-gallery="music" data-index="0">
+            <img src="agents/music-agent.png" alt="Music Agent — closed-loop release marketing dashboard">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Music Agent.</span><span>Closed Loop · Multi-DSP</span></div></div>
+          </div>
+        </div>
+
+        <div class="pull">
+          <span class="pull-format">The System · <em>Closed Loop</em></span>
+          <p class="pull-line">Promotion that <em>reports back.</em></p>
+          <div class="pull-body">
+            <p>Watches what the data does — saves, follows, paid streams, link-clicks — and reroutes the next cycle to whatever earned its keep. The channels that convert get more. The ones that don't get cut.</p>
+            <p>Built for artists who want the machine to do the daily work. Platform-native drafts, human approval gate, DSP-level attribution. The release cadence becomes a system, not a scramble.</p>
+          </div>
+          <div class="pull-sig">Music Agent · Multi-DSP · Approval Queue · Conversion Routing</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.page -->
+
+<!-- ─── LIGHTBOX ─── -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="lb-close" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" aria-label="Previous">←</button>
+  <button class="lb-nav lb-next" aria-label="Next">→</button>
+  <figure class="lb-figure">
+    <img class="lb-img" alt="">
+    <figcaption class="lb-cap">
+      <span class="lb-cap-l"></span>
+      <span class="lb-cap-r"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<style>
+  #lightbox {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(15,15,14,0.96); backdrop-filter: blur(16px);
+    align-items: center; justify-content: center;
+    padding: 80px 60px 60px; opacity: 0; transition: opacity .25s;
+  }
+  #lightbox.open { display: flex; opacity: 1; }
+  #lightbox .lb-figure {
+    display: flex; flex-direction: column; align-items: center;
+    max-width: 1100px; width: 100%; gap: 16px;
+  }
+  #lightbox .lb-img {
+    max-height: 75vh; max-width: 100%; object-fit: contain;
+    border-radius: 3px; border: 1px solid var(--rule);
+  }
+  #lightbox .lb-cap {
+    display: flex; justify-content: space-between; width: 100%;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--fg-3);
+  }
+  #lightbox .lb-cap-l { color: var(--accent); }
+  #lightbox button {
+    position: fixed; background: rgba(15,15,14,0.7); border: 1px solid var(--rule);
+    color: var(--fg-2); cursor: pointer; padding: 10px 14px;
+    font-family: var(--mono); font-size: 14px; border-radius: 3px;
+    transition: background .2s, border-color .2s, color .2s, transform .2s;
+    backdrop-filter: blur(8px);
+  }
+  #lightbox button:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  #lightbox .lb-close { top: 20px; right: 20px; }
+  #lightbox .lb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+  #lightbox .lb-next { right: 20px; top: 50%; transform: translateY(-50%); }
+  #lightbox .lb-prev:hover { transform: translateY(-50%) translateX(-2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  #lightbox .lb-next:hover { transform: translateY(-50%) translateX(2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  body.lb-open { overflow: hidden; }
+  @media (max-width: 640px) {
+    #lightbox { padding: 60px 12px 60px; }
+    #lightbox .lb-prev { left: 8px; }
+    #lightbox .lb-next { right: 8px; }
+  }
+</style>
+
+<script>
+(function() {
+  const galleries = {
+    ssia: [
+      { src: 'agents/ssia-vrt-dashboard.png',  hl: 'VRT Dashboard.',   meta: 'SSIA · Vertiv · Morning Run' },
+      { src: 'agents/ssia-vrt-graphs.png',     hl: 'VRT Signals.',     meta: 'SSIA · Vertiv · Regime Graphs' },
+      { src: 'agents/ssia-crdo-dashboard.png', hl: 'CRDO Dashboard.',  meta: 'SSIA · Credo · Morning Run' },
+      { src: 'agents/ssia-crdo-graphs.png',    hl: 'CRDO Signals.',    meta: 'SSIA · Credo · Regime Graphs' },
+    ],
+    book: [
+      { src: 'agents/book-agent.png', hl: 'Book Agent.', meta: 'KDP · Closed Loop · Five Channels' },
+    ],
+    auscan: [
+      { src: 'agents/auscan-dashboard.png', hl: 'AuScan Dashboard.', meta: 'AuScan · Prospectivity Grid' },
+      { src: 'agents/auscan-report.png',    hl: 'Field Report.',     meta: 'AuScan · Harney County · Oregon' },
+    ],
+    beef: [
+      { src: 'agents/beef-dashboard.png', hl: 'BEEF Dashboard.', meta: 'BEEF · 68 Assets · Daily Brief' },
+    ],
+    music: [
+      { src: 'agents/music-agent.png', hl: 'Music Agent.', meta: 'Closed Loop · Multi-DSP' },
+    ],
+  };
+
+  const lb     = document.getElementById('lightbox');
+  const img    = lb.querySelector('.lb-img');
+  const capL   = lb.querySelector('.lb-cap-l');
+  const capR   = lb.querySelector('.lb-cap-r');
+  let current  = { gal: null, idx: 0 };
+
+  function render() {
+    const arr = galleries[current.gal];
+    if (!arr) return;
+    const item = arr[current.idx];
+    img.src = item.src;
+    img.alt = item.hl;
+    capL.textContent = item.hl;
+    capR.textContent = item.meta + '  ·  ' + (current.idx + 1) + ' / ' + arr.length;
+  }
+  function open(gal, idx) {
+    current.gal = gal; current.idx = idx;
+    render();
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+  }
+  function close() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+  }
+  function step(d) {
+    const arr = galleries[current.gal];
+    if (!arr) return;
+    current.idx = (current.idx + d + arr.length) % arr.length;
+    render();
+  }
+
+  document.querySelectorAll('.ad[data-gallery]').forEach(el => {
+    el.addEventListener('click', () => {
+      open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10));
+    });
+  });
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+</script>
+
+<script>
+// ── HAMBURGER MENU ────────────────────────────────────────
+(function() {
+  const hb = document.getElementById('hamburger');
+  const mn = document.getElementById('mob-nav');
+  const cl = document.getElementById('mob-close');
+  if (!hb || !mn) return;
+  hb.addEventListener('click', () => mn.classList.add('open'));
+  cl.addEventListener('click', () => mn.classList.remove('open'));
+  mn.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mn.classList.remove('open')));
+})();
+</script>
+
+<script src="theme.js"></script>
+</body>
+</html>

@@ -40,6 +40,12 @@
       { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1' },
       { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1' }
     ],
+    filekeepers: [
+      { src: 'ads/FileKeepers_SPACE1.jpg',  hl: 'Space.', meta: 'FileKeepers · Room 1' },
+      { src: 'ads/FileKeepers_SPACE12.jpg', hl: 'Space.', meta: 'FileKeepers · Room 2' },
+      { src: 'ads/FileKeepers_SPACE13.jpg', hl: 'Space.', meta: 'FileKeepers · Room 3' },
+      { src: 'ads/FileKeepers_SPACE14.jpg', hl: 'Space.', meta: 'FileKeepers · Room 4' }
+    ],
     clink: [
       { src: 'CLINK/ws-panel_0000_homepage.jpg',                                                          hl: 'Homepage.',  meta: 'Clink Hostels' },
       { src: 'CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',            hl: 'Clink78.',   meta: 'London' },

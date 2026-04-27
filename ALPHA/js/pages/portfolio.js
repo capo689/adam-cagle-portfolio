@@ -143,6 +143,32 @@
     if (pull) A.reveal(pull, { y: 50, duration: 0.9, start: 'top 82%' });
   }
 
+  function initFileKeepers() {
+    const section = document.getElementById('filekeepers');
+    if (!section) return;
+    revealProjectHead(section);
+
+    const ads = section.querySelectorAll('.ad-grid.g-2 .ad');
+    if (ads.length) {
+      const grid = section.querySelector('.ad-grid.g-2');
+      gsap.set(ads, { y: 50, opacity: 0 });
+      gsap.to(ads, {
+        y: 0, opacity: 1,
+        duration: 0.9, ease: 'power3.out',
+        stagger: { each: 0.1, from: 'start' },
+        scrollTrigger: { trigger: grid, start: 'top 78%', toggleActions: 'play none none reverse' }
+      });
+      ads.forEach((ad) => {
+        const img = ad.querySelector('img');
+        if (img) A.kenBurns(img, { trigger: ad, from: 1.06 });
+      });
+    }
+
+    section.querySelectorAll('.pull').forEach((pull) => {
+      A.reveal(pull, { y: 50, duration: 0.9, start: 'top 82%', trigger: pull });
+    });
+  }
+
   function initFigueroa() {
     const section = document.getElementById('figueroa');
     if (!section) return;
@@ -192,6 +218,7 @@
     initKillerNetwork();
     initFigueroa();
     initClink();
+    initFileKeepers();
     initCloser();
     A.refreshOnLoad();
   }

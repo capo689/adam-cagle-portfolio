@@ -22,8 +22,8 @@
   const xTo = gsap.quickTo(cursor, 'x', { duration: 0.4, ease: 'power3' });
   const yTo = gsap.quickTo(cursor, 'y', { duration: 0.4, ease: 'power3' });
 
-  // Sparkle trail. Throttle spawns so we do not flood the DOM.
-  const SPARKLE_INTERVAL = 35;
+  // Particle trail. Restrained drift, no pop, no glow. Throttle spawns.
+  const SPARKLE_INTERVAL = 22;
   let lastSparkle = 0;
 
   function spawnSparkle(x, y) {
@@ -31,24 +31,21 @@
     s.className = 'sparkle';
     document.body.appendChild(s);
 
-    const angle = Math.random() * Math.PI * 2;
-    const dist  = 18 + Math.random() * 42;
-    const dx    = Math.cos(angle) * dist;
-    const dy    = Math.sin(angle) * dist;
-    const size  = 0.6 + Math.random() * 1.6;
-    const dur   = 0.55 + Math.random() * 0.5;
+    // Small lateral jitter, gentle downward drift, no radial scatter
+    const jx   = (Math.random() - 0.5) * 8;
+    const dy   = 6 + Math.random() * 14;
+    const size = 0.85 + Math.random() * 0.7;
+    const dur  = 0.45 + Math.random() * 0.35;
 
-    gsap.set(s, { x: x, y: y, opacity: 0, scale: 0 });
-    const tl = gsap.timeline({ onComplete: () => s.remove() });
-    tl.to(s, { opacity: 1, scale: size, duration: 0.12, ease: 'power2.out' })
-      .to(s, {
-        x: x + dx,
-        y: y + dy,
-        opacity: 0,
-        scale: 0.1,
-        duration: dur,
-        ease: 'power1.in'
-      });
+    gsap.set(s, { x: x, y: y, opacity: 0.85, scale: size });
+    gsap.to(s, {
+      x: x + jx,
+      y: y + dy,
+      opacity: 0,
+      duration: dur,
+      ease: 'power1.out',
+      onComplete: () => s.remove()
+    });
   }
 
   window.addEventListener('mousemove', (e) => {

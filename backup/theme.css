@@ -3,22 +3,15 @@
    variables win regardless of where this file loads relative
    to each page's inline <style> block.
 ─────────────────────────────── */
-html[data-theme="dark"] {
-  /* WCAG contrast bump: 0.45 → 0.62 raises --fg-3 from ~4.2:1 to ~7.2:1 against #0f0f0e */
-  --fg-3:    rgba(246,243,236,0.62);
-}
-
 html[data-theme="light"] {
   --bg:      #f4efe7;
   --bg-soft: #ebe4d7;
   --fg:      #14110f;
   --fg-2:    rgba(20,17,15,0.7);
-  /* WCAG contrast bump: 0.42 → 0.62 raises --fg-3 to ~4.8:1 against #f4efe7 */
-  --fg-3:    rgba(20,17,15,0.62);
+  --fg-3:    rgba(20,17,15,0.42);
   --rule:    rgba(20,17,15,0.16);
   --rule-2:  rgba(20,17,15,0.09);
-  /* Darkened accent for light mode (was #ff5b1f, only ~2.75:1) → #b8430f ~4.6:1 */
-  --accent:  #b8430f;
+  --accent:  #ff5b1f;
 }
 
 html[data-theme="light"] body {
@@ -77,12 +70,4 @@ html[data-theme="light"] .toggle-pill {
 html[data-theme="light"] .toggle-pill::after {
   transform: translateX(16px);
   background: var(--accent);
-}
-
-/* ─── KEYBOARD FOCUS RING ─── */
-*:focus { outline: none; }
-*:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 2px;
 }

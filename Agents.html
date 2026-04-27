@@ -200,6 +200,20 @@
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--fg-3);
   }
 
+  /* ─── WHITE PAPER BUTTON ─── */
+  .wp-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 16px;
+    padding: 10px 16px;
+    border: 1px solid var(--rule); border-radius: 4px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--fg);
+    background: var(--bg-soft);
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .wp-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--bg); }
+  .wp-btn .arrow { font-family: var(--mono); }
+
   /* ─── STATUS DOT ─── */
   .status-live {
     display: inline-flex; align-items: center; gap: 6px;
@@ -359,6 +373,7 @@
           <span>Position Sizing</span>
         </div>
         <div style="margin-top:16px;"><span class="status-live">Live · Paper Lock</span></div>
+        <a href="ssia-whitepaper.html" target="_blank" rel="noopener" class="wp-btn">Read the White Paper <span class="arrow">→</span></a>
       </aside>
 
       <div class="c-body">

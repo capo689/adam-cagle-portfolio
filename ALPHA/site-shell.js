@@ -1,45 +1,21 @@
 // site-shell.js (ALPHA)
-// Editorial nav rebuild: brand + running head, numbered Roman/italic stacked
-// links, status pill, CTA, theme toggle. Scroll-shrink and progress hairline.
+// Minimal editorial nav: brand, nav links, CTA, theme toggle.
+// Scroll-shrink + accent progress hairline at bottom edge.
 
 (function () {
   const NAV = [
-    { key: 'resume',    href: 'index.html',     label: 'Résumé',    italic: 'résumé'    },
-    { key: 'portfolio', href: 'Portfolio.html', label: 'Portfolio', italic: 'portfolio' },
-    { key: 'agents',    href: 'Agents.html',    label: 'Agents',    italic: 'agents'    },
-    { key: 'books',     href: 'Books.html',     label: 'Books',     italic: 'books'     }
+    { key: 'resume',    href: 'index.html',     label: 'Résumé'    },
+    { key: 'portfolio', href: 'Portfolio.html', label: 'Portfolio' },
+    { key: 'agents',    href: 'Agents.html',    label: 'Agents'    },
+    { key: 'books',     href: 'Books.html',     label: 'Books'     }
   ];
   const EMAIL = 'adamrcagle@gmail.com';
 
-  function navLinks(active, mobile) {
-    return NAV.map((i, n) => {
-      const num = String(n + 1).padStart(2, '0');
-      const isActive = i.key === active;
-      const cls = 'nav-link' + (isActive ? ' is-active' : '');
-      return (
-        '<a href="' + i.href + '" class="' + cls + '"' +
-        (mobile ? '' : ' data-cursor="hover"') + '>' +
-          (mobile ? '' : '<span class="nav-link__num">' + num + '</span>') +
-          '<span class="nav-link__stack">' +
-            '<span class="nav-link__roman">' + i.label + '<span class="dot">.</span></span>' +
-            '<span class="nav-link__italic">' + i.italic + '<span class="dot">.</span></span>' +
-          '</span>' +
-        '</a>'
-      );
+  function navLinks(active) {
+    return NAV.map((i) => {
+      const cls = 'nav-link' + (i.key === active ? ' is-active' : '');
+      return '<a href="' + i.href + '" class="' + cls + '" data-cursor="hover">' + i.label + '</a>';
     }).join('');
-  }
-
-  function brandHTML(active) {
-    const item = NAV.find((i) => i.key === active);
-    const head = item
-      ? '<span class="rail-runninghead"><span class="arrow">&#x25B8;</span><em>' + item.italic + '</em><span class="dot">.</span></span>'
-      : '';
-    return (
-      '<a href="index.html" class="rail-brand" data-cursor="hover">' +
-        '<span class="rail-brand__name">Adam R. Cagle<span class="dot">.</span></span>' +
-        head +
-      '</a>'
-    );
   }
 
   function inject(host, html) {
@@ -53,10 +29,9 @@
       const active = this.getAttribute('active') || '';
       const html =
 '<header class="rail" data-active="' + active + '">' +
-  '<div class="rail-left">' + brandHTML(active) + '</div>' +
-  '<nav class="rail-nav">' + navLinks(active, false) + '</nav>' +
+  '<a href="index.html" class="rail-brand" data-cursor="hover">Adam R. Cagle</a>' +
+  '<nav class="rail-nav">' + navLinks(active) + '</nav>' +
   '<div class="rail-right">' +
-    '<span class="rail-status" aria-label="Available for work"><i></i>Available</span>' +
     '<a class="rail-cta" href="mailto:' + EMAIL + '" data-cursor="email" data-cursor-text="Hello">' +
       'Get in touch <span class="arrow">&rarr;</span>' +
     '</a>' +
@@ -71,7 +46,7 @@
 '</header>' +
 '<div class="mob-nav" id="mob-nav">' +
   '<button class="mob-close" id="mob-close" aria-label="Close menu">&times; close</button>' +
-  '<nav>' + navLinks(active, true) + '</nav>' +
+  '<nav>' + navLinks(active) + '</nav>' +
   '<a class="mob-cta" href="mailto:' + EMAIL + '">Get in touch &rarr;</a>' +
 '</div>';
       inject(this, html);
@@ -93,11 +68,10 @@
       if (!rail) return;
 
       function update() {
-        const y       = window.pageYOffset || document.documentElement.scrollTop || 0;
-        const max     = (document.documentElement.scrollHeight - window.innerHeight) || 1;
-        const ratio   = Math.max(0, Math.min(1, y / max));
-        const shrunk  = y > 80;
-        rail.classList.toggle('is-shrunk', shrunk);
+        const y      = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const max    = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+        const ratio  = Math.max(0, Math.min(1, y / max));
+        rail.classList.toggle('is-shrunk', y > 80);
         rail.style.setProperty('--scroll-progress', (ratio * 100).toFixed(2) + '%');
       }
       update();

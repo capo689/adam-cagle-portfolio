@@ -84,6 +84,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<script src="site-shell.js" defer></script>
 <style>
   :root {
     --bg:      #0f0f0e;
@@ -110,25 +112,6 @@
   }
   ::selection { background: var(--accent); color: var(--bg); }
   a { color: inherit; text-decoration: none; }
-
-  .rail {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    align-items: center; gap: 24px;
-    padding: 16px 32px;
-    font-family: var(--mono); font-size: 13px;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    background: linear-gradient(180deg, rgba(15,15,14,0.95), rgba(15,15,14,0.7) 70%, transparent);
-    backdrop-filter: blur(8px);
-  }
-  .rail .brand { color: var(--fg); font-weight: 500; letter-spacing: 0.14em; }
-  .rail .brand:hover { color: var(--accent); }
-  .rail nav { display: flex; gap: 28px; justify-content: center; }
-  .rail nav a { color: var(--fg-3); transition: color .2s; letter-spacing: 0.1em; }
-  .rail nav a:hover, .rail nav a.active { color: var(--accent); }
-  .rail .right { text-align: right; }
-  .rail .right a { color: var(--fg-3); }
-  .rail .right a:hover { color: var(--accent); }
 
   .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
 
@@ -249,17 +232,6 @@
   .tri-value .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--fg-2); }
   .tri-note { font-size: 13.5px; color: var(--fg-3); line-height: 1.5; }
 
-  .foot {
-    padding: 36px 0 56px; border-top: 1px solid var(--rule);
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
-    font-family: var(--sans); font-size: 14px;
-    color: var(--fg-2); align-items: center;
-  }
-  .foot .center { text-align: center; color: var(--fg-3); }
-  .foot .right { text-align: right; }
-  .foot a { color: var(--fg-2); transition: color .2s; }
-  .foot a:hover { color: var(--accent); }
-
   @media print {
     @page { size: Letter; margin: 0.5in; }
     :root { --bg:#fff; --bg-soft:#f8f8f6; --fg:#0f0f0e; --fg-2:#3b3b38; --fg-3:#7a7771; --rule:#d9d6cd; --rule-2:#e8e5dc; --accent:#c94b18; }
@@ -271,9 +243,6 @@
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
-    .rail { padding: 14px 20px; grid-template-columns: 1fr auto 1fr; }
-    .rail .right { display: none; }
-    .rail nav { gap: 16px; }
     .hero { padding: 110px 0 48px; }
     .hero-sub { grid-template-columns: 1fr; gap: 28px; }
     .section { grid-template-columns: 1fr; gap: 28px; }
@@ -281,70 +250,11 @@
     .caps, .works, .tri { grid-template-columns: 1fr; }
   }
 
-  /* ── mobile nav ── */
-  .hamburger {
-    display: none; background: none; border: none; cursor: pointer;
-    padding: 4px 0; flex-direction: column; gap: 5px; align-items: center;
-  }
-  .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--fg); transition: background .2s; }
-  .hamburger:hover span { background: var(--accent); }
-  .mob-nav {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(15,15,14,0.97); backdrop-filter: blur(16px);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity .3s;
-  }
-  .mob-nav.open { opacity: 1; pointer-events: all; }
-  .mob-nav nav { display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--rule); }
-  .mob-nav nav a {
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--fg-3); padding: 22px 0; border-bottom: 1px solid var(--rule);
-    width: 180px; text-align: center; transition: color .2s;
-  }
-  .mob-nav nav a.active, .mob-nav nav a:hover { color: var(--accent); }
-  .mob-close {
-    position: absolute; top: 22px; right: 28px;
-    background: none; border: none; cursor: pointer;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--fg-3); padding: 8px; transition: color .2s;
-  }
-  .mob-close:hover { color: var(--fg); }
-  @media (max-width: 640px) {
-    .rail { grid-template-columns: 1fr auto; }
-    .rail nav { display: none; }
-    .rail .right { display: flex !important; }
-    .rail-email { display: none !important; }
-    .hamburger { display: flex; }
-  }
 </style>
 </head>
 <body>
 
-<header class="rail">
-  <div class="left"><a href="index.html" class="brand">Adam R. Cagle</a></div>
-  <nav>
-    <a href="index.html" class="active">Résumé</a>
-    <a href="Portfolio.html">Portfolio</a>
-    <a href="Agents.html">Agents</a>
-    <a href="Books.html">Books</a>
-    <!-- <a href="Studio.html">Studio</a> -->
-  </nav>
-  <div class="right" style="display:flex;align-items:center;justify-content:flex-end;gap:20px;">
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"><span class="toggle-icon">◐</span><span class="toggle-pill"></span></button>
-    <a href="mailto:adamrcagle@gmail.com" class="rail-email">adamrcagle@gmail.com</a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
-  </div>
-</header>
-
-<div class="mob-nav" id="mob-nav">
-  <button class="mob-close" id="mob-close" aria-label="Close menu">✕ close</button>
-  <nav>
-    <a href="index.html" class="active">Résumé</a>
-    <a href="Portfolio.html">Portfolio</a>
-    <a href="Agents.html">Agents</a>
-    <a href="Books.html">Books</a>
-  </nav>
-</div>
+<site-header active="resume"></site-header>
 
 <div class="page">
 
@@ -541,25 +451,9 @@
     </div>
   </div>
 
-  <footer class="foot">
-    <div class="left">Adam R. Cagle</div>
-    <div class="center">© 2026</div>
-    <div class="right"><a href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a></div>
-  </footer>
+  <site-footer></site-footer>
 
 </div>
 <script src="theme.js"></script>
-<script>
-(function(){
-  var h=document.getElementById('hamburger'),
-      n=document.getElementById('mob-nav'),
-      c=document.getElementById('mob-close');
-  function openMenu(){ n.classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeMenu(){ n.classList.remove('open'); document.body.style.overflow=''; }
-  if(h) h.addEventListener('click',openMenu);
-  if(c) c.addEventListener('click',closeMenu);
-  if(n) n.addEventListener('click',function(e){ if(e.target===n) closeMenu(); });
-})();
-</script>
 </body>
 </html>

@@ -76,27 +76,29 @@
 
   // ─── Particle pool ───
   const particles = [];
-  const MAX_PARTICLES   = 1200;
-  const SPAWN_INTERVAL  = 4;
-  const PER_SPAWN       = 2;
+  const MAX_PARTICLES   = 1400;
+  const SPAWN_INTERVAL  = 6;
+  const PER_SPAWN       = 4;
   let lastSpawn = 0;
   let mx = -9999, my = -9999;
 
   function spawn(x, y) {
     for (let i = 0; i < PER_SPAWN; i++) {
       if (particles.length >= MAX_PARTICLES) break;
+      // Radial emanation from cursor: every angle equally probable, low speed
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.2 + Math.random() * 0.85;
       particles.push({
-        x: x + (Math.random() - 0.5) * 6,
-        y: y + (Math.random() - 0.5) * 6,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: 0.05 + Math.random() * 0.25,
-        r:  0.5 + Math.random() * 1.3,
+        x: x + (Math.random() - 0.5) * 4,
+        y: y + (Math.random() - 0.5) * 4,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r:  0.45 + Math.random() * 1.1,
         life: 0,
-        maxLife: 700 + Math.random() * 700,
-        // brightness multiplier so each particle is a slightly different orange
-        bv: 0.75 + Math.random() * 0.3,
-        color: null, // null = use accent (theme color)
-        decay: 1     // no velocity decay for trail particles
+        maxLife: 850 + Math.random() * 950,
+        bv: 0.8 + Math.random() * 0.3,
+        color: null,
+        decay: 0.99
       });
     }
   }

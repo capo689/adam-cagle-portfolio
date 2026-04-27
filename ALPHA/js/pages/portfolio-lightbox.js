@@ -63,7 +63,7 @@
   const btnNext  = lb.querySelector('.lb-next');
 
   const pageEl = document.querySelector('.page');
-  const state  = { gal: null, idx: 0, sourceEl: null, animating: false };
+  const state  = { gal: null, idx: 0, sourceEl: null, hiddenImg: null, animating: false };
 
   function setText(idx) {
     const arr = galleries[state.gal];
@@ -155,8 +155,11 @@
     lbImg.src = item.src;
     lbImg.alt = item.hl;
 
-    // Hide the source ad image so the clone is the only copy on screen
+    // Hide the source image so the clone is the only copy on screen.
+    // Track it so close() can guarantee its restoration even if the user
+    // navigates away from the original tile via prev/next.
     srcImg.style.opacity = '0';
+    state.hiddenImg = srcImg;
 
     // Build the flying clone at the source position
     const clone = makeFlyingClone(srcImg, {
@@ -301,7 +304,13 @@
       lb.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('lb-open');
       gsap.set([lb, lbImg, lbCapL, lbCapR, btnClose, btnPrev, btnNext], { clearProps: 'all' });
-      // Restore original tile opacity in case something nudged it
+      // Restore the originally hidden source image (covers Clink, HF, and
+      // any non-grid trigger that does not have a matching tile to flip back to)
+      if (state.hiddenImg) {
+        state.hiddenImg.style.opacity = '';
+        state.hiddenImg = null;
+      }
+      // Safety net: any .ad image we may have nudged
       document.querySelectorAll('.ad img[style*="opacity: 0"]').forEach((img) => {
         img.style.opacity = '';
       });

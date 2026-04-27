@@ -414,14 +414,31 @@
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
-    .hero { padding: 110px 0 48px; }
-    .hero-sub { grid-template-columns: 1fr; gap: 28px; }
-    .campaign { grid-template-columns: 1fr; gap: 28px; }
+    section { padding: 64px 0 16px; }
+    .hero { padding: 100px 0 40px; }
+    .hero-sub { grid-template-columns: 1fr; gap: 24px; align-items: start; }
+    .hero-name { font-size: clamp(40px, 11vw, 72px); }
+    .hero-role { font-size: clamp(18px, 4.5vw, 24px); }
+    .sect-head { font-size: clamp(32px, 9vw, 60px); margin-bottom: 40px; max-width: 22ch; }
+    .sect-label { gap: 10px; flex-wrap: wrap; font-size: 11px; }
+    .campaign { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
     .c-meta { position: static; }
+    .c-meta .client { font-size: clamp(34px, 9vw, 52px); }
     .ad-grid.g-3, .ad-grid.g-featured { grid-template-columns: 1fr 1fr; }
     .ad-grid.g-2 { grid-template-columns: 1fr; }
     .hl-grid, .verbs { grid-template-columns: 1fr; }
     .pull { padding: 32px 24px 28px; }
+    .pull-line { font-size: clamp(28px, 8vw, 48px); max-width: none; }
+    .pull-body { font-size: 16px; }
+    .closer { padding: 80px 0 48px; }
+    .closer .say { font-size: clamp(40px, 12vw, 80px); }
+  }
+  @media (max-width: 520px) {
+    .hero { padding: 90px 0 32px; }
+    .ad-grid.g-3, .ad-grid.g-featured { grid-template-columns: 1fr; }
+    .pull { padding: 28px 20px 24px; }
+    .hl-tile { padding: 24px 22px 20px; min-height: 180px; }
+    .verb-col { padding: 28px 24px 22px; }
   }
 
 </style>

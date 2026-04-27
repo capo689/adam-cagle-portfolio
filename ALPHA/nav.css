@@ -177,3 +177,14 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 .foot .right { text-align: right; }
 .foot a { color: var(--fg-2); transition: color .2s; }
 .foot a:hover { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .foot {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 8px;
+    padding: 28px 0 40px;
+    font-size: 13px;
+  }
+  .foot .center, .foot .right { text-align: center; }
+}

@@ -234,17 +234,26 @@
     .campaign, .pull { break-inside: avoid; }
   }
   @media (max-width: 860px) {
-    .hero-sub { grid-template-columns: 1fr; }
+    .hero { padding: 60px 0 40px; }
+    .hero-sub { grid-template-columns: 1fr; gap: 24px; }
     .hero-stat-row { display: none; }
-    .campaign { grid-template-columns: 1fr; gap: 28px; }
+    .hero-name { font-size: clamp(40px, 11vw, 72px); }
+    .hero-role { font-size: clamp(18px, 4.5vw, 24px); }
+    .sect-head { font-size: clamp(28px, 8vw, 50px); margin-bottom: 28px; }
+    .sect-label { flex-wrap: wrap; gap: 8px; }
+    .campaign { grid-template-columns: 1fr; gap: 28px; padding: 40px 0 48px; }
     .c-meta { position: static; }
+    .c-meta .client { font-size: clamp(22px, 5vw, 28px); }
     .pull { padding: 32px 24px 28px; }
+    .pull-line { font-size: clamp(20px, 5vw, 26px); }
+    .pull-body { font-size: 16px; }
     .ad-grid.g-2, .ad-grid.g-4, .ad-grid.g-featured { grid-template-columns: 1fr; }
     .ad-grid.g-featured .ad:first-child { grid-column: 1; }
+    .wp-btn { padding: 10px 14px; font-size: 10.5px; }
   }
   @media (max-width: 640px) {
     .page { padding-left: 20px; padding-right: 20px; }
-    .hero { padding: 60px 0 40px; }
+    .pull { padding: 28px 20px 24px; }
   }
 </style>
 </head>

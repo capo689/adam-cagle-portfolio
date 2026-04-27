@@ -201,8 +201,9 @@
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
-    .hero { padding: 110px 0 48px; }
-    .book { grid-template-columns: 1fr; gap: 28px; }
+    .hero { padding: 100px 0 40px; }
+    .hero-name { font-size: clamp(22px, 5.5vw, 36px); max-width: none; }
+    .book { grid-template-columns: 1fr; gap: 28px; padding: 56px 0; }
     .book-left {
       position: static;
       display: grid;
@@ -213,8 +214,15 @@
     .book-cover { grid-column: 1; grid-row: 1 / 4; width: 100%; align-self: start; }
     .book-genre { grid-column: 2; grid-row: 1; align-self: start; }
     .book-title { grid-column: 2; grid-row: 2; font-size: clamp(18px, 5vw, 26px); align-self: start; }
-    .book-subtitle { grid-column: 2; grid-row: 3; align-self: start; }
+    .book-subtitle { grid-column: 2; grid-row: 3; align-self: start; font-size: 14px; }
     .quote { padding: 28px 20px 24px; }
+    .quote-pull { font-size: clamp(20px, 5.5vw, 28px); max-width: none; }
+    .quote-body { font-size: 16px; }
+  }
+  @media (max-width: 520px) {
+    .book-left { grid-template-columns: 90px 1fr; column-gap: 16px; }
+    .book-title { font-size: clamp(17px, 5vw, 22px); }
+    .quote { padding: 24px 18px 22px; }
   }
 
 </style>

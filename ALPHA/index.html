@@ -323,11 +323,28 @@
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
-    .hero { padding: 110px 0 48px; }
+    .hero { padding: 100px 0 40px; }
     .hero-sub { grid-template-columns: 1fr; gap: 28px; }
-    .section { grid-template-columns: 1fr; gap: 28px; }
+    .hero-name { font-size: clamp(48px, 13vw, 96px); line-height: 0.88; }
+    .hero-meta { align-self: stretch; }
+    .hero-cta { padding: 16px 18px; }
+    .hero-cta .cta-email { font-size: 14px; }
+    .section { grid-template-columns: 1fr; gap: 28px; padding: 56px 0; }
     .s-head { position: static; }
+    .s-title { white-space: normal; font-size: clamp(28px, 7vw, 38px); }
     .caps, .works, .tri { grid-template-columns: 1fr; }
+    .summary p { margin: 0 0 20px 0; max-width: none; font-size: clamp(18px, 4.5vw, 22px); }
+    .job-body { margin-right: 0; }
+    .work-cta { padding: 18px 20px; }
+    .work-cta .cta-title { font-size: 17px; }
+  }
+  @media (max-width: 520px) {
+    .hero { padding: 90px 0 32px; }
+    .hero-kicker { gap: 10px; font-size: 11px; flex-wrap: wrap; }
+    .hero-cta { gap: 10px; padding: 14px 16px; }
+    .hero-cta .cta-arrow { font-size: 16px; }
+    .cap, .work { padding: 22px; }
+    .job-org { font-size: 10.5px; }
   }
 
 </style>

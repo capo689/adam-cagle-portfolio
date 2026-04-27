@@ -10,28 +10,29 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined') return;
 
-  // ─── Cursor element (3 layers: fill, ring, label) ───
+  // ─── Cursor element (the X-ray blob) and ring sibling ───
   const cursor = document.createElement('div');
   cursor.className = 'cursor';
   cursor.setAttribute('aria-hidden', 'true');
-
-  const fill = document.createElement('div');
-  fill.className = 'cursor__fill';
-  cursor.appendChild(fill);
-
-  const ring = document.createElement('div');
-  ring.className = 'cursor__ring';
-  cursor.appendChild(ring);
 
   const label = document.createElement('span');
   label.className = 'cursor__label';
   cursor.appendChild(label);
 
+  // Separate top-level ring so it stays orange (not caught in the cursor's
+  // mix-blend-mode difference stacking context).
+  const ring = document.createElement('div');
+  ring.className = 'cursor-ring';
+  ring.setAttribute('aria-hidden', 'true');
+
   document.body.appendChild(cursor);
+  document.body.appendChild(ring);
   document.body.classList.add('has-custom-cursor');
 
   const xTo = gsap.quickTo(cursor, 'x', { duration: 0.4, ease: 'power3' });
   const yTo = gsap.quickTo(cursor, 'y', { duration: 0.4, ease: 'power3' });
+  const ringX = gsap.quickTo(ring, 'x', { duration: 0.4, ease: 'power3' });
+  const ringY = gsap.quickTo(ring, 'y', { duration: 0.4, ease: 'power3' });
 
   // ─── Canvas trail ───
   const canvas = document.createElement('canvas');
@@ -101,8 +102,8 @@
   window.addEventListener('mousemove', (e) => {
     mx = e.clientX;
     my = e.clientY;
-    xTo(mx);
-    yTo(my);
+    xTo(mx);   yTo(my);
+    ringX(mx); ringY(my);
 
     const now = performance.now();
     if (now - lastSpawn >= SPAWN_INTERVAL) {
@@ -163,11 +164,13 @@
     if (!state) return;
     el.addEventListener('mouseenter', () => {
       cursor.classList.add('is-' + state);
+      ring.classList.add('is-' + state);
       const text = el.getAttribute('data-cursor-text') || DEFAULT_TEXT[state] || '';
       label.textContent = text;
     });
     el.addEventListener('mouseleave', () => {
       cursor.classList.remove('is-' + state);
+      ring.classList.remove('is-' + state);
       label.textContent = '';
     });
   }

@@ -22,37 +22,20 @@
   top: 0; left: 0;
   width: 14px; height: 14px;
   margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--accent);
   pointer-events: none;
   z-index: 9999;
   will-change: transform;
   transition:
     width .35s cubic-bezier(.2,.7,.2,1),
     height .35s cubic-bezier(.2,.7,.2,1),
-    margin .35s cubic-bezier(.2,.7,.2,1);
+    margin .35s cubic-bezier(.2,.7,.2,1),
+    background .25s;
 }
 
-/* Layer 1: the visible blob.
-   Default (small): solid accent dot.
-   Expanded states: white fill + mix-blend-mode difference for the X-ray. */
-.cursor__fill {
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  background: var(--accent);
-  transition: background .25s;
-}
-
-/* Layer 2: orange ring, hidden by default, appears in expanded states. */
-.cursor__ring {
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid var(--accent);
-  opacity: 0;
-  transition: opacity .25s;
-  pointer-events: none;
-}
-
-/* Layer 3: label text, also blended with difference so it always reads
-   against whatever the X-ray inverts behind it. */
+/* Label sits inside cursor. In expanded state the cursor is white with
+   mix-blend-mode difference, so a black label renders correctly inverted. */
 .cursor__label {
   position: absolute; inset: 0;
   display: grid; place-items: center;
@@ -61,11 +44,26 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #fff;
-  mix-blend-mode: difference;
+  color: #000;
   opacity: 0;
   white-space: nowrap;
   transition: opacity .25s;
+}
+
+/* Separate orange ring, top-level sibling so it is NOT inside the
+   difference-blended cursor. Hidden by default. */
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 96px; height: 96px;
+  margin: -48px 0 0 -48px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .25s, transform .35s cubic-bezier(.2,.7,.2,1), width .35s, height .35s, margin .35s;
 }
 
 /* ─── EXPANDED STATES ─── */
@@ -74,35 +72,23 @@
 .cursor.is-drag {
   width: 96px; height: 96px;
   margin: -48px 0 0 -48px;
+  background: #fff;
+  mix-blend-mode: difference;
 }
 
 .cursor.is-external,
 .cursor.is-email {
   width: 84px; height: 84px;
   margin: -42px 0 0 -42px;
+  background: #fff;
+  mix-blend-mode: difference;
 }
 
 .cursor.is-hover {
   width: 36px; height: 36px;
   margin: -18px 0 0 -18px;
-}
-
-/* In any expanded state: switch fill to white + difference, show ring + label */
-.cursor.is-view .cursor__fill,
-.cursor.is-drag .cursor__fill,
-.cursor.is-external .cursor__fill,
-.cursor.is-email .cursor__fill,
-.cursor.is-hover .cursor__fill {
   background: #fff;
   mix-blend-mode: difference;
-}
-
-.cursor.is-view .cursor__ring,
-.cursor.is-drag .cursor__ring,
-.cursor.is-external .cursor__ring,
-.cursor.is-email .cursor__ring,
-.cursor.is-hover .cursor__ring {
-  opacity: 1;
 }
 
 .cursor.is-view .cursor__label,
@@ -110,6 +96,22 @@
 .cursor.is-external .cursor__label,
 .cursor.is-email .cursor__label {
   opacity: 1;
+}
+
+/* Ring sizes track the cursor sizes */
+.cursor-ring.is-view,
+.cursor-ring.is-drag {
+  width: 96px; height: 96px; margin: -48px 0 0 -48px;
+  opacity: 1; transform: scale(1);
+}
+.cursor-ring.is-external,
+.cursor-ring.is-email {
+  width: 84px; height: 84px; margin: -42px 0 0 -42px;
+  opacity: 1; transform: scale(1);
+}
+.cursor-ring.is-hover {
+  width: 36px; height: 36px; margin: -18px 0 0 -18px;
+  opacity: 1; transform: scale(1);
 }
 
 /* ─── CANVAS PARTICLE TRAIL ─── */

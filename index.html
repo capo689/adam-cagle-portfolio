@@ -144,13 +144,83 @@
     color: var(--fg-2); max-width: 38ch;
   }
   .hero-role em { color: var(--accent); font-style: italic; }
-  .hero-meta { display: grid; gap: 0; font-family: var(--mono); font-size: 13px; align-content: end; align-self: end; }
-  .hero-meta a, .hero-meta span {
-    display: flex; align-items: baseline; gap: 10px;
-    padding: 10px 0; border-top: 1px solid var(--rule);
+
+  /* ─── HERO META: status + CTA + location ─── */
+  .hero-meta { display: flex; flex-direction: column; gap: 16px; align-self: end; }
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #4ade80;
   }
-  .hero-meta a:hover { color: var(--accent); }
-  .hero-meta .k { color: var(--fg-3); font-size: 10.5px; letter-spacing: 0.18em; min-width: 68px; }
+  .hero-status::before {
+    content: ''; display: block; width: 7px; height: 7px; border-radius: 50%;
+    background: #4ade80; box-shadow: 0 0 8px #4ade80;
+    animation: pulse-live 2s ease-in-out infinite;
+  }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .hero-cta {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 18px 22px;
+    border: 1px solid var(--rule); border-radius: 6px;
+    background: var(--bg-soft);
+    transition: border-color .25s, background .25s;
+  }
+  .hero-cta:hover { border-color: var(--accent); background: var(--bg); }
+  .hero-cta:hover .cta-arrow { transform: translateX(4px); color: var(--accent); }
+  .hero-cta .cta-stack { display: flex; flex-direction: column; gap: 4px; }
+  .hero-cta .cta-label {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+  }
+  .hero-cta .cta-email {
+    font-family: var(--mono); font-size: 14px; color: var(--fg);
+  }
+  .hero-cta .cta-arrow {
+    font-family: var(--mono); font-size: 18px; color: var(--fg-3);
+    transition: transform .25s, color .25s;
+  }
+  .hero-loc {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3);
+    padding-left: 22px;
+  }
+
+  /* ─── CREDENTIALS STRIP ─── */
+  .hero-creds {
+    margin-top: 56px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px;
+    background: var(--rule);
+  }
+  .cred {
+    background: var(--bg);
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 22px 20px;
+  }
+  .cred .num {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(28px, 3vw, 42px);
+    letter-spacing: -0.03em; line-height: 1; color: var(--fg);
+  }
+  .cred .num.it {
+    font-family: var(--italic); font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+  .cred .label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-3);
+  }
+  @media (max-width: 960px) {
+    .hero-creds { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .hero-creds { grid-template-columns: repeat(2, 1fr); }
+  }
 
   .section {
     display: grid; grid-template-columns: 260px 1fr;
@@ -275,9 +345,25 @@
         Creative Director &amp; Lead Copywriter.<br><em>AI Agents</em>, Brands, Strategy, Pitches, Launches.
       </div>
       <div class="hero-meta">
-        <span><span class="k">Based</span><span>Bend, Oregon</span></span>
-        <a href="mailto:adamrcagle@gmail.com"><span class="k">Email</span><span>adamrcagle@gmail.com</span></a>
+        <span class="hero-status">Available for Work</span>
+        <a href="mailto:adamrcagle@gmail.com" class="hero-cta">
+          <span class="cta-stack">
+            <span class="cta-label">Get in touch</span>
+            <span class="cta-email">adamrcagle@gmail.com</span>
+          </span>
+          <span class="cta-arrow">→</span>
+        </a>
+        <span class="hero-loc">Bend, Oregon · Available worldwide</span>
       </div>
+    </div>
+
+    <div class="hero-creds">
+      <div class="cred"><span class="num">25<span style="color:var(--accent);">+</span></span><span class="label">Years</span></div>
+      <div class="cred"><span class="num">60<span style="color:var(--accent);">+</span></span><span class="label">Brands</span></div>
+      <div class="cred"><span class="num">07</span><span class="label">Agents Shipped</span></div>
+      <div class="cred"><span class="num it">Clio</span><span class="label">Award</span></div>
+      <div class="cred"><span class="num it">Ad Club</span><span class="label">Award</span></div>
+      <div class="cred"><span class="num it">Webby</span><span class="label">Award</span></div>
     </div>
   </div>
 

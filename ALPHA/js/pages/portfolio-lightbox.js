@@ -198,8 +198,8 @@
     tl.to(clone, {
       rotationX: -5,
       scale: 1.02,
-      duration: 0.18,
-      ease: 'power2.in'
+      duration: 0.28,
+      ease: 'sine.in'
     });
 
     // Fold out: top tilts forward, while traveling to center and growing.
@@ -212,31 +212,31 @@
       rotationX: 22,
       z: 220,
       scale: 1,
-      duration: 0.6,
-      ease: 'power2.out',
+      duration: 0.78,
+      ease: 'power3.inOut',
       boxShadow: '0 40px 90px rgba(0,0,0,0.55)'
-    }, '<+0.18');
+    }, '<+0.24');
 
     // Unfold flat: rotationX back to 0, z back to 0, settling sharp
     tl.to(clone, {
       rotationX: 0,
       z: 0,
-      duration: 0.45,
-      ease: 'power3.out'
-    }, '>-0.1');
+      duration: 0.6,
+      ease: 'expo.out'
+    }, '>-0.18');
 
     // Subtle motion blur during the fold travel
     tl.to(clone, {
       filter: 'blur(2.2px)',
-      duration: 0.25,
-      ease: 'power2.in'
-    }, '<-0.45');
+      duration: 0.32,
+      ease: 'sine.inOut'
+    }, '<-0.65');
 
     tl.to(clone, {
       filter: 'blur(0px)',
-      duration: 0.4,
-      ease: 'power2.out'
-    }, '>-0.05');
+      duration: 0.5,
+      ease: 'sine.out'
+    }, '>-0.1');
 
     // Chrome late: caption + close + arrows
     tl.fromTo([lbCapL, lbCapR],

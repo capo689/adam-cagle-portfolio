@@ -75,8 +75,12 @@
   .hero-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
   .hero-name .dot { color: var(--accent); }
   .hero-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
-  .hero-role { font-size: 16px; line-height: 1.6; color: var(--fg-2); }
-  .hero-role em { font-family: var(--italic); font-style: italic; color: var(--fg); }
+  .hero-role {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.3;
+    color: var(--fg-2); max-width: 36ch; text-wrap: balance;
+  }
+  .hero-role em { color: var(--accent); font-style: italic; }
   .hero-stat-row {
     display: flex; flex-direction: column; gap: 12px;
     padding: 20px; border: 1px solid var(--rule); border-radius: 4px;

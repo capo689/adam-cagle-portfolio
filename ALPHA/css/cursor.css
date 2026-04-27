@@ -81,10 +81,10 @@
 .sparkle {
   position: fixed;
   top: 0; left: 0;
-  width: 3px; height: 3px;
-  margin: -1.5px 0 0 -1.5px;
+  width: 2px; height: 2px;
+  margin: -1px 0 0 -1px;
   border-radius: 50%;
-  background: rgba(232,236,242,0.75);
+  background: rgba(232,236,242,0.8);
   pointer-events: none;
   mix-blend-mode: screen;
   z-index: 9998;

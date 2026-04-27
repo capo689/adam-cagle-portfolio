@@ -22,8 +22,8 @@
   const xTo = gsap.quickTo(cursor, 'x', { duration: 0.4, ease: 'power3' });
   const yTo = gsap.quickTo(cursor, 'y', { duration: 0.4, ease: 'power3' });
 
-  // Particle trail. Restrained drift, no pop, no glow. Throttle spawns.
-  const SPARKLE_INTERVAL = 22;
+  // Tiny particle trail. Higher density, smaller dots.
+  const SPARKLE_INTERVAL = 10;
   let lastSparkle = 0;
 
   function spawnSparkle(x, y) {
@@ -31,10 +31,9 @@
     s.className = 'sparkle';
     document.body.appendChild(s);
 
-    // Small lateral jitter, gentle downward drift, no radial scatter
     const jx   = (Math.random() - 0.5) * 8;
     const dy   = 6 + Math.random() * 14;
-    const size = 0.85 + Math.random() * 0.7;
+    const size = 0.55 + Math.random() * 0.7;
     const dur  = 0.45 + Math.random() * 0.35;
 
     gsap.set(s, { x: x, y: y, opacity: 0.85, scale: size });

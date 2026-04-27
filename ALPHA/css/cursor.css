@@ -23,8 +23,7 @@
   width: 14px; height: 14px;
   margin: -7px 0 0 -7px;
   border-radius: 50%;
-  background: #fff;
-  mix-blend-mode: difference;
+  background: var(--accent);
   pointer-events: none;
   z-index: 9999;
   will-change: transform;
@@ -44,7 +43,7 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #000;
+  color: #fff;
   opacity: 0;
   white-space: nowrap;
   transition: opacity .25s;

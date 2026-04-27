@@ -47,11 +47,27 @@
   resize();
   window.addEventListener('resize', resize);
 
+  // ─── Accent color sampling (theme-aware) ───
+  let accent = { r: 255, g: 91, b: 31 };
+  function readAccent() {
+    const v = getComputedStyle(document.documentElement)
+                .getPropertyValue('--accent').trim();
+    const m = v.match(/^#([0-9a-f]{6})$/i);
+    if (m) {
+      const n = parseInt(m[1], 16);
+      accent = { r: (n >> 16) & 0xff, g: (n >> 8) & 0xff, b: n & 0xff };
+    }
+  }
+  readAccent();
+  new MutationObserver(readAccent).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-theme']
+  });
+
   // ─── Particle pool ───
   const particles = [];
   const MAX_PARTICLES   = 500;
-  const SPAWN_INTERVAL  = 4;   // ms between spawn pulses
-  const PER_SPAWN       = 2;   // particles emitted per pulse
+  const SPAWN_INTERVAL  = 4;
+  const PER_SPAWN       = 2;
   let lastSpawn = 0;
   let mx = -9999, my = -9999;
 
@@ -66,7 +82,8 @@
         r:  0.5 + Math.random() * 1.3,
         life: 0,
         maxLife: 700 + Math.random() * 700,
-        b: 215 + Math.floor(Math.random() * 40)
+        // brightness multiplier so each particle is a slightly different orange
+        bv: 0.75 + Math.random() * 0.3
       });
     }
   }
@@ -104,11 +121,15 @@
       p.y += p.vy;
 
       const t     = p.life / p.maxLife;
-      const alpha = (1 - t) * 0.85;
+      const alpha = (1 - t) * 0.9;
+
+      const r = Math.round(accent.r * p.bv);
+      const g = Math.round(accent.g * p.bv);
+      const b = Math.round(accent.b * p.bv);
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + p.b + ',' + (p.b + 6) + ',' + (p.b + 14) + ',' + alpha + ')';
+      ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
       ctx.fill();
     }
   });

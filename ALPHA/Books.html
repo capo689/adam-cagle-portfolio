@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Books — Adam R. Cagle</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
+<link rel="icon" type="image/png" href="cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- SEO -->
+<meta name="description" content="Books by Adam R. Cagle — Ship Happens, Vampire's Babysitter, What Worked For Me, The Deal, The Ledger. Historical fiction, horror, fitness, and philosophy.">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<link rel="canonical" href="https://adamcagle.com/Books.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="Books — Adam R. Cagle">
+<meta property="og:description" content="Ottoman Empire vampires, zombie comedies, workout manifestos, and arguments about civilization. All written because they popped into my head.">
+<meta property="og:url" content="https://adamcagle.com/Books.html">
+<meta property="og:image" content="https://adamcagle.com/books/ship-happens.png">
+<meta property="og:image:alt" content="Ship Happens — A Chad Cruz Zombie Adventure by Adam R. Cagle">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Books — Adam R. Cagle">
+<meta name="twitter:description" content="Ottoman Empire vampires, zombie comedies, workout manifestos, and arguments about civilization.">
+<meta name="twitter:image" content="https://adamcagle.com/books/ship-happens.png">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Books by Adam R. Cagle",
+  "url": "https://adamcagle.com/Books.html",
+  "author": { "@type": "Person", "name": "Adam R. Cagle", "url": "https://adamcagle.com" },
+  "hasPart": [
+    {
+      "@type": "Book",
+      "name": "Ship Happens: A Chad Cruz Zombie Adventure",
+      "author": { "@type": "Person", "name": "Adam R. Cagle" },
+      "genre": ["Horror", "Comedy", "Zombie Fiction"],
+      "image": "https://adamcagle.com/books/ship-happens.png"
+    },
+    {
+      "@type": "Book",
+      "name": "Vampire's Babysitter",
+      "author": { "@type": "Person", "name": "Adam R. Cagle" },
+      "genre": ["Historical Fiction", "Horror"],
+      "description": "Set in the Ottoman Empire. A vampire as old as rivers and mountain passes.",
+      "image": "https://adamcagle.com/Vampire.png"
+    },
+    {
+      "@type": "Book",
+      "name": "What Worked For Me",
+      "author": { "@type": "Person", "name": "Adam R. Cagle" },
+      "genre": ["Nonfiction", "Fitness"],
+      "image": "https://adamcagle.com/workout.png"
+    },
+    {
+      "@type": "Book",
+      "name": "The Deal",
+      "author": { "@type": "Person", "name": "Adam R. Cagle" },
+      "genre": ["Nonfiction", "Philosophy", "Civilization"],
+      "image": "https://adamcagle.com/books/the-deal.jpg"
+    },
+    {
+      "@type": "Book",
+      "name": "The Ledger",
+      "author": { "@type": "Person", "name": "Adam R. Cagle" },
+      "genre": ["Nonfiction", "Philosophy"],
+      "image": "https://adamcagle.com/books/the-ledger.jpg"
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<script src="site-shell.js" defer></script>
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #ff5b1f;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02"; overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 130px 0 64px; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--fg-3); margin-bottom: 32px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .ac { color: var(--accent); }
+  .hero-name {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95; letter-spacing: -0.03em; margin: 0;
+  }
+  .hero-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -0.03em; }
+  .hero-sub {
+    margin-top: 32px;
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.3;
+    color: var(--fg-2); max-width: 36ch; text-wrap: balance;
+  }
+  .hero-sub em { color: var(--accent); font-style: italic; }
+
+  /* ─── BOOK ENTRY ─── */
+  .book {
+    display: grid; grid-template-columns: 280px 1fr;
+    gap: 56px; padding: 72px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  /* left column */
+  .book-left { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 88px; }
+  .book-genre {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  }
+  .book-cover {
+    border: 1px solid var(--rule); border-radius: 4px;
+    overflow: hidden; background: var(--bg-soft);
+  }
+  .book-cover img { display: block; width: 100%; height: auto; transition: transform .5s ease; }
+  .book-cover:hover img { transform: scale(1.025); }
+  .book-title {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(22px, 2.2vw, 32px);
+    line-height: 1; letter-spacing: -0.03em; margin: 0;
+  }
+  .book-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .book-subtitle {
+    font-family: var(--italic); font-style: italic;
+    font-size: 15px; line-height: 1.4; color: var(--fg-3); margin: -6px 0 0;
+  }
+
+  /* right column */
+  .book-right { display: flex; flex-direction: column; gap: 20px; }
+
+  /* quote cards */
+  .quote {
+    background: var(--bg-soft); border: 1px solid var(--rule);
+    border-radius: 6px; padding: 32px 36px 28px; position: relative;
+  }
+  .quote-tag {
+    position: absolute; top: -10px; left: 20px;
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
+    background: var(--bg); padding: 2px 10px;
+    border: 1px solid var(--rule); border-radius: 3px;
+  }
+  .quote-pull {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(22px, 2.2vw, 32px);
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--fg); margin: 0 0 18px; max-width: 34ch;
+  }
+  .quote-pull em { color: var(--accent); font-style: italic; }
+  .quote-body {
+    font-size: 17px; line-height: 1.65; color: var(--fg-2); max-width: 64ch;
+    padding-top: 16px; border-top: 1px solid var(--rule-2);
+  }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .hero { padding: 110px 0 48px; }
+    .book { grid-template-columns: 1fr; gap: 28px; }
+    .book-left {
+      position: static;
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      grid-template-rows: auto auto auto;
+      column-gap: 20px; row-gap: 6px;
+    }
+    .book-cover { grid-column: 1; grid-row: 1 / 4; width: 100%; align-self: start; }
+    .book-genre { grid-column: 2; grid-row: 1; align-self: start; }
+    .book-title { grid-column: 2; grid-row: 2; font-size: clamp(18px, 5vw, 26px); align-self: start; }
+    .book-subtitle { grid-column: 2; grid-row: 3; align-self: start; }
+    .quote { padding: 28px 20px 24px; }
+  }
+
+</style>
+</head>
+<body>
+
+<site-header active="books"></site-header>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span><span class="ac">//</span>
+      <span>Books</span><span>·</span>
+      <span>Fiction &amp; Nonfiction</span>
+    </div>
+    <h1 class="hero-name">I write therefore I am...<br><span class="it">probably not coming</span><br>to your party.</h1>
+    <p class="hero-sub">Vampires of the Ottoman Empire, workout manifestos, zombie comedies, and arguments about <em>civilization</em> — all written because they popped into my head and wouldn't go away.
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       01 — SHIP HAPPENS
+  ════════════════════════════════════════════════ -->
+  <div class="book" id="ship-happens">
+    <div class="book-left">
+      <span class="book-genre">// Fiction · Comedy</span>
+      <div class="book-cover">
+        <img src="books/ship-happens.png" alt="Ship Happens — A Chad Cruz Zombie Adventure" />
+      </div>
+      <h2 class="book-title">Ship <span class="it">Happens</span></h2>
+      <p class="book-subtitle">A Chad Cruz Zombie Adventure</p>
+    </div>
+    <div class="book-right">
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">It sounded like either a <em>discount exorcism</em> or a restaurant where the appetizers scream.</p>
+        <div class="quote-body">The Dominion's Pizzeria delivery topper on my roof was held in place by bungee cords and optimism. It read "DOMINION'S ... WE DELIVER!" in letters that had faded from red to the pinkish hue of a surrendered dream. The "O" had fallen off months ago, so from certain angles it read "DOMINI N'S," which sounded like either a discount exorcism or a restaurant where the appetizers scream.</div>
+      </div>
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">The English language does not contain the <em>phonetic architecture</em> necessary.</p>
+        <div class="quote-body">I don't know how to describe the fart. I don't have the vocabulary. Webster doesn't have the vocabulary. The English language, which has given us Shakespeare and Hemingway and the word "moist," does not contain the phonetic architecture necessary to capture what emerged from the chief engineer's backside in the half-second after the Wrench of Doom made contact with his reproductive geography.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       02 — VAMPIRE'S BABYSITTER
+  ════════════════════════════════════════════════ -->
+  <div class="book" id="vampires-babysitter">
+    <div class="book-left">
+      <span class="book-genre">// Historical Fiction · Horror</span>
+      <div class="book-cover">
+        <img src="Vampire.png" alt="Vampire's Babysitter — Adam R. Cagle" />
+      </div>
+      <h2 class="book-title">Vampire's <span class="it">Babysitter</span></h2>
+      <p class="book-subtitle">Historical Fiction · Horror</p>
+    </div>
+    <div class="book-right">
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">The dome of the Hagia Sophia floated in the failing light like something placed there by a <em>hand larger than any hand that builds.</em></p>
+        <div class="quote-body">The city sat on its peninsula like something that had grown out of the hill rather than been built on it. The domes caught the evening light, the golden-low light of late November on salt water, the kind that turns old stone warm from the outside in. The walls ran across the back of the peninsula in a line that was too long, too regular, too solid to be anything but a statement of permanent intent. Above everything, the dome of the Hagia Sophia floated in the failing light like something placed there by a hand larger than any hand that builds.</div>
+      </div>
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">He was old in the way that rivers are old, <em>or mountain passes.</em></p>
+        <div class="quote-body">The man beside me was not old in the way that old men are old. He was old in the way that rivers are old, or mountain passes. A thing that had simply been here through everything, accumulating, not aging, continuing. And the creature who had made Orban, and who had made me, was older still. The plan we were inside was a plan made by something that thought in centuries the way I thought in days.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       03 — WHAT WORKED FOR ME
+  ════════════════════════════════════════════════ -->
+  <div class="book" id="what-worked-for-me">
+    <div class="book-left">
+      <span class="book-genre">// Nonfiction · Fitness</span>
+      <div class="book-cover">
+        <img src="workout.png" alt="What Worked For Me — Adam R. Cagle" />
+      </div>
+      <h2 class="book-title">What Worked <span class="it">For Me</span></h2>
+      <p class="book-subtitle">Fitness · Nonfiction</p>
+    </div>
+    <div class="book-right">
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">I simply laugh at the pathetic attempt to weasel out of what's <em>coming.</em></p>
+        <div class="quote-body">Sometimes, when I wake up to work out, I don't want to. If I am acting as one entity, I end up participating in the discussion about whether I should or should not work out, with my mind presenting amazing facts like it's cold outside, my leg hurts, I worked out yesterday. If I separate myself from the rest, then I don't engage in that argument. I simply laugh at the pathetic attempt to weasel out of what's coming and lace up those workout shoes.</div>
+      </div>
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">Sometimes <em>the path</em> is the path.</p>
+        <div class="quote-body">By the time he was five, he could see the world around him. When he sat down on the bed next to me, poked me in the belly, and told me I was fat, it was that moment where I let go completely of everything and just started over. I do occasionally look back and wish I had found this path in my twenties, avoided a whole lot of pain, and reaped the life rewards that come with knowing my path and following it. But one look at my son, my life, and what I have now, and I know I would have gladly gone through much worse to get here, and sometimes the path is the path.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       04 — THE DEAL
+  ════════════════════════════════════════════════ -->
+  <div class="book" id="the-deal">
+    <div class="book-left">
+      <span class="book-genre">// Nonfiction</span>
+      <div class="book-cover">
+        <img src="books/the-deal.jpg" alt="The Deal — Every Civilization Runs on a Deal. It's Time to Renegotiate." />
+      </div>
+      <h2 class="book-title">The <span class="it">Deal</span></h2>
+      <p class="book-subtitle">Every Civilization Runs on a Deal. It's Time to Renegotiate.</p>
+    </div>
+    <div class="book-right">
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">Every time, the tool that solved the problem became the tool that <em>locked the door.</em></p>
+        <div class="quote-body">Agriculture did this with food. Writing did this with memory. Money did this with exchange. Law did this with justice. Every time, the tool that solved the problem became the tool that locked the door. And every time, the people inside the room were the last to notice, because from the inside, a room with good lighting and a well-stocked pantry does not feel like a trap.</div>
+      </div>
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">The tool has become <em>its own operator.</em> That has never happened before.</p>
+        <div class="quote-body">Every previous technology of control required human operators. Scribes had to write the tablets. Tax collectors had to visit the farms. Judges had to hear the cases. Engineers had to adjust the algorithms. AI systems adjust their own weights, billions of times per hour, without waiting for anyone to tell them what to do next. The tool has become its own operator. That has never happened before, and it changes everything about how fast the deal can tighten.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       05 — THE LEDGER
+  ════════════════════════════════════════════════ -->
+  <div class="book" id="the-ledger">
+    <div class="book-left">
+      <span class="book-genre">// Nonfiction</span>
+      <div class="book-cover">
+        <img src="books/the-ledger.jpg" alt="The Ledger — An Accounting of Gender Roles" />
+      </div>
+      <h2 class="book-title">The <span class="it">Ledger</span></h2>
+      <p class="book-subtitle">An Accounting of Gender Roles</p>
+    </div>
+    <div class="book-right">
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">Rigid role assignment in a group that small is not a philosophy. It is a <em>death sentence.</em></p>
+        <div class="quote-body">A band of thirty people, moving across a landscape where food appears in patches and disappears with the seasons, cannot afford passengers. Every adult who can carry, dig, track, or butcher needs to do it. Rigid role assignment in a group that small is not a philosophy. It is a death sentence.</div>
+      </div>
+
+      <div class="quote">
+        <span class="quote-tag">From the Book</span>
+        <p class="quote-pull">The debate about whether women <em>could</em> do the work was taking place while women were <em>doing</em> the work.</p>
+        <div class="quote-body">In early 1944, while Congress debated whether women were physically and psychologically suited for military aviation, WASP pilots were flying the B-29 Superfortress. The debate about whether women could do the work was taking place while women were doing the work.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <site-footer></site-footer>
+
+</div>
+<script src="theme.js"></script>
+</body>
+</html>

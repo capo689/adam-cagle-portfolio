@@ -175,63 +175,68 @@
     // Compute final rect from the natural size of the source image
     const tgt = targetRect(srcImg.naturalWidth, srcImg.naturalHeight);
 
-    // Master timeline: anticipation, then breakthrough
+    // Master timeline: anticipation, then 3D fold to fullscreen
     const tl = gsap.timeline({
       onComplete: () => {
         // Settle: swap clone for the real lightbox image so prev/next can work
         lbImg.src = item.src;
-        gsap.set(lbImg, { opacity: 1, x: 0, y: 0, scale: 1, filter: 'none' });
+        gsap.set(lbImg, { opacity: 1, x: 0, y: 0, scale: 1, filter: 'none', rotationX: 0, z: 0 });
         clone.remove();
-        // The original ad stays opacity:0 while lb is open, body.lb-open hides scrolling
         state.animating = false;
       }
     });
 
-    // Anticipation: small in-place pop with a touch of blur
+    // Establish 3D context. Hinge from the bottom edge so the top of the
+    // image is what tilts forward toward the viewer.
+    gsap.set(clone, {
+      transformPerspective: 1300,
+      transformStyle: 'preserve-3d',
+      transformOrigin: '50% 100%'
+    });
+
+    // Anticipation: top edge tips slightly AWAY from viewer (negative rotationX)
     tl.to(clone, {
-      scale: 1.04,
-      filter: 'blur(0.4px)',
-      duration: 0.16,
+      rotationX: -5,
+      scale: 1.02,
+      duration: 0.18,
       ease: 'power2.in'
     });
 
-    // Burst at launch: tiny orange + silver dots erupt from across the
-    // ad's full surface, flying outward.
-    tl.add(() => {
-      if (typeof window.cursorBurst === 'function') {
-        window.cursorBurst({
-          rect: {
-            top: startRect.top, left: startRect.left,
-            width: startRect.width, height: startRect.height
-          },
-          count: 320
-        });
-      }
-    });
-
-    // Breakthrough: travel + size up, with peak motion blur mid-flight
+    // Fold out: top tilts forward, while traveling to center and growing.
+    // The travel and the tilt-forward run together.
     tl.to(clone, {
       top:    tgt.top,
       left:   tgt.left,
       width:  tgt.width,
       height: tgt.height,
-      scale:  1,
-      duration: 0.85,
-      ease: 'power3.inOut',
-      boxShadow: '0 30px 80px rgba(0,0,0,0.55)'
-    }, '<');
+      rotationX: 22,
+      z: 220,
+      scale: 1,
+      duration: 0.6,
+      ease: 'power2.out',
+      boxShadow: '0 40px 90px rgba(0,0,0,0.55)'
+    }, '<+0.18');
 
+    // Unfold flat: rotationX back to 0, z back to 0, settling sharp
     tl.to(clone, {
-      filter: 'blur(3px)',
-      duration: 0.3,
+      rotationX: 0,
+      z: 0,
+      duration: 0.45,
+      ease: 'power3.out'
+    }, '>-0.1');
+
+    // Subtle motion blur during the fold travel
+    tl.to(clone, {
+      filter: 'blur(2.2px)',
+      duration: 0.25,
       ease: 'power2.in'
-    }, '<+0.05');
+    }, '<-0.45');
 
     tl.to(clone, {
       filter: 'blur(0px)',
       duration: 0.4,
       ease: 'power2.out'
-    }, '>-0.1');
+    }, '>-0.05');
 
     // Chrome late: caption + close + arrows
     tl.fromTo([lbCapL, lbCapR],

@@ -1,14 +1,16 @@
 // cursor.js
-// Custom cursor for adamcagle.com ALPHA. Reads data-cursor on hover targets to
-// switch states. Bails on touch devices, reduced-motion preference, or if GSAP
-// has not loaded.
+// Custom cursor + canvas particle trail for adamcagle.com ALPHA.
+// Cursor element stays DOM (one node, mix-blend-mode does the work).
+// Trail particles render to a single full-viewport canvas so we can run
+// hundreds of them cheaply.
+// Bails on touch devices, reduced-motion preference, or if GSAP is missing.
 
 (function () {
   if (!window.matchMedia('(pointer: fine)').matches) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined') return;
 
-  // Build the cursor element
+  // ─── Cursor element ───
   const cursor = document.createElement('div');
   cursor.className = 'cursor';
   cursor.setAttribute('aria-hidden', 'true');
@@ -18,47 +20,100 @@
   document.body.appendChild(cursor);
   document.body.classList.add('has-custom-cursor');
 
-  // Smooth lag via GSAP quickTo
   const xTo = gsap.quickTo(cursor, 'x', { duration: 0.4, ease: 'power3' });
   const yTo = gsap.quickTo(cursor, 'y', { duration: 0.4, ease: 'power3' });
 
-  // Tiny particle trail. Higher density, smaller dots.
-  const SPARKLE_INTERVAL = 10;
-  let lastSparkle = 0;
+  // ─── Canvas trail ───
+  const canvas = document.createElement('canvas');
+  canvas.className = 'cursor-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
 
-  function spawnSparkle(x, y) {
-    const s = document.createElement('div');
-    s.className = 'sparkle';
-    document.body.appendChild(s);
+  let dpr = Math.max(1, window.devicePixelRatio || 1);
+  let vw  = window.innerWidth;
+  let vh  = window.innerHeight;
 
-    const jx   = (Math.random() - 0.5) * 8;
-    const dy   = 6 + Math.random() * 14;
-    const size = 0.55 + Math.random() * 0.7;
-    const dur  = 0.45 + Math.random() * 0.35;
+  function resize() {
+    dpr = Math.max(1, window.devicePixelRatio || 1);
+    vw  = window.innerWidth;
+    vh  = window.innerHeight;
+    canvas.width  = vw * dpr;
+    canvas.height = vh * dpr;
+    canvas.style.width  = vw + 'px';
+    canvas.style.height = vh + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
 
-    gsap.set(s, { x: x, y: y, opacity: 0.85, scale: size });
-    gsap.to(s, {
-      x: x + jx,
-      y: y + dy,
-      opacity: 0,
-      duration: dur,
-      ease: 'power1.out',
-      onComplete: () => s.remove()
-    });
+  // ─── Particle pool ───
+  const particles = [];
+  const MAX_PARTICLES   = 500;
+  const SPAWN_INTERVAL  = 4;   // ms between spawn pulses
+  const PER_SPAWN       = 2;   // particles emitted per pulse
+  let lastSpawn = 0;
+  let mx = -9999, my = -9999;
+
+  function spawn(x, y) {
+    for (let i = 0; i < PER_SPAWN; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      particles.push({
+        x: x + (Math.random() - 0.5) * 6,
+        y: y + (Math.random() - 0.5) * 6,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: 0.05 + Math.random() * 0.25,
+        r:  0.5 + Math.random() * 1.3,
+        life: 0,
+        maxLife: 700 + Math.random() * 700,
+        b: 215 + Math.floor(Math.random() * 40)
+      });
+    }
   }
 
   window.addEventListener('mousemove', (e) => {
-    xTo(e.clientX);
-    yTo(e.clientY);
+    mx = e.clientX;
+    my = e.clientY;
+    xTo(mx);
+    yTo(my);
 
     const now = performance.now();
-    if (now - lastSparkle > SPARKLE_INTERVAL) {
-      lastSparkle = now;
-      spawnSparkle(e.clientX, e.clientY);
+    if (now - lastSpawn >= SPAWN_INTERVAL) {
+      lastSpawn = now;
+      spawn(mx, my);
     }
   });
 
-  // Default label per state if data-cursor-text is absent
+  // ─── Render loop on GSAP ticker ───
+  let lastTime = performance.now();
+  gsap.ticker.add((time) => {
+    const now = time * 1000;
+    const dt  = Math.min(50, now - lastTime);
+    lastTime = now;
+
+    ctx.clearRect(0, 0, vw, vh);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.life += dt;
+      if (p.life >= p.maxLife) {
+        particles.splice(i, 1);
+        continue;
+      }
+      p.x += p.vx;
+      p.y += p.vy;
+
+      const t     = p.life / p.maxLife;
+      const alpha = (1 - t) * 0.85;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + p.b + ',' + (p.b + 6) + ',' + (p.b + 14) + ',' + alpha + ')';
+      ctx.fill();
+    }
+  });
+
+  // ─── Cursor state delegation ───
   const DEFAULT_TEXT = {
     view:     'View',
     external: 'Open',
@@ -67,8 +122,7 @@
     hover:    ''
   };
 
-  // Auto-tag existing lightbox triggers as VIEW so we do not have to touch
-  // every individual .ad markup
+  // Auto-tag existing lightbox triggers as VIEW
   document.querySelectorAll('.ad[data-gallery]:not([data-cursor])').forEach((el) => {
     el.setAttribute('data-cursor', 'view');
   });

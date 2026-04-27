@@ -76,17 +76,17 @@
   opacity: 1;
 }
 
-/* ─── SPARKLE TRAIL ─── */
+/* ─── CANVAS PARTICLE TRAIL ─── */
 
-.sparkle {
+.cursor-canvas {
   position: fixed;
   top: 0; left: 0;
-  width: 2px; height: 2px;
-  margin: -1px 0 0 -1px;
-  border-radius: 50%;
-  background: rgba(232,236,242,0.8);
+  width: 100vw; height: 100vh;
   pointer-events: none;
-  mix-blend-mode: screen;
   z-index: 9998;
-  will-change: transform, opacity;
+  mix-blend-mode: screen;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-canvas { display: none !important; }
 }

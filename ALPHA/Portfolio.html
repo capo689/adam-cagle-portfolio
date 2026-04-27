@@ -64,10 +64,12 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <script src="js/cursor.js" defer></script>
 <script src="js/smooth-scroll.js" defer></script>
 <script src="js/pages/portfolio.js" defer></script>
+<script src="js/pages/portfolio-lightbox.js" defer></script>
 <style>
   :root {
     --bg:       #0f0f0e;
@@ -1148,92 +1150,7 @@
 </style>
 
 <script>
-(function() {
-  const galleries = {
-    traveler: [
-      { src: 'ads/traveler-road.webp',             hl: 'The Road.',                     meta: 'Escape Mk III · 25 Years' },
-      { src: 'ads/traveler-sonic-bloom.webp',      hl: 'Sonic Bloom.',                  meta: 'Redlands Concert · Forest' },
-      { src: 'ads/traveler-jungle.webp',           hl: 'Hey Jungle, Welcome to Me.',    meta: 'Vaibrant Electric · Tropical' },
-      { src: 'ads/traveler-greatness.jpg',         hl: 'Next Stop, Greatness.',         meta: 'Ultra-Light · Subway' },
-      { src: 'ads/traveler-force.webp',            hl: 'A Force of Nature.',            meta: 'Vaibrant Teal Burst · Tempest' },
-      { src: 'ads/traveler-flying-solo.webp',      hl: 'Flying Solo.',                  meta: 'Ultra-Light · Cockpit' },
-      { src: 'ads/traveler-endless-strummer.webp', hl: 'Endless Strummer.',             meta: 'Redlands Mini · Surf' },
-    ],
-    sunset: [
-      { src: 'ads/sunset-legendary-nights.webp',   hl: 'Yes, that beautiful.',                                 meta: 'Sunset Marquis' },
-      { src: 'ads/sunset-yes-that-beautiful.jpg',  hl: 'Legendary Nights Begin at Sunset.',                   meta: 'Sunset Marquis' },
-      { src: 'ads/ACM-Awards-2025.jpg',            hl: 'Sure, it\'s California, but it\'s the southern part.', meta: 'ACM Awards Guide' },
-      { src: 'ads/SMBrochure.jpg',                 hl: 'Unique. Even by Hollywood standards.®',               meta: 'GDS One-Sheet' },
-    ],
-    killer: [
-      { src: 'ads/killer-sniper.webp?v=2026',  hl: 'Warrior.', meta: 'Killer NIC K1' },
-      { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1' },
-      { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1' },
-    ],
-    clink: [
-      { src: 'CLINK/ws-panel_0000_homepage.jpg',                                                                        hl: 'Homepage.',      meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',                          hl: 'Clink78.',       meta: 'London' },
-      { src: 'CLINK/ws-panel_0002_screencapture-clinkhostels-clink261-2023-09-13-09_57_53.jpg',                         hl: 'Clink261.',      meta: 'London' },
-      { src: 'CLINK/ws-panel_0003_screencapture-clinkhostels-london-2023-09-13-09_53_57.jpg',                           hl: 'London.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg',                        hl: 'Amsterdam.',     meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0005_screencapture-clinkhostels-dublin-2023-09-13-09_56_27.jpg',                           hl: 'Dublin.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0006_screencapture-clinkhostels-groups-2023-09-13-09_56_05.jpg',                           hl: 'Groups.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0007_screencapture-clinkhostels-category-offers-2023-09-13-09_55_39.jpg',                  hl: 'Offers.',        meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0008_screencapture-clinkhostels-category-city-tips-2023-09-13-09_57_06.jpg',               hl: 'City Tips.',     meta: 'Clink Hostels' },
-    ],
-  };
-  const lb = document.getElementById('lightbox');
-  const img = lb.querySelector('.lb-img');
-  const capL = lb.querySelector('.lb-cap-l');
-  const capR = lb.querySelector('.lb-cap-r');
-  let current = { gal: null, idx: 0 };
-
-  function render() {
-    const arr = galleries[current.gal];
-    if (!arr) return;
-    const item = arr[current.idx];
-    img.src = item.src;
-    img.alt = item.hl;
-    capL.textContent = item.hl;
-    capR.textContent = `${item.meta}  ·  ${current.idx + 1} / ${arr.length}`;
-  }
-  function open(gal, idx) {
-    current.gal = gal; current.idx = idx;
-    render();
-    lb.classList.add('open');
-    lb.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('lb-open');
-  }
-  function close() {
-    lb.classList.remove('open');
-    lb.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('lb-open');
-  }
-  function step(d) {
-    const arr = galleries[current.gal];
-    if (!arr) return;
-    current.idx = (current.idx + d + arr.length) % arr.length;
-    render();
-  }
-
-  document.querySelectorAll('.ad[data-gallery]').forEach(el => {
-    el.addEventListener('click', () => {
-      open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10));
-    });
-  });
-  const clinkCover = document.getElementById('clink-cover');
-  if (clinkCover) clinkCover.addEventListener('click', () => open('clink', 4));
-  lb.querySelector('.lb-close').addEventListener('click', close);
-  lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
-  lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
-  lb.addEventListener('click', e => { if (e.target === lb) close(); });
-  document.addEventListener('keydown', e => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowLeft') step(-1);
-    else if (e.key === 'ArrowRight') step(1);
-  });
-})();
+// Lightbox handler moved to js/pages/portfolio-lightbox.js (GSAP Flip-powered)
 
 // ── HOTEL FIGUEROA BRAND BOOK VIEWER ──────────────────────
 (function() {

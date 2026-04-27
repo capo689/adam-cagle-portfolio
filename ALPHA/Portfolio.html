@@ -59,7 +59,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
 <script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
 <style>
   :root {
     --bg:       #0f0f0e;
@@ -777,7 +780,7 @@
           <span class="label">The Brand at Work · Live Site</span>
         </div>
 
-        <a class="hf-cover-wrap sm-site" href="https://sunsetmarquis.com" target="_blank" rel="noopener">
+        <a class="hf-cover-wrap sm-site" href="https://sunsetmarquis.com" target="_blank" rel="noopener" data-cursor="external" data-cursor-text="Visit">
           <img src="ads/Sunset-Marquis.jpg" alt="SunsetMarquis.com — live website brand system by Adam R. Cagle, Agency689, West Hollywood">
           <div class="overlay"><div class="overlay-inner"><span class="hl">Visit sunsetmarquis.com →</span><span>The Brand Operating in the Wild</span></div></div>
         </a>
@@ -911,7 +914,7 @@
       <div class="c-body">
 
         <!-- cover hero -->
-        <div class="hf-cover-wrap" id="hf-cover">
+        <div class="hf-cover-wrap" id="hf-cover" data-cursor="view" data-cursor-text="Open Book">
           <img src="HF/HotelFigueroa%2062.jpeg" alt="Hotel Figueroa Brand Book cover — 61-page brand identity system by Agency689, DTLA luxury hotel relaunch">
           <div class="overlay"><div class="overlay-inner"><span class="hl">Open Brand Book →</span><span>61 Pages · Agency689 · DTLA</span></div></div>
         </div>
@@ -955,7 +958,7 @@
       <div class="c-body">
 
         <!-- cover hero -->
-        <div class="hf-cover-wrap" id="clink-cover">
+        <div class="hf-cover-wrap" id="clink-cover" data-cursor="view" data-cursor-text="9 Screens">
           <img src="CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg" alt="Clink Hostels Amsterdam website — brand copy and messaging system by Adam R. Cagle, Agency689">
           <div class="overlay"><div class="overlay-inner"><span class="hl">View Site Screens →</span><span>9 Screens · Agency689</span></div></div>
         </div>
@@ -979,7 +982,7 @@
   <!-- CLOSER -->
   <section class="closer">
     <p class="say">More where <em>this</em><br>came from.</p>
-    <a class="cta" href="mailto:adamrcagle@gmail.com">
+    <a class="cta" href="mailto:adamrcagle@gmail.com" data-cursor="email" data-cursor-text="Say Hello">
       Let's work <span class="arrow">→</span>
     </a>
   </section>

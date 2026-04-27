@@ -1,0 +1,77 @@
+/* cursor.css
+   Custom cursor for adamcagle.com ALPHA rebuild.
+   Hidden on touch devices and when reduced motion is requested. */
+
+@media (pointer: coarse) {
+  .cursor { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor { display: none !important; }
+}
+
+/* Hide the native cursor only when our custom one is active */
+@media (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor [data-cursor] { cursor: none; }
+}
+
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 14px; height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition:
+    width .35s cubic-bezier(.2,.7,.2,1),
+    height .35s cubic-bezier(.2,.7,.2,1),
+    margin .35s cubic-bezier(.2,.7,.2,1),
+    background .25s,
+    border-radius .25s;
+}
+
+.cursor__label {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-family: 'Geist Mono', ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity .25s;
+}
+
+/* ─── STATES ─── */
+
+.cursor.is-view,
+.cursor.is-drag {
+  width: 96px; height: 96px;
+  margin: -48px 0 0 -48px;
+}
+
+.cursor.is-external,
+.cursor.is-email {
+  width: 84px; height: 84px;
+  margin: -42px 0 0 -42px;
+}
+
+.cursor.is-hover {
+  width: 36px; height: 36px;
+  margin: -18px 0 0 -18px;
+}
+
+.cursor.is-view .cursor__label,
+.cursor.is-drag .cursor__label,
+.cursor.is-external .cursor__label,
+.cursor.is-email .cursor__label {
+  opacity: 1;
+}

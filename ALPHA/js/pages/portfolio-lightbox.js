@@ -150,6 +150,11 @@
     gsap.set(lbImg, { opacity: 0 });
     gsap.set([lbCapL, lbCapR, btnClose, btnPrev, btnNext], { opacity: 0 });
 
+    // Set the lb-img src up-front so it lays out at its natural position;
+    // we will use that exact rect as the clone's target so the swap is seamless.
+    lbImg.src = item.src;
+    lbImg.alt = item.hl;
+
     // Hide the source ad image so the clone is the only copy on screen
     srcImg.style.opacity = '0';
 
@@ -172,14 +177,25 @@
     // Backdrop fade
     gsap.to(lb, { opacity: 1, duration: 0.45, ease: 'power2.out' });
 
-    // Compute final rect from the natural size of the source image
-    const tgt = targetRect(srcImg.naturalWidth, srcImg.naturalHeight);
+    // Wait for the lb-img to finish laying out, then capture its actual rect
+    imageReady(lbImg).then(() => {
+      // Force a reflow read so the rect is post-layout
+      const tgt = lbImg.getBoundingClientRect();
+      // Fall back to a computed rect if lb-img has zero size for any reason
+      const tgtRect = (tgt && tgt.width > 0 && tgt.height > 0)
+        ? { top: tgt.top, left: tgt.left, width: tgt.width, height: tgt.height }
+        : targetRect(srcImg.naturalWidth, srcImg.naturalHeight);
 
+      runFoldTimeline(clone, tgtRect);
+    });
+  }
+
+  function runFoldTimeline(clone, tgt) {
     // Master timeline: anticipation, then 3D fold to fullscreen
     const tl = gsap.timeline({
       onComplete: () => {
-        // Settle: swap clone for the real lightbox image so prev/next can work
-        lbImg.src = item.src;
+        // Settle: swap clone for the real lightbox image. Clone is sitting at
+        // the exact same rect as lbImg, so the swap is visually seamless.
         gsap.set(lbImg, { opacity: 1, x: 0, y: 0, scale: 1, filter: 'none', rotationX: 0, z: 0 });
         clone.remove();
         state.animating = false;
@@ -217,32 +233,33 @@
       boxShadow: '0 40px 90px rgba(0,0,0,0.55)'
     }, '<+0.24');
 
-    // Unfold flat: rotationX back to 0, z back to 0, settling sharp
+    // Unfold flat: rotationX back to 0, z back to 0, settling sharp.
+    // expo.out for a very gentle arrival, no jerk before final position.
     tl.to(clone, {
       rotationX: 0,
       z: 0,
-      duration: 0.6,
+      duration: 0.7,
       ease: 'expo.out'
-    }, '>-0.18');
+    }, '>-0.32');
 
     // Subtle motion blur during the fold travel
     tl.to(clone, {
       filter: 'blur(2.2px)',
       duration: 0.32,
       ease: 'sine.inOut'
-    }, '<-0.65');
+    }, '<-0.78');
 
     tl.to(clone, {
       filter: 'blur(0px)',
-      duration: 0.5,
+      duration: 0.55,
       ease: 'sine.out'
-    }, '>-0.1');
+    }, '>-0.15');
 
     // Chrome late: caption + close + arrows
     tl.fromTo([lbCapL, lbCapR],
       { opacity: 0, y: 14 },
       { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.06 },
-      '-=0.25');
+      '-=0.4');
     tl.to([btnClose, btnPrev, btnNext],
       { opacity: 1, duration: 0.3, ease: 'power2.out' },
       '<+0.05');

@@ -22,19 +22,37 @@
   top: 0; left: 0;
   width: 14px; height: 14px;
   margin: -7px 0 0 -7px;
-  border-radius: 50%;
-  background: var(--accent);
   pointer-events: none;
   z-index: 9999;
   will-change: transform;
   transition:
     width .35s cubic-bezier(.2,.7,.2,1),
     height .35s cubic-bezier(.2,.7,.2,1),
-    margin .35s cubic-bezier(.2,.7,.2,1),
-    background .25s,
-    border-radius .25s;
+    margin .35s cubic-bezier(.2,.7,.2,1);
 }
 
+/* Layer 1: the visible blob.
+   Default (small): solid accent dot.
+   Expanded states: white fill + mix-blend-mode difference for the X-ray. */
+.cursor__fill {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: background .25s;
+}
+
+/* Layer 2: orange ring, hidden by default, appears in expanded states. */
+.cursor__ring {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  opacity: 0;
+  transition: opacity .25s;
+  pointer-events: none;
+}
+
+/* Layer 3: label text, also blended with difference so it always reads
+   against whatever the X-ray inverts behind it. */
 .cursor__label {
   position: absolute; inset: 0;
   display: grid; place-items: center;
@@ -44,12 +62,13 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #fff;
+  mix-blend-mode: difference;
   opacity: 0;
   white-space: nowrap;
   transition: opacity .25s;
 }
 
-/* ─── STATES ─── */
+/* ─── EXPANDED STATES ─── */
 
 .cursor.is-view,
 .cursor.is-drag {
@@ -66,6 +85,24 @@
 .cursor.is-hover {
   width: 36px; height: 36px;
   margin: -18px 0 0 -18px;
+}
+
+/* In any expanded state: switch fill to white + difference, show ring + label */
+.cursor.is-view .cursor__fill,
+.cursor.is-drag .cursor__fill,
+.cursor.is-external .cursor__fill,
+.cursor.is-email .cursor__fill,
+.cursor.is-hover .cursor__fill {
+  background: #fff;
+  mix-blend-mode: difference;
+}
+
+.cursor.is-view .cursor__ring,
+.cursor.is-drag .cursor__ring,
+.cursor.is-external .cursor__ring,
+.cursor.is-email .cursor__ring,
+.cursor.is-hover .cursor__ring {
+  opacity: 1;
 }
 
 .cursor.is-view .cursor__label,

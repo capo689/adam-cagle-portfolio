@@ -10,13 +10,23 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined') return;
 
-  // ─── Cursor element ───
+  // ─── Cursor element (3 layers: fill, ring, label) ───
   const cursor = document.createElement('div');
   cursor.className = 'cursor';
   cursor.setAttribute('aria-hidden', 'true');
+
+  const fill = document.createElement('div');
+  fill.className = 'cursor__fill';
+  cursor.appendChild(fill);
+
+  const ring = document.createElement('div');
+  ring.className = 'cursor__ring';
+  cursor.appendChild(ring);
+
   const label = document.createElement('span');
   label.className = 'cursor__label';
   cursor.appendChild(label);
+
   document.body.appendChild(cursor);
   document.body.classList.add('has-custom-cursor');
 

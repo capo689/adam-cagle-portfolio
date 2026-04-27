@@ -75,3 +75,23 @@
 .cursor.is-email .cursor__label {
   opacity: 1;
 }
+
+/* ─── SPARKLE TRAIL ─── */
+
+.sparkle {
+  position: fixed;
+  top: 0; left: 0;
+  width: 5px; height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255,255,255,0.95) 0%,
+    rgba(220,224,232,0.7) 35%,
+    rgba(180,190,210,0.25) 65%,
+    transparent 78%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 9998;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.6));
+}

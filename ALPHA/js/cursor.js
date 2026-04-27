@@ -76,7 +76,7 @@
 
   // ─── Particle pool ───
   const particles = [];
-  const MAX_PARTICLES   = 500;
+  const MAX_PARTICLES   = 1200;
   const SPAWN_INTERVAL  = 4;
   const PER_SPAWN       = 2;
   let lastSpawn = 0;
@@ -102,27 +102,59 @@
   }
 
   // Public API for triggering a one-shot burst from any script.
-  // Half particles inherit the accent color, half are silver, mixed sizes,
-  // radial scatter with mild deceleration.
+  // Pass { rect: {top, left, width, height} } to scatter from across the
+  // entire surface of an element with outward radial velocity, OR
+  // pass { x, y } for a point burst.
   window.cursorBurst = function (opts) {
     opts = opts || {};
-    const x = opts.x != null ? opts.x : window.innerWidth  / 2;
-    const y = opts.y != null ? opts.y : window.innerHeight / 2;
     const count = opts.count != null ? opts.count : 80;
+    const rect  = opts.rect || null;
+    const px0   = opts.x != null ? opts.x : window.innerWidth  / 2;
+    const py0   = opts.y != null ? opts.y : window.innerHeight / 2;
+
+    let cx, cy, halfDiag;
+    if (rect) {
+      cx = rect.left + rect.width  / 2;
+      cy = rect.top  + rect.height / 2;
+      halfDiag = Math.sqrt(rect.width * rect.width + rect.height * rect.height) / 2;
+    }
 
     for (let i = 0; i < count; i++) {
       if (particles.length >= MAX_PARTICLES) break;
-      const angle  = Math.random() * Math.PI * 2;
-      const speed  = 1.8 + Math.random() * 5.5;
+
+      let sx, sy, vx, vy;
+      if (rect) {
+        // Spawn anywhere inside the rect
+        sx = rect.left + Math.random() * rect.width;
+        sy = rect.top  + Math.random() * rect.height;
+
+        // Velocity: outward from rect center, plus jitter
+        let dx = sx - cx;
+        let dy = sy - cy;
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
+        dx /= len; dy /= len;
+
+        // Distance-from-center weighting: edge particles fly faster
+        const distRatio = len / halfDiag;
+        const speed = 2.2 + Math.random() * 6 + distRatio * 1.5;
+
+        vx = dx * speed + (Math.random() - 0.5) * 0.6;
+        vy = dy * speed + (Math.random() - 0.5) * 0.6;
+      } else {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1.8 + Math.random() * 5.5;
+        sx = px0 + (Math.random() - 0.5) * 8;
+        sy = py0 + (Math.random() - 0.5) * 8;
+        vx = Math.cos(angle) * speed;
+        vy = Math.sin(angle) * speed - 0.2;
+      }
+
       const silver = Math.random() < 0.5;
       particles.push({
-        x: x + (Math.random() - 0.5) * 8,
-        y: y + (Math.random() - 0.5) * 8,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - 0.2,
+        x: sx, y: sy, vx: vx, vy: vy,
         r:  0.7 + Math.random() * 1.7,
         life: 0,
-        maxLife: 650 + Math.random() * 750,
+        maxLife: 700 + Math.random() * 800,
         bv: 0.85 + Math.random() * 0.25,
         color: silver ? { r: 232, g: 236, b: 242 } : null,
         decay: 0.945 + Math.random() * 0.03

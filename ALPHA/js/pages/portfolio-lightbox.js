@@ -195,12 +195,17 @@
       ease: 'power2.in'
     });
 
-    // Burst at launch: tiny orange + silver dots radiate from the ad's center
+    // Burst at launch: tiny orange + silver dots erupt from across the
+    // ad's full surface, flying outward.
     tl.add(() => {
       if (typeof window.cursorBurst === 'function') {
-        const cx = startRect.left + startRect.width  / 2;
-        const cy = startRect.top  + startRect.height / 2;
-        window.cursorBurst({ x: cx, y: cy, count: 90 });
+        window.cursorBurst({
+          rect: {
+            top: startRect.top, left: startRect.left,
+            width: startRect.width, height: startRect.height
+          },
+          count: 320
+        });
       }
     });
 

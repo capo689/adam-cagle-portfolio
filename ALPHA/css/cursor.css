@@ -34,22 +34,6 @@
     background .25s;
 }
 
-/* Label sits inside cursor. In expanded state the cursor is white with
-   mix-blend-mode difference, so a black label renders correctly inverted. */
-.cursor__label {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  font-family: 'Geist Mono', ui-monospace, Menlo, monospace;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #000;
-  opacity: 0;
-  white-space: nowrap;
-  transition: opacity .25s;
-}
-
 /* Separate orange ring, top-level sibling so it is NOT inside the
    difference-blended cursor. Hidden by default. */
 .cursor-ring {
@@ -89,13 +73,6 @@
   margin: -18px 0 0 -18px;
   background: #fff;
   mix-blend-mode: difference;
-}
-
-.cursor.is-view .cursor__label,
-.cursor.is-drag .cursor__label,
-.cursor.is-external .cursor__label,
-.cursor.is-email .cursor__label {
-  opacity: 1;
 }
 
 /* Ring sizes track the cursor sizes */

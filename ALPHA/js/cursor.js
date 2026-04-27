@@ -15,10 +15,6 @@
   cursor.className = 'cursor';
   cursor.setAttribute('aria-hidden', 'true');
 
-  const label = document.createElement('span');
-  label.className = 'cursor__label';
-  cursor.appendChild(label);
-
   // Separate top-level ring so it stays orange (not caught in the cursor's
   // mix-blend-mode difference stacking context).
   const ring = document.createElement('div');
@@ -216,14 +212,6 @@
   });
 
   // ─── Cursor state delegation ───
-  const DEFAULT_TEXT = {
-    view:     'View',
-    external: 'Open',
-    email:    'Email',
-    drag:     'Drag',
-    hover:    ''
-  };
-
   // Auto-tag existing lightbox triggers as VIEW
   document.querySelectorAll('.ad[data-gallery]:not([data-cursor])').forEach((el) => {
     el.setAttribute('data-cursor', 'view');
@@ -235,13 +223,10 @@
     el.addEventListener('mouseenter', () => {
       cursor.classList.add('is-' + state);
       ring.classList.add('is-' + state);
-      const text = el.getAttribute('data-cursor-text') || DEFAULT_TEXT[state] || '';
-      label.textContent = text;
     });
     el.addEventListener('mouseleave', () => {
       cursor.classList.remove('is-' + state);
       ring.classList.remove('is-' + state);
-      label.textContent = '';
     });
   }
 

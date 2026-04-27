@@ -94,10 +94,41 @@
         life: 0,
         maxLife: 700 + Math.random() * 700,
         // brightness multiplier so each particle is a slightly different orange
-        bv: 0.75 + Math.random() * 0.3
+        bv: 0.75 + Math.random() * 0.3,
+        color: null, // null = use accent (theme color)
+        decay: 1     // no velocity decay for trail particles
       });
     }
   }
+
+  // Public API for triggering a one-shot burst from any script.
+  // Half particles inherit the accent color, half are silver, mixed sizes,
+  // radial scatter with mild deceleration.
+  window.cursorBurst = function (opts) {
+    opts = opts || {};
+    const x = opts.x != null ? opts.x : window.innerWidth  / 2;
+    const y = opts.y != null ? opts.y : window.innerHeight / 2;
+    const count = opts.count != null ? opts.count : 80;
+
+    for (let i = 0; i < count; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      const angle  = Math.random() * Math.PI * 2;
+      const speed  = 1.8 + Math.random() * 5.5;
+      const silver = Math.random() < 0.5;
+      particles.push({
+        x: x + (Math.random() - 0.5) * 8,
+        y: y + (Math.random() - 0.5) * 8,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 0.2,
+        r:  0.7 + Math.random() * 1.7,
+        life: 0,
+        maxLife: 650 + Math.random() * 750,
+        bv: 0.85 + Math.random() * 0.25,
+        color: silver ? { r: 232, g: 236, b: 242 } : null,
+        decay: 0.945 + Math.random() * 0.03
+      });
+    }
+  };
 
   window.addEventListener('mousemove', (e) => {
     mx = e.clientX;
@@ -130,13 +161,18 @@
       }
       p.x += p.vx;
       p.y += p.vy;
+      if (p.decay && p.decay !== 1) {
+        p.vx *= p.decay;
+        p.vy *= p.decay;
+      }
 
       const t     = p.life / p.maxLife;
       const alpha = (1 - t) * 0.9;
 
-      const r = Math.round(accent.r * p.bv);
-      const g = Math.round(accent.g * p.bv);
-      const b = Math.round(accent.b * p.bv);
+      const c = p.color || accent;
+      const r = Math.round(c.r * p.bv);
+      const g = Math.round(c.g * p.bv);
+      const b = Math.round(c.b * p.bv);
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);

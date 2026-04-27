@@ -195,6 +195,15 @@
       ease: 'power2.in'
     });
 
+    // Burst at launch: tiny orange + silver dots radiate from the ad's center
+    tl.add(() => {
+      if (typeof window.cursorBurst === 'function') {
+        const cx = startRect.left + startRect.width  / 2;
+        const cy = startRect.top  + startRect.height / 2;
+        window.cursorBurst({ x: cx, y: cy, count: 90 });
+      }
+    });
+
     // Breakthrough: travel + size up, with peak motion blur mid-flight
     tl.to(clone, {
       top:    tgt.top,

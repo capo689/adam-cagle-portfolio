@@ -1,16 +1,23 @@
 // js/pages/portfolio-lightbox.js
-// GSAP Flip-powered lightbox for Portfolio.html.
-// Click an ad: the actual ad image animates from its grid position to the
-// fullscreen lightbox spot. Close / Esc: it animates back to wherever the
-// current image lives in the grid.
+// Cinematic lightbox for Portfolio.html.
 //
-// Replaces the older inline lightbox script. Bails silently if GSAP or Flip
-// failed to load.
+// On click:
+//   1) Clone the clicked ad image, position it over the original.
+//   2) The .page wrapper recedes (scale + blur) so the image owns focus.
+//   3) Backdrop fades in.
+//   4) Clone takes a small anticipation pop, then breaks forward to fullscreen
+//      with a hint of motion blur, settling sharp.
+//   5) Caption + chrome arrive late.
+//
+// On close: reverse, with the image flying back to whichever ad in the grid
+// matches the current image.
+//
+// Prev / next: motion-blur slide swap.
+//
+// Bails silently if GSAP failed to load.
 
 (function () {
   if (typeof gsap === 'undefined') return;
-  if (typeof Flip === 'undefined') return;
-  gsap.registerPlugin(Flip);
 
   const galleries = {
     traveler: [
@@ -48,25 +55,22 @@
 
   const lb = document.getElementById('lightbox');
   if (!lb) return;
-  const lbImg  = lb.querySelector('.lb-img');
-  const lbCapL = lb.querySelector('.lb-cap-l');
-  const lbCapR = lb.querySelector('.lb-cap-r');
+  const lbImg    = lb.querySelector('.lb-img');
+  const lbCapL   = lb.querySelector('.lb-cap-l');
+  const lbCapR   = lb.querySelector('.lb-cap-r');
   const btnClose = lb.querySelector('.lb-close');
   const btnPrev  = lb.querySelector('.lb-prev');
   const btnNext  = lb.querySelector('.lb-next');
 
-  const state = { gal: null, idx: 0, sourceEl: null, animating: false };
+  const pageEl = document.querySelector('.page');
+  const state  = { gal: null, idx: 0, sourceEl: null, animating: false };
 
-  function setItem(gal, idx) {
-    const arr = galleries[gal];
+  function setText(idx) {
+    const arr = galleries[state.gal];
     if (!arr) return;
     const it = arr[idx];
-    lbImg.src = it.src;
-    lbImg.alt = it.hl;
     lbCapL.textContent = it.hl;
     lbCapR.textContent = it.meta + '  ·  ' + (idx + 1) + ' / ' + arr.length;
-    state.gal = gal;
-    state.idx = idx;
   }
 
   function imageReady(img) {
@@ -77,139 +81,298 @@
     });
   }
 
-  // Find the ad tile in the grid that matches the current gallery + index
-  function findCurrentTile() {
-    if (!state.gal) return null;
-    const sel = '.ad[data-gallery="' + state.gal + '"][data-index="' + state.idx + '"]';
-    return document.querySelector(sel) || state.sourceEl;
+  function findTile(gal, idx) {
+    const sel = '.ad[data-gallery="' + gal + '"][data-index="' + idx + '"]';
+    return document.querySelector(sel);
   }
 
+  // Compute centered, viewport-padded target rect for an image of given aspect
+  function targetRect(naturalW, naturalH) {
+    const padX = 60, padY = 100;
+    const maxW = window.innerWidth  - padX * 2;
+    const maxH = window.innerHeight - padY * 2;
+    const ratio = (naturalW && naturalH) ? naturalW / naturalH : (16 / 10);
+    let w = maxW, h = maxW / ratio;
+    if (h > maxH) { h = maxH; w = maxH * ratio; }
+    return {
+      left: (window.innerWidth  - w) / 2,
+      top:  (window.innerHeight - h) / 2,
+      width: w, height: h
+    };
+  }
+
+  function makeFlyingClone(srcImg, rect, z) {
+    const clone = document.createElement('img');
+    clone.src = srcImg.src;
+    clone.alt = srcImg.alt || '';
+    Object.assign(clone.style, {
+      position: 'fixed',
+      top:    rect.top    + 'px',
+      left:   rect.left   + 'px',
+      width:  rect.width  + 'px',
+      height: rect.height + 'px',
+      objectFit: 'cover',
+      margin: 0,
+      pointerEvents: 'none',
+      zIndex: String(z || 9995),
+      willChange: 'transform, filter, width, height, top, left',
+      borderRadius: getComputedStyle(srcImg).borderRadius || '0',
+      boxShadow: '0 0 0 rgba(0,0,0,0)'
+    });
+    document.body.appendChild(clone);
+    return clone;
+  }
+
+  // ─── OPEN: BREAKTHROUGH ───
   function open(gal, idx, sourceEl) {
     if (state.animating) return;
     state.animating = true;
+    state.gal = gal;
+    state.idx = idx;
     state.sourceEl = sourceEl;
-    setItem(gal, idx);
+    setText(idx);
 
+    const item = galleries[gal][idx];
+    const srcImg = sourceEl ? (sourceEl.querySelector('img') || sourceEl) : null;
+
+    if (!srcImg || typeof srcImg.getBoundingClientRect !== 'function') {
+      simpleOpen(item.src);
+      return;
+    }
+
+    const startRect = srcImg.getBoundingClientRect();
+
+    // Show lb container but transparent and image hidden so the clone owns the screen
     lb.classList.add('open');
     lb.setAttribute('aria-hidden', 'false');
     document.body.classList.add('lb-open');
+    gsap.set(lb, { opacity: 0 });
+    gsap.set(lbImg, { opacity: 0 });
+    gsap.set([lbCapL, lbCapR, btnClose, btnPrev, btnNext], { opacity: 0 });
 
-    // Fade backdrop in. Buttons fade in slightly later.
-    gsap.fromTo(lb, { opacity: 0 }, { opacity: 1, duration: 0.32, ease: 'power2.out' });
-    gsap.fromTo([btnClose, btnPrev, btnNext],
-      { opacity: 0 },
-      { opacity: 1, duration: 0.3, delay: 0.45, ease: 'power2.out' });
-    gsap.fromTo([lbCapL, lbCapR],
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.4, delay: 0.55, ease: 'power2.out', stagger: 0.05 });
+    // Hide the source ad image so the clone is the only copy on screen
+    srcImg.style.opacity = '0';
 
-    imageReady(lbImg).then(() => {
-      const sourceImg = sourceEl ? (sourceEl.querySelector('img') || sourceEl) : null;
-      if (sourceImg && sourceImg.getBoundingClientRect) {
-        const startState = Flip.getState(lbImg);
-        Flip.fit(lbImg, sourceImg, { absolute: true });
-        Flip.from(startState, {
-          duration: 0.75,
-          ease: 'power3.inOut',
-          absolute: true,
-          onComplete: () => {
-            gsap.set(lbImg, { clearProps: 'all' });
-            state.animating = false;
-          }
-        });
-      } else {
-        gsap.fromTo(lbImg,
-          { opacity: 0, scale: 0.9 },
-          { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out',
-            onComplete: () => { state.animating = false; }
-          }
-        );
+    // Build the flying clone at the source position
+    const clone = makeFlyingClone(srcImg, {
+      top: startRect.top, left: startRect.left,
+      width: startRect.width, height: startRect.height
+    }, 9995);
+
+    // Recede the page behind: scale + blur
+    if (pageEl) {
+      gsap.to(pageEl, {
+        scale: 0.93,
+        filter: 'blur(10px)',
+        duration: 0.7,
+        ease: 'power2.out'
+      });
+    }
+
+    // Backdrop fade
+    gsap.to(lb, { opacity: 1, duration: 0.45, ease: 'power2.out' });
+
+    // Compute final rect from the natural size of the source image
+    const tgt = targetRect(srcImg.naturalWidth, srcImg.naturalHeight);
+
+    // Master timeline: anticipation, then breakthrough
+    const tl = gsap.timeline({
+      onComplete: () => {
+        // Settle: swap clone for the real lightbox image so prev/next can work
+        lbImg.src = item.src;
+        gsap.set(lbImg, { opacity: 1, x: 0, y: 0, scale: 1, filter: 'none' });
+        clone.remove();
+        // The original ad stays opacity:0 while lb is open, body.lb-open hides scrolling
+        state.animating = false;
       }
     });
+
+    // Anticipation: small in-place pop with a touch of blur
+    tl.to(clone, {
+      scale: 1.04,
+      filter: 'blur(0.4px)',
+      duration: 0.16,
+      ease: 'power2.in'
+    });
+
+    // Breakthrough: travel + size up, with peak motion blur mid-flight
+    tl.to(clone, {
+      top:    tgt.top,
+      left:   tgt.left,
+      width:  tgt.width,
+      height: tgt.height,
+      scale:  1,
+      duration: 0.85,
+      ease: 'power3.inOut',
+      boxShadow: '0 30px 80px rgba(0,0,0,0.55)'
+    }, '<');
+
+    tl.to(clone, {
+      filter: 'blur(3px)',
+      duration: 0.3,
+      ease: 'power2.in'
+    }, '<+0.05');
+
+    tl.to(clone, {
+      filter: 'blur(0px)',
+      duration: 0.4,
+      ease: 'power2.out'
+    }, '>-0.1');
+
+    // Chrome late: caption + close + arrows
+    tl.fromTo([lbCapL, lbCapR],
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.06 },
+      '-=0.25');
+    tl.to([btnClose, btnPrev, btnNext],
+      { opacity: 1, duration: 0.3, ease: 'power2.out' },
+      '<+0.05');
   }
 
+  function simpleOpen(src) {
+    lbImg.src = src;
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+    gsap.fromTo(lb, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+    gsap.fromTo(lbImg, { opacity: 0, scale: 0.92 },
+      { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out',
+        onComplete: () => { state.animating = false; } });
+  }
+
+  // ─── CLOSE: REVERSE BREAKTHROUGH ───
   function close() {
     if (state.animating) return;
     state.animating = true;
-    const tile = findCurrentTile();
-    const targetImg = tile ? (tile.querySelector('img') || tile) : null;
+    const tile = findTile(state.gal, state.idx);
+    const tileImg = tile ? tile.querySelector('img') : null;
 
-    // Fade out chrome
+    // Fade chrome
     gsap.to([btnClose, btnPrev, btnNext, lbCapL, lbCapR],
-      { opacity: 0, duration: 0.2, ease: 'power2.in' });
+      { opacity: 0, y: 8, duration: 0.22, ease: 'power2.in' });
 
     function finish() {
       lb.classList.remove('open');
       lb.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('lb-open');
       gsap.set([lb, lbImg, lbCapL, lbCapR, btnClose, btnPrev, btnNext], { clearProps: 'all' });
+      // Restore original tile opacity in case something nudged it
+      document.querySelectorAll('.ad img[style*="opacity: 0"]').forEach((img) => {
+        img.style.opacity = '';
+      });
       state.sourceEl = null;
       state.animating = false;
     }
 
-    if (targetImg && targetImg.getBoundingClientRect) {
-      const startState = Flip.getState(lbImg);
-      Flip.fit(lbImg, targetImg, { absolute: true });
-      Flip.from(startState, {
-        duration: 0.55,
-        ease: 'power3.inOut',
-        absolute: true,
-        onComplete: finish
+    // Restore page from receded state
+    if (pageEl) {
+      gsap.to(pageEl, {
+        scale: 1, filter: 'blur(0px)',
+        duration: 0.55, ease: 'power2.out'
       });
-      gsap.to(lb, { opacity: 0, duration: 0.5, delay: 0.1, ease: 'power2.in' });
+    }
+
+    if (tileImg) {
+      const lbRect   = lbImg.getBoundingClientRect();
+      const tgtRect  = tileImg.getBoundingClientRect();
+
+      // Build clone at lb-img position
+      const clone = makeFlyingClone(lbImg, {
+        top: lbRect.top, left: lbRect.left,
+        width: lbRect.width, height: lbRect.height
+      }, 9996);
+
+      gsap.set(lbImg, { opacity: 0 });
+      tileImg.style.opacity = '0';
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          tileImg.style.opacity = '';
+          clone.remove();
+          finish();
+        }
+      });
+
+      tl.to(clone, {
+        filter: 'blur(2.5px)',
+        duration: 0.18,
+        ease: 'power2.in'
+      });
+
+      tl.to(clone, {
+        top:    tgtRect.top,
+        left:   tgtRect.left,
+        width:  tgtRect.width,
+        height: tgtRect.height,
+        boxShadow: '0 0 0 rgba(0,0,0,0)',
+        duration: 0.65,
+        ease: 'power3.inOut'
+      }, '<');
+
+      tl.to(clone, {
+        filter: 'blur(0px)',
+        duration: 0.3,
+        ease: 'power2.out'
+      }, '>-0.2');
+
+      gsap.to(lb, { opacity: 0, duration: 0.55, delay: 0.1, ease: 'power2.in' });
     } else {
-      gsap.to(lbImg, { opacity: 0, scale: 0.92, duration: 0.35, ease: 'power2.in' });
-      gsap.to(lb, { opacity: 0, duration: 0.4, ease: 'power2.in', onComplete: finish });
+      gsap.to(lbImg, { opacity: 0, scale: 0.94, duration: 0.35, ease: 'power2.in' });
+      gsap.to(lb, { opacity: 0, duration: 0.45, ease: 'power2.in', onComplete: finish });
     }
   }
 
+  // ─── PREV / NEXT: motion-blur slide swap ───
   function step(direction) {
     if (state.animating) return;
     const arr = galleries[state.gal];
     if (!arr) return;
     state.animating = true;
     const newIdx = (state.idx + direction + arr.length) % arr.length;
-    const offset = direction > 0 ? -60 : 60;
+    const offset = direction > 0 ? -window.innerWidth * 0.25 : window.innerWidth * 0.25;
 
-    // Slide current image out
     gsap.to(lbImg, {
-      opacity: 0, x: offset, duration: 0.22, ease: 'power2.in',
+      x: offset, opacity: 0, filter: 'blur(8px)',
+      duration: 0.32, ease: 'power3.in',
       onComplete: () => {
-        setItem(state.gal, newIdx);
+        state.idx = newIdx;
+        const item = arr[newIdx];
+        lbImg.src = item.src;
+        lbImg.alt = item.hl;
+        setText(newIdx);
         imageReady(lbImg).then(() => {
-          gsap.fromTo(lbImg,
-            { x: -offset, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.42, ease: 'power3.out',
-              onComplete: () => { state.animating = false; }
-            }
-          );
+          gsap.set(lbImg, { x: -offset, filter: 'blur(8px)', opacity: 0 });
+          gsap.to(lbImg, {
+            x: 0, opacity: 1, filter: 'blur(0px)',
+            duration: 0.5, ease: 'power3.out',
+            onComplete: () => { state.animating = false; }
+          });
         });
       }
     });
 
-    // Caption swap
+    // Caption swap timed with the slide
     gsap.to([lbCapL, lbCapR], {
-      opacity: 0, duration: 0.18, ease: 'power2.in',
-      onComplete: () => {
-        const item = galleries[state.gal][newIdx];
-        lbCapL.textContent = item.hl;
-        lbCapR.textContent = item.meta + '  ·  ' + (newIdx + 1) + ' / ' + arr.length;
-        gsap.fromTo([lbCapL, lbCapR],
-          { opacity: 0 },
-          { opacity: 1, duration: 0.3, ease: 'power2.out' });
-      }
+      opacity: 0, y: -8, duration: 0.18, ease: 'power2.in'
     });
+    gsap.fromTo([lbCapL, lbCapR],
+      { y: 8 },
+      { opacity: 1, y: 0, duration: 0.32, delay: 0.4, ease: 'power2.out', stagger: 0.04 });
   }
 
   // ─── Wiring ───
   document.querySelectorAll('.ad[data-gallery]').forEach((el) => {
-    el.addEventListener('click', () => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
       open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10), el);
     });
   });
 
   const clinkCover = document.getElementById('clink-cover');
-  if (clinkCover) clinkCover.addEventListener('click', () => open('clink', 4, clinkCover));
+  if (clinkCover) clinkCover.addEventListener('click', (e) => {
+    e.preventDefault();
+    open('clink', 4, clinkCover);
+  });
 
   if (btnClose) btnClose.addEventListener('click', close);
   if (btnPrev)  btnPrev.addEventListener('click',  (e) => { e.stopPropagation(); step(-1); });

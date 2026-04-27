@@ -194,11 +194,20 @@
     // Master timeline: anticipation, then 3D fold to fullscreen
     const tl = gsap.timeline({
       onComplete: () => {
-        // Settle: swap clone for the real lightbox image. Clone is sitting at
-        // the exact same rect as lbImg, so the swap is visually seamless.
-        gsap.set(lbImg, { opacity: 1, x: 0, y: 0, scale: 1, filter: 'none', rotationX: 0, z: 0 });
-        clone.remove();
-        state.animating = false;
+        // Crossfade: lb-img sits at the same rect as the clone, so a quick
+        // opacity swap masks any subpixel or box-shadow / background
+        // difference between the animated clone and the styled lb-img.
+        gsap.set(lbImg, { opacity: 0, x: 0, y: 0, scale: 1, filter: 'none', rotationX: 0, z: 0 });
+        gsap.to(lbImg, { opacity: 1, duration: 0.22, ease: 'sine.out' });
+        gsap.to(clone, {
+          opacity: 0,
+          duration: 0.22,
+          ease: 'sine.out',
+          onComplete: () => {
+            clone.remove();
+            state.animating = false;
+          }
+        });
       }
     });
 

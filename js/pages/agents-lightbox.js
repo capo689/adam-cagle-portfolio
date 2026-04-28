@@ -253,17 +253,30 @@
     }
   }
 
+  // ─── PREV / NEXT: 3D card flip ───
   function step(direction) {
     if (state.animating) return;
     const arr = galleries[state.gal];
     if (!arr) return;
     state.animating = true;
     const newIdx = (state.idx + direction + arr.length) % arr.length;
-    const offset = direction > 0 ? -window.innerWidth * 0.25 : window.innerWidth * 0.25;
+
+    const isNext   = direction > 0;
+    const exitX    = isNext ? -window.innerWidth * 0.32 :  window.innerWidth * 0.32;
+    const exitRotY = isNext ? -16 :  16;
+    const enterX   = isNext ?  window.innerWidth * 0.32 : -window.innerWidth * 0.32;
+    const enterRotY = isNext ?  16 : -16;
+
+    gsap.set(lbImg, {
+      transformPerspective: 1400,
+      transformOrigin: '50% 50%',
+      transformStyle: 'preserve-3d'
+    });
 
     gsap.to(lbImg, {
-      x: offset, opacity: 0, filter: 'blur(8px)',
-      duration: 0.32, ease: 'power3.in',
+      x: exitX, rotationY: exitRotY,
+      opacity: 0, filter: 'blur(6px)',
+      duration: 0.45, ease: 'power2.in',
       onComplete: () => {
         state.idx = newIdx;
         const item = arr[newIdx];
@@ -271,20 +284,23 @@
         lbImg.alt = item.hl;
         setText(newIdx);
         imageReady(lbImg).then(() => {
-          gsap.set(lbImg, { x: -offset, filter: 'blur(8px)', opacity: 0 });
+          gsap.set(lbImg, { x: enterX, rotationY: enterRotY, opacity: 0, filter: 'blur(6px)' });
           gsap.to(lbImg, {
-            x: 0, opacity: 1, filter: 'blur(0px)',
-            duration: 0.5, ease: 'power3.out',
-            onComplete: () => { state.animating = false; }
+            x: 0, rotationY: 0, opacity: 1, filter: 'blur(0px)',
+            duration: 0.65, ease: 'power3.out',
+            onComplete: () => {
+              gsap.set(lbImg, { clearProps: 'transform,filter' });
+              state.animating = false;
+            }
           });
         });
       }
     });
 
-    gsap.to([lbCapL, lbCapR], { opacity: 0, y: -8, duration: 0.18, ease: 'power2.in' });
+    gsap.to([lbCapL, lbCapR], { opacity: 0, y: -8, duration: 0.22, ease: 'power2.in' });
     gsap.fromTo([lbCapL, lbCapR],
       { y: 8 },
-      { opacity: 1, y: 0, duration: 0.32, delay: 0.4, ease: 'power2.out', stagger: 0.04 });
+      { opacity: 1, y: 0, duration: 0.36, delay: 0.55, ease: 'power2.out', stagger: 0.04 });
   }
 
   // Wiring

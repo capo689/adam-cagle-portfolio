@@ -12,9 +12,10 @@
     if (typeof SplitText === 'undefined') return;
     const heroName = document.querySelector('.hero .hero-name');
     const heroKick = document.querySelector('.hero .hero-kicker');
+    const heroSub  = document.querySelector('.hero .hero-sub');
     if (!heroName) return;
 
-    gsap.set([heroKick, heroName].filter(Boolean), { opacity: 0 });
+    gsap.set([heroKick, heroName, heroSub].filter(Boolean), { opacity: 0 });
 
     (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve())
       .then(() => {
@@ -37,6 +38,12 @@
           duration: 0.7,
           stagger: 0.04
         }, 0.25);
+
+        if (heroSub) {
+          tl.fromTo(heroSub,
+            { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.7 }, '-=0.2');
+        }
       });
   }
 

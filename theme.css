@@ -17,8 +17,8 @@ html[data-theme="light"] {
   --fg-3:    rgba(20,17,15,0.62);
   --rule:    rgba(20,17,15,0.16);
   --rule-2:  rgba(20,17,15,0.09);
-  /* Darkened accent for light mode (was #ff5b1f, only ~2.75:1) → #b8430f ~4.6:1 */
-  --accent:  #b8430f;
+  /* Denim blue accent for light mode (replaces #b8430f orange) — ~7:1 contrast on #f4efe7 */
+  --accent:  #1F4E8C;
 }
 
 html[data-theme="light"] body {

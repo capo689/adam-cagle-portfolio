@@ -7,23 +7,23 @@
 
   const galleries = {
     ssia: [
-      { src: 'agents/ssia-vrt-dashboard.png',  hl: 'VRT Dashboard.',   meta: 'SSIA · Vertiv · Morning Run' },
-      { src: 'agents/ssia-vrt-graphs.png',     hl: 'VRT Signals.',     meta: 'SSIA · Vertiv · Regime Graphs' },
-      { src: 'agents/ssia-crdo-dashboard.png', hl: 'CRDO Dashboard.',  meta: 'SSIA · Credo · Morning Run' },
-      { src: 'agents/ssia-crdo-graphs.png',    hl: 'CRDO Signals.',    meta: 'SSIA · Credo · Regime Graphs' }
+      { src: 'img/agents/ssia-vrt-dashboard.png',  hl: 'VRT Dashboard.',   meta: 'SSIA · Vertiv · Morning Run' },
+      { src: 'img/agents/ssia-vrt-graphs.png',     hl: 'VRT Signals.',     meta: 'SSIA · Vertiv · Regime Graphs' },
+      { src: 'img/agents/ssia-crdo-dashboard.png', hl: 'CRDO Dashboard.',  meta: 'SSIA · Credo · Morning Run' },
+      { src: 'img/agents/ssia-crdo-graphs.png',    hl: 'CRDO Signals.',    meta: 'SSIA · Credo · Regime Graphs' }
     ],
     book: [
-      { src: 'agents/book-agent.png', hl: 'Book Agent.', meta: 'KDP · Closed Loop · Five Channels' }
+      { src: 'img/agents/book-agent.png', hl: 'Book Agent.', meta: 'KDP · Closed Loop · Five Channels' }
     ],
     auscan: [
-      { src: 'agents/auscan-dashboard.png', hl: 'AuScan Dashboard.', meta: 'AuScan · Prospectivity Grid' },
-      { src: 'agents/auscan-report.png',    hl: 'Field Report.',     meta: 'AuScan · Harney County · Oregon' }
+      { src: 'img/agents/auscan-dashboard.png', hl: 'AuScan Dashboard.', meta: 'AuScan · Prospectivity Grid' },
+      { src: 'img/agents/auscan-report.png',    hl: 'Field Report.',     meta: 'AuScan · Harney County · Oregon' }
     ],
     beef: [
-      { src: 'agents/beef-dashboard.png', hl: 'BEEF Dashboard.', meta: 'BEEF · 68 Assets · Daily Brief' }
+      { src: 'img/agents/beef-dashboard.png', hl: 'BEEF Dashboard.', meta: 'BEEF · 68 Assets · Daily Brief' }
     ],
     music: [
-      { src: 'agents/music-agent.png', hl: 'Music Agent.', meta: 'Closed Loop · Multi-DSP' }
+      { src: 'img/agents/music-agent.png', hl: 'Music Agent.', meta: 'Closed Loop · Multi-DSP' }
     ]
   };
 

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Studio · Adam R. Cagle</title>
 <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
-<link rel="icon" type="image/png" href="cross.png">
+<link rel="icon" type="image/png" href="img/cross.png">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
 <!-- SEO -->
@@ -299,7 +299,7 @@
     </div>
     <div>
       <div class="banner-wrap" id="banner-wrap">
-        <img id="banner-thumb" src="banners/media/fallback-image.jpg" alt="Sunset Marquis HTML5 banner ad · preview thumbnail (click play to view animation)" width="728" height="90" style="display:block;width:100%;height:100%;object-fit:cover;">
+        <img id="banner-thumb" src="img/banners/media/fallback-image.jpg" alt="Sunset Marquis HTML5 banner ad · preview thumbnail (click play to view animation)" width="728" height="90" style="display:block;width:100%;height:100%;object-fit:cover;">
       </div>
       <div class="banner-controls">
         <button class="b-btn" id="banner-btn" onclick="toggleBanner()">
@@ -339,7 +339,7 @@
     if (!document.getElementById('banner-thumb')) {
       var img = document.createElement('img');
       img.id = 'banner-thumb';
-      img.src = 'banners/media/fallback-image.jpg';
+      img.src = 'img/banners/media/fallback-image.jpg';
       img.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;';
       wrap.appendChild(img);
     }
@@ -350,7 +350,7 @@
     if (t) t.remove();
     var f = document.createElement('iframe');
     f.id = 'banner-iframe';
-    f.src = 'banners/index.html';
+    f.src = 'img/banners/index.html';
     f.width = 728; f.height = 90;
     f.setAttribute('scrolling', 'no');
     f.style.cssText = 'display:block;border:none;background:transparent;';

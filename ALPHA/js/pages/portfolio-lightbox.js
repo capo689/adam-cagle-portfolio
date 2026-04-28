@@ -21,41 +21,41 @@
 
   const galleries = {
     traveler: [
-      { src: 'ads/traveler-road.webp',             hl: 'The Road.',                     meta: 'Escape Mk III · 25 Years' },
-      { src: 'ads/traveler-sonic-bloom.webp',      hl: 'Sonic Bloom.',                  meta: 'Redlands Concert · Forest' },
-      { src: 'ads/traveler-jungle.webp',           hl: 'Hey Jungle, Welcome to Me.',    meta: 'Vaibrant Electric · Tropical' },
-      { src: 'ads/traveler-greatness.jpg',         hl: 'Next Stop, Greatness.',         meta: 'Ultra-Light · Subway' },
-      { src: 'ads/traveler-force.webp',            hl: 'A Force of Nature.',            meta: 'Vaibrant Teal Burst · Tempest' },
-      { src: 'ads/traveler-flying-solo.webp',      hl: 'Flying Solo.',                  meta: 'Ultra-Light · Cockpit' },
-      { src: 'ads/traveler-endless-strummer.webp', hl: 'Endless Strummer.',             meta: 'Redlands Mini · Surf' }
+      { src: 'img/ads/traveler-road.webp',             hl: 'The Road.',                     meta: 'Escape Mk III · 25 Years' },
+      { src: 'img/ads/traveler-sonic-bloom.webp',      hl: 'Sonic Bloom.',                  meta: 'Redlands Concert · Forest' },
+      { src: 'img/ads/traveler-jungle.webp',           hl: 'Hey Jungle, Welcome to Me.',    meta: 'Vaibrant Electric · Tropical' },
+      { src: 'img/ads/traveler-greatness.jpg',         hl: 'Next Stop, Greatness.',         meta: 'Ultra-Light · Subway' },
+      { src: 'img/ads/traveler-force.webp',            hl: 'A Force of Nature.',            meta: 'Vaibrant Teal Burst · Tempest' },
+      { src: 'img/ads/traveler-flying-solo.webp',      hl: 'Flying Solo.',                  meta: 'Ultra-Light · Cockpit' },
+      { src: 'img/ads/traveler-endless-strummer.webp', hl: 'Endless Strummer.',             meta: 'Redlands Mini · Surf' }
     ],
     sunset: [
-      { src: 'ads/sunset-legendary-nights.webp',   hl: 'Yes, that beautiful.',                                  meta: 'Sunset Marquis' },
-      { src: 'ads/sunset-yes-that-beautiful.jpg',  hl: 'Legendary Nights Begin at Sunset.',                    meta: 'Sunset Marquis' },
-      { src: 'ads/ACM-Awards-2025.jpg',            hl: "Sure, it's California, but it's the southern part.",   meta: 'ACM Awards Guide' },
-      { src: 'ads/SMBrochure.jpg',                 hl: 'Unique. Even by Hollywood standards.',                 meta: 'GDS One-Sheet' }
+      { src: 'img/ads/sunset-legendary-nights.webp',   hl: 'Yes, that beautiful.',                                  meta: 'Sunset Marquis' },
+      { src: 'img/ads/sunset-yes-that-beautiful.jpg',  hl: 'Legendary Nights Begin at Sunset.',                    meta: 'Sunset Marquis' },
+      { src: 'img/ads/ACM-Awards-2025.jpg',            hl: "Sure, it's California, but it's the southern part.",   meta: 'ACM Awards Guide' },
+      { src: 'img/ads/SMBrochure.jpg',                 hl: 'Unique. Even by Hollywood standards.',                 meta: 'GDS One-Sheet' }
     ],
     killer: [
-      { src: 'ads/killer-sniper.webp?v=2026',  hl: 'Warrior.', meta: 'Killer NIC K1' },
-      { src: 'ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1' },
-      { src: 'ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1' }
+      { src: 'img/ads/killer-sniper.webp?v=2026',  hl: 'Warrior.', meta: 'Killer NIC K1' },
+      { src: 'img/ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1' },
+      { src: 'img/ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1' }
     ],
     filekeepers: [
-      { src: 'ads/FileKeepers_SPACE1.jpg',  hl: 'Space.', meta: 'FileKeepers · Room 1' },
-      { src: 'ads/FileKeepers_SPACE12.jpg', hl: 'Space.', meta: 'FileKeepers · Room 2' },
-      { src: 'ads/FileKeepers_SPACE13.jpg', hl: 'Space.', meta: 'FileKeepers · Room 3' },
-      { src: 'ads/FileKeepers_SPACE14.jpg', hl: 'Space.', meta: 'FileKeepers · Room 4' }
+      { src: 'img/ads/FileKeepers_SPACE1.jpg',  hl: 'Space.', meta: 'FileKeepers · Room 1' },
+      { src: 'img/ads/FileKeepers_SPACE12.jpg', hl: 'Space.', meta: 'FileKeepers · Room 2' },
+      { src: 'img/ads/FileKeepers_SPACE13.jpg', hl: 'Space.', meta: 'FileKeepers · Room 3' },
+      { src: 'img/ads/FileKeepers_SPACE14.jpg', hl: 'Space.', meta: 'FileKeepers · Room 4' }
     ],
     clink: [
-      { src: 'CLINK/ws-panel_0000_homepage.jpg',                                                          hl: 'Homepage.',  meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',            hl: 'Clink78.',   meta: 'London' },
-      { src: 'CLINK/ws-panel_0002_screencapture-clinkhostels-clink261-2023-09-13-09_57_53.jpg',           hl: 'Clink261.',  meta: 'London' },
-      { src: 'CLINK/ws-panel_0003_screencapture-clinkhostels-london-2023-09-13-09_53_57.jpg',             hl: 'London.',    meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg',          hl: 'Amsterdam.', meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0005_screencapture-clinkhostels-dublin-2023-09-13-09_56_27.jpg',             hl: 'Dublin.',    meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0006_screencapture-clinkhostels-groups-2023-09-13-09_56_05.jpg',             hl: 'Groups.',    meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0007_screencapture-clinkhostels-category-offers-2023-09-13-09_55_39.jpg',    hl: 'Offers.',    meta: 'Clink Hostels' },
-      { src: 'CLINK/ws-panel_0008_screencapture-clinkhostels-category-city-tips-2023-09-13-09_57_06.jpg', hl: 'City Tips.', meta: 'Clink Hostels' }
+      { src: 'img/CLINK/ws-panel_0000_homepage.jpg',                                                          hl: 'Homepage.',  meta: 'Clink Hostels' },
+      { src: 'img/CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',            hl: 'Clink78.',   meta: 'London' },
+      { src: 'img/CLINK/ws-panel_0002_screencapture-clinkhostels-clink261-2023-09-13-09_57_53.jpg',           hl: 'Clink261.',  meta: 'London' },
+      { src: 'img/CLINK/ws-panel_0003_screencapture-clinkhostels-london-2023-09-13-09_53_57.jpg',             hl: 'London.',    meta: 'Clink Hostels' },
+      { src: 'img/CLINK/ws-panel_0004_screencapture-clinkhostels-amsterdam-2023-09-13-09_54_23.jpg',          hl: 'Amsterdam.', meta: 'Clink Hostels' },
+      { src: 'img/CLINK/ws-panel_0005_screencapture-clinkhostels-dublin-2023-09-13-09_56_27.jpg',             hl: 'Dublin.',    meta: 'Clink Hostels' },
+      { src: 'img/CLINK/ws-panel_0006_screencapture-clinkhostels-groups-2023-09-13-09_56_05.jpg',             hl: 'Groups.',    meta: 'Clink Hostels' },
+      { src: 'img/CLINK/ws-panel_0007_screencapture-clinkhostels-category-offers-2023-09-13-09_55_39.jpg',    hl: 'Offers.',    meta: 'Clink Hostels' },
+      { src: 'img/CLINK/ws-panel_0008_screencapture-clinkhostels-category-city-tips-2023-09-13-09_57_06.jpg', hl: 'City Tips.', meta: 'Clink Hostels' }
     ]
   };
 

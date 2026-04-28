@@ -130,16 +130,13 @@
   .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
   .hero-kicker .ac { color: var(--accent); }
   .hero-name {
-    font-family: var(--italic); font-style: italic; font-weight: 400;
-    font-size: clamp(28px, 3vw, 44px);
-    line-height: 1.3; letter-spacing: -0.01em;
-    color: var(--fg-2);
-    max-width: 32ch;
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95; letter-spacing: -0.03em;
     margin: 0;
-    text-wrap: balance;
+    max-width: 18ch; text-wrap: balance;
   }
-  .hero-name .it,
-  .hero-name em { color: var(--accent); font-style: italic; }
+  .hero-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -0.03em; }
   .hero-sub {
     margin-top: 24px;
     font-family: var(--italic); font-style: italic;
@@ -209,7 +206,7 @@
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
     .hero { padding: 100px 0 40px; }
-    .hero-name { font-size: clamp(22px, 5.5vw, 36px); max-width: none; }
+    .hero-name { font-size: clamp(40px, 11vw, 72px); max-width: none; }
     .book { grid-template-columns: 1fr; gap: 28px; padding: 56px 0; }
     .book-left {
       position: static;
@@ -246,7 +243,7 @@
       <span>Books</span><span>·</span>
       <span>Fiction &amp; Nonfiction</span>
     </div>
-    <h1 class="hero-name">I am a copywriter by trade and a writer by <span class="it">compulsion</span>. The books are what happens when there is no client and no brief and <span class="it">nobody to tell me to stop</span>.</h1>
+    <h1 class="hero-name">I am a copywriter by trade and a writer by <span class="it">compulsion</span>.</h1>
     <p class="hero-sub">Vampires of the Ottoman Empire, workout manifestos, zombie comedies, and arguments about <em>civilization</em>. All written because they popped into my head and wouldn't go away.</p>
   </div>
 

@@ -7,44 +7,11 @@
   if (!A) return;
 
   function initHero() {
-    // Books hero is a paragraph statement, not a punchy headline.
-    // Use word-level SplitText so the reveal stays under ~1.2s.
-    if (typeof SplitText === 'undefined') return;
-    const heroName = document.querySelector('.hero .hero-name');
-    const heroKick = document.querySelector('.hero .hero-kicker');
-    const heroSub  = document.querySelector('.hero .hero-sub');
-    if (!heroName) return;
-
-    gsap.set([heroKick, heroName, heroSub].filter(Boolean), { opacity: 0 });
-
-    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve())
-      .then(() => {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        if (heroKick) {
-          tl.fromTo(heroKick,
-            { opacity: 0, y: 12 },
-            { opacity: 1, y: 0, duration: 0.6 }, 0.15);
-        }
-        const split = new SplitText(heroName, {
-          type: 'words,lines',
-          mask: 'lines',
-          linesClass: 'split-line',
-          wordsClass: 'split-word'
-        });
-        gsap.set(heroName, { opacity: 1 });
-        gsap.set(split.words, { yPercent: 110 });
-        tl.to(split.words, {
-          yPercent: 0,
-          duration: 0.7,
-          stagger: 0.04
-        }, 0.25);
-
-        if (heroSub) {
-          tl.fromTo(heroSub,
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.7 }, '-=0.2');
-        }
-      });
+    A.heroReveal({
+      name: '.hero .hero-name',
+      sub:  '.hero .hero-sub',
+      kick: '.hero .hero-kicker'
+    });
   }
 
   function initBook(book) {

@@ -101,6 +101,11 @@
   z-index: 9998;
   mix-blend-mode: screen;
 }
+/* Light theme: screen on cream-coloured bg has nothing to brighten so the
+   particles disappear. Multiply darkens, which makes orange visible. */
+html[data-theme="light"] .cursor-canvas {
+  mix-blend-mode: multiply;
+}
 
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .cursor-canvas { display: none !important; }

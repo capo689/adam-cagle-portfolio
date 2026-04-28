@@ -20,7 +20,7 @@
     const genre  = book.querySelector('.book-genre');
     const title  = book.querySelector('.book-title');
     const sub    = book.querySelector('.book-subtitle');
-    const quotes = book.querySelectorAll('.quote');
+    const blocks = book.querySelectorAll('.synopsis, .quote');
 
     // Left column: stagger reveal
     const leftEls = [genre, cover, title, sub].filter(Boolean);
@@ -38,10 +38,10 @@
       if (img) A.kenBurns(img, { trigger: cover, from: 1.05 });
     }
 
-    // Right column: each quote rises
-    if (quotes.length) {
-      gsap.set(quotes, { y: 50, opacity: 0 });
-      gsap.to(quotes, {
+    // Right column: synopsis + each quote rises in sequence
+    if (blocks.length) {
+      gsap.set(blocks, { y: 50, opacity: 0 });
+      gsap.to(blocks, {
         y: 0, opacity: 1,
         duration: 0.9, ease: 'power3.out',
         stagger: 0.18,

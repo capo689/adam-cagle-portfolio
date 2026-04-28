@@ -325,16 +325,31 @@
     .page { padding: 0 20px; }
     .hero { padding: 100px 0 40px; }
     .hero-sub { grid-template-columns: 1fr; gap: 28px; }
-    .hero-name { font-size: clamp(48px, 13vw, 96px); line-height: 0.88; }
-    .hero-meta { align-self: stretch; }
+    .hero-name { font-size: clamp(48px, 13vw, 96px); line-height: 0.92; }
+    .hero-role { max-width: none; font-size: clamp(20px, 5vw, 26px); }
+    .hero-meta { align-self: stretch; width: 100%; }
     .hero-cta { padding: 16px 18px; }
     .hero-cta .cta-email { font-size: 14px; }
-    .section { grid-template-columns: 1fr; gap: 28px; padding: 56px 0; }
+    .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
     .s-head { position: static; }
-    .s-title { white-space: normal; font-size: clamp(28px, 7vw, 38px); }
+    .s-title { white-space: normal; font-size: clamp(28px, 7vw, 40px); }
     .caps, .works, .tri { grid-template-columns: 1fr; }
-    .summary p { margin: 0 0 20px 0; max-width: none; font-size: clamp(18px, 4.5vw, 22px); }
-    .job-body { margin-right: 0; }
+    .s-body { width: 100%; }
+    .summary p {
+      margin: 0 0 20px 0;
+      max-width: none;
+      width: 100%;
+      font-size: clamp(20px, 5vw, 24px);
+      line-height: 1.45;
+    }
+    .job-body { margin-right: 0; max-width: none; width: 100%; font-size: clamp(17px, 4.4vw, 19px); line-height: 1.65; }
+    .job-title { font-size: clamp(20px, 5.5vw, 26px); }
+    .job-org { font-size: 11px; }
+    .cap p { font-size: clamp(16px, 4.2vw, 18px); }
+    .tri-note { font-size: clamp(16px, 4.2vw, 18px); }
+    .work p { font-size: clamp(16px, 4.2vw, 18px); }
+    .work .line { font-size: clamp(17px, 4.5vw, 19px); }
+    .work-intro { font-size: clamp(17px, 4.6vw, 20px); max-width: none; }
     .work-cta { padding: 18px 20px; }
     .work-cta .cta-title { font-size: 17px; }
   }

@@ -188,3 +188,18 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
   }
   .foot .center, .foot .right { text-align: center; }
 }
+
+/* ─── SPLITTEXT LINE MASK FIX ───
+   GSAP SplitText with mask:'lines' wraps each line in overflow:hidden so
+   characters can rise from below. With tight line-heights (0.84-0.95) the
+   wrapper is shorter than the glyph + descender, which clips the bottoms of
+   letters with descenders (g, y, p, q, j). Adding padding extends the visible
+   area without affecting layout flow. */
+.split-line {
+  padding-bottom: 0.18em;
+  /* Counter the extra padding so subsequent siblings aren't pushed down */
+  margin-bottom: -0.1em;
+}
+
+/* ─── GLOBAL OVERFLOW SAFETY ─── */
+html, body { overflow-x: hidden; }

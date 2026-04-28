@@ -60,15 +60,6 @@
   filter: drop-shadow(0 0 4px rgba(255, 91, 31, 0.06));
 }
 
-/* Light mode: swap the orange neon glow for blue (matches --accent #1F4E8C) */
-html[data-theme="light"] .preloader__neon {
-  filter: drop-shadow(0 0 28px rgba(31, 78, 140, 0.45))
-          drop-shadow(0 0 60px rgba(31, 78, 140, 0.15));
-}
-html[data-theme="light"] .preloader__neon[data-state="off"] {
-  filter: drop-shadow(0 0 4px rgba(31, 78, 140, 0.06));
-}
-
 .preloader__neon[data-ready="true"] {
   opacity: 1;
 }

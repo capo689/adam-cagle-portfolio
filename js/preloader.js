@@ -16,13 +16,6 @@
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Theme-aware neon image set. Light mode uses the blue variants, dark stays
-  // orange. Read once at preloader start — theme is set synchronously by
-  // theme.js before any DOM exists, so this is reliable.
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  const NEON_ON  = isLight ? 'img/neonblue_on.png'  : 'img/neon_on.png';
-  const NEON_OFF = isLight ? 'img/neonblue_off.png' : 'img/neon_off.png';
-
   function build() {
     if (document.getElementById('preloader')) return;
     document.body.classList.add('preloader-active');
@@ -30,7 +23,7 @@
     el.id = 'preloader';
     el.className = 'preloader';
     el.setAttribute('aria-hidden', 'true');
-    el.innerHTML = '<img class="preloader__neon" src="' + NEON_OFF + '" data-state="off" alt="">';
+    el.innerHTML = '<img class="preloader__neon" src="img/neon_off.png" data-state="off" alt="">';
     document.body.insertBefore(el, document.body.firstChild);
     return el;
   }
@@ -49,10 +42,8 @@
   function findTarget() {
     return document.querySelector('[data-preloader-target]')
         || document.querySelector('.hero img[src*="neon_on"]')
-        || document.querySelector('.hero img[src*="neonblue_on"]')
         || document.querySelector('.hero img[src*="neonx"]')
         || document.querySelector('img[src*="neon_on"]')
-        || document.querySelector('img[src*="neonblue_on"]')
         || document.querySelector('img[src*="neonx"]')
         || null;
   }
@@ -126,7 +117,7 @@
     let acc = 0;
     sequence.forEach((step, i) => {
       setTimeout(() => {
-        neon.src = step.state === 'on' ? NEON_ON : NEON_OFF;
+        neon.src = step.state === 'on' ? 'img/neon_on.png' : 'img/neon_off.png';
         neon.dataset.state = step.state;
         if (i === sequence.length - 1) {
           setTimeout(onDone, step.hold);
@@ -162,14 +153,14 @@
     const neon = el.querySelector('.preloader__neon');
 
     if (reduced) {
-      neon.src = NEON_ON;
+      neon.src = 'img/neon_on.png';
       neon.dataset.state = 'on';
       neon.dataset.ready = 'true';
       setTimeout(() => dismiss(el), 600);
       return;
     }
 
-    Promise.all([preloadImage(NEON_OFF), preloadImage(NEON_ON)])
+    Promise.all([preloadImage('img/neon_off.png'), preloadImage('img/neon_on.png')])
       .then(() => {
         // Wait for layout to find the target, then position the neon there
         const ready = (document.readyState === 'complete' || document.readyState === 'interactive')

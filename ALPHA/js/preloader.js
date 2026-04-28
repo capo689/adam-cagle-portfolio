@@ -38,7 +38,9 @@
   // selectors. Returns the element or null.
   function findTarget() {
     return document.querySelector('[data-preloader-target]')
+        || document.querySelector('.hero img[src*="neon_on"]')
         || document.querySelector('.hero img[src*="neonx"]')
+        || document.querySelector('img[src*="neon_on"]')
         || document.querySelector('img[src*="neonx"]')
         || null;
   }
@@ -112,7 +114,7 @@
     let acc = 0;
     sequence.forEach((step, i) => {
       setTimeout(() => {
-        neon.src = step.state === 'on' ? 'neonx.png' : 'neon_off.png';
+        neon.src = step.state === 'on' ? 'neon_on.png' : 'neon_off.png';
         neon.dataset.state = step.state;
         if (i === sequence.length - 1) {
           setTimeout(onDone, step.hold);
@@ -148,14 +150,14 @@
     const neon = el.querySelector('.preloader__neon');
 
     if (reduced) {
-      neon.src = 'neonx.png';
+      neon.src = 'neon_on.png';
       neon.dataset.state = 'on';
       neon.dataset.ready = 'true';
       setTimeout(() => dismiss(el), 600);
       return;
     }
 
-    Promise.all([preloadImage('neon_off.png'), preloadImage('neonx.png')])
+    Promise.all([preloadImage('neon_off.png'), preloadImage('neon_on.png')])
       .then(() => {
         // Wait for layout to find the target, then position the neon there
         const ready = (document.readyState === 'complete' || document.readyState === 'interactive')

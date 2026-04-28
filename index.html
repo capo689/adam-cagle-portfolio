@@ -156,23 +156,8 @@
   }
   .hero-role em { color: var(--accent); font-style: italic; }
 
-  /* ─── HERO META: status + CTA + location ─── */
+  /* ─── HERO META: CTA + location ─── */
   .hero-meta { display: flex; flex-direction: column; gap: 16px; align-self: end; }
-  .hero-status {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: #4ade80;
-  }
-  .hero-status::before {
-    content: ''; display: block; width: 7px; height: 7px; border-radius: 50%;
-    background: #4ade80; box-shadow: 0 0 8px #4ade80;
-    animation: pulse-live 2s ease-in-out infinite;
-  }
-  @keyframes pulse-live {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
   .hero-cta {
     display: flex; align-items: center; justify-content: space-between;
     gap: 16px; padding: 18px 22px;
@@ -405,7 +390,6 @@
         Creative Director &amp; Lead Copywriter.<br><em>AI Agents</em>, Brands, Strategy, Pitches, Launches.
       </div>
       <div class="hero-meta">
-        <span class="hero-status">Available for Work</span>
         <a href="mailto:adamrcagle@gmail.com" class="hero-cta">
           <span class="cta-stack">
             <span class="cta-label">Get in touch</span>

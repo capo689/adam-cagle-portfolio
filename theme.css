@@ -3,6 +3,12 @@
    variables win regardless of where this file loads relative
    to each page's inline <style> block.
 ─────────────────────────────── */
+
+/* Reserve scrollbar gutter so locking body overflow (preloader, lightbox)
+   doesn't change viewport width — keeps vw-based font sizes stable so the
+   preloader neon lands exactly on the page neon. */
+html { scrollbar-gutter: stable; }
+
 html[data-theme="dark"] {
   /* WCAG contrast bump: 0.45 → 0.62 raises --fg-3 from ~4.2:1 to ~7.2:1 against #0f0f0e */
   --fg-3:    rgba(246,243,236,0.62);

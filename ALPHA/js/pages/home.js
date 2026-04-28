@@ -61,8 +61,12 @@
     if (!section) return;
     revealSectionHead(section);
     const caps = section.querySelectorAll('.cap');
-    if (caps.length) {
-      const grid = section.querySelector('.caps');
+    if (!caps.length) return;
+    const grid = section.querySelector('.caps');
+
+    // Below 960px: keep the original 2x2 grid stagger reveal
+    const wideEnoughForPin = window.matchMedia('(min-width: 961px)').matches;
+    if (!wideEnoughForPin) {
       gsap.set(caps, { y: 50, opacity: 0 });
       gsap.to(caps, {
         y: 0, opacity: 1,
@@ -70,6 +74,43 @@
         stagger: 0.12,
         scrollTrigger: { trigger: grid, start: 'top 78%', toggleActions: 'play none none reverse' }
       });
+      return;
+    }
+
+    // Desktop: pinned stack-and-swap. Cards share the same grid cell.
+    grid.classList.add('is-pinned');
+
+    // Initial state: only the first card is visible
+    gsap.set(caps, { opacity: 0, y: 40 });
+    gsap.set(caps[0], { opacity: 1, y: 0 });
+
+    const transitionDur = 0.7;
+    const holdDur = 1.0;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=' + (caps.length * 100) + '%',
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1,
+        invalidateOnRefresh: true
+      }
+    });
+
+    // Hold-then-swap rhythm: each transition starts after a hold
+    for (let i = 1; i < caps.length; i++) {
+      const startAt = (i - 1) * (transitionDur + holdDur) + holdDur;
+      tl.to(caps[i - 1], {
+        opacity: 0, y: -40,
+        duration: transitionDur, ease: 'power2.in'
+      }, startAt);
+      tl.fromTo(caps[i],
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: transitionDur, ease: 'power2.out' },
+        startAt + 0.18
+      );
     }
   }
 

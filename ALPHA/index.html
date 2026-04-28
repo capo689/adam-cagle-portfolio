@@ -266,6 +266,26 @@
     gap: 1px; background: var(--rule);
     border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
   }
+  /* Pinned scroll-driven sequence: cards stack at the same grid cell so
+     the timeline can swap them in/out one at a time */
+  .caps.is-pinned {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    min-height: 380px;
+  }
+  .caps.is-pinned .cap {
+    grid-column: 1;
+    grid-row: 1;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 36px 40px 32px;
+  }
   .cap { background: var(--bg-soft); padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 14px; }
   .cap-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
   .cap-name { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; color: var(--fg); }

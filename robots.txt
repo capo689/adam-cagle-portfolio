@@ -1,10 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /uploads/
-Disallow: /chats/
-Disallow: /banners/
 
-# AI crawlers — explicitly welcome
+# AI crawlers welcome
 User-agent: GPTBot
 Allow: /
 

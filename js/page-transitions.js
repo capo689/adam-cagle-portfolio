@@ -40,7 +40,7 @@
       });
     }
 
-    // Hijack same-origin internal link clicks within /ALPHA/
+    // Hijack same-origin internal link clicks
     document.addEventListener('click', (e) => {
       // Respect modifier keys and non-left clicks
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -63,13 +63,6 @@
         return;
       }
       if (url.origin !== window.location.origin) return;
-
-      // Both source and destination must be inside /ALPHA/ for the round
-      // trip to land safely (the destination needs page-transitions.js too)
-      const fromPath = window.location.pathname;
-      const toPath   = url.pathname;
-      const inAlpha  = (p) => p === '/ALPHA/' || p.startsWith('/ALPHA/');
-      if (!inAlpha(fromPath) || !inAlpha(toPath)) return;
 
       // Don't transition to the same URL
       if (url.href === window.location.href) return;

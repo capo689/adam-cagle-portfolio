@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Books — Adam R. Cagle</title>
+<title>Books · Adam R. Cagle</title>
 <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
-<link rel="icon" type="image/png" href="cross.png">
+<link rel="icon" type="image/png" href="img/cross.png">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
 <!-- SEO -->
-<meta name="description" content="Books by Adam R. Cagle — Ship Happens, Vampire's Babysitter, What Worked For Me, The Deal, The Ledger. Historical fiction, horror, fitness, and philosophy.">
+<meta name="description" content="Books by Adam R. Cagle · Ship Happens, Vampire's Babysitter, What Worked For Me, The Deal, The Ledger. Historical fiction, horror, fitness, and philosophy.">
 <meta name="author" content="Adam R. Cagle">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0f0f0e">
@@ -18,17 +18,17 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Adam R. Cagle">
-<meta property="og:title" content="Books — Adam R. Cagle">
+<meta property="og:title" content="Books · Adam R. Cagle">
 <meta property="og:description" content="Ottoman Empire vampires, zombie comedies, workout manifestos, and arguments about civilization. All written because they popped into my head.">
 <meta property="og:url" content="https://adamcagle.com/Books.html">
-<meta property="og:image" content="https://adamcagle.com/books/ship-happens.png">
-<meta property="og:image:alt" content="Ship Happens — A Chad Cruz Zombie Adventure by Adam R. Cagle">
+<meta property="og:image" content="https://adamcagle.com/img/books/ship-happens.png">
+<meta property="og:image:alt" content="Ship Happens · A Chad Cruz Zombie Adventure by Adam R. Cagle">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Books — Adam R. Cagle">
+<meta name="twitter:title" content="Books · Adam R. Cagle">
 <meta name="twitter:description" content="Ottoman Empire vampires, zombie comedies, workout manifestos, and arguments about civilization.">
-<meta name="twitter:image" content="https://adamcagle.com/books/ship-happens.png">
+<meta name="twitter:image" content="https://adamcagle.com/img/books/ship-happens.png">
 
 <!-- Structured Data -->
 <script type="application/ld+json">
@@ -44,7 +44,7 @@
       "name": "Ship Happens: A Chad Cruz Zombie Adventure",
       "author": { "@type": "Person", "name": "Adam R. Cagle" },
       "genre": ["Horror", "Comedy", "Zombie Fiction"],
-      "image": "https://adamcagle.com/books/ship-happens.png"
+      "image": "https://adamcagle.com/img/books/ship-happens.png"
     },
     {
       "@type": "Book",
@@ -52,28 +52,28 @@
       "author": { "@type": "Person", "name": "Adam R. Cagle" },
       "genre": ["Historical Fiction", "Horror"],
       "description": "Set in the Ottoman Empire. A vampire as old as rivers and mountain passes.",
-      "image": "https://adamcagle.com/Vampire.png"
+      "image": "https://adamcagle.com/img/Vampire.png"
     },
     {
       "@type": "Book",
       "name": "What Worked For Me",
       "author": { "@type": "Person", "name": "Adam R. Cagle" },
       "genre": ["Nonfiction", "Fitness"],
-      "image": "https://adamcagle.com/workout.png"
+      "image": "https://adamcagle.com/img/workout.png"
     },
     {
       "@type": "Book",
       "name": "The Deal",
       "author": { "@type": "Person", "name": "Adam R. Cagle" },
       "genre": ["Nonfiction", "Philosophy", "Civilization"],
-      "image": "https://adamcagle.com/books/the-deal.jpg"
+      "image": "https://adamcagle.com/img/books/the-deal.jpg"
     },
     {
       "@type": "Book",
       "name": "The Ledger",
       "author": { "@type": "Person", "name": "Adam R. Cagle" },
       "genre": ["Nonfiction", "Philosophy"],
-      "image": "https://adamcagle.com/books/the-ledger.jpg"
+      "image": "https://adamcagle.com/img/books/the-ledger.jpg"
     }
   ]
 }
@@ -84,7 +84,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<link rel="stylesheet" href="css/page-transitions.css">
 <script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<script src="js/pages/books.js" defer></script>
 <style>
   :root {
     --bg:      #0f0f0e;
@@ -123,14 +134,16 @@
   .hero-name {
     font-family: var(--sans); font-weight: 800;
     font-size: clamp(48px, 8vw, 96px);
-    line-height: 0.95; letter-spacing: -0.03em; margin: 0;
+    line-height: 0.95; letter-spacing: -0.03em;
+    margin: 0;
+    max-width: 18ch; text-wrap: balance;
   }
   .hero-name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -0.03em; }
   .hero-sub {
-    margin-top: 32px;
+    margin-top: 24px;
     font-family: var(--italic); font-style: italic;
-    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.3;
-    color: var(--fg-2); max-width: 36ch; text-wrap: balance;
+    font-size: clamp(18px, 1.8vw, 22px); line-height: 1.4;
+    color: var(--fg-3); max-width: 56ch; text-wrap: balance;
   }
   .hero-sub em { color: var(--accent); font-style: italic; }
 
@@ -194,8 +207,9 @@
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
-    .hero { padding: 110px 0 48px; }
-    .book { grid-template-columns: 1fr; gap: 28px; }
+    .hero { padding: 100px 0 40px; }
+    .hero-name { font-size: clamp(40px, 11vw, 72px); max-width: none; }
+    .book { grid-template-columns: 1fr; gap: 28px; padding: 56px 0; }
     .book-left {
       position: static;
       display: grid;
@@ -206,13 +220,22 @@
     .book-cover { grid-column: 1; grid-row: 1 / 4; width: 100%; align-self: start; }
     .book-genre { grid-column: 2; grid-row: 1; align-self: start; }
     .book-title { grid-column: 2; grid-row: 2; font-size: clamp(18px, 5vw, 26px); align-self: start; }
-    .book-subtitle { grid-column: 2; grid-row: 3; align-self: start; }
+    .book-subtitle { grid-column: 2; grid-row: 3; align-self: start; font-size: 14px; }
     .quote { padding: 28px 20px 24px; }
+    .quote-pull { font-size: clamp(20px, 5.5vw, 28px); max-width: none; }
+    .quote-body { font-size: 16px; }
+  }
+  @media (max-width: 520px) {
+    .book-left { grid-template-columns: 90px 1fr; column-gap: 16px; }
+    .book-title { font-size: clamp(17px, 5vw, 22px); }
+    .quote { padding: 24px 18px 22px; }
   }
 
 </style>
 </head>
 <body>
+<script src="js/page-transitions.js"></script>
+<script src="js/preloader.js"></script>
 
 <site-header active="books"></site-header>
 
@@ -224,19 +247,18 @@
       <span>Books</span><span>·</span>
       <span>Fiction &amp; Nonfiction</span>
     </div>
-    <h1 class="hero-name">I write therefore I am...<br><span class="it">probably not coming</span><br>to your party.</h1>
-    <p class="hero-sub">Vampires of the Ottoman Empire, workout manifestos, zombie comedies, and arguments about <em>civilization</em> — all written because they popped into my head and wouldn't go away.
-    </p>
+    <h1 class="hero-name">I am a copywriter by trade and a writer by <span class="it">compulsion</span>.</h1>
+    <p class="hero-sub">Vampires of the Ottoman Empire, workout manifestos, zombie comedies, and arguments about <em>civilization</em>. All written because they popped into my head and wouldn't go away.</p>
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       01 — SHIP HAPPENS
+       01 · SHIP HAPPENS
   ════════════════════════════════════════════════ -->
   <div class="book" id="ship-happens">
     <div class="book-left">
       <span class="book-genre">// Fiction · Comedy</span>
       <div class="book-cover">
-        <img src="books/ship-happens.png" alt="Ship Happens — A Chad Cruz Zombie Adventure" />
+        <img src="img/books/ship-happens.png" alt="Ship Happens · A Chad Cruz Zombie Adventure" />
       </div>
       <h2 class="book-title">Ship <span class="it">Happens</span></h2>
       <p class="book-subtitle">A Chad Cruz Zombie Adventure</p>
@@ -259,13 +281,13 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       02 — VAMPIRE'S BABYSITTER
+       02 · VAMPIRE'S BABYSITTER
   ════════════════════════════════════════════════ -->
   <div class="book" id="vampires-babysitter">
     <div class="book-left">
       <span class="book-genre">// Historical Fiction · Horror</span>
       <div class="book-cover">
-        <img src="Vampire.png" alt="Vampire's Babysitter — Adam R. Cagle" />
+        <img src="img/Vampire.png" alt="Vampire's Babysitter · Adam R. Cagle" />
       </div>
       <h2 class="book-title">Vampire's <span class="it">Babysitter</span></h2>
       <p class="book-subtitle">Historical Fiction · Horror</p>
@@ -288,13 +310,13 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       03 — WHAT WORKED FOR ME
+       03 · WHAT WORKED FOR ME
   ════════════════════════════════════════════════ -->
   <div class="book" id="what-worked-for-me">
     <div class="book-left">
       <span class="book-genre">// Nonfiction · Fitness</span>
       <div class="book-cover">
-        <img src="workout.png" alt="What Worked For Me — Adam R. Cagle" />
+        <img src="img/workout.png" alt="What Worked For Me · Adam R. Cagle" />
       </div>
       <h2 class="book-title">What Worked <span class="it">For Me</span></h2>
       <p class="book-subtitle">Fitness · Nonfiction</p>
@@ -317,13 +339,13 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       04 — THE DEAL
+       04 · THE DEAL
   ════════════════════════════════════════════════ -->
   <div class="book" id="the-deal">
     <div class="book-left">
       <span class="book-genre">// Nonfiction</span>
       <div class="book-cover">
-        <img src="books/the-deal.jpg" alt="The Deal — Every Civilization Runs on a Deal. It's Time to Renegotiate." />
+        <img src="img/books/the-deal.jpg" alt="The Deal · Every Civilization Runs on a Deal. It's Time to Renegotiate." />
       </div>
       <h2 class="book-title">The <span class="it">Deal</span></h2>
       <p class="book-subtitle">Every Civilization Runs on a Deal. It's Time to Renegotiate.</p>
@@ -346,13 +368,13 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       05 — THE LEDGER
+       05 · THE LEDGER
   ════════════════════════════════════════════════ -->
   <div class="book" id="the-ledger">
     <div class="book-left">
       <span class="book-genre">// Nonfiction</span>
       <div class="book-cover">
-        <img src="books/the-ledger.jpg" alt="The Ledger — An Accounting of Gender Roles" />
+        <img src="img/books/the-ledger.jpg" alt="The Ledger · An Accounting of Gender Roles" />
       </div>
       <h2 class="book-title">The <span class="it">Ledger</span></h2>
       <p class="book-subtitle">An Accounting of Gender Roles</p>

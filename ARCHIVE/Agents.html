@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Agents · Adam R. Cagle | AI Agents & Autonomous Systems</title>
 <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
-<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="icon" type="image/png" href="cross.png">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <meta name="description" content="Production AI agents by Adam R. Cagle · equities intelligence, book marketing, satellite prospecting, anomaly correlation, music promotion.">
 <meta name="author" content="Adam R. Cagle">
@@ -25,19 +25,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="nav.css">
-<link rel="stylesheet" href="css/cursor.css">
-<link rel="stylesheet" href="css/preloader.css">
-<link rel="stylesheet" href="css/page-transitions.css">
 <script src="site-shell.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
-<script src="js/cursor.js" defer></script>
-<script src="js/smooth-scroll.js" defer></script>
-<script src="js/animations.js" defer></script>
-<script src="js/pages/agents.js" defer></script>
-<script src="js/pages/agents-lightbox.js" defer></script>
 <style>
   :root {
     --bg:       #0f0f0e;
@@ -236,34 +224,21 @@
     .campaign, .pull { break-inside: avoid; }
   }
   @media (max-width: 860px) {
-    .hero { padding: 60px 0 40px; }
-    .hero-sub { grid-template-columns: 1fr; gap: 24px; }
+    .hero-sub { grid-template-columns: 1fr; }
     .hero-stat-row { display: none; }
-    .hero-name { font-size: clamp(40px, 11vw, 72px); }
-    .hero-role { font-size: clamp(18px, 4.5vw, 24px); }
-    .sect-head { font-size: clamp(28px, 8vw, 50px); margin-bottom: 28px; }
-    .sect-label { flex-wrap: wrap; gap: 8px; }
-    .campaign { grid-template-columns: 1fr; gap: 28px; padding: 40px 0 48px; }
+    .campaign { grid-template-columns: 1fr; gap: 28px; }
     .c-meta { position: static; }
-    .c-meta .client { font-size: clamp(22px, 5vw, 28px); }
-    .c-meta .context { font-size: clamp(16px, 4.2vw, 18px); }
-    .c-body { width: 100%; }
     .pull { padding: 32px 24px 28px; }
-    .pull-line { font-size: clamp(20px, 5vw, 26px); }
-    .pull-body { font-size: 16px; }
     .ad-grid.g-2, .ad-grid.g-4, .ad-grid.g-featured { grid-template-columns: 1fr; }
     .ad-grid.g-featured .ad:first-child { grid-column: 1; }
-    .wp-btn { padding: 10px 14px; font-size: 10.5px; }
   }
   @media (max-width: 640px) {
     .page { padding-left: 20px; padding-right: 20px; }
-    .pull { padding: 28px 20px 24px; }
+    .hero { padding: 60px 0 40px; }
   }
 </style>
 </head>
 <body>
-<script src="js/page-transitions.js"></script>
-<script src="js/preloader.js"></script>
 
 <site-header active="agents"></site-header>
 
@@ -334,19 +309,19 @@
         <!-- 2×2 screenshot grid · all four images lightboxed -->
         <div class="ad-grid g-4">
           <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="0">
-            <img src="img/agents/ssia-vrt-dashboard.png" alt="SSIA Vertiv · morning intelligence dashboard">
+            <img src="agents/ssia-vrt-dashboard.png" alt="SSIA Vertiv · morning intelligence dashboard">
             <div class="overlay"><div class="overlay-inner"><span class="hl">VRT Dashboard.</span><span>Vertiv · Morning Run</span></div></div>
           </div>
           <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="1">
-            <img src="img/agents/ssia-vrt-graphs.png" alt="SSIA Vertiv · hypothesis scoring graphs">
+            <img src="agents/ssia-vrt-graphs.png" alt="SSIA Vertiv · hypothesis scoring graphs">
             <div class="overlay"><div class="overlay-inner"><span class="hl">VRT Signals.</span><span>Vertiv · Regime Graphs</span></div></div>
           </div>
           <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="2">
-            <img src="img/agents/ssia-crdo-dashboard.png" alt="SSIA Credo · morning intelligence dashboard">
+            <img src="agents/ssia-crdo-dashboard.png" alt="SSIA Credo · morning intelligence dashboard">
             <div class="overlay"><div class="overlay-inner"><span class="hl">CRDO Dashboard.</span><span>Credo · Morning Run</span></div></div>
           </div>
           <div class="ad" style="aspect-ratio:16/10;" data-gallery="ssia" data-index="3">
-            <img src="img/agents/ssia-crdo-graphs.png" alt="SSIA Credo · hypothesis scoring graphs">
+            <img src="agents/ssia-crdo-graphs.png" alt="SSIA Credo · hypothesis scoring graphs">
             <div class="overlay"><div class="overlay-inner"><span class="hl">CRDO Signals.</span><span>Credo · Regime Graphs</span></div></div>
           </div>
         </div>
@@ -381,7 +356,7 @@
       <div class="c-body">
         <div class="ad-grid g-1">
           <div class="ad" style="aspect-ratio:16/9;" data-gallery="book" data-index="0">
-            <img src="img/agents/book-agent.png" alt="Book Agent · KDP marketing closed-loop dashboard">
+            <img src="agents/book-agent.png" alt="Book Agent · KDP marketing closed-loop dashboard">
             <div class="overlay"><div class="overlay-inner"><span class="hl">Book Agent.</span><span>KDP · Closed Loop</span></div></div>
           </div>
         </div>
@@ -428,11 +403,11 @@
         <!-- 2-up screenshots with lightbox -->
         <div class="ad-grid g-2">
           <div class="ad" style="aspect-ratio:4/3;" data-gallery="auscan" data-index="0">
-            <img src="img/agents/auscan-dashboard.png" alt="AuScan · prospectivity scoring dashboard">
+            <img src="agents/auscan-dashboard.png" alt="AuScan · prospectivity scoring dashboard">
             <div class="overlay"><div class="overlay-inner"><span class="hl">AuScan Dashboard.</span><span>Prospectivity Grid</span></div></div>
           </div>
           <div class="ad" style="aspect-ratio:4/3;" data-gallery="auscan" data-index="1">
-            <img src="img/agents/auscan-report.png" alt="AuScan · terrain analysis report output">
+            <img src="agents/auscan-report.png" alt="AuScan · terrain analysis report output">
             <div class="overlay"><div class="overlay-inner"><span class="hl">Field Report.</span><span>Harney County · Oregon</span></div></div>
           </div>
         </div>
@@ -478,7 +453,7 @@
       <div class="c-body">
         <div class="ad-grid g-1">
           <div class="ad" style="aspect-ratio:16/9;" data-gallery="beef" data-index="0">
-            <img src="img/agents/beef-dashboard.png" alt="BEEF · multi-asset anomaly correlation engine dashboard">
+            <img src="agents/beef-dashboard.png" alt="BEEF · multi-asset anomaly correlation engine dashboard">
             <div class="overlay"><div class="overlay-inner"><span class="hl">BEEF Dashboard.</span><span>68 Assets · Daily Brief</span></div></div>
           </div>
         </div>
@@ -523,7 +498,7 @@
       <div class="c-body">
         <div class="ad-grid g-1">
           <div class="ad" style="aspect-ratio:16/9;" data-gallery="music" data-index="0">
-            <img src="img/agents/music-agent.png" alt="Music Agent · closed-loop release marketing dashboard">
+            <img src="agents/music-agent.png" alt="Music Agent · closed-loop release marketing dashboard">
             <div class="overlay"><div class="overlay-inner"><span class="hl">Music Agent.</span><span>Closed Loop · Multi-DSP</span></div></div>
           </div>
         </div>
@@ -601,7 +576,81 @@
   }
 </style>
 
-<!-- Lightbox handler moved to js/pages/agents-lightbox.js (cinematic fold) -->
+<script>
+(function() {
+  const galleries = {
+    ssia: [
+      { src: 'agents/ssia-vrt-dashboard.png',  hl: 'VRT Dashboard.',   meta: 'SSIA · Vertiv · Morning Run' },
+      { src: 'agents/ssia-vrt-graphs.png',     hl: 'VRT Signals.',     meta: 'SSIA · Vertiv · Regime Graphs' },
+      { src: 'agents/ssia-crdo-dashboard.png', hl: 'CRDO Dashboard.',  meta: 'SSIA · Credo · Morning Run' },
+      { src: 'agents/ssia-crdo-graphs.png',    hl: 'CRDO Signals.',    meta: 'SSIA · Credo · Regime Graphs' },
+    ],
+    book: [
+      { src: 'agents/book-agent.png', hl: 'Book Agent.', meta: 'KDP · Closed Loop · Five Channels' },
+    ],
+    auscan: [
+      { src: 'agents/auscan-dashboard.png', hl: 'AuScan Dashboard.', meta: 'AuScan · Prospectivity Grid' },
+      { src: 'agents/auscan-report.png',    hl: 'Field Report.',     meta: 'AuScan · Harney County · Oregon' },
+    ],
+    beef: [
+      { src: 'agents/beef-dashboard.png', hl: 'BEEF Dashboard.', meta: 'BEEF · 68 Assets · Daily Brief' },
+    ],
+    music: [
+      { src: 'agents/music-agent.png', hl: 'Music Agent.', meta: 'Closed Loop · Multi-DSP' },
+    ],
+  };
+
+  const lb     = document.getElementById('lightbox');
+  const img    = lb.querySelector('.lb-img');
+  const capL   = lb.querySelector('.lb-cap-l');
+  const capR   = lb.querySelector('.lb-cap-r');
+  let current  = { gal: null, idx: 0 };
+
+  function render() {
+    const arr = galleries[current.gal];
+    if (!arr) return;
+    const item = arr[current.idx];
+    img.src = item.src;
+    img.alt = item.hl;
+    capL.textContent = item.hl;
+    capR.textContent = item.meta + '  ·  ' + (current.idx + 1) + ' / ' + arr.length;
+  }
+  function open(gal, idx) {
+    current.gal = gal; current.idx = idx;
+    render();
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+  }
+  function close() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+  }
+  function step(d) {
+    const arr = galleries[current.gal];
+    if (!arr) return;
+    current.idx = (current.idx + d + arr.length) % arr.length;
+    render();
+  }
+
+  document.querySelectorAll('.ad[data-gallery]').forEach(el => {
+    el.addEventListener('click', () => {
+      open(el.dataset.gallery, parseInt(el.dataset.index || '0', 10));
+    });
+  });
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+</script>
 
 <script src="theme.js"></script>
 </body>

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Résumé — Adam R. Cagle</title>
+<title>Résumé · Adam R. Cagle</title>
 <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
-<link rel="icon" type="image/png" href="cross.png">
+<link rel="icon" type="image/png" href="img/cross.png">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
 <!-- SEO -->
-<meta name="description" content="Adam R. Cagle — creative director and copywriter. 25+ years building brand systems, campaigns, and AI-production agents at Agency689 and Agentic689. Bend, Oregon.">
+<meta name="description" content="Adam R. Cagle · creative director and copywriter. 25+ years building brand systems, campaigns, and AI-production agents at Agency689 and Agentic689. Bend, Oregon.">
 <meta name="author" content="Adam R. Cagle">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0f0f0e">
@@ -20,18 +20,18 @@
 <!-- Open Graph -->
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Adam R. Cagle">
-<meta property="og:title" content="Adam R. Cagle — Creative Director & Copywriter">
+<meta property="og:title" content="Adam R. Cagle · Creative Director & Copywriter">
 <meta property="og:description" content="25+ years building brand systems, campaigns, and AI-production agents. Agency689 and Agentic689. Bend, Oregon.">
 <meta property="og:url" content="https://adamcagle.com/">
-<meta property="og:image" content="https://adamcagle.com/ads/Sunset-Marquis.jpg">
+<meta property="og:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:alt" content="Adam R. Cagle portfolio — brand campaigns and creative direction">
+<meta property="og:image:alt" content="Adam R. Cagle portfolio · brand campaigns and creative direction">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Adam R. Cagle — Creative Director & Copywriter">
+<meta name="twitter:title" content="Adam R. Cagle · Creative Director & Copywriter">
 <meta name="twitter:description" content="25+ years building brand systems, campaigns, and AI-production agents. Agency689 and Agentic689.">
-<meta name="twitter:image" content="https://adamcagle.com/ads/Sunset-Marquis.jpg">
+<meta name="twitter:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
 
 <!-- Structured Data -->
 <script type="application/ld+json">
@@ -85,7 +85,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<link rel="stylesheet" href="css/page-transitions.css">
 <script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<script src="js/pages/home.js" defer></script>
 <style>
   :root {
     --bg:      #0f0f0e;
@@ -232,8 +243,9 @@
   .s-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
   .s-title {
     font-family: var(--sans); font-weight: 700;
-    font-size: clamp(32px, 3.5vw, 52px);
+    font-size: clamp(26px, 2.6vw, 38px);
     line-height: 0.95; letter-spacing: -0.04em; margin: 0;
+    white-space: nowrap;
   }
   .s-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
   .s-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); line-height: 1.7; margin-top: 4px; }
@@ -313,16 +325,64 @@
 
   @media (max-width: 960px) {
     .page { padding: 0 20px; }
-    .hero { padding: 110px 0 48px; }
+    .hero { padding: 100px 0 40px; }
     .hero-sub { grid-template-columns: 1fr; gap: 28px; }
-    .section { grid-template-columns: 1fr; gap: 28px; }
+    .hero-name { font-size: clamp(48px, 13vw, 96px); line-height: 0.92; }
+    .hero-role { max-width: none; font-size: clamp(20px, 5vw, 26px); }
+    .hero-meta { align-self: stretch; width: 100%; }
+    .hero-cta { padding: 16px 18px; }
+    .hero-cta .cta-email { font-size: 14px; }
+    .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
     .s-head { position: static; }
+    .s-title { white-space: normal; font-size: clamp(28px, 7vw, 40px); }
     .caps, .works, .tri { grid-template-columns: 1fr; }
+    .s-body { width: 100%; }
+    .summary p {
+      margin: 0 0 20px 0;
+      max-width: none;
+      width: 100%;
+      font-size: clamp(20px, 5vw, 24px);
+      line-height: 1.45;
+    }
+    .job-body { margin-right: 0; max-width: none; width: 100%; font-size: clamp(17px, 4.4vw, 19px); line-height: 1.65; }
+    .job-title { font-size: clamp(20px, 5.5vw, 26px); }
+    .job-org { font-size: 11px; }
+    .cap p { font-size: clamp(16px, 4.2vw, 18px); }
+    .tri-note { font-size: clamp(16px, 4.2vw, 18px); }
+    .work { padding: 22px 22px 24px; }
+    .work p { font-size: clamp(16px, 4.2vw, 18px); }
+    .work .line { font-size: clamp(17px, 4.5vw, 19px); }
+    .work-name { font-size: clamp(20px, 5.5vw, 24px); }
+    .work-tag {
+      white-space: normal;
+      font-size: clamp(11px, 3vw, 13px);
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+    }
+    .work-intro { font-size: clamp(17px, 4.6vw, 20px); max-width: none; }
+    .work-cta {
+      padding: 18px 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .work-cta > div:first-child { min-width: 0; flex: 1 1 auto; }
+    .work-cta .cta-title { font-size: clamp(15px, 4vw, 18px); line-height: 1.3; }
+    .work-cta .arrow { font-size: 10.5px; }
+  }
+  @media (max-width: 520px) {
+    .hero { padding: 90px 0 32px; }
+    .hero-kicker { gap: 10px; font-size: 11px; flex-wrap: wrap; }
+    .hero-cta { gap: 10px; padding: 14px 16px; }
+    .hero-cta .cta-arrow { font-size: 16px; }
+    .cap, .work { padding: 22px; }
+    .job-org { font-size: 10.5px; }
   }
 
 </style>
 </head>
 <body>
+<script src="js/page-transitions.js"></script>
+<script src="js/preloader.js"></script>
 
 <site-header active="resume"></site-header>
 
@@ -339,7 +399,7 @@
       <span>Bend, OR</span>
     </div>
     <h1 class="hero-name">Adam R<span style="color:var(--accent)">.</span><br>Cagle</h1>
-    <img src="neonx.png" alt="NeonX" style="display:block;width:520px;max-width:70%;height:auto;margin:20px 0 -20px;opacity:0.9;">
+    <img src="img/neon_on.png" alt="The Write Guy For The Job" data-preloader-target style="display:block;width:520px;max-width:70%;height:auto;margin:20px 0 -20px;opacity:0.9;">
     <div class="hero-sub">
       <div class="hero-role">
         Creative Director &amp; Lead Copywriter.<br><em>AI Agents</em>, Brands, Strategy, Pitches, Launches.
@@ -357,14 +417,6 @@
       </div>
     </div>
 
-    <div class="hero-creds">
-      <div class="cred"><span class="num">25<span style="color:var(--accent);">+</span></span><span class="label">Years</span></div>
-      <div class="cred"><span class="num">60<span style="color:var(--accent);">+</span></span><span class="label">Brands</span></div>
-      <div class="cred"><span class="num">07</span><span class="label">Agents Shipped</span></div>
-      <div class="cred"><span class="num it">Clio</span><span class="label">Awards</span></div>
-      <div class="cred"><span class="num it">Ad Club</span><span class="label">Awards</span></div>
-      <div class="cred"><span class="num it">Webby</span><span class="label">Award</span></div>
-    </div>
   </div>
 
   <div class="section">
@@ -416,7 +468,7 @@
       <div class="job">
         <div class="job-head">
           <h3 class="job-title">Co-Creative Director &amp; <span class="it">Lead Copywriter</span></h3>
-          <span class="job-years">2001 — Present</span>
+          <span class="job-years">2001 · Present</span>
         </div>
         <div class="job-org">Agency689, Inc. · Co-Founder · Bend, OR · California</div>
         <p class="job-body">Full-service identity and branding studio. Research-based naming, brand development, creative direction, identity design, and the content, packaging, and digital work that launches a brand into the world. Twenty-five years leading creative and copy on every engagement. Sixty-plus brands shipped, with deep benches in hospitality (Sunset Marquis as Agency of Record, Hotel Figueroa, CLINK Hostels, Oxford Collection, Hotel Nikko, Hotel Sax Chicago, Maison 140, Zaza Dallas, Le Montrose, House of Blues Hotel, Magnolia, Lexington), gaming and consumer tech (Xbox, AMD, Microsoft, Blizzard, Killer Network, Rivet Networks, ViewSonic, Traveler Guitar), studios and entertainment (Raleigh Studios, Manhattan Beach Studios, Orbital Virtual Studios, Red Touch Media), restaurants (Cavatina, Playa Rivera, ANZU, Josh Slocum's), wineries (Rosenthal Estates, Bianchi, Beverly Hills Vineyard), and conservation (Coastal Corridor Alliance). Wrote and designed the new-business pitch decks that built the roster.</p>
@@ -424,7 +476,7 @@
       <div class="job">
         <div class="job-head">
           <h3 class="job-title">Founder &amp; <span class="it">AI Agent Architect</span></h3>
-          <span class="job-years">2024 — Present</span>
+          <span class="job-years">2024 · Present</span>
         </div>
         <div class="job-org">Agentic689 · Sister Studio to Agency689</div>
         <p class="job-body">A studio built to develop deep working fluency with frontier AI by shipping production agents on the Claude API. The work is the research. I learn what these models can actually make by making them make it, against real objectives, with real outcomes on the line. Sole author of every system prompt, persona file, SKILL.md, and governance doc across seven shipped agents: two single-stock intelligence platforms (CRDO, VRT) with tiered hypotheses, regime detection, and drawdown protocols; a multi-asset anomaly correlation engine (COOK) with a steakhouse-themed pyramid UI; closed-loop book and music marketing systems (Book, Music); a Reddit persona builder with validated .md persona specs (Red); and AuScan, a Claude-Vision satellite prospecting tool that surfaced a 72% confidence gold hit in Harney County, Oregon. Documented the architecture in a 7,400-word whitepaper. The work has directly sharpened how fast and how well I produce deck design, infographics, and technical visuals. The design discipline the agents demand is the same design discipline that makes pitch work land.</p>
@@ -432,7 +484,7 @@
       <div class="job">
         <div class="job-head">
           <h3 class="job-title">Creative Director &amp; <span class="it">Lead Copywriter, Interactive</span></h3>
-          <span class="job-years">1998 — 2001</span>
+          <span class="job-years">1998 · 2001</span>
         </div>
         <div class="job-org">DGWB Advertising</div>
         <p class="job-body">Led creative direction and copy inside DGWB's interactive practice during the first wave of agency digital. Wrote and led the new-business pitches. Managed copy and creative direction across accounts including IndyMac Bank, Toshiba Computers, Toshiba Copiers, Yamaha Music, Avery Dennison, Clarion, and Wienerschnitzel.</p>
@@ -450,7 +502,7 @@
       <a href="Portfolio.html" class="work-cta">
         <div>
           <div class="cta-label">See the Campaigns</div>
-          <div class="cta-title">Full print portfolio — <span class="it">Traveler, Sunset Marquis, Killer NIC</span></div>
+          <div class="cta-title">Full print portfolio · <span class="it">Traveler, Sunset Marquis, Killer NIC</span></div>
         </div>
         <div class="arrow">Open →</div>
       </a>
@@ -502,7 +554,7 @@
       <a href="Agents.html" class="work-cta">
         <div>
           <div class="cta-label">See the Agents</div>
-          <div class="cta-title">Production AI agents — <span class="it">SSIA, Book, AuScan, BEEF, Music</span></div>
+          <div class="cta-title">Production AI agents · <span class="it">SSIA, Book, AuScan, BEEF, Music</span></div>
         </div>
         <div class="arrow">Open →</div>
       </a>

@@ -1,0 +1,72 @@
+/* preloader.css
+   Black overlay with the neon sign centered. Flickers off→on a few times,
+   then a soft-edged circular hole expands from the neon outward to reveal
+   the page underneath. */
+
+.preloader {
+  /* --hole drives the radius of the transparent reveal hole, animated by JS */
+  --hole: 0;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: hidden;
+
+  /* Soft-edge radial mask: transparent at center (page shows through),
+     opaque at edges (black overlay still visible). The 8% feather is the
+     soft gradient zone. */
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0%,
+    transparent calc(var(--hole) * 1%),
+    black calc(var(--hole) * 1% + 8%),
+    black 100%
+  );
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0%,
+    transparent calc(var(--hole) * 1%),
+    black calc(var(--hole) * 1% + 8%),
+    black 100%
+  );
+
+  /* When done, the JS adds .preloader--gone for cleanup */
+  transition: opacity .25s linear;
+}
+
+.preloader--gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader__neon {
+  display: block;
+  width: clamp(260px, 52vw, 620px);
+  height: auto;
+  filter: drop-shadow(0 0 28px rgba(255, 91, 31, 0.45))
+          drop-shadow(0 0 60px rgba(255, 91, 31, 0.15));
+  transition: filter .12s linear;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* When the neon is "off" the orange glow is suppressed */
+.preloader__neon[data-state="off"] {
+  filter: drop-shadow(0 0 4px rgba(255, 91, 31, 0.06));
+}
+
+/* Lock body scroll while the preloader is active */
+body.preloader-active {
+  overflow: hidden !important;
+}
+
+/* Respect reduced motion: skip flicker, just fade out */
+@media (prefers-reduced-motion: reduce) {
+  .preloader { mask-image: none; -webkit-mask-image: none; }
+  .preloader__neon { filter: none; }
+}

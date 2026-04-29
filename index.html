@@ -177,10 +177,8 @@
       rgba(0,0,0,0.30) 74%,
       transparent 90%
     );
-    /* SVG turbulence warps the smooth fade into a torn/ragged edge,
-       then CSS filters add punch + warm shadow + accent haze */
+    /* Punch + warm shadow + accent haze */
     filter:
-      url(#portrait-rag)
       contrast(1.06) saturate(1.12) brightness(1.02)
       drop-shadow(0 6px 22px rgba(0,0,0,0.55))
       drop-shadow(0 0 32px rgba(77,139,232,0.18));
@@ -416,16 +414,6 @@
 <body>
 <script src="js/page-transitions.js"></script>
 <script src="js/preloader.js"></script>
-
-<!-- SVG turbulence filter — warps the soft mask into a ragged edge -->
-<svg width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true">
-  <defs>
-    <filter id="portrait-rag" x="-12%" y="-12%" width="124%" height="124%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </defs>
-</svg>
 
 <site-header active="resume"></site-header>
 <noscript>

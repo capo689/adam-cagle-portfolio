@@ -1,12 +1,12 @@
 // preloader.js
-// First-load overlay. Black background, neon sign starts off, flickers
-// on/off a few times, settles lit, then a soft-edged circular hole expands
-// from the neon's resting position outward to reveal the page.
+// First-load overlay. Black background, neon sign starts off, snaps on a
+// few quick times, settles lit, then a soft-edged circular hole expands
+// from the lit sign outward to reveal the page underneath.
 //
-// The sign positions itself at the page's actual neon image element (querying
-// by data-preloader-target or fallback selectors). On the resume page that
-// puts it at the bottom-left of the hero, exactly where the page's neon will
-// be after reveal. On other pages it falls back to centered.
+// The preloader sign positions itself over the page's actual resting neon
+// (queried by data-preloader-target or fallback selectors), matching its
+// rect so the off-state, the on-state flash, and the page's resting on-state
+// all register on the same pixels.
 
 (function () {
   if (document.getElementById('preloader')) return;
@@ -17,9 +17,11 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Both themes currently use the blue neon PNG set; the theme-conditional
-  // glow color is handled in preloader.css.
-  const NEON_ON  = 'img/neon-blue-web.png';
-  const NEON_OFF = 'img/neon-blueoff-web.png';
+  // glow color is handled in preloader.css. The "x" art is redrawn so the
+  // off and on states register pixel-for-pixel against each other and against
+  // the page's resting neon image.
+  const NEON_ON  = 'img/neon-bluex.png';
+  const NEON_OFF = 'img/neon-off-bluex.png';
 
   function build() {
     if (document.getElementById('preloader')) return;
@@ -46,9 +48,9 @@
   // selectors. Returns the element or null.
   function findTarget() {
     return document.querySelector('[data-preloader-target]')
-        || document.querySelector('.hero img[src*="neon_on"]')
+        || document.querySelector('.hero img[src*="neon-bluex"]')
         || document.querySelector('.hero img[src*="neon-blue-web"]')
-        || document.querySelector('img[src*="neon_on"]')
+        || document.querySelector('img[src*="neon-bluex"]')
         || document.querySelector('img[src*="neon-blue-web"]')
         || null;
   }
@@ -109,15 +111,18 @@
   }
 
   function runFlicker(neon, onDone) {
+    // Start dark on the off-state art, snap on a few quick times, then
+    // settle lit. The settle hold gives the eye a beat before the reveal
+    // expands outward from the now-lit sign.
     const sequence = [
-      { state: 'off', hold: 380 },
-      { state: 'on',  hold: 70  },
-      { state: 'off', hold: 110 },
-      { state: 'on',  hold: 50  },
-      { state: 'off', hold: 220 },
-      { state: 'on',  hold: 60  },
+      { state: 'off', hold: 360 }, // initial dark
+      { state: 'on',  hold: 55  }, // flash 1
+      { state: 'off', hold: 90  },
+      { state: 'on',  hold: 45  }, // flash 2
+      { state: 'off', hold: 130 },
+      { state: 'on',  hold: 35  }, // flash 3 (stutter)
       { state: 'off', hold: 70  },
-      { state: 'on',  hold: 460 } // settle hold
+      { state: 'on',  hold: 480 }  // settle, then reveal
     ];
     let acc = 0;
     sequence.forEach((step, i) => {

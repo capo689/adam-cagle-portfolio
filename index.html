@@ -151,38 +151,43 @@
     font-weight: 400; color: var(--accent); letter-spacing: -0.03em;
   }
 
-  /* ─── HERO NAME ROW: name left, portrait snug right ─── */
+  /* ─── HERO NAME ROW: name left, portrait right ─── */
   .hero-namerow {
     display: flex;
-    align-items: flex-end;
-    gap: 20px;
+    align-items: center;
+    gap: 56px;
   }
   .portrait-img {
     display: block;
     flex-shrink: 0;
-    width: clamp(110px, 12vw, 200px);
+    width: clamp(190px, 18vw, 300px);
     height: auto;
-    margin-top: 28px;    /* slide portrait down so face is mid-name */
-    /* Soft radial vignette — 4 stops for a film-burn feel */
+    /* Soft radial vignette — base for the rag */
     -webkit-mask-image: radial-gradient(
-      ellipse 80% 88% at 50% 42%,
-      black 30%,
-      rgba(0,0,0,0.82) 50%,
-      rgba(0,0,0,0.28) 72%,
-      transparent 88%
+      ellipse 82% 88% at 50% 42%,
+      black 34%,
+      rgba(0,0,0,0.85) 54%,
+      rgba(0,0,0,0.30) 74%,
+      transparent 90%
     );
     mask-image: radial-gradient(
-      ellipse 80% 88% at 50% 42%,
-      black 30%,
-      rgba(0,0,0,0.82) 50%,
-      rgba(0,0,0,0.28) 72%,
-      transparent 88%
+      ellipse 82% 88% at 50% 42%,
+      black 34%,
+      rgba(0,0,0,0.85) 54%,
+      rgba(0,0,0,0.30) 74%,
+      transparent 90%
     );
-    /* Photo-filter stack: punch + warm shadow + accent haze */
+    /* SVG turbulence warps the smooth fade into a torn/ragged edge,
+       then CSS filters add punch + warm shadow + accent haze */
     filter:
-      contrast(1.08) saturate(1.14) brightness(1.02)
+      url(#portrait-rag)
+      contrast(1.06) saturate(1.12) brightness(1.02)
       drop-shadow(0 6px 22px rgba(0,0,0,0.55))
       drop-shadow(0 0 32px rgba(77,139,232,0.18));
+  }
+  @media (max-width: 900px) {
+    .hero-namerow { gap: 28px; }
+    .portrait-img { width: clamp(140px, 22vw, 200px); }
   }
   @media (max-width: 600px) {
     .portrait-img { display: none; }
@@ -411,6 +416,16 @@
 <body>
 <script src="js/page-transitions.js"></script>
 <script src="js/preloader.js"></script>
+
+<!-- SVG turbulence filter — warps the soft mask into a ragged edge -->
+<svg width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true">
+  <defs>
+    <filter id="portrait-rag" x="-12%" y="-12%" width="124%" height="124%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
 
 <site-header active="resume"></site-header>
 <noscript>

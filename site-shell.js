@@ -32,12 +32,12 @@
   '<a href="index.html" class="rail-brand" data-cursor="hover">Adam R. Cagle</a>' +
   '<nav class="rail-nav">' + navLinks(active) + '</nav>' +
   '<div class="rail-right">' +
-    '<a class="rail-cta" href="mailto:' + EMAIL + '" data-cursor="email" data-cursor-text="Hello">' +
-      'Get in touch <span class="arrow">&rarr;</span>' +
-    '</a>' +
     '<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">' +
       '<span class="toggle-icon">&#x25D0;</span><span class="toggle-pill"></span>' +
     '</button>' +
+    '<a class="rail-cta" href="mailto:' + EMAIL + '" data-cursor="email" data-cursor-text="Hello">' +
+      'Get in touch <span class="arrow">&rarr;</span>' +
+    '</a>' +
     '<button class="hamburger" id="hamburger" aria-label="Open menu">' +
       '<span></span><span></span><span></span>' +
     '</button>' +

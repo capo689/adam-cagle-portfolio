@@ -82,20 +82,16 @@ html[data-theme="light"] .rail {
   font-weight: 500;
   font-size: 13.5px;
   letter-spacing: 0.01em;
-  color: var(--fg);
+  color: #fff;
   text-decoration: none;
   padding: 9px 18px;
-  border: 1px solid var(--rule);
+  border: 1px solid var(--accent);
   border-radius: 999px;
-  background: transparent;
-  transition: border-color .25s, background .25s, color .25s;
+  background: var(--accent);
+  transition: filter .25s, transform .25s;
 }
 .rail-cta .arrow { display: inline-block; transition: transform .25s; }
-.rail-cta:hover {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
-}
+.rail-cta:hover { filter: brightness(0.92); }
 .rail-cta:hover .arrow { transform: translateX(4px); }
 
 /* ─── HAMBURGER ─── */

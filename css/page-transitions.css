@@ -1,35 +1,3 @@
 /* page-transitions.css
-   Blue slab that wipes up from the bottom on link click, then on the next
-   page wipes off the top to reveal new content. */
-
-.transition-slab {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  background: #1F4E8C;
-  pointer-events: none;
-  transform: translateY(100%);
-  will-change: transform;
-  transition: transform .65s cubic-bezier(.7, 0, .25, 1);
-}
-
-/* Rising into view: wipe up from below */
-.transition-slab.is-rising {
-  transform: translateY(0);
-}
-
-/* On arrival: pre-positioned covering the screen */
-.transition-slab.is-covering {
-  transform: translateY(0);
-  transition: none; /* no animation on the initial paint */
-}
-
-/* Leaving: dissolve out once the page underneath is fully painted */
-.transition-slab.is-leaving {
-  opacity: 0;
-  transition: opacity 3s ease-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .transition-slab { display: none !important; }
-}
+   Slab replaced by native View Transitions API. Transition animations
+   live in nav.css under the @view-transition block. */

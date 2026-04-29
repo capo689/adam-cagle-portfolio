@@ -37,6 +37,7 @@ html[data-theme="light"] .rail {
   text-decoration: none;
   white-space: nowrap;
   transition: color .25s;
+  view-transition-name: nav-brand;
 }
 .rail-brand:hover { color: var(--accent); }
 
@@ -199,3 +200,34 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 
 /* ─── GLOBAL OVERFLOW SAFETY ─── */
 html, body { overflow-x: hidden; }
+
+/* ─── VIEW TRANSITIONS ─── */
+@view-transition {
+  navigation: auto;
+}
+
+/* Old page fades and lifts slightly; new page fades in */
+@keyframes vt-fade-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes vt-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+::view-transition-old(root) {
+  animation: 0.3s ease-in both vt-fade-out;
+}
+::view-transition-new(root) {
+  animation: 0.45s ease-out both vt-fade-in;
+}
+
+/* Brand mark stays anchored — no animation, just holds position */
+::view-transition-old(nav-brand),
+::view-transition-new(nav-brand) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}

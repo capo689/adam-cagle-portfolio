@@ -6,7 +6,7 @@
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: #4D8BE8;
+  background: #1F4E8C;
   pointer-events: none;
   transform: translateY(100%);
   will-change: transform;

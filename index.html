@@ -151,15 +151,16 @@
     font-weight: 400; color: var(--accent); letter-spacing: -0.03em;
   }
 
-  /* ─── HERO NAME ROW: name left, portrait right ─── */
+  /* ─── HERO NAME ROW: name left, portrait in same column as CTA below ─── */
   .hero-namerow {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
     gap: 56px;
+    align-items: center;
   }
   .portrait-img {
     display: block;
-    flex-shrink: 0;
+    justify-self: start;
     width: clamp(190px, 18vw, 300px);
     height: auto;
     /* Image has its own painterly ragged edge — just add depth */
@@ -167,8 +168,8 @@
       contrast(1.04) saturate(1.08)
       drop-shadow(0 8px 24px rgba(0,0,0,0.45));
   }
-  @media (max-width: 900px) {
-    .hero-namerow { gap: 28px; }
+  @media (max-width: 960px) {
+    .hero-namerow { grid-template-columns: 1fr; gap: 28px; }
     .portrait-img { width: clamp(140px, 22vw, 200px); }
   }
   @media (max-width: 600px) {

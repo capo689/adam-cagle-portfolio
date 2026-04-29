@@ -6,7 +6,7 @@
   const NAV = [
     { key: 'resume',    href: 'index.html',     label: 'Résumé'    },
     { key: 'portfolio', href: 'Portfolio.html', label: 'Portfolio' },
-    { key: 'agents',    href: 'Agents.html',    label: 'Agents'    },
+    { key: 'agents',    href: 'Agents.html',    label: 'AI Agents' },
     { key: 'books',     href: 'Books.html',     label: 'Books'     }
   ];
   const EMAIL = 'adamrcagle@gmail.com';

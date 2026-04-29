@@ -151,21 +151,38 @@
     font-weight: 400; color: var(--accent); letter-spacing: -0.03em;
   }
 
-  /* ─── HERO NAME ROW: name left, portrait right ─── */
+  /* ─── HERO NAME ROW: name left, portrait snug right ─── */
   .hero-namerow {
     display: flex;
     align-items: flex-end;
-    justify-content: space-between;
-    gap: 32px;
+    gap: 20px;
   }
   .portrait-img {
     display: block;
     flex-shrink: 0;
-    width: clamp(160px, 20vw, 320px);
+    width: clamp(110px, 12vw, 200px);
     height: auto;
-    margin-bottom: 4px;
-    -webkit-mask-image: radial-gradient(ellipse 82% 80% at 50% 40%, black 42%, rgba(0,0,0,0.55) 64%, transparent 86%);
-    mask-image: radial-gradient(ellipse 82% 80% at 50% 40%, black 42%, rgba(0,0,0,0.55) 64%, transparent 86%);
+    margin-top: 28px;    /* slide portrait down so face is mid-name */
+    /* Soft radial vignette — 4 stops for a film-burn feel */
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 88% at 50% 42%,
+      black 30%,
+      rgba(0,0,0,0.82) 50%,
+      rgba(0,0,0,0.28) 72%,
+      transparent 88%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 88% at 50% 42%,
+      black 30%,
+      rgba(0,0,0,0.82) 50%,
+      rgba(0,0,0,0.28) 72%,
+      transparent 88%
+    );
+    /* Photo-filter stack: punch + warm shadow + accent haze */
+    filter:
+      contrast(1.08) saturate(1.14) brightness(1.02)
+      drop-shadow(0 6px 22px rgba(0,0,0,0.55))
+      drop-shadow(0 0 32px rgba(77,139,232,0.18));
   }
   @media (max-width: 600px) {
     .portrait-img { display: none; }

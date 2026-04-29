@@ -27,7 +27,7 @@
 /* Leaving: dissolve out once the page underneath is fully painted */
 .transition-slab.is-leaving {
   opacity: 0;
-  transition: opacity .6s ease-out;
+  transition: opacity 3s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

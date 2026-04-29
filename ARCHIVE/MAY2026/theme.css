@@ -1,0 +1,94 @@
+/* ─── LIGHT MODE OVERRIDES ───
+   html[data-theme] beats :root (0,1,1 vs 0,1,0) so these
+   variables win regardless of where this file loads relative
+   to each page's inline <style> block.
+─────────────────────────────── */
+
+/* Reserve scrollbar gutter so locking body overflow (preloader, lightbox)
+   doesn't change viewport width — keeps vw-based font sizes stable so the
+   preloader neon lands exactly on the page neon. */
+html { scrollbar-gutter: stable; }
+
+html[data-theme="dark"] {
+  /* WCAG contrast bump: 0.45 → 0.62 raises --fg-3 from ~4.2:1 to ~7.2:1 against #0f0f0e */
+  --fg-3:    rgba(246,243,236,0.62);
+}
+
+html[data-theme="light"] {
+  --bg:      #f4efe7;
+  --bg-soft: #ebe4d7;
+  --fg:      #14110f;
+  --fg-2:    rgba(20,17,15,0.7);
+  /* WCAG contrast bump: 0.42 → 0.62 raises --fg-3 to ~4.8:1 against #f4efe7 */
+  --fg-3:    rgba(20,17,15,0.62);
+  --rule:    rgba(20,17,15,0.16);
+  --rule-2:  rgba(20,17,15,0.09);
+  /* Denim blue accent for light mode (replaces #b8430f orange) — ~7:1 contrast on #f4efe7 */
+  --accent:  #1F4E8C;
+}
+
+html[data-theme="light"] body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+html[data-theme="light"] .rail {
+  background: linear-gradient(180deg, rgba(244,239,231,0.97) 0%, rgba(244,239,231,0.82) 70%, transparent 100%);
+}
+
+html[data-theme="light"] ::selection {
+  background: var(--accent); color: #fff;
+}
+
+/* ─── TOGGLE SWITCH ─── */
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 9px;
+  cursor: pointer; background: none; border: none; padding: 0;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--fg-3); transition: color .2s;
+  vertical-align: middle;
+}
+.theme-toggle:hover { color: var(--fg); }
+.theme-toggle:hover .toggle-pill { border-color: var(--fg); }
+
+.toggle-icon {
+  font-size: 13px; line-height: 1;
+  transition: transform .4s ease;
+  display: inline-block;
+}
+html[data-theme="light"] .toggle-icon { transform: rotate(180deg); }
+
+.toggle-pill {
+  width: 36px; height: 20px;
+  border: 1px solid var(--fg-3);
+  border-radius: 999px;
+  background: transparent;
+  position: relative;
+  transition: border-color .3s;
+  flex-shrink: 0;
+}
+.toggle-pill::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--fg-3);
+  transition: transform .3s ease, background .3s;
+}
+html[data-theme="light"] .toggle-pill {
+  border-color: var(--accent);
+}
+html[data-theme="light"] .toggle-pill::after {
+  transform: translateX(16px);
+  background: var(--accent);
+}
+
+/* ─── KEYBOARD FOCUS RING ─── */
+*:focus { outline: none; }
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

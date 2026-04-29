@@ -26,19 +26,23 @@
   }
 
   function init() {
-    // If we arrived via internal nav, the slab starts covering and wipes off the top
+    // If we arrived via internal nav, the slab starts covering and dissolves out
     if (arrivedViaSlab) {
       const slab = makeSlab('covering');
-      // Force a reflow, then transition off the top
-      requestAnimationFrame(() => {
+      // Wait for fonts + a full paint cycle so the page is visible under
+      // the slab before we start fading — prevents the "loading under it" look
+      const fontsReady = (document.fonts && document.fonts.ready)
+        ? document.fonts.ready : Promise.resolve();
+      fontsReady.then(() => {
         requestAnimationFrame(() => {
-          // Drop the no-transition modifier so the leaving animation runs
-          slab.classList.remove('is-covering');
-          slab.classList.add('is-leaving');
-          slab.addEventListener('transitionend', (ev) => {
-            if (ev.propertyName !== 'opacity') return;
-            slab.remove();
-          }, { once: true });
+          requestAnimationFrame(() => {
+            slab.classList.remove('is-covering');
+            slab.classList.add('is-leaving');
+            slab.addEventListener('transitionend', (ev) => {
+              if (ev.propertyName !== 'opacity') return;
+              slab.remove();
+            }, { once: true });
+          });
         });
       });
     }

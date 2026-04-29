@@ -24,10 +24,10 @@
   transition: none; /* no animation on the initial paint */
 }
 
-/* Leaving: dissolve out in place instead of sweeping off the top */
+/* Leaving: dissolve out once the page underneath is fully painted */
 .transition-slab.is-leaving {
   opacity: 0;
-  transition: opacity .45s ease-in-out;
+  transition: opacity .6s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

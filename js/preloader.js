@@ -138,6 +138,9 @@
   }
 
   function runReveal(el, onDone) {
+    // Turn on the mask only now, so the overlay was fully opaque during
+    // the flicker and the page's resting neon couldn't bleed through.
+    el.classList.add('preloader--revealing');
     if (typeof gsap !== 'undefined') {
       gsap.to(el, {
         '--hole': 150,

@@ -1,12 +1,12 @@
 /* page-transitions.css
-   Black slab that wipes up from the bottom on link click, then on the next
+   Blue slab that wipes up from the bottom on link click, then on the next
    page wipes off the top to reveal new content. */
 
 .transition-slab {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: #000;
+  background: #4D8BE8;
   pointer-events: none;
   transform: translateY(100%);
   will-change: transform;

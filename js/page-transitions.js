@@ -1,7 +1,7 @@
 // page-transitions.js
-// Slab wipe between ALPHA pages. On internal link click: a black slab wipes
+// Slab wipe between ALPHA pages. On internal link click: a slab wipes
 // up from the bottom over ~650ms, then navigates. On arrival the slab is
-// pre-positioned covering the viewport and wipes off the top.
+// pre-positioned covering the viewport and dissolves out.
 //
 // Sets window.__siteArrivedViaSlab synchronously so the preloader (loaded
 // after this script) can decide to skip itself for internal navigation.
@@ -35,7 +35,10 @@
           // Drop the no-transition modifier so the leaving animation runs
           slab.classList.remove('is-covering');
           slab.classList.add('is-leaving');
-          slab.addEventListener('transitionend', () => slab.remove(), { once: true });
+          slab.addEventListener('transitionend', (ev) => {
+            if (ev.propertyName !== 'opacity') return;
+            slab.remove();
+          }, { once: true });
         });
       });
     }

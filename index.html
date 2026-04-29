@@ -293,7 +293,31 @@
   .job-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--fg-2); }
   .job-years { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--accent); white-space: nowrap; }
   .job-org { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 14px; }
-  .job-body { font-size: 17px; line-height: 1.6; color: var(--fg-2); margin-right: 145px; }
+  .job-body { font-size: 17px; line-height: 1.6; color: var(--fg-2); margin: 0 145px 12px 0; }
+  .job-body:last-child { margin-bottom: 0; }
+
+  /* Client / agent roster — category label + dot-separated list */
+  .job-roster {
+    display: grid; gap: 10px;
+    margin: 16px 145px 16px 0;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule-2);
+    border-bottom: 1px solid var(--rule-2);
+  }
+  .job-roster-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+  .job-roster-cat {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .job-roster-list {
+    font-size: 16px; line-height: 1.55; color: var(--fg-2);
+  }
 
   .work-intro { font-family: var(--italic); font-style: italic; font-size: 18px; line-height: 1.5; color: var(--fg-3); margin: 0 0 8px; }
   .work-cta {
@@ -358,6 +382,9 @@
       line-height: 1.45;
     }
     .job-body { margin-right: 0; max-width: none; width: 100%; font-size: clamp(17px, 4.4vw, 19px); line-height: 1.65; }
+    .job-roster { margin-right: 0; gap: 14px; }
+    .job-roster-row { grid-template-columns: 1fr; gap: 4px; }
+    .job-roster-list { font-size: clamp(15px, 4vw, 17px); }
     .job-title { font-size: clamp(20px, 5.5vw, 26px); }
     .job-org { font-size: 11px; }
     .cap p { font-size: clamp(16px, 4.2vw, 18px); }
@@ -498,7 +525,35 @@
           <span class="job-years">2001 · Present</span>
         </div>
         <div class="job-org">Agency689, Inc. · Co-Founder · Bend, OR · California</div>
-        <p class="job-body">Full-service identity and branding studio. Research-based naming, brand development, creative direction, identity design, and the content, packaging, and digital work that launches a brand into the world. Twenty-five years leading creative and copy on every engagement. Sixty-plus brands shipped, with deep benches in hospitality (Sunset Marquis as Agency of Record, Hotel Figueroa, CLINK Hostels, Oxford Collection, Hotel Nikko, Hotel Sax Chicago, Maison 140, Zaza Dallas, Le Montrose, House of Blues Hotel, Magnolia, Lexington), gaming and consumer tech (Xbox, AMD, Microsoft, Blizzard, Killer Network, Rivet Networks, ViewSonic, Traveler Guitar), studios and entertainment (Raleigh Studios, Manhattan Beach Studios, Orbital Virtual Studios, Red Touch Media), restaurants (Cavatina, Playa Rivera, ANZU, Josh Slocum's), wineries (Rosenthal Estates, Bianchi, Beverly Hills Vineyard), and conservation (Coastal Corridor Alliance). Wrote and designed the new-business pitch decks that built the roster.</p>
+        <p class="job-body">Full-service identity and branding studio. Research-based naming, brand development, creative direction, identity design, and the content, packaging, and digital work that launches a brand into the world.</p>
+        <p class="job-body">Twenty-five years leading creative and copy on every engagement. Sixty-plus brands shipped, with deep benches across six categories.</p>
+        <div class="job-roster">
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Hospitality</span>
+            <span class="job-roster-list">Sunset Marquis (Agency of Record) · Hotel Figueroa · CLINK Hostels · Oxford Collection · Hotel Nikko · Hotel Sax Chicago · Maison 140 · Zaza Dallas · Le Montrose · House of Blues Hotel · Magnolia · Lexington</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Gaming &amp; Tech</span>
+            <span class="job-roster-list">Xbox · AMD · Microsoft · Blizzard · Killer Network · Rivet Networks · ViewSonic · Traveler Guitar</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Studios</span>
+            <span class="job-roster-list">Raleigh Studios · Manhattan Beach Studios · Orbital Virtual Studios · Red Touch Media</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Restaurants</span>
+            <span class="job-roster-list">Cavatina · Playa Rivera · ANZU · Josh Slocum's</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Wineries</span>
+            <span class="job-roster-list">Rosenthal Estates · Bianchi · Beverly Hills Vineyard</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Conservation</span>
+            <span class="job-roster-list">Coastal Corridor Alliance</span>
+          </div>
+        </div>
+        <p class="job-body">Wrote and designed the new-business pitch decks that built the roster.</p>
       </div>
       <div class="job">
         <div class="job-head">
@@ -506,7 +561,31 @@
           <span class="job-years">2024 · Present</span>
         </div>
         <div class="job-org">Agentic689 · Sister Studio to Agency689</div>
-        <p class="job-body">A studio built to develop deep working fluency with frontier AI by shipping production agents on the Claude API. The work is the research. I learn what these models can actually make by making them make it, against real objectives, with real outcomes on the line. Sole author of every system prompt, persona file, SKILL.md, and governance doc across seven shipped agents: two single-stock intelligence platforms (CRDO, VRT) with tiered hypotheses, regime detection, and drawdown protocols; a multi-asset anomaly correlation engine (COOK) with a steakhouse-themed pyramid UI; closed-loop book and music marketing systems (Book, Music); a Reddit persona builder with validated .md persona specs (Red); and AuScan, a Claude-Vision satellite prospecting tool that surfaced a 72% confidence gold hit in Harney County, Oregon. Documented the architecture in a 7,400-word whitepaper. The work has directly sharpened how fast and how well I produce deck design, infographics, and technical visuals. The design discipline the agents demand is the same design discipline that makes pitch work land.</p>
+        <p class="job-body">A studio built to develop deep working fluency with frontier AI by shipping production agents on the Claude API. The work is the research. I learn what these models can actually make by making them make it, against real objectives, with real outcomes on the line.</p>
+        <p class="job-body">Sole author of every system prompt, persona file, SKILL.md, and governance doc across seven shipped agents.</p>
+        <div class="job-roster">
+          <div class="job-roster-row">
+            <span class="job-roster-cat">SSIA · CRDO, VRT</span>
+            <span class="job-roster-list">Two single-stock intelligence platforms with tiered hypotheses, regime detection, and drawdown protocols</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">COOK</span>
+            <span class="job-roster-list">Multi-asset anomaly correlation engine with a steakhouse-themed pyramid UI</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Book &amp; Music</span>
+            <span class="job-roster-list">Closed-loop marketing systems for KDP titles and music releases</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">Red</span>
+            <span class="job-roster-list">Reddit persona builder with validated .md persona specs</span>
+          </div>
+          <div class="job-roster-row">
+            <span class="job-roster-cat">AuScan</span>
+            <span class="job-roster-list">Claude-Vision satellite prospecting tool that surfaced a 72% confidence gold hit in Harney County, Oregon</span>
+          </div>
+        </div>
+        <p class="job-body">Documented the architecture in a 7,400-word whitepaper. The work has directly sharpened how fast and how well I produce deck design, infographics, and technical visuals. The design discipline the agents demand is the same design discipline that makes pitch work land.</p>
       </div>
       <div class="job">
         <div class="job-head">

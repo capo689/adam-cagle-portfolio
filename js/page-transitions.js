@@ -37,6 +37,10 @@
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             slab.classList.remove('is-covering');
+            // Force a reflow so the browser registers opacity:1 as the
+            // "before" state — without this both class changes batch into
+            // one recalc and no transition fires (instant blink).
+            void slab.offsetWidth;
             slab.classList.add('is-leaving');
             slab.addEventListener('transitionend', (ev) => {
               if (ev.propertyName !== 'opacity') return;

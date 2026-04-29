@@ -150,6 +150,27 @@
     font-family: var(--italic); font-style: italic;
     font-weight: 400; color: var(--accent); letter-spacing: -0.03em;
   }
+
+  /* ─── HERO NAME ROW: name left, portrait right ─── */
+  .hero-namerow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .portrait-img {
+    display: block;
+    flex-shrink: 0;
+    width: clamp(160px, 20vw, 320px);
+    height: auto;
+    margin-bottom: 4px;
+    -webkit-mask-image: radial-gradient(ellipse 82% 80% at 50% 40%, black 42%, rgba(0,0,0,0.55) 64%, transparent 86%);
+    mask-image: radial-gradient(ellipse 82% 80% at 50% 40%, black 42%, rgba(0,0,0,0.55) 64%, transparent 86%);
+  }
+  @media (max-width: 600px) {
+    .portrait-img { display: none; }
+  }
+
   .hero-sub {
     margin-top: 40px;
     display: grid; grid-template-columns: 1.2fr 0.8fr;
@@ -400,7 +421,10 @@
       <span>·</span>
       <span>Bend, OR</span>
     </div>
-    <h1 class="hero-name">Adam R<span style="color:var(--accent)">.</span><br>Cagle</h1>
+    <div class="hero-namerow">
+      <h1 class="hero-name">Adam R<span style="color:var(--accent)">.</span><br>Cagle</h1>
+      <img src="img/adamart.jpg" alt="Adam R. Cagle · Creative Director & Copywriter" class="portrait-img">
+    </div>
     <img src="img/neon-blue-web.png" alt="The Write Guy For The Job" data-preloader-target data-neon-dark="img/neon-blue-web.png" data-neon-light="img/neon-blue-web.png" style="display:block;width:520px;max-width:70%;height:auto;margin:20px 0 -20px;opacity:0.9;">
     <div class="hero-sub">
       <div class="hero-role">

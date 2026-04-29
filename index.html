@@ -304,6 +304,13 @@
     border-top: 1px solid var(--rule-2);
     border-bottom: 1px solid var(--rule-2);
   }
+  /* When the roster is the last thing in a job, drop the bottom rule so
+     it doesn't double up against the next job's top border. */
+  .job > .job-roster:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
   .job-roster-row {
     display: grid;
     grid-template-columns: 130px 1fr;

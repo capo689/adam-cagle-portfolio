@@ -67,6 +67,14 @@ html[data-theme="light"] .preloader__neon {
 }
 html[data-theme="light"] .preloader__neon[data-state="off"] {
   filter: drop-shadow(0 0 4px rgba(31, 78, 140, 0.06));
+  /* The blue OFF PNG was AI-generated with the sign in a slightly different
+     position and slightly larger than the ON PNG. These independent
+     translate+scale properties compose with the inline transform: none and
+     align the OFF content's center/scale with the ON content. Numbers come
+     from measuring alpha bbox of each: ON 543×414 @ center (338.5,222),
+     OFF 572×432 @ center (323,232) within identical 672×448 canvases. */
+  translate: 2.31% -2.22%;
+  scale: 0.949 0.958;
 }
 
 .preloader__neon[data-ready="true"] {

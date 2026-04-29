@@ -5,7 +5,10 @@
 
 .preloader {
   /* --hole drives the radius of the transparent reveal hole, animated by JS.
-     --reveal-x and --reveal-y are set in pixels by JS to match the target. */
+     --reveal-x and --reveal-y are set in pixels by JS to match the target.
+     The mask is only applied once .preloader--revealing is set, so the
+     overlay stays fully opaque during the flicker (no halo bleed of the
+     page's resting on-state neon). */
   --hole: 0;
   --reveal-x: 50%;
   --reveal-y: 50%;
@@ -17,22 +20,25 @@
   pointer-events: none;
   overflow: hidden;
 
+  transition: opacity .25s linear;
+}
+
+.preloader--revealing {
+  /* Tight aperture: the transparent stop trails the black stop by --soft%.
+     At --hole: 0 the transparent stop sits at -3% (off-canvas) and the
+     black stop is at 0%, so the dead-center pixel is fully opaque. As
+     --hole grows, a small soft-edged transparent disc opens and expands. */
+  --soft: 3;
   -webkit-mask-image: radial-gradient(
     circle at var(--reveal-x) var(--reveal-y),
-    transparent 0%,
-    transparent calc(var(--hole) * 1%),
-    black calc(var(--hole) * 1% + 8%),
-    black 100%
+    transparent calc((var(--hole) - var(--soft)) * 1%),
+    black calc(var(--hole) * 1%)
   );
   mask-image: radial-gradient(
     circle at var(--reveal-x) var(--reveal-y),
-    transparent 0%,
-    transparent calc(var(--hole) * 1%),
-    black calc(var(--hole) * 1% + 8%),
-    black 100%
+    transparent calc((var(--hole) - var(--soft)) * 1%),
+    black calc(var(--hole) * 1%)
   );
-
-  transition: opacity .25s linear;
 }
 
 .preloader--gone {

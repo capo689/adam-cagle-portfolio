@@ -24,9 +24,10 @@
   transition: none; /* no animation on the initial paint */
 }
 
-/* Leaving off the top of the screen */
+/* Leaving: dissolve out in place instead of sweeping off the top */
 .transition-slab.is-leaving {
-  transform: translateY(-100%);
+  opacity: 0;
+  transition: opacity .45s ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

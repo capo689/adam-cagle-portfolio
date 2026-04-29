@@ -1124,13 +1124,15 @@
   .hf-spread-wrap {
     display: flex; flex-direction: column; align-items: center; gap: 20px;
     width: 100%;
+    perspective: 2200px;
+    perspective-origin: 50% 50%;
   }
   #hf-spread {
     display: flex; gap: 3px; align-items: stretch; justify-content: center;
     max-height: calc(100vh - 160px); width: 100%;
-    transition: opacity .15s ease;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
   }
-  #hf-spread.fading { opacity: 0; }
   .hf-pg {
     display: flex; align-items: center; justify-content: center;
     overflow: hidden; background: #0d0d0c;
@@ -1274,27 +1276,20 @@
     return img;
   }
 
-  function render(instant) {
+  function drawNow() {
     const v = views[cur];
-    if (!instant) { spreadEl.classList.add('fading'); }
-
-    const draw = () => {
-      spreadEl.innerHTML = '';
-      if (v.type === 'single') {
-        const pg = document.createElement('div');
-        pg.className = 'hf-pg solo';
-        pg.appendChild(makeImg(v.files[0]));
-        spreadEl.appendChild(pg);
-      } else {
-        const left  = document.createElement('div'); left.className  = 'hf-pg pair'; left.appendChild(makeImg(v.files[0]));
-        const spine = document.createElement('div'); spine.className = 'hf-spine';
-        const right = document.createElement('div'); right.className = 'hf-pg pair'; right.appendChild(makeImg(v.files[1]));
-        spreadEl.appendChild(left); spreadEl.appendChild(spine); spreadEl.appendChild(right);
-      }
-      spreadEl.classList.remove('fading');
-    };
-
-    instant ? draw() : setTimeout(draw, 150);
+    spreadEl.innerHTML = '';
+    if (v.type === 'single') {
+      const pg = document.createElement('div');
+      pg.className = 'hf-pg solo';
+      pg.appendChild(makeImg(v.files[0]));
+      spreadEl.appendChild(pg);
+    } else {
+      const left  = document.createElement('div'); left.className  = 'hf-pg pair'; left.appendChild(makeImg(v.files[0]));
+      const spine = document.createElement('div'); spine.className = 'hf-spine';
+      const right = document.createElement('div'); right.className = 'hf-pg pair'; right.appendChild(makeImg(v.files[1]));
+      spreadEl.appendChild(left); spreadEl.appendChild(spine); spreadEl.appendChild(right);
+    }
 
     const label = cur === 0 ? 'Cover' : cur === total - 1 ? 'Back Cover' : `Spread ${cur} of ${total - 2}`;
     counter.textContent = `${label}  ·  ${cur + 1} / ${total}`;
@@ -1305,8 +1300,46 @@
     });
   }
 
+  // Page-flip animation: phase 1 rotates current page edge-on, swap content
+  // invisibly at perpendicular, phase 2 rotates new page back to flat.
+  let flipping = false;
+  function flipTo(newCur, dir) {
+    if (flipping || newCur === cur) return;
+    flipping = true;
+    const out = dir > 0 ? -92 : 92;   // forward tips right edge toward viewer
+    const inFrom = -out;              // new page enters from opposite side
+    const dur = 280;
+
+    spreadEl.style.transition = `transform ${dur}ms cubic-bezier(.5,0,.75,.2), opacity ${dur}ms ease-in`;
+    spreadEl.style.transform = `translateZ(-60px) rotateY(${out}deg)`;
+    spreadEl.style.opacity = '0';
+
+    setTimeout(() => {
+      cur = newCur;
+      drawNow();
+      // Snap to opposite extreme without animating
+      spreadEl.style.transition = 'none';
+      spreadEl.style.transform = `translateZ(-60px) rotateY(${inFrom}deg)`;
+      spreadEl.style.opacity = '0';
+      // Force reflow so the next transition runs
+      void spreadEl.offsetWidth;
+      // Phase 2: rotate to flat
+      spreadEl.style.transition = `transform ${dur}ms cubic-bezier(.25,.8,.5,1), opacity ${dur}ms ease-out`;
+      spreadEl.style.transform = 'translateZ(0) rotateY(0deg)';
+      spreadEl.style.opacity = '1';
+      setTimeout(() => {
+        spreadEl.style.transition = '';
+        flipping = false;
+      }, dur + 20);
+    }, dur);
+  }
+
   function openViewer() {
-    cur = 0; render(true);
+    cur = 0;
+    spreadEl.style.transition = '';
+    spreadEl.style.transform = '';
+    spreadEl.style.opacity = '';
+    drawNow();
     viewer.classList.add('open');
     requestAnimationFrame(() => viewer.classList.add('visible'));
     viewer.setAttribute('aria-hidden', 'false');
@@ -1320,8 +1353,9 @@
   }
 
   function step(d) {
-    cur = Math.max(0, Math.min(total - 1, cur + d));
-    render(false);
+    const newCur = Math.max(0, Math.min(total - 1, cur + d));
+    if (newCur === cur) return;
+    flipTo(newCur, d);
   }
 
   const cover = document.getElementById('hf-cover');

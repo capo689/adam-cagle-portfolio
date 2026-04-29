@@ -24,19 +24,20 @@
 }
 
 .preloader--revealing {
+  /* Tight aperture: the transparent stop trails the black stop by --soft%.
+     At --hole: 0 the transparent stop sits at -3% (off-canvas) and the
+     black stop is at 0%, so the dead-center pixel is fully opaque. As
+     --hole grows, a small soft-edged transparent disc opens and expands. */
+  --soft: 3;
   -webkit-mask-image: radial-gradient(
     circle at var(--reveal-x) var(--reveal-y),
-    transparent 0%,
-    transparent calc(var(--hole) * 1%),
-    black calc(var(--hole) * 1% + 8%),
-    black 100%
+    transparent calc((var(--hole) - var(--soft)) * 1%),
+    black calc(var(--hole) * 1%)
   );
   mask-image: radial-gradient(
     circle at var(--reveal-x) var(--reveal-y),
-    transparent 0%,
-    transparent calc(var(--hole) * 1%),
-    black calc(var(--hole) * 1% + 8%),
-    black 100%
+    transparent calc((var(--hole) - var(--soft)) * 1%),
+    black calc(var(--hole) * 1%)
   );
 }
 

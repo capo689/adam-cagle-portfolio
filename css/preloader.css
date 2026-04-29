@@ -48,8 +48,9 @@
   transform: translate(-50%, -50%);
   width: clamp(260px, 52vw, 620px);
   height: auto;
-  filter: drop-shadow(0 0 28px rgba(255, 91, 31, 0.45))
-          drop-shadow(0 0 60px rgba(255, 91, 31, 0.15));
+  /* Dark mode: bright royal-blue glow (matches --accent #4D8BE8) */
+  filter: drop-shadow(0 0 28px rgba(77, 139, 232, 0.45))
+          drop-shadow(0 0 60px rgba(77, 139, 232, 0.15));
   transition: filter .12s linear, opacity .25s linear;
   user-select: none;
   -webkit-user-drag: none;
@@ -57,10 +58,10 @@
 }
 
 .preloader__neon[data-state="off"] {
-  filter: drop-shadow(0 0 4px rgba(255, 91, 31, 0.06));
+  filter: drop-shadow(0 0 4px rgba(77, 139, 232, 0.06));
 }
 
-/* Light mode: swap orange neon glow for blue (matches --accent #1F4E8C) */
+/* Light mode: deeper denim-blue glow (matches --accent #1F4E8C) */
 html[data-theme="light"] .preloader__neon {
   filter: drop-shadow(0 0 28px rgba(31, 78, 140, 0.45))
           drop-shadow(0 0 60px rgba(31, 78, 140, 0.15));

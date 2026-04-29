@@ -16,12 +16,10 @@
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Theme-aware neon image set. Light mode uses the blue PNGs, dark stays
-  // orange. Read once at preloader start — theme is set synchronously by
-  // theme.js before any DOM exists, so this is reliable.
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  const NEON_ON  = isLight ? 'img/neon-blue-web.png'    : 'img/neon_on.png';
-  const NEON_OFF = isLight ? 'img/neon-blueoff-web.png' : 'img/neon_off.png';
+  // Both themes currently use the blue neon PNG set; the theme-conditional
+  // glow color is handled in preloader.css.
+  const NEON_ON  = 'img/neon-blue-web.png';
+  const NEON_OFF = 'img/neon-blueoff-web.png';
 
   function build() {
     if (document.getElementById('preloader')) return;

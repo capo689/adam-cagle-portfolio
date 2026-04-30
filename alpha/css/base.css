@@ -1,0 +1,116 @@
+/* ──────────────────────────────────────────────────────────────────────
+   base.css — design tokens, reset, typography
+   The only file allowed to define :root variables. Every other stylesheet
+   reads from these.
+   ────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Color (dark default) ───────────────────────────────────────── */
+  --bg:      #0f0f0e;
+  --bg-soft: #141312;
+  --fg:      #f6f3ec;
+  --fg-2:    rgba(246, 243, 236, 0.72);
+  --fg-3:    rgba(246, 243, 236, 0.45);
+  --rule:    rgba(246, 243, 236, 0.14);
+  --rule-2:  rgba(246, 243, 236, 0.08);
+  --accent:  #4D8BE8;
+
+  /* ── Type ───────────────────────────────────────────────────────── */
+  --sans:   "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono:   "Geist Mono", ui-monospace, Menlo, monospace;
+  --italic: "Instrument Serif", Georgia, serif;
+
+  /* ── Layout ─────────────────────────────────────────────────────── */
+  --page-max: 1480px;
+  --page-pad: 32px;
+  --rail-h:   72px;
+
+  /* ── Motion ─────────────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 200ms;
+  --t-base: 400ms;
+  --t-slow: 800ms;
+}
+
+/* Light theme override (applied via [data-theme="light"] on <html>) */
+[data-theme="light"] {
+  --bg:      #ffffff;
+  --bg-soft: #f8f8f6;
+  --fg:      #0f0f0e;
+  --fg-2:    #3b3b38;
+  --fg-3:    #7a7771;
+  --rule:    #d9d6cd;
+  --rule-2:  #e8e5dc;
+  --accent:  #1F4E8C;
+}
+
+/* ── Reset ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto; /* Lenis owns scroll */
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "ss02";
+  overflow-x: clip;
+}
+
+img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+input, textarea, select { font: inherit; color: inherit; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ── Typography primitives ────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+p  { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+.italic, em, i { font-family: var(--italic); font-style: italic; font-weight: 400; }
+.mono          { font-family: var(--mono); }
+
+/* ── Accessibility ────────────────────────────────────────────────── */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

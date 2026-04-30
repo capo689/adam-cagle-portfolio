@@ -1,0 +1,342 @@
+/* ──────────────────────────────────────────────────────────────────────
+   pages/home.css — homepage-specific styles
+   Anything used only on index.html lives here. Hero/section primitives
+   live in layout.css.
+   ────────────────────────────────────────────────────────────────────── */
+
+/* ── Portrait image in hero ───────────────────────────────────────── */
+.portrait-img {
+  display: block;
+  justify-self: start;
+  width: clamp(190px, 18vw, 300px);
+  height: auto;
+  filter:
+    contrast(1.04) saturate(1.08)
+    drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+}
+
+/* ── Hero neon (signature image) ──────────────────────────────────── */
+.hero-neon {
+  display: block;
+  width: 520px;
+  max-width: 70%;
+  height: auto;
+  margin: 20px 0 -20px;
+  opacity: 0.9;
+}
+
+/* ── Section 01: Summary (italic display copy) ────────────────────── */
+.summary p {
+  font-family: var(--italic);
+  font-size: clamp(19px, 1.8vw, 24px);
+  line-height: 1.45;
+  color: var(--fg-2);
+  margin: 0 145px 20px 0;
+}
+.summary p:last-child { margin-bottom: 0; }
+.summary p em       { color: var(--accent); font-style: italic; }
+.summary p strong   {
+  color: var(--fg);
+  font-style: normal;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+/* ── Section 02: Capabilities (2x2 grid of cap cards) ─────────────── */
+.caps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.cap {
+  background: var(--bg-soft);
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cap-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.cap-name {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--fg);
+}
+.cap-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+.cap p { margin: 0; font-size: 17px; line-height: 1.6; color: var(--fg-2); }
+.cap p strong { color: var(--fg); font-weight: 600; }
+
+/* ── Section 03: Experience (job blocks) ──────────────────────────── */
+.job {
+  padding: 28px 0;
+  border-top: 1px solid var(--rule-2);
+}
+.job:first-child { border-top: 0; padding-top: 0; }
+
+.job-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.job-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+.job-title .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fg-2);
+}
+.job-years {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.job-org {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  margin-bottom: 14px;
+}
+.job-org a {
+  color: var(--fg-2);
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.2s, border-color 0.2s;
+}
+.job-org a:hover { color: var(--accent); border-color: var(--accent); }
+
+.job-body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  margin: 0 145px 12px 0;
+}
+.job-body:last-child { margin-bottom: 0; }
+
+.job-roster {
+  display: grid;
+  gap: 10px;
+  margin: 16px 145px 16px 0;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule-2);
+}
+.job-roster-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 24px;
+  align-items: baseline;
+}
+.job-roster-cat {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.job-roster-list {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+
+/* ── Section 04: Selected Work ────────────────────────────────────── */
+.work-intro {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--fg-3);
+  margin: 0 0 8px;
+}
+.work-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  margin-bottom: 4px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--bg-soft);
+  transition: border-color 0.2s, background 0.2s;
+}
+.work-cta:hover { border-color: var(--accent); background: var(--bg); }
+.work-cta .cta-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.work-cta .cta-title {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.work-cta .cta-title .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.work-cta .arrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.works {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.work {
+  background: var(--bg-soft);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: background 0.2s;
+}
+.work:hover { background: var(--bg); }
+.work-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.work-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.work-tag {
+  font-family: var(--mono);
+  font-size: 17px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.work p { margin: 0; font-size: 17px; line-height: 1.6; color: var(--fg-2); }
+.work .line { font-family: var(--italic); font-style: italic; font-size: 17px; color: var(--fg); }
+
+/* ── Section 05: Awards / Ed / Board (3-up) ───────────────────────── */
+.tri {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+}
+.tri-item { display: flex; flex-direction: column; gap: 10px; }
+.tri-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.tri-value {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.tri-value .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fg-2);
+}
+.tri-note { font-size: 17px; color: var(--fg-3); line-height: 1.5; }
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .page { padding: 0 20px; }
+  .summary p {
+    margin: 0 0 20px 0;
+    width: 100%;
+    font-size: clamp(20px, 5vw, 24px);
+    line-height: 1.45;
+  }
+  .caps, .works, .tri { grid-template-columns: 1fr; }
+  .job-body { margin-right: 0; width: 100%; font-size: clamp(17px, 4.4vw, 19px); line-height: 1.65; }
+  .job-roster { margin-right: 0; gap: 14px; }
+  .job-roster-row { grid-template-columns: 1fr; gap: 4px; }
+  .job-roster-list { font-size: clamp(15px, 4vw, 17px); }
+  .job-title { font-size: clamp(20px, 5.5vw, 26px); }
+  .cap p { font-size: clamp(16px, 4.2vw, 18px); }
+  .tri-note { font-size: clamp(16px, 4.2vw, 18px); }
+  .work { padding: 22px 22px 24px; }
+  .work p { font-size: clamp(16px, 4.2vw, 18px); }
+  .work .line { font-size: clamp(17px, 4.5vw, 19px); }
+  .work-name { font-size: clamp(20px, 5.5vw, 24px); }
+  .work-tag {
+    white-space: normal;
+    font-size: clamp(11px, 3vw, 13px);
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+  }
+  .work-intro { font-size: clamp(17px, 4.6vw, 20px); }
+  .work-cta { padding: 18px 20px; flex-wrap: wrap; gap: 10px; }
+  .work-cta > div:first-child { min-width: 0; flex: 1 1 auto; }
+  .work-cta .cta-title { font-size: clamp(15px, 4vw, 18px); line-height: 1.3; }
+  .work-cta .arrow { font-size: 10.5px; }
+}
+
+/* ── Print (résumé export) ────────────────────────────────────────── */
+@media print {
+  @page { size: Letter; margin: 0.5in; }
+  :root {
+    --bg: #fff; --bg-soft: #f8f8f6; --fg: #0f0f0e;
+    --fg-2: #3b3b38; --fg-3: #7a7771;
+    --rule: #d9d6cd; --rule-2: #e8e5dc;
+    --accent: #1F4E8C;
+  }
+  html, body { background: #fff; color: #0f0f0e; }
+  .rail, .mob-nav { display: none !important; }
+  .hero { padding: 32px 0 48px; }
+  .section, .job, .cap, .work { break-inside: avoid; }
+}

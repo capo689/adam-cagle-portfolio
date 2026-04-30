@@ -5,6 +5,8 @@
 (function () {
   if (typeof gsap === 'undefined') return;
 
+  function initAgentsLightbox() {
+
   const galleries = {
     ssia: [
       { src: 'img/agents/ssia-vrt-dashboard.png',  hl: 'VRT Dashboard.',   meta: 'SSIA · Vertiv · Morning Run' },
@@ -322,4 +324,21 @@
     else if (e.key === 'ArrowLeft') step(-1);
     else if (e.key === 'ArrowRight') step(1);
   });
+
+  } // end initAgentsLightbox
+
+  window.initAgentsLightbox = initAgentsLightbox;
+
+  function isMyPage() {
+    const c = document.querySelector('[data-barba-namespace]');
+    return c && c.dataset.barbaNamespace === 'agents';
+  }
+
+  if (isMyPage()) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAgentsLightbox);
+    } else {
+      initAgentsLightbox();
+    }
+  }
 })();

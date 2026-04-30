@@ -1,0 +1,37 @@
+/* ──────────────────────────────────────────────────────────────────────
+   preloader.css — full-screen first-load reveal (home only)
+
+   Overlay paints over the page while the neon graphic fades in, holds,
+   then the curtain slides up to reveal the hero. Uses bg + accent
+   tokens so light/dark themes both work. Coordinates with hero-reveal:
+   hero-reveal.js waits for SiteFX.emit('preloader:done') if the flag
+   is set, so the hero choreography doesn't fire underneath the curtain.
+   ────────────────────────────────────────────────────────────────────── */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  will-change: transform, opacity;
+}
+
+.preloader-art {
+  display: block;
+  width: clamp(260px, 38vw, 520px);
+  height: auto;
+  opacity: 0;
+  /* GSAP will animate scale + opacity; keep an initial scale here so
+     non-JS users get a static hero immediately (no flash of huge art). */
+  transform: scale(0.96);
+}
+
+/* Lock scroll while preloader is up */
+html.is-preloading,
+html.is-preloading body {
+  overflow: hidden;
+}

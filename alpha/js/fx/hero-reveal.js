@@ -93,11 +93,21 @@
       }
     }
 
-    // Wait for fonts so SplitText measures lines on final layout.
+    // Wait for fonts so SplitText measures lines on final layout. Then
+    // either play immediately or, if the preloader is active, defer
+    // until it emits 'preloader:done' so the hero choreography doesn't
+    // fire underneath the curtain.
+    function ready() {
+      if (window.__preloaderActive && window.SiteFX) {
+        window.SiteFX.on('preloader:done', play);
+      } else {
+        play();
+      }
+    }
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(play);
+      document.fonts.ready.then(ready);
     } else {
-      play();
+      ready();
     }
   }
 

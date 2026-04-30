@@ -68,9 +68,9 @@
     wrap.classList.add('is-active');
 
     // Reset state defensively so a half-finished previous nav doesn't
-    // leave bands mid-screen.
-    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101 });
-    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101 });
+    // leave bands mid-screen or faded out (autoAlpha restores opacity+visibility).
+    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, autoAlpha: 1 });
+    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, autoAlpha: 1 });
 
     var label = document.getElementById('barba-label');
     if (label) label.textContent = LABELS[toNamespace] || '';

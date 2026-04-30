@@ -1,0 +1,198 @@
+/* ═══════════════════════════════════════════════════════════════════
+   layout.css — page wrapper, hero, two-column section grid, footer.
+   The skeleton every page sits inside.
+═══════════════════════════════════════════════════════════════════ */
+
+/* ─── PAGE WRAPPER ─────────────────────────────────────────────────── */
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+/* ─── HERO ─────────────────────────────────────────────────────────── */
+.hero {
+  padding: 140px 0 72px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 36px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.hero-kicker .dash {
+  width: 40px;
+  height: 1px;
+  background: var(--fg-3);
+}
+.hero-kicker .accent { color: var(--accent); }
+
+.hero-name {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(64px, 11vw, 180px);
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+}
+.hero-name .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+
+.hero-sub {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 56px;
+  align-items: end;
+  margin-top: 40px;
+}
+
+.hero-role {
+  max-width: 38ch;
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  color: var(--fg-2);
+}
+.hero-role em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: end;
+}
+
+/* ─── SECTIONS ─────────────────────────────────────────────────────── */
+.section {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 64px;
+  padding: 72px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section:last-of-type { border-bottom: 0; }
+
+.s-head {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.s-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.s-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(26px, 2.6vw, 38px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.s-title .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.s-body {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ─── FOOTER ───────────────────────────────────────────────────────── */
+.foot {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 36px 0 56px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--fg-2);
+}
+.foot .center {
+  text-align: center;
+  color: var(--fg-3);
+}
+.foot .right { text-align: right; }
+.foot a {
+  color: var(--fg-2);
+  transition: color 0.2s;
+}
+.foot a:hover { color: var(--accent); }
+
+/* ─── RESPONSIVE ───────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .page { padding: 0 20px; }
+
+  .hero { padding: 96px 0 36px; }
+  .hero-kicker {
+    margin-bottom: 22px;
+    gap: 10px;
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+  .hero-name {
+    font-size: clamp(44px, 11vw, 96px);
+    line-height: 0.92;
+  }
+  .hero-sub {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 28px;
+  }
+  .hero-role {
+    max-width: none;
+    font-size: clamp(20px, 5vw, 26px);
+  }
+  .hero-meta {
+    align-self: stretch;
+    width: 100%;
+  }
+
+  .section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 52px 0;
+  }
+  .s-head { position: static; }
+  .s-title { font-size: clamp(28px, 7vw, 40px); }
+}
+
+@media (max-width: 640px) {
+  .foot {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 28px 0 40px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .foot .center,
+  .foot .right { text-align: center; }
+}

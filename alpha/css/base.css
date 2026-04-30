@@ -1,0 +1,95 @@
+/* ═══════════════════════════════════════════════════════════════════
+   base.css — design tokens, reset, typography, theme variables.
+   First stylesheet loaded. Sets the foundation everything else builds on.
+═══════════════════════════════════════════════════════════════════ */
+
+/* ─── DESIGN TOKENS (DARK — DEFAULT) ───────────────────────────────── */
+:root {
+  /* Color */
+  --bg:       #0f0f0e;
+  --bg-soft:  #141312;
+  --fg:       #f6f3ec;
+  --fg-2:     rgba(246, 243, 236, 0.72);
+  --fg-3:     rgba(246, 243, 236, 0.62);
+  --rule:     rgba(246, 243, 236, 0.14);
+  --rule-2:   rgba(246, 243, 236, 0.08);
+  --accent:   #4D8BE8;
+
+  /* Typography */
+  --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+  --italic:  "Instrument Serif", Georgia, serif;
+
+  /* Page */
+  --page-max: 1480px;
+  --page-pad: 32px;
+}
+
+html[data-theme="light"] {
+  --bg:       #f4efe7;
+  --bg-soft:  #ebe4d7;
+  --fg:       #14110f;
+  --fg-2:     rgba(20, 17, 15, 0.7);
+  --fg-3:     rgba(20, 17, 15, 0.62);
+  --rule:     rgba(20, 17, 15, 0.16);
+  --rule-2:   rgba(20, 17, 15, 0.09);
+  --accent:   #1F4E8C;
+}
+
+/* ─── RESET ────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+html { scrollbar-gutter: stable; }
+html, body { overflow-x: clip; }
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ─── TYPOGRAPHY ───────────────────────────────────────────────────── */
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "ss02";
+}
+
+/* ─── FOCUS RING ───────────────────────────────────────────────────── */
+*:focus { outline: none; }
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

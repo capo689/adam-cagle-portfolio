@@ -1,0 +1,225 @@
+/* ═══════════════════════════════════════════════════════════════════
+   nav.css — fixed top rail with brand, links, theme toggle, CTA.
+   Mobile: hamburger + full-screen overlay.
+═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --rail-h:        72px;
+  --rail-h-shrunk: 52px;
+  --rail-pad-x:    32px;
+}
+
+/* ─── RAIL ─────────────────────────────────────────────────────────── */
+.rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: minmax(auto, 1fr) auto minmax(auto, 1fr);
+  align-items: center;
+  gap: 32px;
+  padding: 0 var(--rail-pad-x);
+  height: var(--rail-h);
+  background: linear-gradient(180deg, rgba(15, 15, 14, 0.96), rgba(15, 15, 14, 0.78) 70%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html[data-theme="light"] .rail {
+  background: linear-gradient(180deg, rgba(244, 239, 231, 0.97), rgba(244, 239, 231, 0.82) 70%, transparent);
+}
+.rail.is-shrunk { height: var(--rail-h-shrunk); }
+
+/* ─── BRAND ────────────────────────────────────────────────────────── */
+.rail-brand {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+.rail-brand:hover { color: var(--accent); }
+
+/* ─── NAV LINKS ────────────────────────────────────────────────────── */
+.rail-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-link {
+  position: relative;
+  padding: 4px 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.005em;
+  color: var(--fg-2);
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+.nav-link:hover { color: var(--fg); }
+.nav-link.is-active { color: var(--accent); }
+
+/* underline that draws left → right on hover/active */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.nav-link:hover::after,
+.nav-link.is-active::after { transform: scaleX(1); }
+
+/* ─── RIGHT CLUSTER (theme toggle + CTA + hamburger) ───────────────── */
+.rail-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+.rail-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  color: #fff;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  transition: filter 0.25s, transform 0.25s;
+}
+.rail-cta .arrow {
+  display: inline-block;
+  transition: transform 0.25s;
+}
+.rail-cta:hover { filter: brightness(0.92); }
+.rail-cta:hover .arrow { transform: translateX(4px); }
+
+/* ─── HAMBURGER (mobile only) ──────────────────────────────────────── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  padding: 4px 0;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--fg);
+  transition: background 0.2s;
+}
+.hamburger:hover span { background: var(--accent); }
+
+/* ─── MOBILE OVERLAY ───────────────────────────────────────────────── */
+.mob-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: rgba(15, 15, 14, 0.97);
+  backdrop-filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+html[data-theme="light"] .mob-nav { background: rgba(244, 239, 231, 0.97); }
+.mob-nav.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.mob-nav nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid var(--rule);
+}
+.mob-nav .nav-link {
+  width: 220px;
+  padding: 22px 0;
+  font-size: 22px;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+}
+.mob-nav .nav-link::after { display: none; }
+
+.mob-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 12px 22px;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--fg);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  transition: border-color 0.25s, background 0.25s, color 0.25s;
+}
+.mob-cta:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.mob-close {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  padding: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  transition: color 0.2s;
+}
+.mob-close:hover { color: var(--fg); }
+
+/* ─── SCROLL PROGRESS HAIRLINE ─────────────────────────────────────── */
+.rail-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: var(--scroll-progress, 0%);
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.rail.is-shrunk .rail-progress { opacity: 1; }
+
+/* ─── RESPONSIVE ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .rail {
+    grid-template-columns: 1fr auto;
+    padding: 0 22px;
+    gap: 16px;
+  }
+  .rail-nav { display: none; }
+  .rail-cta { display: none; }
+  .hamburger { display: flex; }
+}

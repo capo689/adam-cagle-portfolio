@@ -1,0 +1,53 @@
+/* theme.css — theme toggle pill button styles.
+   Theme variable overrides live in base.css under html[data-theme="light"]. */
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  transition: color 0.2s;
+}
+.theme-toggle:hover { color: var(--fg); }
+.theme-toggle:hover .toggle-pill { border-color: var(--fg); }
+
+.toggle-icon {
+  font-size: 13px;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+html[data-theme="light"] .toggle-icon { transform: rotate(180deg); }
+
+.toggle-pill {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border: 1px solid var(--fg-3);
+  border-radius: 999px;
+  background: transparent;
+  flex-shrink: 0;
+  transition: border-color 0.3s;
+}
+.toggle-pill::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--fg-3);
+  transition: transform 0.3s ease, background 0.3s;
+}
+html[data-theme="light"] .toggle-pill {
+  border-color: var(--accent);
+}
+html[data-theme="light"] .toggle-pill::after {
+  transform: translateX(16px);
+  background: var(--accent);
+}

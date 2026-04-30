@@ -1,0 +1,202 @@
+/* ═══════════════════════════════════════════════════════════════════
+   pages/home.css — Résumé page (index.html) specific styles.
+   Hero-namerow w/ portrait, summary block, job entries, rosters.
+═══════════════════════════════════════════════════════════════════ */
+
+/* ─── HERO NAME ROW: name left, portrait right ─────────────────────── */
+.hero-namerow {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 56px;
+  align-items: center;
+}
+.portrait-img {
+  display: block;
+  justify-self: start;
+  width: clamp(190px, 18vw, 300px);
+  height: auto;
+  filter: contrast(1.04) saturate(1.08) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+}
+
+/* ─── HERO NEON TAGLINE ART ────────────────────────────────────────── */
+.hero-neon {
+  display: block;
+  width: 520px;
+  max-width: 70%;
+  height: auto;
+  margin: 20px 0 -20px;
+  opacity: 0.9;
+}
+
+/* ─── SUMMARY BLOCK (italic prose paragraphs) ──────────────────────── */
+.summary p {
+  margin: 0 145px 20px 0;
+  font-family: var(--italic);
+  font-size: clamp(19px, 1.8vw, 24px);
+  line-height: 1.45;
+  color: var(--fg-2);
+}
+.summary p:last-child { margin-bottom: 0; }
+.summary p em {
+  color: var(--accent);
+  font-style: italic;
+}
+.summary p strong {
+  color: var(--fg);
+  font-style: normal;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+/* ─── JOB ENTRIES (Experience section) ─────────────────────────────── */
+.job {
+  padding: 28px 0;
+  border-top: 1px solid var(--rule-2);
+}
+.job:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.job-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.job-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.job-title .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fg-2);
+}
+.job-years {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.job-org {
+  margin-bottom: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.job-org a {
+  color: var(--fg-2);
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.2s, border-color 0.2s;
+}
+.job-org a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.job-body {
+  margin: 0 145px 12px 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--fg-2);
+}
+.job-body:last-child { margin-bottom: 0; }
+
+/* ─── JOB ROSTER (category labels + dot-lists) ─────────────────────── */
+.job-roster {
+  display: grid;
+  gap: 10px;
+  margin: 16px 145px 16px 0;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule-2);
+}
+.job > .job-roster:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.job-roster-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 24px;
+  align-items: baseline;
+}
+.job-roster-cat {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.job-roster-list {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+
+/* ─── SELECTED WORK INTRO ──────────────────────────────────────────── */
+.work-intro {
+  margin: 0 0 8px;
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--fg-3);
+}
+
+/* ─── RESPONSIVE ───────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .hero-namerow {
+    grid-template-columns: 1.45fr 1fr;
+    gap: 24px;
+  }
+  .portrait-img {
+    width: 100%;
+    max-width: 220px;
+  }
+  .summary p {
+    margin: 0 0 20px;
+    max-width: none;
+    font-size: clamp(20px, 5vw, 24px);
+    line-height: 1.45;
+  }
+  .job-body {
+    margin-right: 0;
+    max-width: none;
+    font-size: clamp(17px, 4.4vw, 19px);
+    line-height: 1.65;
+  }
+  .job-roster {
+    margin-right: 0;
+    gap: 14px;
+  }
+  .job-roster-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .job-roster-list { font-size: clamp(15px, 4vw, 17px); }
+  .job-title { font-size: clamp(20px, 5.5vw, 26px); }
+  .job-org { font-size: 11px; }
+  .work-intro {
+    max-width: none;
+    font-size: clamp(17px, 4.6vw, 20px);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-namerow {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 16px;
+  }
+  .portrait-img { max-width: 160px; }
+}

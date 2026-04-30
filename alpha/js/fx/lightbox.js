@@ -119,14 +119,26 @@
     }
 
     // Bind tile clicks (delegated so future-loaded grids work too).
+    // Two trigger shapes:
+    //   .ad[data-gallery="X"] — the tile IS in the gallery, opens at its own data-index
+    //   [data-lightbox="X"]   — a cover-plate trigger; opens gallery X at its data-index
     document.addEventListener('click', function (e) {
+      var trigger = e.target.closest && e.target.closest('[data-lightbox]');
+      if (trigger) {
+        e.preventDefault();
+        var galleryName = trigger.getAttribute('data-lightbox');
+        var idxAttr = trigger.getAttribute('data-index');
+        var idx = idxAttr === null ? 0 : parseInt(idxAttr, 10) || 0;
+        open(galleryName, idx);
+        return;
+      }
       var tile = e.target.closest && e.target.closest('.ad[data-gallery]');
       if (!tile) return;
       e.preventDefault();
-      var galleryName = tile.getAttribute('data-gallery');
-      var idxAttr = tile.getAttribute('data-index');
-      var idx = idxAttr === null ? 0 : parseInt(idxAttr, 10) || 0;
-      open(galleryName, idx);
+      var galleryName2 = tile.getAttribute('data-gallery');
+      var idxAttr2 = tile.getAttribute('data-index');
+      var idx2 = idxAttr2 === null ? 0 : parseInt(idxAttr2, 10) || 0;
+      open(galleryName2, idx2);
     });
 
     closeBtn && closeBtn.addEventListener('click', close);

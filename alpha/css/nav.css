@@ -197,6 +197,17 @@ html[data-theme="light"] .mob-nav { background: rgba(244, 239, 231, 0.97); }
 }
 .rail.is-shrunk .rail-progress { opacity: 1; }
 
+/* ── BARBA SLAB (page transition) ─────────────────────────────────── */
+.barba-slab {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;            /* above modals (200/300), below cursor (9999) */
+  background: var(--accent);
+  transform: translateY(100%);
+  pointer-events: none;
+  will-change: transform;
+}
+
 /* ── FOOTER ───────────────────────────────────────────────────────── */
 .foot {
   padding: 36px 0 56px;

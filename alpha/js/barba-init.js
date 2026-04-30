@@ -1,20 +1,17 @@
 /* ──────────────────────────────────────────────────────────────────────
-   barba-init.js — Barba.js v2 page transitions (instant swap stage)
+   barba-init.js — Barba.js v2 page transitions
 
-   This is round 5i-2a: the engine boots and pages swap via AJAX, but
-   without a transition (instant). Round 5i-2b will add per-plugin
-   re-init hooks so hero-reveal / section-reveal / hf-viewer / studio.js
-   bind to the new container after each enter. Round 5i-3 layers the
-   slab/dissolve transition on top.
-
-   For now, on each enter we:
-     - Reset Lenis scroll to 0 (or window.scrollTo as fallback)
-     - Update .nav-link.is-active in site-shell from data-barba-namespace
-     - Kill ScrollTriggers pointing at removed elements, then refresh
-     - Emit page:enter / page:leave on SiteFX
+   Lifecycle:
+     beforeLeave → leave (slab covers) → [Barba swaps containers] →
+     beforeEnter (CSS hot-swap, scroll reset, nav update, ST refresh,
+     SiteFX page:enter emit so plugins lock+queue animations while
+     hidden) → enter (slab uncovers, animations are mid-play as the
+     slab clears) → afterEnter (sessionStorage flag).
 
    prevent rules: anchors, mailto/tel, target=_blank, download, and
    binary asset URLs all bypass Barba and load natively.
+
+   prefers-reduced-motion: instant swap, no slab.
    ────────────────────────────────────────────────────────────────────── */
 
 (function () {
@@ -24,6 +21,40 @@
     agents:    'Agents.html',
     books:     'Books.html',
   };
+
+  function ensureSlab() {
+    var s = document.getElementById('barba-slab');
+    if (s) return s;
+    s = document.createElement('div');
+    s.id = 'barba-slab';
+    s.className = 'barba-slab';
+    s.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(s);
+    return s;
+  }
+
+  function slabLeave() {
+    if (!window.gsap) return;
+    return window.gsap.fromTo(ensureSlab(),
+      { yPercent: 100 },
+      { yPercent: 0, duration: 0.5, ease: 'power3.inOut' }
+    );
+  }
+
+  function slabEnter() {
+    if (!window.gsap) return;
+    var slab = document.getElementById('barba-slab');
+    if (!slab) return;
+    return window.gsap.fromTo(slab,
+      { yPercent: 0 },
+      { yPercent: -100, duration: 0.55, ease: 'power3.inOut',
+        onComplete: function () {
+          // Reset to below for next leave
+          window.gsap.set(slab, { yPercent: 100 });
+        }
+      }
+    );
+  }
 
   function shouldPrevent(opts) {
     var href = (opts.href || (opts.el && opts.el.getAttribute('href')) || '').trim();
@@ -97,12 +128,17 @@
       return;
     }
 
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     window.barba.init({
       prevent: shouldPrevent,
-      transitions: [{
-        name: 'instant',
-        // No leave/enter animation yet — just swap. Slab/dissolve in 5i-3.
-      }],
+      transitions: reduceMotion
+        ? [{ name: 'instant' }]
+        : [{
+            name: 'slab',
+            leave: function () { return slabLeave(); },
+            enter: function () { return slabEnter(); },
+          }],
     });
 
     window.barba.hooks.beforeLeave(function (data) {
@@ -114,31 +150,28 @@
       }
     });
 
-    // Swap per-page stylesheet before the new container renders so we
-    // don't get a flash of incorrect styling.
+    // beforeEnter runs after Barba has swapped containers (old removed,
+    // new added) but BEFORE the enter animation (slab uncover). Doing
+    // CSS hot-swap, scroll reset, nav update, and plugin re-init here
+    // keeps the visual flash hidden behind the slab.
     window.barba.hooks.beforeEnter(function (data) {
-      return swapPageStylesheet(data.next.html);
+      return swapPageStylesheet(data.next.html).then(function () {
+        var ns = data.next.namespace;
+        updateActiveNav(ns);
+        refreshScroll();
+        if (window.SiteFX) {
+          window.SiteFX.emit('page:enter', {
+            from: data.current && data.current.namespace,
+            to: ns,
+            container: data.next.container,
+          });
+        }
+      });
     });
 
-    window.barba.hooks.afterEnter(function (data) {
-      var ns = data.next.namespace;
-      updateActiveNav(ns);
-      refreshScroll();
-
-      // Update <html> document title is handled by Barba automatically
-      // (it swaps the <head>'s <title>).
-
-      // Mark preloader as 'shown' on first navigation so it doesn't
-      // re-fire on subsequent enters into the home page.
+    window.barba.hooks.afterEnter(function () {
+      // Mark preloader 'shown' so it doesn't re-fire on enter back to home.
       try { sessionStorage.setItem('alpha-preloaded', '1'); } catch (e) {}
-
-      if (window.SiteFX) {
-        window.SiteFX.emit('page:enter', {
-          from: data.current && data.current.namespace,
-          to: ns,
-          container: data.next.container,
-        });
-      }
     });
   }
 

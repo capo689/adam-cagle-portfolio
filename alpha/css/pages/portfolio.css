@@ -1,0 +1,840 @@
+/* ──────────────────────────────────────────────────────────────────────
+   pages/portfolio.css
+   Page-specific styles for Portfolio.html.
+   Built up in three parts:
+     1. CORE (this file initially) — hero overrides, sections, campaign,
+        ad-grid, pull, hl-grid, verbs, closer, responsive, print.
+     2. CASE STUDIES — appended: .sm-* (Sunset Marquis), .hf-cover-wrap
+        (Hotel Figueroa).
+     3. MODALS — appended: #lightbox, #hf-viewer.
+   ────────────────────────────────────────────────────────────────────── */
+
+/* ── Hero overrides (Portfolio uses smaller, balanced name) ───────── */
+.hero-name {
+  font-size: clamp(48px, 8vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  max-width: 14ch;
+  text-wrap: balance;
+}
+.hero-name .dot { color: var(--accent); }
+
+.hero-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 24px;
+  font-family: var(--mono);
+  font-size: 13px;
+  align-content: end;
+}
+.hero-links a,
+.hero-links span {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+}
+.hero-links a:hover { color: var(--accent); }
+.hero-links .k {
+  color: var(--fg-3);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  min-width: 62px;
+}
+
+/* ── Section primitives (raw <section> blocks) ────────────────────── */
+.page > section {
+  padding: 96px 0 24px;
+  border-top: 1px solid var(--rule);
+}
+.sect-label {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  margin-bottom: 28px;
+}
+.sect-label .num { color: var(--accent); }
+.sect-head {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(40px, 5.5vw, 80px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  margin: 0 0 72px;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.sect-head .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+/* ── Campaign card (sticky meta + body) ───────────────────────────── */
+.campaign {
+  display: grid;
+  grid-template-columns: 0.9fr 1.3fr;
+  gap: 64px;
+  padding: 64px 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
+.campaign:last-of-type { border-bottom: 1px solid var(--rule); }
+
+.c-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 100px;
+}
+.c-meta .num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.c-meta .client {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(36px, 4vw, 62px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+.c-meta .client .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.c-meta .context {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  max-width: 34ch;
+  margin-top: 10px;
+}
+.c-meta .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.c-meta .tags span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 5px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--fg-2);
+}
+
+.c-body { display: flex; flex-direction: column; gap: 32px; }
+
+/* ── Ad grid (image collage, hover overlay) ───────────────────────── */
+.ad-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ad-grid.g-1 { grid-template-columns: 1fr; }
+.ad-grid.g-2 { grid-template-columns: 1fr 1fr; }
+.ad-grid.g-3 { grid-template-columns: repeat(3, 1fr); }
+.ad-grid.g-featured { grid-template-columns: 1.4fr 1fr 1fr; grid-auto-rows: auto; }
+
+.ad {
+  position: relative;
+  background: var(--bg-soft);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.ad img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92);
+  transition: transform 0.6s ease, filter 0.3s ease;
+}
+.ad:hover img { transform: scale(1.02); filter: saturate(1); }
+
+.ad .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(15, 15, 14, 0.88) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 20px 22px;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.ad:hover .overlay { opacity: 1; }
+.ad .overlay-inner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+.ad .overlay-inner .hl {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--accent);
+}
+
+/* ── Pullquote block ──────────────────────────────────────────────── */
+.pull {
+  position: relative;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 48px 48px 40px;
+}
+.pull-format {
+  position: absolute;
+  top: -10px;
+  left: 24px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--bg);
+  padding: 2px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+.pull-line {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+  margin: 0 0 24px;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+.pull-line em,
+.pull-line .hot { color: var(--accent); font-style: italic; }
+
+.pull-body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  max-width: 58ch;
+}
+.pull-body p { margin: 0 0 14px; text-wrap: pretty; }
+.pull-body p:last-child { margin-bottom: 0; }
+.pull-body em { font-family: var(--italic); font-style: italic; color: var(--fg); }
+
+.pull-sig {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ── Headline grid (3-up tiles) ───────────────────────────────────── */
+.hl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.hl-tile {
+  background: var(--bg);
+  padding: 32px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 220px;
+  transition: background 0.25s;
+}
+.hl-tile .meta {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  display: flex;
+  justify-content: space-between;
+}
+.hl-tile .meta .num { color: var(--accent); }
+.hl-tile .line {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(24px, 2.3vw, 34px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  margin: auto 0 0;
+  text-wrap: balance;
+}
+.hl-tile .attr {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--fg-2);
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ── Verb stack (Killer NIC) ──────────────────────────────────────── */
+.verbs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.verb-col {
+  background: var(--bg);
+  padding: 36px 32px 28px;
+  display: flex;
+  flex-direction: column;
+}
+.verb-col .class {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+.verb-col .class .n { color: var(--accent); }
+.verb-col .v {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(22px, 2vw, 28px);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  padding: 3px 0;
+}
+.verb-col .kill {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(28px, 2.6vw, 38px);
+  letter-spacing: -0.03em;
+}
+.verb-col .kill .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+/* ── Closer (CTA outro) ───────────────────────────────────────────── */
+.closer {
+  padding: 120px 0 64px;
+  border-top: 1px solid var(--rule);
+}
+.closer .say {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(48px, 7vw, 120px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--fg);
+  margin: 0 0 24px;
+  max-width: 16ch;
+  text-wrap: balance;
+}
+.closer .say em { color: var(--accent); font-style: italic; }
+.closer .cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 16px 22px;
+  border: 1px solid var(--fg);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.closer .cta:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.closer .arrow { display: inline-block; transition: transform 0.2s; }
+.closer .cta:hover .arrow { transform: translateX(4px); }
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .page > section { padding: 64px 0 16px; }
+  .hero-name { font-size: clamp(40px, 11vw, 72px); }
+  .hero-role { font-size: clamp(18px, 4.5vw, 24px); }
+  .sect-head { font-size: clamp(32px, 9vw, 60px); margin-bottom: 40px; }
+  .sect-label { gap: 10px; flex-wrap: wrap; font-size: 11px; }
+  .campaign { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
+  .c-meta { position: static; }
+  .c-meta .client { font-size: clamp(34px, 9vw, 52px); }
+  .c-meta .context { max-width: none; font-size: clamp(16px, 4.2vw, 18px); }
+  .c-body { width: 100%; }
+  .ad-grid.g-3, .ad-grid.g-featured { grid-template-columns: 1fr 1fr; }
+  .ad-grid.g-2 { grid-template-columns: 1fr; }
+  .hl-grid, .verbs { grid-template-columns: 1fr; }
+  .pull { padding: 32px 24px 28px; }
+  .pull-line { font-size: clamp(28px, 8vw, 48px); max-width: none; }
+  .pull-body { font-size: 16px; max-width: none; }
+  .closer { padding: 80px 0 48px; }
+  .closer .say { font-size: clamp(40px, 12vw, 80px); }
+}
+@media (max-width: 520px) {
+  .ad-grid.g-3, .ad-grid.g-featured { grid-template-columns: 1fr; }
+  .pull { padding: 28px 20px 24px; }
+  .hl-tile { padding: 24px 22px 20px; min-height: 180px; }
+  .verb-col { padding: 28px 24px 22px; }
+}
+
+/* ── Print ────────────────────────────────────────────────────────── */
+@media print {
+  @page { size: Letter; margin: 0.45in; }
+  :root {
+    --bg: #fff; --fg: #0f0f0e; --fg-2: #3b3b38; --fg-3: #7a7771;
+    --rule: #d9d6cd; --rule-2: #e8e5dc; --bg-soft: #fafaf7;
+  }
+  html, body { background: #fff; color: #0f0f0e; }
+  .rail, .mob-nav { display: none !important; }
+  .ad:hover img { transform: none; filter: saturate(1); }
+  .campaign, .pull, .hl-tile, .verb-col { break-inside: avoid; }
+  .page > section { padding: 28px 0 12px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PART 2 — CASE STUDIES
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Sunset Marquis: movement labels (roman numeral chapters) ─────── */
+.sm-mvmt {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0 4px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.sm-mvmt:first-child { padding-top: 0; }
+.sm-mvmt .roman { color: var(--accent); font-weight: 500; }
+.sm-mvmt .rule  { flex: 1; height: 1px; background: var(--rule); }
+.sm-mvmt .label { color: var(--fg-2); }
+
+/* ── Sunset Marquis: image + pullquote pair ───────────────────────── */
+.sm-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+}
+.sm-pair.reverse > .ad { order: 2; }
+.sm-pair.apex { grid-template-columns: 1.05fr 0.95fr; gap: 36px; }
+
+.sm-pair > .pull {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 44px 40px 36px;
+}
+.sm-pair > .pull .pull-line {
+  font-size: clamp(34px, 4vw, 54px);
+  max-width: none;
+  margin: 0 0 22px;
+}
+.sm-pair.apex > .pull .pull-line {
+  font-size: clamp(40px, 4.8vw, 64px);
+}
+.sm-pair > .pull .pull-body {
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: none;
+}
+.sm-pair > .pull .pull-sig { margin-top: auto; }
+
+/* ── Sunset Marquis: sub-brand architecture panel ─────────────────── */
+.sm-arch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.sm-arch-cell {
+  background: var(--bg-soft);
+  padding: 44px 38px 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: background 0.25s;
+}
+.sm-arch-cell:hover { background: var(--bg); }
+.sm-arch-cell .num {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.sm-arch-cell .name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(26px, 2.8vw, 40px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 2px 0 0;
+}
+.sm-arch-cell .name .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.sm-arch-cell .line {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(24px, 2.6vw, 36px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 8px 0 6px;
+  color: var(--fg);
+  text-wrap: balance;
+}
+.sm-arch-cell .line em { color: var(--accent); font-style: italic; }
+.sm-arch-cell .body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+.sm-arch-cell .sig {
+  margin-top: auto;
+  padding-top: 22px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ── Sunset Marquis: live site tile ───────────────────────────────── */
+.sm-site {
+  display: block;
+  cursor: pointer;
+}
+.sm-site img { transition: transform 0.8s ease, filter 0.3s ease; }
+.sm-site:hover img { filter: brightness(1.05); }
+
+@media (max-width: 960px) {
+  .sm-pair, .sm-pair.apex { grid-template-columns: 1fr; gap: 14px; }
+  .sm-pair.reverse > .ad { order: 0; }
+  .sm-pair > .pull { padding: 36px 28px 28px; }
+  .sm-arch { grid-template-columns: 1fr; }
+}
+
+/* ── Hotel Figueroa: brand-book cover plate (opens hf-viewer) ─────── */
+.hf-cover-wrap {
+  position: relative;
+  width: 100%;
+  background: #0a0a09;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.hf-cover-wrap img {
+  display: block;
+  width: 100%;
+  max-height: 680px;
+  object-fit: contain;
+}
+.hf-cover-wrap .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(15, 15, 14, 0.88) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 20px 22px;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.hf-cover-wrap:hover .overlay { opacity: 1; }
+.hf-cover-wrap .overlay-inner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+.hf-cover-wrap .overlay-inner .hl {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--accent);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PART 3 — MODALS
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Lightbox (ad-grid zoom view) ─────────────────────────────────── */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 10, 9, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 64px 80px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+#lightbox.open { display: flex; opacity: 1; }
+
+#lightbox .lb-figure {
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+#lightbox .lb-img {
+  max-width: 100%;
+  max-height: calc(100vh - 180px);
+  object-fit: contain;
+  background: #141312;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(246, 243, 236, 0.08);
+}
+#lightbox .lb-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  width: min(920px, 100%);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+#lightbox .lb-cap-l { color: var(--accent); }
+
+#lightbox button {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(20, 19, 18, 0.85);
+  border: 1px solid rgba(246, 243, 236, 0.18);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+#lightbox button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+#lightbox .lb-close { top: 20px; right: 20px; }
+#lightbox .lb-prev  { left: 20px;  top: 50%; transform: translateY(-50%); }
+#lightbox .lb-next  { right: 20px; top: 50%; transform: translateY(-50%); }
+#lightbox .lb-prev:hover { transform: translateY(-50%) translateX(-2px); }
+#lightbox .lb-next:hover { transform: translateY(-50%) translateX(2px);  }
+
+body.lb-open { overflow: hidden; }
+
+@media (max-width: 600px) {
+  #lightbox { padding: 60px 12px 60px; }
+  #lightbox .lb-prev { left: 8px; }
+  #lightbox .lb-next { right: 8px; }
+}
+
+/* ── HF Viewer (Hotel Figueroa brand-book spread, 3D page-flip) ───── */
+#hf-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(6, 6, 5, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 80px 56px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+#hf-viewer.open    { display: flex; }
+#hf-viewer.visible { opacity: 1; }
+
+.hf-spread-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  perspective: 2200px;
+  perspective-origin: 50% 50%;
+}
+#hf-spread {
+  display: flex;
+  gap: 3px;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  max-height: calc(100vh - 160px);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+.hf-pg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #0d0d0c;
+}
+.hf-pg.solo { max-width: min(90vw, 1400px); }
+.hf-pg.pair { flex: 1; min-width: 0; }
+.hf-pg img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 160px);
+  object-fit: contain;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.hf-spine {
+  width: 2px;
+  align-self: stretch;
+  flex-shrink: 0;
+  background: rgba(246, 243, 236, 0.05);
+}
+.hf-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1100px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+#hf-counter { color: var(--accent); }
+.hf-hint    { color: var(--fg-3); }
+
+.hf-btn {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(18, 17, 16, 0.9);
+  border: 1px solid rgba(246, 243, 236, 0.16);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 15px;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+.hf-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.hf-close-btn { top: 20px; right: 20px; }
+.hf-prev      { left: 20px;  top: 50%; transform: translateY(-50%); }
+.hf-next      { right: 20px; top: 50%; transform: translateY(-50%); }
+.hf-prev:hover { transform: translateY(-50%) translateX(-2px); }
+.hf-next:hover { transform: translateY(-50%) translateX(2px);  }
+
+@media (max-width: 760px) {
+  #hf-viewer { padding: 56px 12px 48px; }
+  #hf-spread { flex-direction: column; align-items: center; gap: 4px; overflow-y: auto; }
+  .hf-pg.pair { width: 100%; max-width: 100%; }
+  .hf-spine, .hf-hint { display: none; }
+}

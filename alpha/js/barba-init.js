@@ -53,8 +53,6 @@
   function resetSlabs() {
     if (!window.gsap) return;
     var gsap = window.gsap;
-    // Reset bands off-screen, full opacity. Never touch band visibility —
-    // the wrapper's is-active class controls visibility at the parent level.
     gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, opacity: 1 });
     gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, opacity: 1 });
     gsap.set('#barba-label', { autoAlpha: 0, y: 24 });
@@ -68,8 +66,7 @@
     var wrap = ensureSlabs();
     wrap.classList.add('is-active');
 
-    // Reset position and opacity — never autoAlpha on bands, it sets
-    // visibility:hidden inline which fights the wrapper's visibility:visible.
+    // Restore opacity in case a previous fade left bands at 0.
     gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, opacity: 1 });
     gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, opacity: 1 });
 
@@ -78,14 +75,12 @@
     gsap.set(label, { autoAlpha: 0, y: 24 });
 
     var tl = gsap.timeline();
-    // Bands sweep in toward 0% with a small staggered delay.
     tl.to('.barba-band', {
       xPercent: 0,
       duration: 0.6,
       ease: 'power3.inOut',
       stagger: { each: 0.06, from: 'random' },
     }, 0);
-    // Label rises into place once the bands are mostly closed.
     tl.to(label, {
       autoAlpha: 1,
       y: 0,
@@ -102,7 +97,7 @@
 
     var tl = gsap.timeline({
       onComplete: function () {
-        // opacity only — never set visibility on bands directly.
+        // Restore bands for next nav — opacity only, never autoAlpha on bands.
         gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, opacity: 1 });
         gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, opacity: 1 });
         gsap.set(label, { autoAlpha: 0, y: 24 });
@@ -111,23 +106,28 @@
       },
     });
 
-    // Label fades out immediately.
-    tl.to(label, { autoAlpha: 0, y: -24, duration: 0.3, ease: 'power2.in' }, 0);
-
-    // Bands dissolve — opacity only, no visibility manipulation.
+    // New container zooms in as bands dissolve.
+    if (nextContainer) {
+      tl.fromTo(nextContainer,
+        { autoAlpha: 0, scale: 1.02, filter: 'blur(3px)' },
+        { autoAlpha: 1, scale: 1,    filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' },
+        0
+      );
+    }
+    // Label fades out.
+    tl.to(label, {
+      autoAlpha: 0,
+      y: -24,
+      duration: 0.32,
+      ease: 'power2.in',
+    }, 0);
+    // Bands dissolve in place instead of sweeping out.
     tl.to('.barba-band', {
       opacity: 0,
       duration: 0.7,
       ease: 'power2.inOut',
       stagger: { each: 0.06, from: 'random' },
     }, 0);
-
-    // Container was hidden in beforeEnter; reveal it as bands dissolve.
-    if (nextContainer) {
-      tl.to(nextContainer, {
-        autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out',
-      }, 0);
-    }
 
     return tl;
   }
@@ -165,11 +165,6 @@
     }
   }
 
-  // Swap the per-page stylesheet (css/pages/X.css) on navigation.
-  // Barba v2 only swaps the container, not <head>, so without this each
-  // page would render under whatever pages CSS was first loaded.
-  // Returns a Promise that resolves when the new stylesheet has loaded
-  // (or fails) so we can hold the new container until styles are ready.
   function swapPageStylesheet(nextHTML) {
     return new Promise(function (resolve) {
       var newDoc;
@@ -226,16 +221,7 @@
       }
     });
 
-    // beforeEnter runs after Barba has swapped containers (old removed,
-    // new added) but BEFORE the enter animation (slab uncover). Doing
-    // CSS hot-swap, scroll reset, nav update, and plugin re-init here
-    // keeps the visual flash hidden behind the slab.
     window.barba.hooks.beforeEnter(function (data) {
-      // Hide the incoming container immediately so it can't flash through
-      // the slab before slabEnter fades it in.
-      if (data.next.container) {
-        window.gsap.set(data.next.container, { autoAlpha: 0, scale: 1.02, filter: 'blur(3px)' });
-      }
       return swapPageStylesheet(data.next.html).then(function () {
         var ns = data.next.namespace;
         updateActiveNav(ns);
@@ -251,7 +237,6 @@
     });
 
     window.barba.hooks.afterEnter(function () {
-      // Mark preloader 'shown' so it doesn't re-fire on enter back to home.
       try { sessionStorage.setItem('alpha-preloaded', '1'); } catch (e) {}
     });
   }

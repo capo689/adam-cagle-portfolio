@@ -180,8 +180,8 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 9. **5i** — Barba page transitions (lands last; orchestrates everything) — in progress
    - **5i-1** ✅ HTML scaffolding (data-barba wrappers on all 5 pages)
    - **5i-2a** ✅ engine + instant swap, scroll reset, ScrollTrigger refresh, active-nav update
-   - **5i-2b** ✅ plugin re-init via SiteFX page:enter event (hero-reveal, section-reveal, magnetic, parallax, hf-viewer, studio.js) + per-page CSS hot-swap in barba-init's beforeEnter + load studio.js on all 5 pages
-   - **5i-3** slab/dissolve transition
+   - **5i-2b** ✅ plugin re-init via SiteFX page:enter event (hero-reveal, section-reveal, magnetic, parallax, hf-viewer) + per-page CSS hot-swap in barba-init's beforeEnter
+   - **5i-3** ✅ slab/dissolve transition (denim-blue slab, 0.5s cover + 0.55s uncover, plugin setup happens behind slab to hide flash)
 
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.

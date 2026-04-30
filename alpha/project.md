@@ -171,7 +171,7 @@ Total: 24 commits across rounds 4a-4f. All content matches live verbatim. No ani
 Each plugin is a SiteFX-registered plugin (init order + selector ownership guaranteed). Recommended order:
 
 1. **5a** — Lenis smooth scroll ✅
-2. **5b** — Section reveal (GSAP + ScrollTrigger fade-ups)
+2. **5b** — Section reveal (GSAP + ScrollTrigger fade-ups) ✅
 3. **5c** — Hero reveal (SplitText character animation)
 4. **5d** — Lightbox (Portfolio + Agents image grids)
 5. **5e** — HF viewer (Hotel Figueroa brand book page-flip)
@@ -183,6 +183,10 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.
 - CDN + script wired into all five pages.
+
+#### 5b — Section reveal (commit `6a45748`, live on main)
+- `alpha/js/fx/section-reveal.js` (108 lines) — `ScrollTrigger.batch()` over a broad block selector (.section, .campaign, .book, .studio-card, .banner-section, .pull, .quote, .synopsis, .cap, .job, .work, .tri-item, .cred, .hl-tile, .verb-col, .sm-arch-cell, .ad-grid). Each block: y:24 + autoAlpha:0 locked on init (no FOUC), then y:0/autoAlpha:1, 0.7s, power3.out, 0.08s stagger inside batch. Plays once at `top 88%`. Refreshes after fonts.ready + window load. Emits `scrolltrigger:ready` on SiteFX so smooth-scroll.js bridges its proxy.
+- GSAP Core + ScrollTrigger CDN + script wired into all five pages.
 
 **Round 5 — motion layer**
 Lenis (smooth scroll), Barba (page transitions), GSAP primitives (`fx/hero-reveal.js`, `section-reveal.js`, `magnetic.js`, `parallax.js`, `lightbox.js`), all registered through SiteFX.

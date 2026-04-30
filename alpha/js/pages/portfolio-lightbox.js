@@ -19,6 +19,8 @@
 (function () {
   if (typeof gsap === 'undefined') return;
 
+  function initPortfolioLightbox() {
+
   const galleries = {
     traveler: [
       { src: 'img/ads/traveler-road.webp',             hl: 'The Road.',                     meta: 'Escape Mk III · 25 Years' },
@@ -475,4 +477,21 @@
     else if (e.key === 'ArrowLeft') step(-1);
     else if (e.key === 'ArrowRight') step(1);
   });
+
+  } // end initPortfolioLightbox
+
+  window.initPortfolioLightbox = initPortfolioLightbox;
+
+  function isMyPage() {
+    const c = document.querySelector('[data-barba-namespace]');
+    return c && c.dataset.barbaNamespace === 'portfolio';
+  }
+
+  if (isMyPage()) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPortfolioLightbox);
+    } else {
+      initPortfolioLightbox();
+    }
+  }
 })();

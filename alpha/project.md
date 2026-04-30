@@ -181,7 +181,7 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 9. **5i** — Barba page transitions (lands last; orchestrates everything) — in progress
    - **5i-1** ✅ HTML scaffolding (data-barba wrappers on all 5 pages)
    - **5i-2a** ✅ engine + instant swap, scroll reset, ScrollTrigger refresh, active-nav update
-   - **5i-2b** plugin re-init on afterEnter (hero-reveal, section-reveal, magnetic, parallax, hf-viewer, studio.js)
+   - **5i-2b** ✅ plugin re-init via SiteFX page:enter event (hero-reveal, section-reveal, magnetic, parallax, hf-viewer, studio.js) + per-page CSS hot-swap in barba-init's beforeEnter + load studio.js on all 5 pages
    - **5i-3** slab/dissolve transition
 
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)

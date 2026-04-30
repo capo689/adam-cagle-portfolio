@@ -176,13 +176,18 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 4. **5d** — Lightbox (Portfolio + Agents image grids) ✅
 5. **5e** — HF viewer (Hotel Figueroa brand book page-flip) ✅
 6. **5f** — Magnetic + Parallax (polish) ✅
-7. **5g** — Custom cursor (`data-cursor` hooks)
+7. **5g** — Custom cursor (`data-cursor` hooks) ✅
 8. **5h** — Preloader (first-load reveal)
 9. **5i** — Barba page transitions (lands last; orchestrates everything)
 
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.
 - CDN + script wired into all five pages.
+
+#### 5g — Custom cursor (commit `3572b2d`, live on main)
+- `alpha/css/cursor.css` (62 lines) — fixed `.cursor` element. Three states: default (6px dot in 32px ring), `.is-link` (ring scales 1.55, dot fades), `.is-labeled` (accent pill with mono-caps text). Hidden until first pointer move. Native cursor stays visible — additive ornament.
+- `alpha/js/cursor.js` (96 lines) — builds .cursor, GSAP `quickTo` smoothing (0.3s power2.out). `mouseover` bubbles drive state classes. `[data-cursor]` triggers labeled pill via `data-cursor-text` or attribute value. Skipped on coarse pointers; reduced-motion users see it but cursor snaps without smoothing.
+- Wired into all five pages. No `data-cursor` attributes added to HTML yet — labeled state available but not in use.
 
 #### 5f — Magnetic + Parallax (commit `cbb1f6f`, live on main)
 - `alpha/js/fx/magnetic.js` (74 lines) — hover-magnet on `.btn, .rail-cta, .hero-cta, .work-cta, .cta, .b-btn, .wp-btn, [data-magnetic]`. Strength 0.25, 0.45s power3.out. Inner `.arrow / .cta-arrow / .b-icon` gets 1.6× boost. Skipped on reduced motion and coarse pointers.

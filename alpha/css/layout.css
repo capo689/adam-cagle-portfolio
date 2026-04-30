@@ -1,0 +1,178 @@
+/* ──────────────────────────────────────────────────────────────────────
+   layout.css — page wrapper, hero block, section grid
+   Structural composition only. Atomic components live in components.css.
+   ────────────────────────────────────────────────────────────────────── */
+
+/* ── Page wrapper ─────────────────────────────────────────────────── */
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+main { display: block; }
+
+/* ── Hero block ───────────────────────────────────────────────────── */
+.hero {
+  padding: 140px 0 72px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  margin-bottom: 36px;
+}
+.hero-kicker .dash   { width: 40px; height: 1px; background: var(--fg-3); }
+.hero-kicker .accent { color: var(--accent); }
+
+.hero-namerow {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hero-name {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(64px, 11vw, 180px);
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+  margin: 0;
+}
+.hero-name .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+
+.hero-sub {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 56px;
+  align-items: end;
+}
+
+.hero-role {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  color: var(--fg-2);
+  max-width: 38ch;
+}
+.hero-role em { color: var(--accent); font-style: italic; }
+
+.hero-meta { display: flex; flex-direction: column; gap: 16px; align-self: end; }
+
+.hero-loc {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  padding-left: 22px;
+}
+
+/* ── Credentials strip (6-up grid of stat blocks) ─────────────────── */
+.hero-creds {
+  margin-top: 56px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--rule);
+}
+.cred {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 20px;
+}
+.cred .num {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--fg);
+}
+.cred .num.it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.cred .label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+/* ── Section (sticky head + body) ─────────────────────────────────── */
+.section {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 64px;
+  padding: 72px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section:last-of-type { border-bottom: 0; }
+
+.s-head {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.s-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.s-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(26px, 2.6vw, 38px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+.s-body { display: flex; flex-direction: column; gap: 32px; }
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .hero { padding: 110px 0 56px; }
+  .hero-namerow { grid-template-columns: 1.45fr 1fr; gap: 24px; }
+  .hero-sub { grid-template-columns: 1fr; gap: 32px; }
+  .hero-creds { grid-template-columns: repeat(3, 1fr); }
+  .section { grid-template-columns: 1fr; gap: 24px; padding: 56px 0; }
+  .s-head { position: static; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 96px 0 48px; }
+  .hero-namerow { grid-template-columns: 1.5fr 1fr; gap: 16px; align-items: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-creds { grid-template-columns: repeat(2, 1fr); }
+}

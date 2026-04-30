@@ -116,18 +116,30 @@ Copied all 129 files from live `img/` → `alpha/img/` (51MB total). Folders: CL
 - `alpha/css/pages/home.css` — `.portrait-img`, `.hero-neon`, `.summary`, `.caps`/`.cap*`, `.job*`/`.job-roster*`, `.works`/`.work*`/`.work-cta`/`.work-intro`, `.tri*`. 960px responsive + print stylesheet (résumé export, light cream tokens, hides nav).
 - No animations yet — round 5.
 
-### Round 4a — portfolio.css (commits `d925b2f`, `71f79d3`, `6e6105b`)
+### Round 4 — Portfolio page
+
+#### 4a — portfolio.css (commits `d925b2f`, `71f79d3`, `6e6105b`)
 Built up in three appended parts to stay under chunk limits.
 - **4a-1 core (450 lines)** — hero overrides (smaller balanced name + .dot + .hero-links), section primitives (.sect-label / .sect-head + raw `<section>` padding), .campaign / .c-meta / .c-body sticky card, .ad-grid (g-1/g-2/g-3/g-featured) + .ad/.overlay, .pull pullquote, .hl-grid/.hl-tile, .verbs/.verb-col, .closer, 960/520 responsive + print.
 - **4a-2 case studies (189 lines)** — Sunset Marquis: .sm-mvmt (chapter labels), .sm-pair (image+pull, with reverse + apex), .sm-arch (2x2 sub-brand grid), .sm-site (live-site tile). Hotel Figueroa: .hf-cover-wrap (cover plate that opens hf-viewer).
 - **4a-3 modals (201 lines)** — `#lightbox` (ad-grid zoom view, blurred backdrop, prev/next/close pills, body.lb-open scroll lock). `#hf-viewer` (Hotel Figueroa brand-book spread modal with perspective + preserve-3d for GSAP page-flip; .hf-pg solo/pair, .hf-spine, .hf-footer counter, .hf-btn pills). Modal JS lands in round 5.
 
+#### 4b — Portfolio.html (commits `3cd95a3`, `5bb6fbc`, `e1ce693`, `8db0732`, `f020fe5`)
+Built up across five passes; six case studies inserted via Edit into the skeleton.
+- **4b-1 skeleton (224 lines)** — full head (meta + OG/Twitter), theme bootstrap, font + CSS load order, defer-loaded SiteFX/site-shell/theme. `<site-shell>` for nav. Hero ('Words that move products.'). Section 01 · Traveler Guitar (campaign card, hero ad-grid g-1, body pull, 3x2 ad-grid g-3, headline grid). Closer + footer. `#lightbox` and `#hf-viewer` markup placed at end of body.
+- **4b-2 Sunset Marquis (132 lines)** — four movements: Apex (Gallery Headline), Range (3 print campaigns: Legendary Nights, ACM, GDS), Architecture (Cavatina + LIVE@SunsetMarquis sub-brands), Brand at Work (live-site link).
+- **4b-3 Killer NIC (67 lines)** — 3-up triptych ad-grid + verb stacks (warrior/mage/sniper, all terminating in 'Kill Faster.') + body pull.
+- **4b-4 Hotel Figueroa (40 lines)** — cover plate (`#hf-cover`, opens `#hf-viewer` in round 5) + brand thesis pull.
+- **4b-5 Clink + FileKeepers (83 lines)** — Clink: cover plate + 'Friends, not miles.' pull. FileKeepers: 2x2 ad-grid (Space rooms 1-4) + insight pull + tagline pull.
+
+Discovered live Portfolio has 6 sections, not 4; plan adjusted mid-build.
+
 ---
 
 ## What's next
 
-**Round 4 — remaining pages**
-Portfolio.html → Agents.html → Books.html → Studio.html. Each page: HTML + `pages/<page>.css` (+ `pages/<page>.js` later if it has unique behavior). **One page per turn** to stay under the chunk limit.
+**Round 4c+ — remaining pages**
+Agents.html → Books.html → Studio.html. Each page: skeleton+HTML and `pages/<page>.css`. Will size each one and split as needed (Agents will likely be 2-3 chunks, Books smaller, Studio smaller still).
 
 **Round 5 — motion layer**
 Lenis (smooth scroll), Barba (page transitions), GSAP primitives (`fx/hero-reveal.js`, `section-reveal.js`, `magnetic.js`, `parallax.js`, `lightbox.js`), all registered through SiteFX.

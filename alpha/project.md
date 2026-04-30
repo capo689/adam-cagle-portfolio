@@ -108,12 +108,12 @@ Cleared `alpha/` to truly empty (158 files removed: legacy Barba/cursor/preloade
 - `alpha/js/site-shell.js` — `<site-shell>` custom element renders rail + mob-nav from one NAV list, marks active link from pathname, scroll-shrinks via rAF, opens/closes mobile overlay. Registers with SiteFX.
 - `alpha/js/theme.js` — pre-paint theme apply (no FOUC) + click toggle, persists to localStorage, emits `theme:change` on SiteFX.
 
+### Round 2 — assets
+Copied all 129 files from live `img/` → `alpha/img/` (51MB total). Folders: CLINK, HF, ads, agents, banners, books, plus root-level icons/portraits (cross.png, adampic.png, adamart.jpg, neon-* variants, workout.png, Vampire.png).
+
 ---
 
 ## What's next
-
-**Round 2 — assets**
-Re-copy `img/` from live → `alpha/img/`. No code, just files.
 
 **Round 3 — homepage HTML (`alpha/index.html`)**
 Static markup matching the live résumé: hero, credentials strip, Capabilities, Selected Work, Agents kicker, SSIA section, contact, footer. Uses `<site-shell>` for nav, page-specific styles in `css/pages/home.css`.

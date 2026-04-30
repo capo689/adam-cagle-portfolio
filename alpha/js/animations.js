@@ -10,7 +10,6 @@
     gsap.registerPlugin(SplitText);
   }
   if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
-  if (typeof Flip !== 'undefined') gsap.registerPlugin(Flip);
 
   const ns = window.AnimHelpers = window.AnimHelpers || {};
 
@@ -103,8 +102,6 @@
   // Selectors are configurable so each page picks its own elements.
   ns.heroReveal = function (config) {
     if (typeof SplitText === 'undefined') return;
-    // Barba handles the hero on internal navigations via Flip morph
-    if (window.__barbaFlip) return;
     config = config || {};
     const heroName = document.querySelector(config.name);
     const heroSub  = config.sub  ? document.querySelector(config.sub)  : null;

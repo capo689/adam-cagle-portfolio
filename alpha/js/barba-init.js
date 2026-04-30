@@ -53,9 +53,10 @@
   function resetSlabs() {
     if (!window.gsap) return;
     var gsap = window.gsap;
-    // Reset bands to off-screen (alternating sides) and label hidden.
-    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, autoAlpha: 1 });
-    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, autoAlpha: 1 });
+    // Reset bands off-screen, full opacity. Never touch band visibility —
+    // the wrapper's is-active class controls visibility at the parent level.
+    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, opacity: 1 });
+    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, opacity: 1 });
     gsap.set('#barba-label', { autoAlpha: 0, y: 24 });
     var wrap = document.getElementById('barba-slabs');
     if (wrap) wrap.classList.remove('is-active');
@@ -67,10 +68,10 @@
     var wrap = ensureSlabs();
     wrap.classList.add('is-active');
 
-    // Reset state defensively so a half-finished previous nav doesn't
-    // leave bands mid-screen or faded out (autoAlpha restores opacity+visibility).
-    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, autoAlpha: 1 });
-    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, autoAlpha: 1 });
+    // Reset position and opacity — never autoAlpha on bands, it sets
+    // visibility:hidden inline which fights the wrapper's visibility:visible.
+    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, opacity: 1 });
+    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, opacity: 1 });
 
     var label = document.getElementById('barba-label');
     if (label) label.textContent = LABELS[toNamespace] || '';
@@ -101,8 +102,9 @@
 
     var tl = gsap.timeline({
       onComplete: function () {
-        gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, autoAlpha: 1 });
-        gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, autoAlpha: 1 });
+        // opacity only — never set visibility on bands directly.
+        gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, opacity: 1 });
+        gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, opacity: 1 });
         gsap.set(label, { autoAlpha: 0, y: 24 });
         var wrap = document.getElementById('barba-slabs');
         if (wrap) wrap.classList.remove('is-active');
@@ -110,28 +112,21 @@
     });
 
     // Label fades out immediately.
-    tl.to(label, {
-      autoAlpha: 0,
-      y: -24,
-      duration: 0.3,
-      ease: 'power2.in',
-    }, 0);
+    tl.to(label, { autoAlpha: 0, y: -24, duration: 0.3, ease: 'power2.in' }, 0);
 
-    // Bands dissolve in place — soft fade with randomised stagger.
+    // Bands dissolve — opacity only, no visibility manipulation.
     tl.to('.barba-band', {
-      autoAlpha: 0,
+      opacity: 0,
       duration: 0.7,
       ease: 'power2.inOut',
       stagger: { each: 0.06, from: 'random' },
     }, 0);
 
-    // New page reveals as bands dissolve.
+    // Container was hidden in beforeEnter; reveal it as bands dissolve.
     if (nextContainer) {
-      tl.fromTo(nextContainer,
-        { autoAlpha: 0, scale: 1.02, filter: 'blur(3px)' },
-        { autoAlpha: 1, scale: 1,    filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' },
-        0
-      );
+      tl.to(nextContainer, {
+        autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out',
+      }, 0);
     }
 
     return tl;
@@ -236,6 +231,11 @@
     // CSS hot-swap, scroll reset, nav update, and plugin re-init here
     // keeps the visual flash hidden behind the slab.
     window.barba.hooks.beforeEnter(function (data) {
+      // Hide the incoming container immediately so it can't flash through
+      // the slab before slabEnter fades it in.
+      if (data.next.container) {
+        window.gsap.set(data.next.container, { autoAlpha: 0, scale: 1.02, filter: 'blur(3px)' });
+      }
       return swapPageStylesheet(data.next.html).then(function () {
         var ns = data.next.namespace;
         updateActiveNav(ns);

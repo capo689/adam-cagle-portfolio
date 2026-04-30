@@ -172,7 +172,7 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 
 1. **5a** — Lenis smooth scroll ✅
 2. **5b** — Section reveal (GSAP + ScrollTrigger fade-ups) ✅
-3. **5c** — Hero reveal (SplitText character animation)
+3. **5c** — Hero reveal (SplitText character animation) ✅
 4. **5d** — Lightbox (Portfolio + Agents image grids)
 5. **5e** — HF viewer (Hotel Figueroa brand book page-flip)
 6. **5f** — Magnetic + Parallax (polish)
@@ -183,6 +183,10 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.
 - CDN + script wired into all five pages.
+
+#### 5c — Hero reveal (commit `2c4b72c`, live on main)
+- `alpha/js/fx/hero-reveal.js` (108 lines) — three-stage timeline. (1) `.hero-kicker` fades + slides 8px (0.5s). (2) `.hero-name` chars rise via SplitText with `mask:'lines'`, yPercent 110→0, stagger 0.025, 0.8s. (3) supporting elements (`.hero-role`, `.hero-meta`, `.hero-sub > *`, `.portrait-img`, `.hero-neon`, `.hero-stat-row`, `.studios`) fade up 18px, stagger 0.06. Waits for `document.fonts.ready` so SplitText measures final layout. Falls back to a simple fade if SplitText errors. Honors reduced motion. Registers with SiteFX, `owns: ['.hero-name']`.
+- SplitText CDN + script wired into all five pages.
 
 #### 5b — Section reveal (commit `6a45748`, live on main)
 - `alpha/js/fx/section-reveal.js` (108 lines) — `ScrollTrigger.batch()` over a broad block selector (.section, .campaign, .book, .studio-card, .banner-section, .pull, .quote, .synopsis, .cap, .job, .work, .tri-item, .cred, .hl-tile, .verb-col, .sm-arch-cell, .ad-grid). Each block: y:24 + autoAlpha:0 locked on init (no FOUC), then y:0/autoAlpha:1, 0.7s, power3.out, 0.08s stagger inside batch. Plays once at `top 88%`. Refreshes after fonts.ready + window load. Emits `scrolltrigger:ready` on SiteFX so smooth-scroll.js bridges its proxy.

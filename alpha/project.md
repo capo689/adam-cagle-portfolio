@@ -174,7 +174,7 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 2. **5b** — Section reveal (GSAP + ScrollTrigger fade-ups) ✅
 3. **5c** — Hero reveal (SplitText character animation) ✅
 4. **5d** — Lightbox (Portfolio + Agents image grids) ✅
-5. **5e** — HF viewer (Hotel Figueroa brand book page-flip)
+5. **5e** — HF viewer (Hotel Figueroa brand book page-flip) ✅
 6. **5f** — Magnetic + Parallax (polish)
 7. **5g** — Custom cursor (`data-cursor` hooks)
 8. **5h** — Preloader (first-load reveal)
@@ -183,6 +183,10 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.
 - CDN + script wired into all five pages.
+
+#### 5e — Hotel Figueroa brand-book viewer (commit `02375ef`, live on main)
+- `alpha/js/fx/hf-viewer.js` (185 lines) — click `#hf-cover` opens `#hf-viewer`. Builds 31 views: cover (62), 29 paired spreads (63–120), odd interior (121), back cover (122). Prev/next/ESC/arrows/backdrop. Body scroll + Lenis lock. Animation: outgoing slides ±40px + fades (0.25s), new spread builds, slides in from opposite edge + fades (0.35s); direction reverses on prev. CSS perspective + preserve-3d already on the wrapper for a future 3D page-flip upgrade.
+- Wired into Portfolio.html only.
 
 #### 5d — Lightbox (commit `df94cb7`, live on main)
 - `alpha/js/fx/lightbox.js` (148 lines) — `.ad[data-gallery]` zoom view. Groups tiles by gallery name; opens `#lightbox` at clicked index. Prev/next walks the gallery only. ESC + arrows + backdrop click close. Body scroll + Lenis lock while open. Caption: `.lb-cap-l` = "GALLERY · 02 / 07", `.lb-cap-r` = tile meta. GSAP fade+scale on open (0.96→1, 0.4s), slight refresh on nav (0.985→1, 0.3s). Delegated click handler. Registers with SiteFX, owns `#lightbox` + `.ad[data-gallery]`.

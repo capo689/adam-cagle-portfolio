@@ -93,4 +93,21 @@
 
   customElements.define('site-header', SiteHeader);
   customElements.define('site-footer', SiteFooter);
+
+  // Flag internal navigation so the preloader skips on arrival
+  document.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (e.button !== 0 && e.button !== undefined) return;
+    var a = e.target.closest('a');
+    if (!a) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+    var href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+    try {
+      var url = new URL(a.href, window.location.href);
+      if (url.origin === window.location.origin && url.href !== window.location.href) {
+        sessionStorage.setItem('site-internal-nav', 'true');
+      }
+    } catch (err) {}
+  });
 })();

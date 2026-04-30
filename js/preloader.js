@@ -11,8 +11,11 @@
 (function () {
   if (document.getElementById('preloader')) return;
 
-  // Skip the preloader on internal nav (the slab transition handles arrival)
-  if (window.__siteArrivedViaSlab) return;
+  // Skip the preloader on internal nav
+  const _navFlag = 'site-internal-nav';
+  const _arrivedViaNav = sessionStorage.getItem(_navFlag) === 'true';
+  sessionStorage.removeItem(_navFlag);
+  if (_arrivedViaNav) return;
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

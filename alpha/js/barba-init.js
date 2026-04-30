@@ -22,38 +22,124 @@
     books:     'Books.html',
   };
 
-  function ensureSlab() {
-    var s = document.getElementById('barba-slab');
-    if (s) return s;
-    s = document.createElement('div');
-    s.id = 'barba-slab';
-    s.className = 'barba-slab';
-    s.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(s);
-    return s;
+  function ensureSlabs() {
+    var wrap = document.getElementById('barba-slabs');
+    if (wrap) return wrap;
+    wrap = document.createElement('div');
+    wrap.id = 'barba-slabs';
+    wrap.className = 'barba-slabs';
+    wrap.setAttribute('aria-hidden', 'true');
+    var i;
+    for (i = 0; i < 4; i++) {
+      var b = document.createElement('div');
+      b.className = 'barba-band b-' + i;
+      wrap.appendChild(b);
+    }
+    var label = document.createElement('div');
+    label.id = 'barba-label';
+    label.className = 'barba-label';
+    wrap.appendChild(label);
+    document.body.appendChild(wrap);
+    return wrap;
   }
 
-  function slabLeave() {
+  var LABELS = {
+    home:      'Résumé.',
+    portfolio: 'Portfolio.',
+    agents:    'AI Agents.',
+    books:     'Books.',
+  };
+
+  function resetSlabs() {
     if (!window.gsap) return;
-    return window.gsap.fromTo(ensureSlab(),
-      { yPercent: 100 },
-      { yPercent: 0, duration: 0.5, ease: 'power3.inOut' }
-    );
+    var gsap = window.gsap;
+    // Reset bands to off-screen (alternating sides) and label hidden.
+    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101 });
+    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101 });
+    gsap.set('#barba-label', { autoAlpha: 0, y: 24 });
+    var wrap = document.getElementById('barba-slabs');
+    if (wrap) wrap.classList.remove('is-active');
   }
 
-  function slabEnter() {
+  function slabLeave(toNamespace) {
     if (!window.gsap) return;
-    var slab = document.getElementById('barba-slab');
-    if (!slab) return;
-    return window.gsap.fromTo(slab,
-      { yPercent: 0 },
-      { yPercent: -100, duration: 0.55, ease: 'power3.inOut',
-        onComplete: function () {
-          // Reset to below for next leave
-          window.gsap.set(slab, { yPercent: 100 });
-        }
-      }
-    );
+    var gsap = window.gsap;
+    var wrap = ensureSlabs();
+    wrap.classList.add('is-active');
+
+    // Reset state defensively so a half-finished previous nav doesn't
+    // leave bands mid-screen.
+    gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101 });
+    gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101 });
+
+    var label = document.getElementById('barba-label');
+    if (label) label.textContent = LABELS[toNamespace] || '';
+    gsap.set(label, { autoAlpha: 0, y: 24 });
+
+    var tl = gsap.timeline();
+    // Bands sweep in toward 0% with a small staggered delay.
+    tl.to('.barba-band', {
+      xPercent: 0,
+      duration: 0.6,
+      ease: 'power3.inOut',
+      stagger: { each: 0.06, from: 'random' },
+    }, 0);
+    // Label rises into place once the bands are mostly closed.
+    tl.to(label, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.45,
+      ease: 'power3.out',
+    }, 0.32);
+    return tl;
+  }
+
+  function slabEnter(nextContainer) {
+    if (!window.gsap) return;
+    var gsap = window.gsap;
+    var label = document.getElementById('barba-label');
+
+    var tl = gsap.timeline({
+      onComplete: function () {
+        // Reset for next nav.
+        gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101 });
+        gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101 });
+        gsap.set(label, { autoAlpha: 0, y: 24 });
+        var wrap = document.getElementById('barba-slabs');
+        if (wrap) wrap.classList.remove('is-active');
+      },
+    });
+
+    // Subtle zoom-in + blur-clear on the new container as bands clear.
+    if (nextContainer) {
+      tl.fromTo(nextContainer,
+        { autoAlpha: 0, scale: 1.02, filter: 'blur(3px)' },
+        { autoAlpha: 1, scale: 1,    filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' },
+        0
+      );
+    }
+    // Label fades up and out.
+    tl.to(label, {
+      autoAlpha: 0,
+      y: -24,
+      duration: 0.32,
+      ease: 'power2.in',
+    }, 0);
+    // Bands sweep OUT toward the opposite side from where they came in,
+    // so the screen cleanly clears.
+    tl.to('.barba-band.b-0, .barba-band.b-2', {
+      xPercent: 101,
+      duration: 0.6,
+      ease: 'power3.inOut',
+      stagger: 0.05,
+    }, 0.18);
+    tl.to('.barba-band.b-1, .barba-band.b-3', {
+      xPercent: -101,
+      duration: 0.6,
+      ease: 'power3.inOut',
+      stagger: 0.05,
+    }, 0.18);
+    return tl;
   }
 
   function shouldPrevent(opts) {
@@ -135,9 +221,9 @@
       transitions: reduceMotion
         ? [{ name: 'instant' }]
         : [{
-            name: 'slab',
-            leave: function () { return slabLeave(); },
-            enter: function () { return slabEnter(); },
+            name: 'editorial',
+            leave: function (data) { return slabLeave(data.next.namespace); },
+            enter: function (data) { return slabEnter(data.next.container); },
           }],
     });
 

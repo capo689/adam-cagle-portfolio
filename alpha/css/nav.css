@@ -197,15 +197,59 @@ html[data-theme="light"] .mob-nav { background: rgba(244, 239, 231, 0.97); }
 }
 .rail.is-shrunk .rail-progress { opacity: 1; }
 
-/* ── BARBA SLAB (page transition) ─────────────────────────────────── */
-.barba-slab {
+/* ── BARBA TRANSITION: editorial color-field with destination label ──
+   Four horizontal bands sweep in from alternating sides (venetian-blind
+   style), big italic-serif label fades in at center showing where the
+   nav is heading, then bands sweep out the opposite way as the new
+   page zooms in subtly. */
+.barba-slabs {
   position: fixed;
   inset: 0;
   z-index: 8000;            /* above modals (200/300), below cursor (9999) */
-  background: var(--accent);
-  transform: translateY(100%);
   pointer-events: none;
+  overflow: hidden;
+  visibility: hidden;        /* shown only during a transition */
+}
+.barba-slabs.is-active { visibility: visible; }
+
+.barba-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 25.5%;             /* slight overlap to mask seams during stagger */
+  background: var(--accent);
   will-change: transform;
+}
+.barba-band.b-0 { top:    0%; transform: translateX(-101%); }
+.barba-band.b-1 { top:   25%; transform: translateX( 101%); }
+.barba-band.b-2 { top:   50%; transform: translateX(-101%); }
+.barba-band.b-3 { top:   75%; transform: translateX( 101%); }
+
+/* Tonal contrast on alternating bands so the venetian-blind read pops */
+.barba-band.b-1, .barba-band.b-3 {
+  background: color-mix(in oklab, var(--accent) 88%, #000 12%);
+}
+@supports not (background: color-mix(in oklab, red, blue)) {
+  .barba-band.b-1, .barba-band.b-3 { background: var(--accent); filter: brightness(0.88); }
+}
+
+.barba-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(72px, 13vw, 200px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--bg);
+  white-space: nowrap;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  text-wrap: balance;
 }
 
 /* ── FOOTER ───────────────────────────────────────────────────────── */

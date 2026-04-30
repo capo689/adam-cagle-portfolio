@@ -175,7 +175,7 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 3. **5c** — Hero reveal (SplitText character animation) ✅
 4. **5d** — Lightbox (Portfolio + Agents image grids) ✅
 5. **5e** — HF viewer (Hotel Figueroa brand book page-flip) ✅
-6. **5f** — Magnetic + Parallax (polish)
+6. **5f** — Magnetic + Parallax (polish) ✅
 7. **5g** — Custom cursor (`data-cursor` hooks)
 8. **5h** — Preloader (first-load reveal)
 9. **5i** — Barba page transitions (lands last; orchestrates everything)
@@ -183,6 +183,11 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.
 - CDN + script wired into all five pages.
+
+#### 5f — Magnetic + Parallax (commit `cbb1f6f`, live on main)
+- `alpha/js/fx/magnetic.js` (74 lines) — hover-magnet on `.btn, .rail-cta, .hero-cta, .work-cta, .cta, .b-btn, .wp-btn, [data-magnetic]`. Strength 0.25, 0.45s power3.out. Inner `.arrow / .cta-arrow / .b-icon` gets 1.6× boost. Skipped on reduced motion and coarse pointers.
+- `alpha/js/fx/parallax.js` (78 lines) — scroll-scrubbed Y drift (-40px range, scrub 0.5) on `.portrait-img, .hero-neon, .banner-wrap, .book-cover img` by default. `[data-parallax]` opts in elsewhere; numeric value sets custom range; `data-parallax='off'` opts out. Refreshes ScrollTrigger after `fonts.ready`. Reduced-motion safe.
+- Both wired into all five pages.
 
 #### 5e — Hotel Figueroa brand-book viewer (commit `02375ef`, live on main)
 - `alpha/js/fx/hf-viewer.js` (185 lines) — click `#hf-cover` opens `#hf-viewer`. Builds 31 views: cover (62), 29 paired spreads (63–120), odd interior (121), back cover (122). Prev/next/ESC/arrows/backdrop. Body scroll + Lenis lock. Animation: outgoing slides ±40px + fades (0.25s), new spread builds, slides in from opposite edge + fades (0.35s); direction reverses on prev. CSS perspective + preserve-3d already on the wrapper for a future 3D page-flip upgrade.

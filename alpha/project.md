@@ -177,12 +177,18 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 5. **5e** — HF viewer (Hotel Figueroa brand book page-flip) ✅
 6. **5f** — Magnetic + Parallax (polish) ✅
 7. **5g** — Custom cursor (`data-cursor` hooks) ✅
-8. **5h** — Preloader (first-load reveal)
+8. **5h** — Preloader (first-load reveal) ✅
 9. **5i** — Barba page transitions (lands last; orchestrates everything)
 
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.
 - CDN + script wired into all five pages.
+
+#### 5h — Preloader (commit `8366b40`, live on main)
+- `alpha/css/preloader.css` — full-screen `.preloader` overlay; `.preloader-art` neon image clamp(260,38vw,520); `html.is-preloading` locks scroll.
+- `alpha/js/preloader.js` — synchronous gate at script eval: runs only when `.hero-neon` is present (home only) AND `sessionStorage('alpha-preloaded')` is unset. Sets `window.__preloaderActive = true` immediately. Sequence: neon fades + scales 0.96→1 (0.7s) → hold 0.6s → neon fades out + curtain slides yPercent:-100 (0.7s power3.inOut). Sets session flag + emits `preloader:done`. Reduced-motion gets brief CSS fade with no movement.
+- **hero-reveal.js update**: now defers `play()` until `preloader:done` if `window.__preloaderActive` is set, else plays after `fonts.ready`.
+- Wired into `index.html` only.
 
 #### 5g — Custom cursor (commit `3572b2d`, live on main)
 - `alpha/css/cursor.css` (62 lines) — fixed `.cursor` element. Three states: default (6px dot in 32px ring), `.is-link` (ring scales 1.55, dot fades), `.is-labeled` (accent pill with mono-caps text). Hidden until first pointer move. Native cursor stays visible — additive ornament.

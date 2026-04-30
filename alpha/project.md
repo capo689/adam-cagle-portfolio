@@ -144,12 +144,17 @@ Note on namespace: classes like `.campaign`, `.c-meta`, `.ad-grid`, `.pull`, `.o
 - **4d-2 Book + AuScan (88 lines)** — Book Agent (single hero, attribution pull). AuScan (Beta status, 2-up dashboard+report screenshots, '72% high-confidence hit' result pull).
 - **4d-3 BEEF + Music (85 lines)** — BEEF (Live, single dashboard, strange-signals hunt pull). Music Agent (Beta, single dashboard, closed-loop system pull).
 
+#### 4e — Books page (commits `e2c0916`, `52c8c42`, `646b2bb`)
+- **4e-1 books.css (218 lines, single chunk)** — editorial book-jacket layout. Hero override (`.ac` accent, narrower 18ch name, paragraph hero-sub). `.book` 280px sticky cover left + body right. `.book-genre`/`.book-cover` (1.025 hover scale)/`.book-title`/`.book-subtitle`. `.synopsis` with **drop cap** on first paragraph (italic-serif accent, 4.4em float-left). `.quote` cards with corner `.quote-tag`, italic `.quote-pull`, ruled `.quote-body`. 960/520 responsive (collapses to 110px cover + stacked grid).
+- **4e-2 skeleton + Books 01-02 (162 lines)** — Vampire's Babysitter (Historical Fiction · Horror) + Ship Happens (Zombie Comedy). Each: drop-cap synopsis + two `.quote` excerpts.
+- **4e-3 Books 03-05 (96 lines)** — The Deal (Nonfiction · civilization-and-control), The Ledger (Nonfiction · gender roles), What Worked For Me (Fitness memoir).
+
 ---
 
 ## What's next
 
-**Round 4e — Books.html**
-Then **4f — Studio.html**. Will size each page and split as needed.
+**Round 4f — Studio.html**
+Last remaining page. Will size and split as needed.
 
 **Round 5 — motion layer**
 Lenis (smooth scroll), Barba (page transitions), GSAP primitives (`fx/hero-reveal.js`, `section-reveal.js`, `magnetic.js`, `parallax.js`, `lightbox.js`), all registered through SiteFX.

@@ -116,6 +116,12 @@ Copied all 129 files from live `img/` → `alpha/img/` (51MB total). Folders: CL
 - `alpha/css/pages/home.css` — `.portrait-img`, `.hero-neon`, `.summary`, `.caps`/`.cap*`, `.job*`/`.job-roster*`, `.works`/`.work*`/`.work-cta`/`.work-intro`, `.tri*`. 960px responsive + print stylesheet (résumé export, light cream tokens, hides nav).
 - No animations yet — round 5.
 
+### Round 4a — portfolio.css (commits `d925b2f`, `71f79d3`, `6e6105b`)
+Built up in three appended parts to stay under chunk limits.
+- **4a-1 core (450 lines)** — hero overrides (smaller balanced name + .dot + .hero-links), section primitives (.sect-label / .sect-head + raw `<section>` padding), .campaign / .c-meta / .c-body sticky card, .ad-grid (g-1/g-2/g-3/g-featured) + .ad/.overlay, .pull pullquote, .hl-grid/.hl-tile, .verbs/.verb-col, .closer, 960/520 responsive + print.
+- **4a-2 case studies (189 lines)** — Sunset Marquis: .sm-mvmt (chapter labels), .sm-pair (image+pull, with reverse + apex), .sm-arch (2x2 sub-brand grid), .sm-site (live-site tile). Hotel Figueroa: .hf-cover-wrap (cover plate that opens hf-viewer).
+- **4a-3 modals (201 lines)** — `#lightbox` (ad-grid zoom view, blurred backdrop, prev/next/close pills, body.lb-open scroll lock). `#hf-viewer` (Hotel Figueroa brand-book spread modal with perspective + preserve-3d for GSAP page-flip; .hf-pg solo/pair, .hf-spine, .hf-footer counter, .hf-btn pills). Modal JS lands in round 5.
+
 ---
 
 ## What's next

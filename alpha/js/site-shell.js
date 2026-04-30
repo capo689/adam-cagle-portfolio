@@ -12,7 +12,6 @@
     { href: 'Portfolio.html', label: 'Portfolio' },
     { href: 'Agents.html',    label: 'AI Agents' },
     { href: 'Books.html',     label: 'Books' },
-    { href: 'Studio.html',    label: 'Studio' },
   ];
 
   function escape(s) { return String(s).replace(/[&<>"']/g, function (c) {

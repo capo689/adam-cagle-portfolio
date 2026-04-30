@@ -23,7 +23,6 @@
     portfolio: 'Portfolio.html',
     agents:    'Agents.html',
     books:     'Books.html',
-    studio:    'Studio.html',
   };
 
   function shouldPrevent(opts) {

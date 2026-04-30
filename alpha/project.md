@@ -39,7 +39,6 @@ alpha/
   Portfolio.html
   Agents.html
   Books.html
-  Studio.html
   css/
     base.css              ← reset, tokens, typography
     layout.css            ← .page, hero, sections, grid
@@ -51,7 +50,6 @@ alpha/
       portfolio.css
       agents.css
       books.css
-      studio.css
   js/
     site-fx.js            ← orchestrator (FIRST script always)
     site-shell.js         ← rail + mobile menu
@@ -71,7 +69,6 @@ alpha/
       portfolio.js
       agents.js
       books.js
-      studio.js
   img/
   vercel.json
 ```
@@ -85,6 +82,8 @@ alpha/
 - **Branch:** `claude/work-in-progress-eJKGG`
 - Match the live design language exactly (tokens, type scale, spacing) until we explicitly diverge.
 - Token-driven CSS only — no hard-coded colors outside `base.css`.
+
+> **Note**: Studio.html was removed mid-build (see commit removing `Studio.html` / `studio.css` / `studio.js`). Round 4f and 5i-2b mention it in their original form for historical record.
 
 ---
 

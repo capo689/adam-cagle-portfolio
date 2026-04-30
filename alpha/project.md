@@ -188,9 +188,10 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 - `alpha/js/fx/hf-viewer.js` (185 lines) — click `#hf-cover` opens `#hf-viewer`. Builds 31 views: cover (62), 29 paired spreads (63–120), odd interior (121), back cover (122). Prev/next/ESC/arrows/backdrop. Body scroll + Lenis lock. Animation: outgoing slides ±40px + fades (0.25s), new spread builds, slides in from opposite edge + fades (0.35s); direction reverses on prev. CSS perspective + preserve-3d already on the wrapper for a future 3D page-flip upgrade.
 - Wired into Portfolio.html only.
 
-#### 5d — Lightbox (commit `df94cb7`, live on main)
-- `alpha/js/fx/lightbox.js` (148 lines) — `.ad[data-gallery]` zoom view. Groups tiles by gallery name; opens `#lightbox` at clicked index. Prev/next walks the gallery only. ESC + arrows + backdrop click close. Body scroll + Lenis lock while open. Caption: `.lb-cap-l` = "GALLERY · 02 / 07", `.lb-cap-r` = tile meta. GSAP fade+scale on open (0.96→1, 0.4s), slight refresh on nav (0.985→1, 0.3s). Delegated click handler. Registers with SiteFX, owns `#lightbox` + `.ad[data-gallery]`.
-- Wired into Portfolio.html + Agents.html only.
+#### 5d — Lightbox (commits `df94cb7`, `865c00b`, live on main)
+- `alpha/js/fx/lightbox.js` (160 lines) — `.ad[data-gallery]` zoom view. Groups tiles by gallery name; opens `#lightbox` at clicked index. Prev/next walks the gallery only. ESC + arrows + backdrop click close. Body scroll + Lenis lock while open. Caption: `.lb-cap-l` = "GALLERY · 02 / 07", `.lb-cap-r` = tile meta. GSAP fade+scale on open (0.96→1, 0.4s), slight refresh on nav (0.985→1, 0.3s). Delegated click handler.
+- **Two trigger shapes:** (1) `.ad[data-gallery="X"]` — tile is in the gallery. (2) `[data-lightbox="X"]` — cover-plate trigger that opens a separate gallery (used by Clink Hostels: `#clink-cover` opens at index 4 (Amsterdam, matching the cover image), 9 hidden `.ad[data-gallery="clink"]` tiles supply the screens).
+- Registers with SiteFX, owns `#lightbox` + `.ad[data-gallery]`. Wired into Portfolio.html + Agents.html.
 
 #### 5c — Hero reveal (commit `2c4b72c`, live on main)
 - `alpha/js/fx/hero-reveal.js` (108 lines) — three-stage timeline. (1) `.hero-kicker` fades + slides 8px (0.5s). (2) `.hero-name` chars rise via SplitText with `mask:'lines'`, yPercent 110→0, stagger 0.025, 0.8s. (3) supporting elements (`.hero-role`, `.hero-meta`, `.hero-sub > *`, `.portrait-img`, `.hero-neon`, `.hero-stat-row`, `.studios`) fade up 18px, stagger 0.06. Waits for `document.fonts.ready` so SplitText measures final layout. Falls back to a simple fade if SplitText errors. Honors reduced motion. Registers with SiteFX, `owns: ['.hero-name']`.

@@ -33,17 +33,22 @@
   --t-slow: 800ms;
 }
 
-/* Light theme override (applied via [data-theme="light"] on <html>) */
+/* Light theme override (applied via [data-theme="light"] on <html>).
+   Cream palette matches the live site (#f4efe7), not pure white. */
 [data-theme="light"] {
-  --bg:      #ffffff;
-  --bg-soft: #f8f8f6;
-  --fg:      #0f0f0e;
-  --fg-2:    #3b3b38;
-  --fg-3:    #7a7771;
-  --rule:    #d9d6cd;
-  --rule-2:  #e8e5dc;
+  --bg:      #f4efe7;
+  --bg-soft: #ebe4d7;
+  --fg:      #14110f;
+  --fg-2:    rgba(20, 17, 15, 0.70);
+  --fg-3:    rgba(20, 17, 15, 0.62);
+  --rule:    rgba(20, 17, 15, 0.16);
+  --rule-2:  rgba(20, 17, 15, 0.09);
   --accent:  #1F4E8C;
 }
+
+/* Reserve scrollbar gutter so locking body overflow (preloader, lightbox)
+   doesn't change viewport width — keeps vw-based font sizes stable. */
+html { scrollbar-gutter: stable; }
 
 /* ── Reset ────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }

@@ -178,7 +178,11 @@ Each plugin is a SiteFX-registered plugin (init order + selector ownership guara
 6. **5f** — Magnetic + Parallax (polish) ✅
 7. **5g** — Custom cursor (`data-cursor` hooks) ✅
 8. **5h** — Preloader (first-load reveal) ✅
-9. **5i** — Barba page transitions (lands last; orchestrates everything)
+9. **5i** — Barba page transitions (lands last; orchestrates everything) — in progress
+   - **5i-1** ✅ HTML scaffolding (data-barba wrappers on all 5 pages)
+   - **5i-2a** ✅ engine + instant swap, scroll reset, ScrollTrigger refresh, active-nav update
+   - **5i-2b** plugin re-init on afterEnter (hero-reveal, section-reveal, magnetic, parallax, hf-viewer, studio.js)
+   - **5i-3** slab/dissolve transition
 
 #### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
 - `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.

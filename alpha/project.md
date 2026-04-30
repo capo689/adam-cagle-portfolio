@@ -134,12 +134,22 @@ Built up across five passes; six case studies inserted via Edit into the skeleto
 
 Discovered live Portfolio has 6 sections, not 4; plan adjusted mid-build.
 
+#### 4c — agents.css (commits `5b733bb`, `949194a`)
+Note on namespace: classes like `.campaign`, `.c-meta`, `.ad-grid`, `.pull`, `.overlay` are intentionally redefined here with different proportions than `pages/portfolio.css` — Agents uses tighter pulls, square borders, gap-based grids vs Portfolio's editorial collage. Each page only loads its own `pages/<page>.css`, so no runtime conflict.
+- **4c-1 core (346 lines)** — `.page` padding override (72px top, 120px bottom), hero (smaller, 80px top), hero-sub 2x1 with `.hero-stat-row` sidebar, `.sect-label`/`.sect-head` (tighter), `.campaign` sticky-meta card, `.ad`+`.overlay` (160deg gradient, square borders), `.ad-grid` (gap-based) with g-1/g-2/g-4/g-featured, `.pull` (radius 2px), `.wp-btn` whitepaper link, `.status-live` pulsing green dot keyframe, 860/640 responsive, print stylesheet.
+- **4c-2 lightbox (83 lines)** — Agents-flavored `#lightbox`: square buttons (10x14, radius 3px), bordered `.lb-img`, 80/60 padding. Both pages style `#lightbox` differently — only ever load one per doc.
+
+#### 4d — Agents.html (commits `4d18849`, `706930b`, `fd60042`)
+- **4d-1 skeleton (188 lines)** — full head + nav + hero ('Systems that work while you sleep.', `.hero-stat-row` with Models/Agents in Production/Architecture/Deployment) + Section 01 SSIA (campaign card with `.status-live` + `.wp-btn` to whitepaper, engine pull, 2x2 ad-grid g-4 of dashboard/graph screenshots) + footer + #lightbox markup.
+- **4d-2 Book + AuScan (88 lines)** — Book Agent (single hero, attribution pull). AuScan (Beta status, 2-up dashboard+report screenshots, '72% high-confidence hit' result pull).
+- **4d-3 BEEF + Music (85 lines)** — BEEF (Live, single dashboard, strange-signals hunt pull). Music Agent (Beta, single dashboard, closed-loop system pull).
+
 ---
 
 ## What's next
 
-**Round 4c+ — remaining pages**
-Agents.html → Books.html → Studio.html. Each page: skeleton+HTML and `pages/<page>.css`. Will size each one and split as needed (Agents will likely be 2-3 chunks, Books smaller, Studio smaller still).
+**Round 4e — Books.html**
+Then **4f — Studio.html**. Will size each page and split as needed.
 
 **Round 5 — motion layer**
 Lenis (smooth scroll), Barba (page transitions), GSAP primitives (`fx/hero-reveal.js`, `section-reveal.js`, `magnetic.js`, `parallax.js`, `lightbox.js`), all registered through SiteFX.

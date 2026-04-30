@@ -1,14 +1,15 @@
 /* ──────────────────────────────────────────────────────────────────────
-   smooth-scroll.js — Lenis smooth scroll
-   Foundational scroll baseline. Every other scroll-driven effect (GSAP
-   ScrollTrigger, Barba, section-reveal, parallax) hooks into the same
-   rAF loop Lenis owns.
+   smooth-scroll.js — Lenis smooth scroll, GSAP-integrated
+   Standard Lenis+GSAP pattern: lenis updates window scroll smoothly,
+   ScrollTrigger reads from window scrollY natively, gsap.ticker drives
+   the rAF loop, lenis.on('scroll', ScrollTrigger.update) keeps them
+   in sync. No scrollerProxy needed (and the previous one was bridging
+   to a non-existent Lenis property).
 
    Exposes window.__lenis so downstream plugins can call .scrollTo(),
-   .stop(), .start(), or sync ScrollTrigger via Lenis events.
+   .stop(), .start().
 
-   Reduced motion: if the user prefers reduced motion, we skip Lenis
-   entirely and let native scroll handle the page.
+   Reduced motion: skip Lenis entirely, native scroll handles the page.
    ────────────────────────────────────────────────────────────────────── */
 
 (function () {
@@ -29,31 +30,28 @@
       touchMultiplier: 1.4,
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
     window.__lenis = lenis;
 
-    // Bridge to GSAP ScrollTrigger if it's already loaded (or once it loads).
-    function bridgeScrollTrigger() {
-      if (!window.ScrollTrigger) return;
-      lenis.on('scroll', window.ScrollTrigger.update);
-      window.ScrollTrigger.scrollerProxy(document.documentElement, {
-        scrollTop: function (value) {
-          if (arguments.length) lenis.scrollTo(value, { immediate: true });
-          return lenis.actualScroll || window.scrollY;
-        },
-        getBoundingClientRect: function () {
-          return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-        },
+    var gsap = window.gsap;
+    var ScrollTrigger = window.ScrollTrigger;
+
+    if (gsap && gsap.ticker) {
+      // Drive Lenis from GSAP's ticker so animations and scroll stay in sync.
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      // Fallback: standalone rAF loop.
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+    }
+
+    if (ScrollTrigger) {
+      lenis.on('scroll', ScrollTrigger.update);
+    } else if (window.SiteFX) {
+      window.SiteFX.on('scrolltrigger:ready', function () {
+        if (window.ScrollTrigger) window.__lenis.on('scroll', window.ScrollTrigger.update);
       });
     }
-    bridgeScrollTrigger();
-
-    window.SiteFX && window.SiteFX.on('scrolltrigger:ready', bridgeScrollTrigger);
   }
 
   if (window.SiteFX) {

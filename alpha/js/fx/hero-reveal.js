@@ -97,11 +97,17 @@
     // either play immediately or, if the preloader is active, defer
     // until it emits 'preloader:done' so the hero choreography doesn't
     // fire underneath the curtain.
+    var hasPlayed = false;
+    var safePlay = function () {
+      if (hasPlayed) return;
+      hasPlayed = true;
+      play();
+    };
     function ready() {
       if (window.__preloaderActive && window.SiteFX) {
-        window.SiteFX.on('preloader:done', play);
+        window.SiteFX.on('preloader:done', safePlay);
       } else {
-        play();
+        safePlay();
       }
     }
     if (document.fonts && document.fonts.ready) {
@@ -109,6 +115,9 @@
     } else {
       ready();
     }
+    // Safety net: force-play after 2s no matter what (covers fonts.ready
+    // hanging, preloader stuck, etc.). hasPlayed guard prevents double-play.
+    setTimeout(safePlay, 2000);
   }
 
   if (window.SiteFX) {

@@ -149,12 +149,38 @@ Note on namespace: classes like `.campaign`, `.c-meta`, `.ad-grid`, `.pull`, `.o
 - **4e-2 skeleton + Books 01-02 (162 lines)** — Vampire's Babysitter (Historical Fiction · Horror) + Ship Happens (Zombie Comedy). Each: drop-cap synopsis + two `.quote` excerpts.
 - **4e-3 Books 03-05 (96 lines)** — The Deal (Nonfiction · civilization-and-control), The Ledger (Nonfiction · gender roles), What Worked For Me (Fitness memoir).
 
+#### 4f — Studio page (commits `820a9f7`, `0364a50`)
+- **4f-1 studio.css (234 lines, single chunk)** — full-viewport hero (min-height 100vh, larger 68/12vw/200px name), `.studios` 2x1 grid (Agency689 / Agentic689 cards with `.studio-num`/`.studio-name`/`.studio-url`/`.studio-desc`/`.studio-tags`), `.coming` 'coming soon' label, `.banner-section` HTML5 ad showcase with `.banner-wrap` (728x90, bordered, hosts thumb img or iframe) and `.b-btn` pill button. 960px breakpoint scales banner via aspect-ratio.
+- **4f-2 Studio.html + studio.js (211 lines)** — full head + nav + hero ('Two studios. One obsession.') + Agency689 + Agentic689 cards + Sunset Marquis HTML5 banner showcase + 'coming soon' + footer. `js/pages/studio.js` registers as a SiteFX plugin (`owns: ['#banner-wrap']`) and toggles thumbnail ↔ live iframe.
+
+---
+
+## Round 4 summary — All five pages shipped
+- `alpha/index.html` (résumé) + `pages/home.css`
+- `alpha/Portfolio.html` (6 case studies + lightbox + hf-viewer markup) + `pages/portfolio.css`
+- `alpha/Agents.html` (5 production agents + lightbox markup) + `pages/agents.css`
+- `alpha/Books.html` (5 books) + `pages/books.css`
+- `alpha/Studio.html` (Agency689 + Agentic689 + banner showcase) + `pages/studio.css` + `js/pages/studio.js`
+
+Total: 24 commits across rounds 4a-4f. All content matches live verbatim. No animations or modal JS yet — round 5.
+
 ---
 
 ## What's next
 
-**Round 4f — Studio.html**
-Last remaining page. Will size and split as needed.
+**Round 5 — motion layer**
+- `alpha/js/smooth-scroll.js` — Lenis init, registered with SiteFX
+- `alpha/js/barba-init.js` — Barba.js page transitions (slab/dissolve)
+- `alpha/js/fx/hero-reveal.js` — GSAP SplitText character reveal on hero names
+- `alpha/js/fx/section-reveal.js` — ScrollTrigger fade-up on sections
+- `alpha/js/fx/magnetic.js` — magnetic hover on buttons/CTAs
+- `alpha/js/fx/parallax.js` — scroll-scrubbed image parallax
+- `alpha/js/fx/lightbox.js` — Portfolio + Agents lightbox handler (Flip-powered)
+- `alpha/js/fx/hf-viewer.js` — Hotel Figueroa brand-book page-flip viewer
+- `alpha/js/cursor.js` — custom cursor with `data-cursor` attribute hooks
+- `alpha/js/preloader.js` — first-load reveal
+
+Each is a SiteFX plugin so init order and selector ownership are guaranteed.
 
 **Round 5 — motion layer**
 Lenis (smooth scroll), Barba (page transitions), GSAP primitives (`fx/hero-reveal.js`, `section-reveal.js`, `magnetic.js`, `parallax.js`, `lightbox.js`), all registered through SiteFX.

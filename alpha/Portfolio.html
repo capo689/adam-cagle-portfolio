@@ -69,20 +69,12 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <script src="js/cursor.js" defer></script>
 <script src="js/smooth-scroll.js" defer></script>
 <script src="js/animations.js" defer></script>
-<script src="js/pages/home.js" defer></script>
-<script src="js/pages/agents.js" defer></script>
-<script src="js/pages/agents-lightbox.js" defer></script>
-<script src="js/pages/books.js" defer></script>
 <script src="js/pages/portfolio.js" defer></script>
 <script src="js/pages/portfolio-lightbox.js" defer></script>
-<script src="js/pages/studio.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@barba/core@2.10.3/dist/barba.umd.js" defer></script>
-<script src="js/barba-init.js" defer></script>
 <style>
   :root {
     --bg:       #0f0f0e;
@@ -457,7 +449,8 @@
 
 </style>
 </head>
-<body data-barba="wrapper">
+<body>
+<script src="js/page-transitions.js"></script>
 <script src="js/preloader.js"></script>
 
 <site-header active="portfolio"></site-header>
@@ -474,7 +467,7 @@
   </header>
 </noscript>
 
-<div class="page" data-barba="container" data-barba-namespace="portfolio">
+<div class="page">
 
   <!-- HERO -->
   <section class="hero" style="border-top: 0;">

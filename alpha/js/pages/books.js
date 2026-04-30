@@ -57,18 +57,9 @@
     A.refreshOnLoad();
   }
 
-  window.initBooksPage = init;
-
-  function isMyPage() {
-    const c = document.querySelector('[data-barba-namespace]');
-    return c && c.dataset.barbaNamespace === 'books';
-  }
-
-  if (isMyPage()) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();

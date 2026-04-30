@@ -1,18 +1,3 @@
 /* page-transitions.css
-   Barba.js slab-wipe transition. Full-screen panel slides up from the
-   bottom to cover, then off the top to reveal the next page. Color is
-   set by JS to match the active theme. */
-
-.barba-slab {
-  position: fixed;
-  left: 0; right: 0; top: 0; bottom: 0;
-  z-index: 9998;
-  pointer-events: none;
-  transform: translateY(100%);
-  will-change: transform;
-  background: #0f0f0e;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .barba-slab { display: none; }
-}
+   Slab replaced by native View Transitions API. Transition animations
+   live in nav.css under the @view-transition block. */

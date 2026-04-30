@@ -56,6 +56,12 @@
     el.addEventListener('mouseleave', reset);
   }
 
+  // Guard against double-binding the same element across page:enter calls.
+  // Previously-bound elements removed from DOM by Barba are GC'd along
+  // with their listeners, so this primarily protects against accidental
+  // duplicate calls within the same session.
+  var bound = (typeof WeakSet !== 'undefined') ? new WeakSet() : null;
+
   function init() {
     if (!window.gsap) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -63,11 +69,18 @@
 
     var els = document.querySelectorAll(SELECTOR);
     if (!els.length) return;
-    Array.prototype.forEach.call(els, function (el) { bind(el, window.gsap); });
+    Array.prototype.forEach.call(els, function (el) {
+      if (bound && bound.has(el)) return;
+      if (bound) bound.add(el);
+      bind(el, window.gsap);
+    });
   }
 
   if (window.SiteFX) {
     window.SiteFX.register('magnetic', { init: init });
+    window.SiteFX.on('page:enter', function (data) {
+      if (data && data.container) init();
+    });
   } else if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {

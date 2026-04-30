@@ -78,6 +78,9 @@
 
   if (window.SiteFX) {
     window.SiteFX.register('parallax', { init: init });
+    window.SiteFX.on('page:enter', function (data) {
+      if (data && data.container) init();
+    });
   } else if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {

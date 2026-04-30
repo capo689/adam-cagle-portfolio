@@ -59,6 +59,39 @@
     }
   }
 
+  // Swap the per-page stylesheet (css/pages/X.css) on navigation.
+  // Barba v2 only swaps the container, not <head>, so without this each
+  // page would render under whatever pages CSS was first loaded.
+  // Returns a Promise that resolves when the new stylesheet has loaded
+  // (or fails) so we can hold the new container until styles are ready.
+  function swapPageStylesheet(nextHTML) {
+    return new Promise(function (resolve) {
+      var newDoc;
+      try { newDoc = new DOMParser().parseFromString(nextHTML, 'text/html'); }
+      catch (e) { resolve(); return; }
+
+      var newLink = newDoc.querySelector('link[rel="stylesheet"][href*="css/pages/"]');
+      var oldLink = document.querySelector('link[rel="stylesheet"][href*="css/pages/"]');
+      var newHref = newLink && newLink.getAttribute('href');
+      var oldHref = oldLink && oldLink.getAttribute('href');
+
+      if (!newHref || newHref === oldHref) { resolve(); return; }
+
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = newHref;
+      link.addEventListener('load', function () {
+        if (oldLink) oldLink.parentNode.removeChild(oldLink);
+        resolve();
+      });
+      link.addEventListener('error', function () {
+        if (oldLink) oldLink.parentNode.removeChild(oldLink);
+        resolve();
+      });
+      document.head.appendChild(link);
+    });
+  }
+
   function init() {
     if (!window.barba) {
       console.warn('[barba-init] Barba not loaded; native page loads will be used');
@@ -80,6 +113,12 @@
           container: data.current.container,
         });
       }
+    });
+
+    // Swap per-page stylesheet before the new container renders so we
+    // don't get a flash of incorrect styling.
+    window.barba.hooks.beforeEnter(function (data) {
+      return swapPageStylesheet(data.next.html);
     });
 
     window.barba.hooks.afterEnter(function (data) {

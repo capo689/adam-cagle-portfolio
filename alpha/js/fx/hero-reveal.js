@@ -113,6 +113,11 @@
 
   if (window.SiteFX) {
     window.SiteFX.register('hero-reveal', { init: init, owns: ['.hero-name'] });
+    // Re-run on Barba navigation. Boot-time page:enter has no container,
+    // so this listener no-ops at boot.
+    window.SiteFX.on('page:enter', function (data) {
+      if (data && data.container) init();
+    });
   } else if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {

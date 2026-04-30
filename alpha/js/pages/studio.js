@@ -60,6 +60,9 @@
 
   if (window.SiteFX) {
     window.SiteFX.register('studio-banner', { init: init, owns: ['#banner-wrap'] });
+    window.SiteFX.on('page:enter', function (data) {
+      if (data && data.container) init();
+    });
   } else if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {

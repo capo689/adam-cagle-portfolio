@@ -94,14 +94,13 @@
     return tl;
   }
 
-  function slabEnter(nextContainer, enterPayload) {
+  function slabEnter(nextContainer) {
     if (!window.gsap) return;
     var gsap = window.gsap;
     var label = document.getElementById('barba-label');
 
     var tl = gsap.timeline({
       onComplete: function () {
-        // Reset for next nav.
         gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, autoAlpha: 1 });
         gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, autoAlpha: 1 });
         gsap.set(label, { autoAlpha: 0, y: 24 });
@@ -118,27 +117,20 @@
       ease: 'power2.in',
     }, 0);
 
-    // Fire page:enter (text animations) the moment bands start dissolving.
-    tl.call(function () {
-      if (window.SiteFX && enterPayload) {
-        window.SiteFX.emit('page:enter', enterPayload);
-      }
-    }, [], 0.15);
-
-    // Bands dissolve in place — soft fade, randomised stagger.
+    // Bands dissolve in place — soft fade with randomised stagger.
     tl.to('.barba-band', {
       autoAlpha: 0,
-      duration: 0.75,
+      duration: 0.7,
       ease: 'power2.inOut',
-      stagger: { each: 0.07, from: 'random' },
-    }, 0.15);
+      stagger: { each: 0.06, from: 'random' },
+    }, 0);
 
-    // Container and text reveal in sync with band dissolve.
+    // New page reveals as bands dissolve.
     if (nextContainer) {
       tl.fromTo(nextContainer,
         { autoAlpha: 0, scale: 1.02, filter: 'blur(3px)' },
-        { autoAlpha: 1, scale: 1,    filter: 'blur(0px)', duration: 0.75, ease: 'power3.out' },
-        0.15
+        { autoAlpha: 1, scale: 1,    filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' },
+        0
       );
     }
 
@@ -226,13 +218,7 @@
         : [{
             name: 'editorial',
             leave: function (data) { return slabLeave(data.next.namespace); },
-            enter: function (data) {
-              return slabEnter(data.next.container, {
-                from: data.current && data.current.namespace,
-                to: data.next.namespace,
-                container: data.next.container,
-              });
-            },
+            enter: function (data) { return slabEnter(data.next.container); },
           }],
     });
 
@@ -254,8 +240,13 @@
         var ns = data.next.namespace;
         updateActiveNav(ns);
         refreshScroll();
-        // page:enter is emitted inside slabEnter so text animations
-        // fire in sync with the band dissolve, not before it.
+        if (window.SiteFX) {
+          window.SiteFX.emit('page:enter', {
+            from: data.current && data.current.namespace,
+            to: ns,
+            container: data.next.container,
+          });
+        }
       });
     });
 

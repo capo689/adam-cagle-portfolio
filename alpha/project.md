@@ -166,21 +166,23 @@ Total: 24 commits across rounds 4a-4f. All content matches live verbatim. No ani
 
 ---
 
-## What's next
+### Round 5 — motion layer
 
-**Round 5 — motion layer**
-- `alpha/js/smooth-scroll.js` — Lenis init, registered with SiteFX
-- `alpha/js/barba-init.js` — Barba.js page transitions (slab/dissolve)
-- `alpha/js/fx/hero-reveal.js` — GSAP SplitText character reveal on hero names
-- `alpha/js/fx/section-reveal.js` — ScrollTrigger fade-up on sections
-- `alpha/js/fx/magnetic.js` — magnetic hover on buttons/CTAs
-- `alpha/js/fx/parallax.js` — scroll-scrubbed image parallax
-- `alpha/js/fx/lightbox.js` — Portfolio + Agents lightbox handler (Flip-powered)
-- `alpha/js/fx/hf-viewer.js` — Hotel Figueroa brand-book page-flip viewer
-- `alpha/js/cursor.js` — custom cursor with `data-cursor` attribute hooks
-- `alpha/js/preloader.js` — first-load reveal
+Each plugin is a SiteFX-registered plugin (init order + selector ownership guaranteed). Recommended order:
 
-Each is a SiteFX plugin so init order and selector ownership are guaranteed.
+1. **5a** — Lenis smooth scroll ✅
+2. **5b** — Section reveal (GSAP + ScrollTrigger fade-ups)
+3. **5c** — Hero reveal (SplitText character animation)
+4. **5d** — Lightbox (Portfolio + Agents image grids)
+5. **5e** — HF viewer (Hotel Figueroa brand book page-flip)
+6. **5f** — Magnetic + Parallax (polish)
+7. **5g** — Custom cursor (`data-cursor` hooks)
+8. **5h** — Preloader (first-load reveal)
+9. **5i** — Barba page transitions (lands last; orchestrates everything)
+
+#### 5a — Lenis smooth scroll (commit `5b0db34`, live on main)
+- `alpha/js/smooth-scroll.js` (66 lines) — Lenis 1.1.20 init at 1.1s duration with custom ease-out, exposes `window.__lenis`. Honors `prefers-reduced-motion`. Pre-wired ScrollTrigger bridge (`scrollerProxy` + `lenis.on('scroll', ScrollTrigger.update)`) so 5b plugs in cleanly.
+- CDN + script wired into all five pages.
 
 **Round 5 — motion layer**
 Lenis (smooth scroll), Barba (page transitions), GSAP primitives (`fx/hero-reveal.js`, `section-reveal.js`, `magnetic.js`, `parallax.js`, `lightbox.js`), all registered through SiteFX.

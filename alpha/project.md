@@ -108,18 +108,20 @@ Cleared `alpha/` to truly empty (158 files removed: legacy Barba/cursor/preloade
 - `alpha/js/site-shell.js` — `<site-shell>` custom element renders rail + mob-nav from one NAV list, marks active link from pathname, scroll-shrinks via rAF, opens/closes mobile overlay. Registers with SiteFX.
 - `alpha/js/theme.js` — pre-paint theme apply (no FOUC) + click toggle, persists to localStorage, emits `theme:change` on SiteFX.
 
-### Round 2 — assets
+### Round 2 — assets (commit `7078fe5`)
 Copied all 129 files from live `img/` → `alpha/img/` (51MB total). Folders: CLINK, HF, ads, agents, banners, books, plus root-level icons/portraits (cross.png, adampic.png, adamart.jpg, neon-* variants, workout.png, Vampire.png).
+
+### Round 3 — homepage (commit `f429c3e`)
+- `alpha/index.html` — clean rebuild matching the live résumé. `<site-shell>` for nav, inline pre-paint theme bootstrap (no FOUC), explicit CSS load order (base → layout → components → nav → theme → page), defer-loaded JS. Five sections: Summary, Capabilities, Experience, Selected Work, Awards/Ed/Board. Content matches live verbatim.
+- `alpha/css/pages/home.css` — `.portrait-img`, `.hero-neon`, `.summary`, `.caps`/`.cap*`, `.job*`/`.job-roster*`, `.works`/`.work*`/`.work-cta`/`.work-intro`, `.tri*`. 960px responsive + print stylesheet (résumé export, light cream tokens, hides nav).
+- No animations yet — round 5.
 
 ---
 
 ## What's next
 
-**Round 3 — homepage HTML (`alpha/index.html`)**
-Static markup matching the live résumé: hero, credentials strip, Capabilities, Selected Work, Agents kicker, SSIA section, contact, footer. Uses `<site-shell>` for nav, page-specific styles in `css/pages/home.css`.
-
-**Round 4 — page-by-page**
-Portfolio.html → Agents.html → Books.html → Studio.html. Each page: HTML + `pages/<page>.css` + `pages/<page>.js`. One per turn.
+**Round 4 — remaining pages**
+Portfolio.html → Agents.html → Books.html → Studio.html. Each page: HTML + `pages/<page>.css` (+ `pages/<page>.js` later if it has unique behavior). **One page per turn** to stay under the chunk limit.
 
 **Round 5 — motion layer**
 Lenis (smooth scroll), Barba (page transitions), GSAP primitives (`fx/hero-reveal.js`, `section-reveal.js`, `magnetic.js`, `parallax.js`, `lightbox.js`), all registered through SiteFX.

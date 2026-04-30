@@ -1,0 +1,218 @@
+/* ──────────────────────────────────────────────────────────────────────
+   pages/books.css
+   Page-specific styles for Books.html.
+   Editorial book-jacket layout: sticky cover left, synopsis + quote
+   cards right. Drop-cap on the synopsis. Single-file (no need to
+   split — page is small).
+   ────────────────────────────────────────────────────────────────────── */
+
+/* ── Hero override (kicker uses .ac instead of .accent) ───────────── */
+.hero {
+  padding: 130px 0 64px;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-kicker { gap: 16px; margin-bottom: 32px; }
+.hero-kicker .ac { color: var(--accent); }
+
+.hero-name {
+  font-size: clamp(48px, 8vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+/* Books .hero-sub is a paragraph (not a grid) — override layout.css */
+p.hero-sub {
+  display: block;
+  margin-top: 24px;
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.4;
+  color: var(--fg-3);
+  max-width: 56ch;
+  text-wrap: balance;
+}
+p.hero-sub em { color: var(--accent); font-style: italic; }
+
+/* ── Book entry (sticky cover left + body right) ──────────────────── */
+.book {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 56px;
+  padding: 72px 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
+
+.book-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 88px;
+}
+.book-genre {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.book-cover {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+.book-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+.book-cover:hover img { transform: scale(1.025); }
+
+.book-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+.book-title .it {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.book-subtitle {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--fg-3);
+  margin: -6px 0 0;
+}
+
+.book-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Synopsis (open layout, drop cap on first paragraph) ──────────── */
+.synopsis {
+  position: relative;
+  padding: 6px 0 32px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.synopsis-tag {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.synopsis-body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--fg-2);
+  max-width: 64ch;
+  margin: 0 0 16px;
+}
+.synopsis-body:last-child { margin-bottom: 0; }
+.synopsis-body em { color: var(--accent); font-style: italic; }
+.synopsis-body:first-of-type::first-letter {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 4.4em;
+  line-height: 0.84;
+  float: left;
+  color: var(--accent);
+  margin: 0.06em 0.12em -0.04em -0.04em;
+}
+
+/* ── Quote card (excerpt with corner tag) ─────────────────────────── */
+.quote {
+  position: relative;
+  padding: 32px 36px 28px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--bg-soft);
+}
+.quote-tag {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--bg);
+  padding: 2px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.quote-pull {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin: 0 0 18px;
+  max-width: 34ch;
+}
+.quote-pull em { color: var(--accent); font-style: italic; }
+.quote-body {
+  padding-top: 16px;
+  border-top: 1px solid var(--rule-2);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--fg-2);
+  max-width: 64ch;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .page { padding: 0 20px; }
+  .hero { padding: 100px 0 40px; }
+  .hero-name { font-size: clamp(40px, 11vw, 72px); max-width: none; }
+  .book { grid-template-columns: 1fr; gap: 28px; padding: 56px 0; }
+  .book-left {
+    position: static;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 20px;
+    row-gap: 6px;
+  }
+  .book-cover    { grid-column: 1; grid-row: 1 / 4; width: 100%; align-self: start; }
+  .book-genre    { grid-column: 2; grid-row: 1; align-self: start; }
+  .book-title    { grid-column: 2; grid-row: 2; font-size: clamp(18px, 5vw, 26px); align-self: start; }
+  .book-subtitle { grid-column: 2; grid-row: 3; align-self: start; font-size: 14px; }
+  .quote { padding: 28px 20px 24px; }
+  .quote-pull { font-size: clamp(20px, 5.5vw, 28px); max-width: none; }
+  .quote-body { font-size: 16px; }
+  .synopsis { padding: 4px 0 26px; }
+  .synopsis-body { font-size: 16px; max-width: none; }
+  .synopsis-body:first-of-type::first-letter {
+    font-size: 3.8em;
+    margin: 0.08em 0.1em 0 -0.04em;
+  }
+}
+@media (max-width: 520px) {
+  .book-left { grid-template-columns: 90px 1fr; column-gap: 16px; }
+  .book-title { font-size: clamp(17px, 5vw, 22px); }
+  .quote { padding: 24px 18px 22px; }
+  .synopsis-body:first-of-type::first-letter { font-size: 3.4em; }
+}

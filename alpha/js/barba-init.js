@@ -61,12 +61,12 @@
   }
 
   function slabLeave(toNamespace) {
-    if (!window.gsap) return;
+    if (!window.gsap) { console.error('[barba] slabLeave: window.gsap not found'); return; }
     var gsap = window.gsap;
     var wrap = ensureSlabs();
     wrap.classList.add('is-active');
+    console.log('[barba] slabLeave → bands in DOM:', document.querySelectorAll('.barba-band').length, 'wrap visible:', getComputedStyle(wrap).visibility);
 
-    // Restore opacity in case a previous fade left bands at 0.
     gsap.set('.barba-band.b-0, .barba-band.b-2', { xPercent: -101, opacity: 1 });
     gsap.set('.barba-band.b-1, .barba-band.b-3', { xPercent:  101, opacity: 1 });
 
@@ -91,7 +91,8 @@
   }
 
   function slabEnter(nextContainer) {
-    if (!window.gsap) return;
+    if (!window.gsap) { console.error('[barba] slabEnter: window.gsap not found'); return; }
+    console.log('[barba] slabEnter → container:', !!nextContainer, 'bands opacity:', Array.from(document.querySelectorAll('.barba-band')).map(function(b){ return getComputedStyle(b).opacity; }));
     var gsap = window.gsap;
     var label = document.getElementById('barba-label');
 

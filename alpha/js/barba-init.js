@@ -195,12 +195,12 @@
   }
 
   function init() {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    console.log('[barba] init — barba:', !!window.barba, '| gsap:', !!window.gsap, '| reduceMotion:', reduceMotion);
     if (!window.barba) {
       console.warn('[barba-init] Barba not loaded; native page loads will be used');
       return;
     }
-
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     window.barba.init({
       prevent: shouldPrevent,

@@ -792,11 +792,30 @@ Given a design spec (HTML or PDF):
 
 ## 18. SITE SETUP — AI PROMPT
 
-> **INSTRUCTION FOR AI:** Before writing any site-specific code for the cursor, preloader, or page transitions, stop and ask the user the following questions. Collect all answers, then implement everything at once. Do not assume defaults — ask even if an option seems obvious.
+> **INSTRUCTION FOR AI:** Before writing any code, stop and ask the user the following questions in order. Collect all answers first, then implement everything at once. Do not assume defaults — ask every question even if an answer seems obvious.
 
 ---
 
 **When you are ready to build, ask the user:**
+
+---
+
+### Design Document
+
+> **Please provide your design as an HTML file.**
+>
+> The design file should be a single self-contained HTML page that shows the visual layout, typography, colors, spacing, content, and structure of the site. It is a design reference only — it does not need to be functional, animated, or production-ready. Inline styles, a `<style>` block, placeholder images, and lorem ipsum text are all fine.
+>
+> The AI will read this file and use it to determine:
+> - Page structure and sections
+> - Visual hierarchy and layout
+> - Color palette and typography (extracted and converted to CSS custom properties)
+> - Content, headings, copy, and image placement
+> - Navigation items and page names
+>
+> **If you have multiple pages**, provide one HTML file per page or combine them into a single file with clearly labeled sections (e.g., `<!-- PAGE: Portfolio -->`).
+>
+> **If you do not have a design file yet**, describe the site in plain language — number of pages, what each page contains, the general visual direction — and the AI will ask clarifying questions before building.
 
 ---
 

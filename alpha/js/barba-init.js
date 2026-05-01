@@ -1,3 +1,4 @@
+console.log('[barba-init] FILE LOADED v=11 — barba:', !!window.barba, 'gsap:', !!window.gsap, 'SiteFX:', !!window.SiteFX);
 /* ──────────────────────────────────────────────────────────────────────
    barba-init.js — Barba.js v2 page transitions
 

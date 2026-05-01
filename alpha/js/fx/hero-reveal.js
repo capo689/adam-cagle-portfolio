@@ -22,8 +22,9 @@
    ────────────────────────────────────────────────────────────────────── */
 
 (function () {
-  function init() {
-    var hero = document.querySelector('.hero');
+  function init(scope) {
+    var root = scope || document;
+    var hero = root.querySelector('.hero');
     if (!hero) return;
     if (typeof window.gsap !== 'object' || !window.gsap) {
       console.warn('[hero-reveal] GSAP not loaded; skipping');
@@ -125,7 +126,7 @@
     // Re-run on Barba navigation. Boot-time page:enter has no container,
     // so this listener no-ops at boot.
     window.SiteFX.on('page:enter', function (data) {
-      if (data && data.container) init();
+      if (data && data.container) init(data.container);
     });
   } else if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });

@@ -108,11 +108,11 @@ console.log('[barba-init] FILE LOADED v=11 — barba:', !!window.barba, 'gsap:',
       },
     });
 
-    // New container zooms in as bands dissolve.
+    // New container fades in as bands dissolve.
     if (nextContainer) {
       tl.fromTo(nextContainer,
-        { autoAlpha: 0, scale: 1.02, filter: 'blur(3px)' },
-        { autoAlpha: 1, scale: 1,    filter: 'blur(0px)', duration: 0.7, ease: 'power3.out' },
+        { autoAlpha: 0, scale: 1.02 },
+        { autoAlpha: 1, scale: 1,    duration: 0.7, ease: 'power3.out' },
         0
       );
     }
@@ -227,7 +227,6 @@ console.log('[barba-init] FILE LOADED v=11 — barba:', !!window.barba, 'gsap:',
       return swapPageStylesheet(data.next.html).then(function () {
         var ns = data.next.namespace;
         updateActiveNav(ns);
-        refreshScroll();
         if (window.SiteFX) {
           window.SiteFX.emit('page:enter', {
             from: data.current && data.current.namespace,
@@ -239,6 +238,7 @@ console.log('[barba-init] FILE LOADED v=11 — barba:', !!window.barba, 'gsap:',
     });
 
     window.barba.hooks.afterEnter(function () {
+      refreshScroll();
       try { sessionStorage.setItem('alpha-preloaded', '1'); } catch (e) {}
     });
   }

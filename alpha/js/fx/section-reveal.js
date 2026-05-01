@@ -37,7 +37,7 @@
     '.ad-grid',
   ];
 
-  function init() {
+  function init(scope) {
     if (typeof window.gsap !== 'object' || !window.gsap || !window.ScrollTrigger) {
       console.warn('[section-reveal] GSAP/ScrollTrigger not loaded; skipping reveals');
       return;
@@ -52,7 +52,8 @@
 
     window.SiteFX && window.SiteFX.emit('scrolltrigger:ready');
 
-    var els = Array.prototype.slice.call(document.querySelectorAll(SELECTORS.join(',')));
+    var root = scope || document;
+    var els = Array.prototype.slice.call(root.querySelectorAll(SELECTORS.join(',')));
     if (!els.length) return;
 
     // Partition by current viewport position.
@@ -118,7 +119,7 @@
   if (window.SiteFX) {
     window.SiteFX.register('section-reveal', { init: init });
     window.SiteFX.on('page:enter', function (data) {
-      if (data && data.container) init();
+      if (data && data.container) init(data.container);
     });
   } else if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });

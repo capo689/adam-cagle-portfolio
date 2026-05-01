@@ -1,6 +1,6 @@
-# BUILD SPEC — adamcagle.com
+# BUILD SPEC
 
-A complete technical reference for building sites to this stack. Provide this document alongside an HTML or PDF design spec; the AI should be able to produce a fully-functioning site matching all behaviour described below.
+A complete technical reference for building sites on this stack. Provide this document alongside an HTML or PDF design spec. The AI should build the full site to these architectural standards, then ask the user the setup questions in the final section before writing any site-specific implementation details.
 
 ---
 
@@ -11,7 +11,7 @@ A complete technical reference for building sites to this stack. Provide this do
 | Animation engine | GSAP | 3.13.0 | jsDelivr CDN |
 | Scroll-based animation | GSAP ScrollTrigger | 3.13.0 (plugin) | jsDelivr CDN |
 | Text splitting | GSAP SplitText | 3.13.0 (plugin) | jsDelivr CDN |
-| Flip animations | GSAP Flip | 3.13.0 (plugin) | jsDelivr CDN (Portfolio only) |
+| Flip animations | GSAP Flip | 3.13.0 (plugin) | jsDelivr CDN (lightbox pages only) |
 | Smooth scroll | Lenis | 1.1.20 | jsDelivr CDN |
 | Nav / shell | Custom Elements v1 | — | `site-shell.js` (local) |
 | Lightbox | Custom (GSAP-driven) | — | `js/pages/*-lightbox.js` (local) |
@@ -29,35 +29,23 @@ No bundler, no framework, no build step. Everything is vanilla JS loaded as defe
 
 ```
 /
-├── index.html              ← Résumé
-├── Portfolio.html
-├── Agents.html
-├── Books.html
-├── Studio.html
+├── [page].html             ← One file per page (index.html, Portfolio.html, etc.)
 ├── theme.css               ← Light-mode overrides + theme toggle CSS (global)
 ├── nav.css                 ← Header rail, mobile nav, footer, SplitText line fix (global)
 ├── site-shell.js           ← <site-header> and <site-footer> custom elements
 ├── theme.js                ← Theme toggle click handler
 ├── css/
-│   ├── cursor.css          ← Custom cursor + canvas trail styling
-│   └── preloader.css       ← Preloader overlay + neon + mask
+│   ├── cursor.css          ← Custom cursor styling
+│   └── preloader.css       ← Preloader overlay + reveal mask
 ├── js/
-│   ├── cursor.js           ← Cursor DOM element + particle canvas
+│   ├── cursor.js           ← Cursor DOM element + optional particle canvas
 │   ├── smooth-scroll.js    ← Lenis instance + GSAP ticker sync
 │   ├── animations.js       ← AnimHelpers namespace (shared primitives)
-│   ├── preloader.js        ← First-load neon flicker + mask reveal
+│   ├── preloader.js        ← First-load preloader logic
 │   └── pages/
-│       ├── home.js
-│       ├── portfolio.js
-│       ├── portfolio-lightbox.js
-│       ├── agents.js
-│       ├── agents-lightbox.js
-│       ├── books.js
-│       └── studio.js
-└── img/
-    ├── neon-bluex.png      ← Neon sign (lit state)
-    ├── neon-off-bluex.png  ← Neon sign (off state)
-    └── ads/                ← Campaign images (webp + jpg)
+│       ├── [page].js
+│       └── [page]-lightbox.js  ← Only on pages with image galleries
+└── img/                    ← All site images
 ```
 
 ---
@@ -77,55 +65,56 @@ Every page follows this exact shell. Swap the page-specific values marked in `[b
 <!-- Theme bootstrap: runs before paint to prevent flash of wrong theme -->
 <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
 
-<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="icon" type="image/png" href="img/[favicon]">
 
-<!-- SEO / OG / Twitter cards here -->
-
-<!-- Structured Data (Person schema on home; adapt per page) -->
-<script type="application/ld+json">{ ... }</script>
+<!-- SEO meta, Open Graph, Twitter cards -->
+<!-- Structured data (JSON-LD) -->
 
 <!-- Fonts (preconnect first, then full CSS) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=[FONTS]&display=swap" rel="stylesheet">
 
-<!-- Stylesheets (order matters) -->
+<!-- Stylesheets (order matters: global → component → page) -->
 <link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="nav.css">
 <link rel="stylesheet" href="css/cursor.css">
 <link rel="stylesheet" href="css/preloader.css">
-<!-- page-specific inline <style> block with CSS custom properties goes here -->
 
-<!-- Shell (must load before GSAP so custom elements parse before scripts run) -->
+<!-- Per-page CSS tokens (inline <style> block — see Section 3a) -->
+<style>
+  :root { /* design tokens here */ }
+</style>
+
+<!-- Shell (before GSAP so custom elements exist before animation scripts run) -->
 <script src="site-shell.js" defer></script>
 
 <!-- CDN: GSAP core + plugins -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
-<!-- Add Flip only on pages that use lightbox reverse-animations: -->
+<!-- Flip plugin only on pages with lightbox reverse-animations: -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js" defer></script> -->
 
 <!-- CDN: Lenis smooth scroll -->
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
 
-<!-- Local JS: core layer -->
+<!-- Local JS: core layer (order matters) -->
 <script src="js/cursor.js" defer></script>
 <script src="js/smooth-scroll.js" defer></script>
 <script src="js/animations.js" defer></script>
 <script src="js/preloader.js" defer></script>
 
-<!-- Local JS: page-specific (last) -->
+<!-- Local JS: page-specific (always last) -->
 <script src="js/pages/[page].js" defer></script>
-<script src="js/pages/[page]-lightbox.js" defer></script><!-- if page has lightbox -->
+<script src="js/pages/[page]-lightbox.js" defer></script><!-- only if page has a gallery -->
 </head>
 
 <body>
-<!-- site-header injects .rail + .mob-nav, active attr sets highlighted nav item -->
-<site-header active="[resume|portfolio|agents|books]"></site-header>
+<site-header active="[nav-key]"></site-header>
 
 <noscript>
-  <!-- Fallback nav (plain HTML) for no-JS users -->
+  <!-- Plain HTML fallback nav for no-JS users -->
 </noscript>
 
 <div class="page">
@@ -134,51 +123,51 @@ Every page follows this exact shell. Swap the page-specific values marked in `[b
 
 <site-footer></site-footer>
 
-<script src="theme.js"></script><!-- runs after body for toggle wiring -->
+<script src="theme.js"></script><!-- end of body so #theme-toggle exists -->
 </body>
 </html>
 ```
 
-### CSS Custom Properties (per-page inline `<style>`)
+### 3a. CSS Custom Properties (per-page inline `<style>`)
 
-Every page declares its own design tokens in an inline `<style>` block inside `<head>`. Do not include fonts or palette choices here — that belongs to the design spec. Structure:
+Every page declares design tokens in its inline `<style>` block. Colors and fonts come from the design spec — the variable names and structure are fixed:
 
 ```css
 :root {
-  --bg:      [base background];
-  --bg-soft: [slightly lifted background for cards/panels];
-  --fg:      [primary text];
+  --bg:      [base background color];
+  --bg-soft: [slightly lifted background for cards and panels];
+  --fg:      [primary text color];
   --fg-2:    [secondary text, ~70% opacity];
   --fg-3:    [tertiary text, ~45% opacity];
   --rule:    [border/divider at ~18% opacity];
   --rule-2:  [hairline divider at ~10% opacity];
-  --accent:  [brand colour used for links, hover states, progress bar];
+  --accent:  [brand color — used for links, hover states, progress bar, cursor];
   --sans:    [sans-serif font stack];
   --mono:    [monospace font stack];
-  --italic:  [italic serif font stack];
+  --italic:  [italic/serif font stack];
 }
 ```
 
-`theme.css` overrides the above for light mode using `html[data-theme="light"]` selectors (higher specificity wins over `:root`).
+`theme.css` overrides these for light mode via `html[data-theme="light"]` selectors, which have higher specificity than `:root` and win regardless of load order.
 
 ---
 
 ## 4. HEADER & FOOTER
 
-Both are implemented as Custom Elements v1 in `site-shell.js`. They render by replacing themselves with injected HTML — no shadow DOM, no encapsulation.
+Both are Custom Elements v1 defined in `site-shell.js`. They replace themselves with injected HTML — no shadow DOM.
 
 ### `<site-header active="[key]">`
 
-**Rendered output:**
+Inject the `active` attribute with the current page's nav key. The matching `.nav-link` gets `is-active`.
+
+**Rendered structure:**
 
 ```html
 <header class="rail" data-active="[key]">
-  <a href="index.html" class="rail-brand" data-cursor="hover">Adam R. Cagle</a>
+  <a href="index.html" class="rail-brand" data-cursor="hover">[Site Name]</a>
   <nav class="rail-nav">
-    <a href="index.html"     class="nav-link [is-active]" data-cursor="hover">Résumé</a>
-    <a href="Portfolio.html" class="nav-link [is-active]" data-cursor="hover">Portfolio</a>
-    <a href="Agents.html"    class="nav-link [is-active]" data-cursor="hover">AI Agents</a>
-    <a href="Books.html"     class="nav-link [is-active]" data-cursor="hover">Books</a>
+    <!-- One .nav-link per page; is-active added to matching key -->
+    <a href="[page].html" class="nav-link" data-cursor="hover">[Label]</a>
   </nav>
   <div class="rail-right">
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
@@ -196,39 +185,33 @@ Both are implemented as Custom Elements v1 in `site-shell.js`. They render by re
 
 <div class="mob-nav" id="mob-nav">
   <button class="mob-close" id="mob-close" aria-label="Close menu">&times; close</button>
-  <nav><!-- same nav-links as above --></nav>
+  <nav><!-- same nav-links --></nav>
   <a class="mob-cta" href="mailto:[EMAIL]">Get in touch &rarr;</a>
 </div>
 ```
 
-**Nav keys:** `resume` → `index.html`, `portfolio` → `Portfolio.html`, `agents` → `Agents.html`, `books` → `Books.html`.
-
-**Behaviours wired in `connectedCallback`:**
-- Hamburger opens `.mob-nav` by adding `.open`, sets `body overflow: hidden`
-- Clicking `.mob-close`, clicking the overlay, or clicking a nav link closes it
-- Scroll listener: adds `.is-shrunk` to `.rail` after 80px scroll (height collapses from `--rail-h` to `--rail-h-shrunk`)
-- Scroll progress: sets CSS var `--scroll-progress` as `(scrollY / maxScrollY * 100)%` on `.rail`; the `.rail-progress` hairline reads it
-
-**Internal nav flag:** `site-shell.js` also listens for clicks on same-origin links and sets `sessionStorage.setItem('site-internal-nav', 'true')` so the preloader knows to skip on the destination page.
+**Behaviours (wired in `connectedCallback`):**
+- Hamburger: adds `.open` to `.mob-nav`, sets `body overflow: hidden`; `.mob-close`, overlay click, and nav link clicks all close it
+- Scroll-shrink: adds `.is-shrunk` to `.rail` after 80px scroll (height collapses from `--rail-h` to `--rail-h-shrunk`)
+- Progress hairline: sets `--scroll-progress` CSS var on `.rail` as a percentage of total page scroll; the `.rail-progress` element reads it and becomes visible once shrunk
+- Internal nav flag: click listener sets `sessionStorage.setItem('site-internal-nav', 'true')` on same-origin link clicks so the preloader skips on the destination page
 
 ### `<site-footer>`
 
-**Rendered output:**
-
 ```html
 <footer class="foot">
-  <div class="left">Adam R. Cagle</div>
-  <div class="center">&copy; 2026</div>
+  <div class="left">[Name]</div>
+  <div class="center">&copy; [Year]</div>
   <div class="right"><a href="mailto:[EMAIL]">[EMAIL]</a></div>
 </footer>
 ```
 
-### Header / Footer CSS (from `nav.css`)
+### Header / Footer CSS (`nav.css`)
 
 ```css
 :root {
-  --rail-h:        72px;
-  --rail-h-shrunk: 52px;
+  --rail-h:        72px;   /* full height */
+  --rail-h-shrunk: 52px;   /* scrolled height */
   --rail-pad-x:    32px;
 }
 
@@ -240,7 +223,6 @@ Both are implemented as Custom Elements v1 in `site-shell.js`. They render by re
   gap: 32px;
   padding: 0 var(--rail-pad-x);
   height: var(--rail-h);
-  background: linear-gradient(180deg, rgba(15,15,14,0.96), rgba(15,15,14,0.78) 70%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: height .35s cubic-bezier(.2,.7,.2,1);
@@ -248,10 +230,7 @@ Both are implemented as Custom Elements v1 in `site-shell.js`. They render by re
 .rail.is-shrunk { height: var(--rail-h-shrunk); }
 
 /* Nav links draw underline left-to-right on hover */
-.nav-link {
-  position: relative; padding: 4px 0;
-  transition: color .25s;
-}
+.nav-link { position: relative; padding: 4px 0; }
 .nav-link::after {
   content: '';
   position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
@@ -266,18 +245,16 @@ Both are implemented as Custom Elements v1 in `site-shell.js`. They render by re
 /* Scroll progress hairline */
 .rail-progress {
   position: absolute; bottom: 0; left: 0;
-  height: 1px;
-  background: var(--accent);
+  height: 1px; background: var(--accent);
   width: var(--scroll-progress, 0%);
   opacity: 0; transition: opacity .25s; pointer-events: none;
 }
 .rail.is-shrunk .rail-progress { opacity: 1; }
 
-/* Mobile: hide rail-nav and CTA, show hamburger */
+/* Mobile breakpoint */
 @media (max-width: 900px) {
   .rail { grid-template-columns: 1fr auto; padding: 0 22px; }
-  .rail-nav { display: none; }
-  .rail-cta { display: none; }
+  .rail-nav, .rail-cta { display: none; }
   .hamburger { display: flex; }
 }
 
@@ -298,20 +275,22 @@ Both are implemented as Custom Elements v1 in `site-shell.js`. They render by re
   .foot { grid-template-columns: 1fr; text-align: center; }
 }
 
-/* SplitText line-mask fix: prevents descender clipping on tight line-heights */
-.split-line {
-  padding-bottom: 0.18em;
-  margin-bottom: -0.1em;
-}
+/* SplitText line-mask fix — prevents descender clipping on tight line-heights */
+.split-line { padding-bottom: 0.18em; margin-bottom: -0.1em; }
+
+/* Global overflow safety */
+html, body { overflow-x: hidden; }
 ```
 
 ---
 
 ## 5. SMOOTH SCROLL (`js/smooth-scroll.js`)
 
-Lenis instance wired to the GSAP ticker so ScrollTrigger positions stay accurate.
+Lenis wired to the GSAP ticker so ScrollTrigger positions stay accurate.
 
 ```js
+// Bails on prefers-reduced-motion, or if Lenis/GSAP failed to load.
+
 const lenis = new Lenis({
   duration: 1.15,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -322,7 +301,6 @@ const lenis = new Lenis({
 });
 
 lenis.on('scroll', ScrollTrigger.update);
-
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 
@@ -336,15 +314,13 @@ document.addEventListener('click', (e) => {
   lenis.scrollTo(target, { offset: -80 });
 });
 
-// Pause when a lightbox or modal is open (body.lb-open class)
+// Pause/resume when a lightbox or modal is open (toggled via body.lb-open)
 new MutationObserver(() => {
   document.body.classList.contains('lb-open') ? lenis.stop() : lenis.start();
 }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
 window.lenis = lenis; // exposed for external control
 ```
-
-**Bail conditions:** `prefers-reduced-motion: reduce`, Lenis not loaded, GSAP not loaded.
 
 ---
 
@@ -353,9 +329,7 @@ window.lenis = lenis; // exposed for external control
 Shared primitives exposed as `window.AnimHelpers`. All functions bail silently if GSAP / ScrollTrigger / SplitText are unavailable.
 
 ```js
-gsap.registerPlugin(SplitText);
-gsap.registerPlugin(ScrollTrigger);
-
+gsap.registerPlugin(SplitText, ScrollTrigger);
 const A = window.AnimHelpers = {};
 A.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 ```
@@ -366,13 +340,7 @@ Generic stagger fade-up bound to scroll visibility.
 
 ```js
 // target: Element | NodeList | Element[]
-// opts:
-//   y        — start offset in px (default 50)
-//   duration — seconds (default 0.85)
-//   ease     — GSAP ease string (default 'power3.out')
-//   stagger  — seconds between each element (default 0)
-//   start    — ScrollTrigger start (default 'top 82%')
-//   trigger  — override trigger element (default first element)
+// opts: y (50), duration (0.85), ease ('power3.out'), stagger (0), start ('top 82%'), trigger
 
 gsap.set(els, { y: opts.y ?? 50, opacity: 0 });
 gsap.to(els, {
@@ -390,7 +358,7 @@ gsap.to(els, {
 
 ### `A.splitReveal(target, opts)`
 
-SplitText characters rise from below a line mask (masking creates the "type appearing" effect).
+SplitText characters rise from below a line mask — the "type appearing" effect.
 
 ```js
 // opts: duration (0.95), stagger (0.025), start ('top 82%')
@@ -398,8 +366,8 @@ SplitText characters rise from below a line mask (masking creates the "type appe
 const split = new SplitText(target, {
   type: 'chars,lines',
   mask: 'lines',
-  linesClass: 'split-line',  // .split-line CSS fix in nav.css prevents descender clip
-  charsClass: 'split-char'
+  linesClass: 'split-line',   // CSS in nav.css prevents descender clipping
+  charsClass:  'split-char'
 });
 gsap.set(split.chars, { yPercent: 110 });
 gsap.to(split.chars, {
@@ -414,7 +382,7 @@ return split;
 
 ### `A.kenBurns(target, opts)`
 
-Image starts slightly zoomed in (~6%) and eases to 1:1 scale on scroll entry.
+Image starts slightly zoomed in and eases to natural scale on scroll entry.
 
 ```js
 // opts: from (1.06), trigger
@@ -428,7 +396,7 @@ gsap.fromTo(target,
 
 ### `A.parallax(target, opts)`
 
-Scrub-tied vertical drift.
+Scrub-tied vertical drift while element is in view.
 
 ```js
 // opts: distance (-60), scrub (0.6), trigger
@@ -446,7 +414,7 @@ gsap.to(target, {
 
 ### `A.heroReveal(config)`
 
-Choreographed hero entrance: kicker fade → name SplitText rise → sub fade. Waits for `document.fonts.ready` so SplitText measures lines on final layout.
+Choreographed hero entrance: kicker → name (SplitText) → supporting elements. Waits for `document.fonts.ready` so SplitText measures lines on final layout.
 
 ```js
 // config: { name: '.hero-name', sub: '.hero-sub', kick: '.hero-kicker' }
@@ -454,14 +422,9 @@ Choreographed hero entrance: kicker fade → name SplitText rise → sub fade. W
 const split = new SplitText(heroName, { type: 'chars,lines', mask: 'lines', ... });
 const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-// kicker: 0.15s delay, from y:12 opacity:0
 tl.fromTo(heroKick, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6 }, 0.15);
-
-// name chars: stagger 0.022, 1.0s, yPercent 110→0
 gsap.set(split.chars, { yPercent: 110 });
 tl.to(split.chars, { yPercent: 0, duration: 1.0, stagger: 0.022 }, 0.25);
-
-// sub: overlaps end of name, from y:16 opacity:0
 tl.fromTo(heroSub, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.3');
 ```
 
@@ -473,7 +436,7 @@ Calls `ScrollTrigger.refresh()` on both `load` and `document.fonts.ready` so tri
 
 ## 7. PAGE ANIMATION PATTERN
 
-Each page has a corresponding `js/pages/[page].js` that calls `AnimHelpers` primitives in a structured `init()` function. The pattern is consistent:
+Each page has `js/pages/[page].js` that calls `AnimHelpers` primitives. The structure is consistent across all pages:
 
 ```js
 (function () {
@@ -482,7 +445,6 @@ Each page has a corresponding `js/pages/[page].js` that calls `AnimHelpers` prim
 
   function init() {
     if (A.reduced) return; // respect prefers-reduced-motion
-
     initHero();
     initSection1();
     initSection2();
@@ -498,7 +460,7 @@ Each page has a corresponding `js/pages/[page].js` that calls `AnimHelpers` prim
 })();
 ```
 
-### Section head reveal pattern (reused on every page)
+**Section header reveal pattern (reused on every page):**
 
 ```js
 function revealSectionHead(section) {
@@ -509,7 +471,7 @@ function revealSectionHead(section) {
 }
 ```
 
-### Grid stagger pattern
+**Grid stagger pattern:**
 
 ```js
 gsap.set(items, { y: 50, opacity: 0 });
@@ -525,26 +487,31 @@ gsap.to(items, {
 
 ## 8. PRELOADER (`js/preloader.js` + `css/preloader.css`)
 
-First-load only — skipped on internal navigation (sessionStorage flag `site-internal-nav`).
+Runs on first visit only — skipped on internal navigation (sessionStorage flag `site-internal-nav`).
 
-### Flow
+### Architecture
 
-1. Build a fixed overlay `#preloader.preloader` (black, z-index 9999), insert as first child of body. Add `body.preloader-active` (sets `overflow: hidden`).
-2. Pre-load both neon PNG images before starting.
-3. Find the page's resting neon image via `[data-preloader-target]` or fallback selectors. Wait for it to decode and lay out.
-4. Position `.preloader__neon` exactly over the page's resting neon (same `top/left/width/height`). Set `--reveal-x` / `--reveal-y` CSS vars to the neon's center point.
-5. Run **flicker sequence**: a timed sequence of swapping `img.src` between off and on PNGs:
-   ```
-   off 360ms → on 55ms → off 90ms → on 45ms → off 130ms → on 35ms → off 70ms → on 480ms (settle)
-   ```
-6. After settling, add `.preloader--revealing`. Animate `--hole` from 0 → 150 over 1.35s (`power3.inOut`) via GSAP. The CSS mask expands a soft-edged transparent disc from the neon's center.
-7. On complete, add `.preloader--gone` (fades to opacity 0 over 250ms), then remove from DOM.
+The preloader is a fixed full-viewport overlay (z-index 9999) that covers the page while it loads, then reveals the page underneath via an animated CSS mask. The specific visual inside the overlay — logo, wordmark, animation, image — is defined by the user in setup (see Section 18).
 
-### CSS Mask Mechanism
+**Fixed structure:**
+
+```js
+// 1. Build overlay and insert before body content
+const el = document.createElement('div');
+el.id = 'preloader';
+el.className = 'preloader';
+el.setAttribute('aria-hidden', 'true');
+document.body.insertBefore(el, document.body.firstChild);
+document.body.classList.add('preloader-active'); // overflow: hidden
+```
+
+**Reveal mechanism (CSS mask):**
+
+The overlay removes itself by expanding a soft-edged transparent circle from a configurable origin point. The origin is set via `--reveal-x` / `--reveal-y` CSS variables (in px or %). `--hole` is a unitless number animated by GSAP from 0 → 150 over ~1.35s.
 
 ```css
 .preloader--revealing {
-  --soft: 3; /* soft-edge width as percent */
+  --soft: 3;
   mask-image: radial-gradient(
     circle at var(--reveal-x) var(--reveal-y),
     transparent calc((var(--hole) - var(--soft)) * 1%),
@@ -553,98 +520,87 @@ First-load only — skipped on internal navigation (sessionStorage flag `site-in
 }
 ```
 
-`--hole` is a unitless number animated from 0 → 150. At 0 the overlay is fully opaque. At 150 the transparent circle extends beyond the viewport edges.
-
-### Neon image markup
-
-```html
-<img class="preloader__neon" src="img/neon-off-bluex.png" data-state="off" alt="">
+```js
+// Trigger reveal:
+el.classList.add('preloader--revealing');
+gsap.to(el, { '--hole': 150, duration: 1.35, ease: 'power3.inOut', onComplete: dismiss });
 ```
 
-The preloader loads `img/neon-bluex.png` (on) and `img/neon-off-bluex.png` (off). The page's resting neon should also use `neon-bluex.png` so they register pixel-for-pixel.
+**Dismiss:**
 
-Mark the page's resting neon with `data-preloader-target` to give the preloader an explicit hook:
-
-```html
-<img src="img/neon-bluex.png" data-preloader-target alt="">
+```js
+function dismiss(el) {
+  el.classList.add('preloader--gone'); // opacity: 0, transition: .25s
+  setTimeout(() => {
+    document.body.classList.remove('preloader-active');
+    el.remove();
+  }, 350);
+}
 ```
 
-**Bail conditions:** already run (element exists), arrived via internal nav (sessionStorage), `prefers-reduced-motion` (shows immediately, skips flicker).
+**Bail conditions:** element already exists, `sessionStorage('site-internal-nav') === 'true'`, `prefers-reduced-motion` (shows briefly then dismisses immediately).
+
+**Target element hook:** if the reveal should originate from a specific element on the page, mark it with `data-preloader-target`. The preloader will position its content over that element's bounding rect and set `--reveal-x` / `--reveal-y` to its center.
 
 ---
 
 ## 9. CUSTOM CURSOR (`js/cursor.js` + `css/cursor.css`)
 
-**Bail conditions:** `(pointer: coarse)` (touch device), `prefers-reduced-motion: reduce`, GSAP not loaded.
+**Bail conditions:** `(pointer: coarse)` touch device, `prefers-reduced-motion: reduce`, GSAP not loaded.
 
-### DOM elements created
+### Architecture
+
+Three DOM elements are appended to `<body>`:
 
 ```html
-<div class="cursor" aria-hidden="true"></div>       <!-- the dot -->
-<div class="cursor-ring" aria-hidden="true"></div>  <!-- the ring -->
-<canvas class="cursor-canvas" aria-hidden="true"></canvas> <!-- particle trail -->
+<div class="cursor" aria-hidden="true"></div>       <!-- main dot -->
+<div class="cursor-ring" aria-hidden="true"></div>  <!-- optional ring -->
+<canvas class="cursor-canvas" aria-hidden="true"></canvas> <!-- optional trail -->
 ```
 
-`body.has-custom-cursor` is added when active; CSS hides the native cursor.
+`body.has-custom-cursor` hides the native OS cursor via CSS.
 
-### Cursor motion
+**Motion (GSAP quickTo — avoids per-mousemove tween allocation):**
 
 ```js
 const xTo = gsap.quickTo(cursor, 'x', { duration: 0.4, ease: 'power3' });
 const yTo = gsap.quickTo(cursor, 'y', { duration: 0.4, ease: 'power3' });
-// ring uses same settings
-
-window.addEventListener('mousemove', (e) => {
-  xTo(e.clientX); yTo(e.clientY);
-  ringX(e.clientX); ringY(e.clientY);
-  // also spawns canvas particles every 6ms
-});
+window.addEventListener('mousemove', (e) => { xTo(e.clientX); yTo(e.clientY); });
 ```
 
-### Cursor states (via `data-cursor` attribute)
+**State system (via `data-cursor` attribute):**
 
-Add `data-cursor="[state]"` to any element. The cursor and ring gain `.is-[state]` on `mouseenter`:
+Add `data-cursor="[state]"` to any element. The cursor gains `.is-[state]` on `mouseenter`. The exact sizes and visual styles for each state are defined by the user in setup (see Section 18), but the states available are:
 
-| `data-cursor` value | Cursor size | Behaviour |
-|---------------------|-------------|-----------|
-| `view` | 96px | White, `mix-blend-mode: difference` |
-| `drag` | 96px | White, `mix-blend-mode: difference` |
-| `external` | 84px | White, `mix-blend-mode: difference` |
-| `email` | 84px | White, `mix-blend-mode: difference` |
-| `hover` | 36px | White, `mix-blend-mode: difference` |
+| State | Typical use |
+|-------|------------|
+| `hover` | Nav links, buttons |
+| `view` | Lightbox-triggering images |
+| `drag` | Draggable elements |
+| `external` | Links opening new tabs |
+| `email` | Email links |
 
-Default state: 14px filled circle in `--accent` colour.
+**Particle canvas trail (optional — defined in setup):**
+- Full-viewport canvas layered behind the cursor
+- HiDPI-aware sizing (`canvas.width = vw * devicePixelRatio`)
+- Particles are spawned on mousemove, rendered on the GSAP ticker
+- Color reads from `--accent` CSS var, updates on `data-theme` change via MutationObserver
 
-All `.ad[data-gallery]` elements are automatically given `data-cursor="view"` by cursor.js.
-
-### Canvas particle trail
-
-- Full-viewport canvas, `mix-blend-mode: screen` (dark mode) or `multiply` (light mode)
-- HiDPI-aware: `canvas.width = vw * devicePixelRatio`
-- Pool: max 1400 particles; spawn 4 per every 6ms of mouse movement
-- Each particle: random radial angle, speed 0.2–1.05, radius 0.45–1.55px, lifetime 850–1800ms, decay 0.99 per frame
-- Color: reads `--accent` from CSS and updates on `data-theme` change via MutationObserver
-
-### `window.cursorBurst(opts)`
-
-One-shot particle explosion from any script:
+**Public API:**
 
 ```js
-window.cursorBurst({
-  rect: element.getBoundingClientRect(), // scatter across an element's surface
-  count: 80                               // default 80
-});
+window.cursorBurst({ rect: element.getBoundingClientRect(), count: 80 });
 // OR
 window.cursorBurst({ x: 400, y: 300, count: 60 });
 ```
 
 ---
 
-## 10. LIGHTBOX (`js/pages/portfolio-lightbox.js` / `agents-lightbox.js`)
+## 10. LIGHTBOX (`js/pages/[page]-lightbox.js`)
 
-Both lightboxes share identical architecture. One instance per page.
+One lightbox instance per page. Both architecture and animation style are shared across all pages that use it.
 
-### Required HTML (add inside `.page`)
+### Required HTML (inside `.page`)
 
 ```html
 <div id="lightbox" class="lb" aria-hidden="true">
@@ -664,7 +620,7 @@ Both lightboxes share identical architecture. One instance per page.
 ```js
 const galleries = {
   'gallery-name': [
-    { src: 'img/ads/image.webp', hl: 'Headline.', meta: 'Campaign Name · Detail' },
+    { src: 'img/image.webp', hl: 'Headline.', meta: 'Caption · Detail' },
     ...
   ]
 };
@@ -674,20 +630,20 @@ const galleries = {
 
 ```html
 <div class="ad" data-gallery="gallery-name" data-index="0">
-  <img src="img/ads/image.webp" alt="">
+  <img src="img/image.webp" alt="">
 </div>
 ```
 
-### Open animation: Cinematic fold
+### Open animation
 
-1. The `.page` wrapper recedes: `scale(0.93)`, `filter: blur(10px)`, 0.7s
-2. Backdrop fades in: `#lightbox` opacity 0 → 1
-3. Source image is hidden (`opacity: 0`); a flying clone is positioned over it
+1. `.page` wrapper recedes: `scale(0.93)`, `filter: blur(10px)`, 0.7s
+2. Backdrop fades in
+3. Source image hidden; flying clone positioned over it at source rect
 4. Clone animates to fullscreen via a 3-phase GSAP timeline:
-   - **Anticipation:** `rotationX: -5`, `scale: 1.02` (0.28s, `sine.in`)
-   - **Fold out:** clone travels to target rect, `rotationX: 22`, `z: 220`, `boxShadow` grows (0.78s, `power3.inOut`); motion blur `blur(2.2px)` runs simultaneously
-   - **Unfold flat:** `rotationX: 0`, `z: 0` (0.7s, `expo.out`)
-5. Caption and chrome fade in last (0.45s)
+   - **Anticipation:** slight backward tilt (`rotationX: -5`, `scale: 1.02`)
+   - **Fold out:** travels to target rect with forward tilt, `z`-depth, motion blur, growing shadow
+   - **Unfold flat:** settles to `rotationX: 0`, `z: 0` with a gentle `expo.out`
+5. Caption and chrome fade in last
 
 ```js
 gsap.set(clone, {
@@ -699,25 +655,20 @@ gsap.set(clone, {
 
 ### Close animation
 
-Reverse of open: chrome fades, flying clone animates back to the source tile's current rect, `.page` returns to `scale(1)`, `blur(0)`.
+Chrome fades, flying clone animates back to the source tile's rect, `.page` restores to `scale(1) blur(0)`.
 
 ### Prev / Next: 3D card flip
 
-```js
-// Outgoing: x ±32vw, rotationY ±16°, blur(6px), opacity 0, 0.45s power2.in
-// Incoming: starts on opposite side pre-rotated, settles to x:0 rotationY:0 blur(0) opacity:1, 0.65s power3.out
-```
+Outgoing image slides and rotates off (`rotationY ±16°`, motion blur); incoming starts pre-rotated on the opposite side and settles flat.
 
 ### Keyboard
 
 - `Escape` → close
-- `ArrowLeft` → prev
+- `ArrowLeft` → previous
 - `ArrowRight` → next
 - Click outside image → close
 
-### Body state
-
-`body.lb-open` is added when lightbox opens and removed on close. `smooth-scroll.js` watches this class to pause/resume Lenis.
+**Body state:** `body.lb-open` is toggled by the lightbox. `smooth-scroll.js` watches this class to pause/resume Lenis.
 
 ---
 
@@ -726,12 +677,12 @@ Reverse of open: chrome fades, flying clone animates back to the source tile's c
 | Attribute | Value | Where used | Effect |
 |-----------|-------|------------|--------|
 | `data-theme` | `dark` / `light` | `<html>` | Activates CSS variable overrides in `theme.css` |
-| `data-cursor` | `view / drag / external / email / hover` | Any element | Cursor enters named state on hover |
-| `data-cursor-text` | string | Any element with `data-cursor` | Optional tooltip text |
-| `data-preloader-target` | (no value) | Page neon `<img>` | Gives preloader explicit landing target |
-| `data-gallery` | gallery name string | `.ad` elements | Links image to a gallery array in lightbox JS |
+| `data-cursor` | `hover / view / drag / external / email` | Any element | Cursor enters named state on hover |
+| `data-cursor-text` | string | Any element with `data-cursor` | Optional label shown near cursor |
+| `data-preloader-target` | (no value) | Landmark image in hero | Preloader positions content over this element and reveals from its center |
+| `data-gallery` | gallery name string | `.ad` elements | Links element to a gallery in lightbox JS |
 | `data-index` | integer | `.ad` elements | Index into gallery array |
-| `data-active` | nav key string | `.rail` (set by site-shell) | Marks active state on nav rail |
+| `data-active` | nav key string | Set on `.rail` by site-shell | Drives active nav link state |
 
 ---
 
@@ -739,26 +690,27 @@ Reverse of open: chrome fades, flying clone animates back to the source tile's c
 
 | Feature | Implementation |
 |---------|---------------|
-| Reduced motion | All GSAP animations bail if `matchMedia('prefers-reduced-motion: reduce').matches`. Preloader skips flicker. Lenis skips entirely. |
-| Touch devices | Custom cursor (`pointer: coarse`) and canvas trail hidden |
-| ARIA | Preloader, cursor, canvas: `aria-hidden="true"`. Lightbox: `aria-hidden` toggled on open/close. Hamburger: `aria-label` |
+| Reduced motion | All GSAP animations guard with `matchMedia('prefers-reduced-motion: reduce').matches`. Preloader dismisses immediately. Lenis smooth scroll skips entirely. |
+| Touch devices | Custom cursor and canvas trail hidden via `@media (pointer: coarse)` |
+| ARIA | Preloader, cursor, canvas: `aria-hidden="true"`. Lightbox: `aria-hidden` toggled on open/close. All buttons have `aria-label`. |
 | Noscript | Each page includes a `<noscript>` block with plain HTML navigation |
-| Semantic markup | `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, `<article>` used correctly |
-| Focus management | Native browser focus; no custom focus traps |
+| Semantic markup | `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, `<article>` used appropriately |
 | Keyboard | Lightbox: Escape / ArrowLeft / ArrowRight fully wired |
 
 ---
 
 ## 13. THEME SYSTEM
 
-Theme is stored in `localStorage` as `theme` (`dark` or `light`).
+Theme persists in `localStorage` as `theme` (`dark` or `light`). Default is `dark`.
 
-**Anti-flash bootstrap** (inline, before any CSS loads):
+**Anti-flash bootstrap** (must be the very first `<script>` in `<head>`):
+
 ```html
 <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
 ```
 
-**Switching** (`theme.js`, runs at end of `<body>`):
+**Toggle handler** (`theme.js`, at end of `<body>`):
+
 ```js
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('#theme-toggle');
@@ -769,56 +721,57 @@ document.addEventListener('click', (e) => {
 });
 ```
 
-**CSS overrides** (`theme.css`) use `html[data-theme="light"]` selectors which have higher specificity than `:root`, so they win regardless of file load order.
+**CSS overrides** (`theme.css`): use `html[data-theme="light"]` selectors — higher specificity than `:root`, wins regardless of file order.
 
-`html { scrollbar-gutter: stable; }` is set in `theme.css` to prevent viewport-width jumps when `overflow: hidden` is applied (preloader, lightbox).
+`html { scrollbar-gutter: stable; }` prevents viewport-width jumps when `overflow: hidden` is applied (preloader, lightbox).
 
 ---
 
 ## 14. SCROLL TRIGGER DEFAULTS
 
-All scroll-triggered animations use these consistent settings unless noted otherwise:
-
 ```js
 scrollTrigger: {
   trigger: element,
-  start: 'top 82%',           // fires when element top crosses 82% down from viewport top
-  toggleActions: 'play none none reverse'  // plays on enter, reverses on leave-back
+  start: 'top 82%',
+  toggleActions: 'play none none reverse'
 }
 ```
 
-Trigger thresholds by element type:
-- Hero elements: immediate (no ScrollTrigger; timeline plays on page load)
-- Section numbers / small labels: `top 88%`
-- Section titles (SplitText): `top 82%`
-- Body paragraphs: `top 80%`
-- Cards / grid items: `top 78%`
-- Images (KenBurns): `top 80%`
+**Trigger thresholds by element type:**
+
+| Element type | `start` value |
+|---|---|
+| Hero (on load, no scroll trigger) | — immediate |
+| Section numbers, small labels | `top 88%` |
+| Section titles (SplitText) | `top 82%` |
+| Body paragraphs | `top 80%` |
+| Cards / grid items | `top 78%` |
+| Images (KenBurns) | `top 80%` |
 
 ---
 
 ## 15. SCRIPT LOADING RULES
 
-1. The inline theme setter must be the **first script in `<head>`** — no exceptions. It prevents flash of wrong theme.
-2. `site-shell.js` must be **deferred** and come before GSAP so the custom elements are defined before any animation script tries to query `.rail` or `.foot`.
-3. GSAP and its plugins load **before** Lenis (Lenis's GSAP integration requires GSAP to exist).
-4. `smooth-scroll.js`, `cursor.js`, `animations.js` load **after** GSAP + Lenis.
-5. Page-specific JS loads **last**.
-6. `theme.js` loads at **end of body** (not in head) so `#theme-toggle` exists when the listener is added.
-7. All CDN scripts and local scripts use `defer` — they execute in source order after DOM parsing.
+1. Inline theme setter — **first script in `<head>`, always**. Prevents flash of wrong theme.
+2. `site-shell.js` — deferred, before GSAP. Custom elements must exist before animation scripts query the nav.
+3. GSAP core and plugins — before Lenis (Lenis GSAP integration requires GSAP).
+4. `cursor.js`, `smooth-scroll.js`, `animations.js` — after GSAP + Lenis.
+5. Page-specific JS — always last.
+6. `theme.js` — end of `<body>`, not `<head>`, so `#theme-toggle` exists when the listener attaches.
+7. All scripts use `defer` — execute in source order, zero render-blocking.
 
 ---
 
 ## 16. PERFORMANCE NOTES
 
-- All scripts: `defer` — zero render-blocking
-- Canvas HiDPI: `canvas.width = vw * devicePixelRatio`; transform scaled to match
-- Particle pool capped at 1400; pooled spawn prevents GC spikes
-- `gsap.quickTo()` for cursor — avoids creating tween objects on every mousemove
+- All scripts `defer` — zero render-blocking
+- `gsap.quickTo()` for cursor — no new tween object per mousemove
+- `gsap.ticker.lagSmoothing(0)` — prevents GSAP from compressing missed frames (keeps scroll linear)
 - `ScrollTrigger.refresh()` called on both `window load` and `document.fonts.ready` to catch post-font layout shifts
-- `gsap.ticker.lagSmoothing(0)` — prevents GSAP from compressing missed frames into one large jump (keeps scroll feel linear)
-- Lightbox images: flying clone reuses the `src` already in the DOM; no extra network request
-- `will-change: transform` on cursor and `.barba-band` elements only (CSS hint, not overused)
+- Canvas HiDPI: `canvas.width = vw * devicePixelRatio`; ctx transform scaled to match
+- Lightbox flying clone reuses the `src` already in DOM — no extra network request
+- `will-change: transform` used only on elements that actively animate position (cursor, transition overlays) — not added speculatively
+- `scrollbar-gutter: stable` keeps layout stable when `overflow: hidden` is applied
 
 ---
 
@@ -827,10 +780,99 @@ Trigger thresholds by element type:
 Given a design spec (HTML or PDF):
 
 1. Copy the HTML template from Section 3. Set the correct `active` attribute and `<title>`.
-2. Write the `:root` CSS custom properties in the inline `<style>` block per the design's token system.
-3. Build page HTML inside `<div class="page">`. Use semantic section structure with `.s-num` / `.s-title` heading patterns for section headers.
-4. For any image gallery, add `data-gallery="[name]" data-index="[n]"` to clickable `.ad` elements and add the matching gallery array to the lightbox JS file.
-5. For the preloader to land correctly, add `data-preloader-target` to the hero neon image.
-6. Create `js/pages/[page].js`: wire `AnimHelpers` calls to the page's DOM selectors. Follow the `init()` pattern: guard with `if (A.reduced) return;`, call `A.refreshOnLoad()` at the end.
-7. Add `data-cursor="[state]"` attributes to interactive elements per the table in Section 11.
-8. No additional CSS files are needed for most pages — the token system in the inline `<style>` block combined with the global sheets handles all structural styling.
+2. Fill in `:root` CSS custom properties from the design's color and type tokens.
+3. Build page content inside `<div class="page">`. Use `.s-num` / `.s-title` class names for section headers so `revealSectionHead()` works without modification.
+4. For image galleries: add `data-gallery` and `data-index` to `.ad` trigger elements; add matching gallery arrays to the lightbox JS file.
+5. Mark the hero's primary visual with `data-preloader-target` if you want the preloader to reveal from that element's position.
+6. Create `js/pages/[page].js` using the `init()` pattern. Guard with `if (A.reduced) return;`. Call `A.refreshOnLoad()` at the end.
+7. Add `data-cursor` attributes to interactive elements per the table in Section 11.
+8. No additional CSS files needed for most pages — the token system plus global sheets covers all structural styling.
+
+---
+
+## 18. SITE SETUP — AI PROMPT
+
+> **INSTRUCTION FOR AI:** Before writing any site-specific code for the cursor, preloader, or page transitions, stop and ask the user the following questions. Collect all answers, then implement everything at once. Do not assume defaults — ask even if an option seems obvious.
+
+---
+
+**When you are ready to build, ask the user:**
+
+---
+
+### Cursor
+
+> **What kind of cursor do you want?**
+>
+> Options (pick one or describe your own):
+> - **A** — Simple dot. Small filled circle that follows the mouse with a slight lag. Grows slightly on hover. No trail.
+> - **B** — Dot + ring. A dot at the pointer position and a larger ring that follows with more lag, inverting colors it passes over (`mix-blend-mode: difference`).
+> - **C** — Dot + ring + particle trail. Same as B, with a canvas-rendered trail of small particles in your accent color that dissipate behind the cursor.
+> - **D** — None. Use the default OS cursor throughout.
+> - **Custom** — Describe what you want.
+>
+> For options A–C: should clicking trigger a burst of particles from the click point? (yes / no)
+
+---
+
+### Preloader
+
+> **Do you want a preloader?** (yes / no)
+>
+> If yes:
+>
+> - **What should be shown while the page loads?** Describe the visual — for example: your logo, a wordmark, an animated icon, a loading bar, a percentage counter, a full-screen illustration, or just a solid color screen with nothing.
+> - **Where should the reveal originate from?** Options: center of screen, top-left corner, the position of your logo/hero image on the page, or custom coordinates.
+> - **What style of reveal?** Options: expanding circle that wipes the overlay away, fade out, slide up, slide left, or describe your own.
+> - **Any intro animation before the reveal?** For example: a flickering effect, a count-up, a typewriter, or just show the element and immediately reveal.
+
+---
+
+### Page Transitions
+
+> **What should happen when the user navigates between pages?**
+>
+> Options:
+> - **A** — None. Native browser page load, no animation.
+> - **B** — Simple fade. Current page fades out, next page fades in.
+> - **C** — Slide. Pages slide left/right based on nav direction.
+> - **D** — Color wipe. Colored panels sweep across the screen (like a curtain), then dissolve to reveal the new page.
+> - **E** — Scale. Current page scales down and blurs while the new page scales up into view.
+> - **Custom** — Describe what you want.
+>
+> If you choose any animated option: should a destination label (page name) appear during the transition? (yes / no)
+
+---
+
+### Scroll Feel
+
+> **How should scrolling feel?**
+>
+> - **A** — Native. Standard browser scroll, no modification.
+> - **B** — Smooth. Lenis smooth scroll with a gentle glide (1.15s duration, exponential easing).
+> - **C** — Smooth, slower. More cinematic feel (1.6s duration).
+> - **D** — Smooth, snappy. Faster settle (0.7s duration).
+
+---
+
+### Content Animations
+
+> **How should content animate in as the user scrolls?**
+>
+> - **A** — Nothing. All content is visible immediately.
+> - **B** — Fade up. Elements fade in and rise slightly as they enter the viewport.
+> - **C** — Fade up with stagger. Groups of elements (cards, list items) appear one after another with a short delay between each.
+> - **D** — Fade up + type reveal. Headlines use the SplitText character-by-character rising animation. Body content fades up.
+> - **Custom** — Describe what you want.
+
+---
+
+### Dark / Light Mode
+
+> **Should the site support a dark/light mode toggle?** (yes / no)
+>
+> If yes: which should be the default? (dark / light)
+
+---
+
+Once you have answers to all of the above, implement the full site.

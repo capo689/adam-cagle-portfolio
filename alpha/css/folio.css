@@ -91,8 +91,9 @@
   background: var(--paper);
 }
 .sh-cover img {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; display: block; z-index: 2;
+  position: absolute; inset: 14px 18px; width: calc(100% - 36px); height: calc(100% - 28px);
+  object-fit: contain; object-position: center; display: block; z-index: 2;
+  filter: drop-shadow(0 8px 28px rgba(0,0,0,0.32));
 }
 .sh-cover .cover-fallback {
   position: absolute; inset: 0; z-index: 1;

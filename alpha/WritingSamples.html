@@ -153,9 +153,10 @@
     border-bottom: 1px solid var(--rule);
   }
   .sample-card-media img {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; display: block; z-index: 2;
+    position: absolute; inset: 12px 18px; width: calc(100% - 36px); height: calc(100% - 24px);
+    object-fit: contain; object-position: center; display: block; z-index: 2;
     transition: transform .6s cubic-bezier(.2,.7,.2,1);
+    filter: drop-shadow(0 6px 24px rgba(0,0,0,0.28));
   }
   .sample-card:hover .sample-card-media img { transform: scale(1.03); }
 
@@ -437,7 +438,7 @@
             <p class="cf-sub">A Chad Cruz Zombie Adventure</p>
             <span class="cf-corner">Sample 01</span>
           </div>
-          <img src="images/writing-samples/ship-happens-thumb.png" alt="Ship Happens writing sample" loading="lazy" onerror="this.style.display='none'">
+          <img src="img/books/ship-happens.png" alt="Ship Happens writing sample" loading="lazy">
         </div>
         <div class="sample-card-body">
           <div class="sc-eyebrow">Comedic Fiction</div>
@@ -458,7 +459,7 @@
             <p class="cf-sub">Every Civilization Runs on a Deal. It’s Time to Renegotiate.</p>
             <span class="cf-corner">Sample 02</span>
           </div>
-          <img src="images/writing-samples/the-deal-thumb.png" alt="The Deal writing sample" loading="lazy" onerror="this.style.display='none'">
+          <img src="img/books/the-deal.jpg" alt="The Deal writing sample" loading="lazy">
         </div>
         <div class="sample-card-body">
           <div class="sc-eyebrow">Narrative Nonfiction</div>
@@ -479,7 +480,7 @@
             <p class="cf-sub">An Accounting of Gender Roles</p>
             <span class="cf-corner">Sample 03</span>
           </div>
-          <img src="images/writing-samples/the-ledger-thumb.png" alt="The Ledger writing sample" loading="lazy" onerror="this.style.display='none'">
+          <img src="img/books/the-ledger.jpg" alt="The Ledger writing sample" loading="lazy">
         </div>
         <div class="sample-card-body">
           <div class="sc-eyebrow">Narrative Nonfiction</div>
@@ -499,7 +500,7 @@
             <h3 class="cf-title">The Vampire’s Babysitter</h3>
             <span class="cf-corner">Sample 04</span>
           </div>
-          <img src="images/writing-samples/the-vampires-babysitter-thumb.png" alt="The Vampire’s Babysitter writing sample" loading="lazy" onerror="this.style.display='none'">
+          <img src="img/Vampire.png" alt="The Vampire’s Babysitter writing sample" loading="lazy">
         </div>
         <div class="sample-card-body">
           <div class="sc-eyebrow">Dark Historical Fiction</div>

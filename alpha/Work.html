@@ -298,6 +298,41 @@
   }
   .verb-col .kill .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
 
+  /* ─── MOVEMENT DIVIDER (Sunset) ─── */
+  .sm-mvmt {
+    display: flex; align-items: baseline; gap: 16px;
+    padding: 16px 0 4px;
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+  }
+  .sm-mvmt:first-child { padding-top: 0; }
+  .sm-mvmt .roman { color: var(--accent); font-weight: 500; }
+  .sm-mvmt .rule { flex: 1; height: 1px; background: var(--rule); }
+  .sm-mvmt .label { color: var(--fg-2); }
+
+  /* ─── IMAGE-PULL PAIR (Sunset) ─── */
+  .sm-pair {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 28px; align-items: stretch;
+  }
+  .sm-pair.reverse > .ad { order: 2; }
+  .sm-pair.apex { grid-template-columns: 1.05fr 0.95fr; gap: 36px; }
+  .sm-pair > .pull {
+    margin: 0;
+    display: flex; flex-direction: column;
+    padding: 44px 40px 36px;
+  }
+  .sm-pair > .pull .pull-line {
+    font-size: clamp(34px, 4vw, 54px);
+    max-width: none;
+    margin: 0 0 22px;
+  }
+  .sm-pair.apex > .pull .pull-line {
+    font-size: clamp(40px, 4.8vw, 64px);
+  }
+  .sm-pair > .pull .pull-body { font-size: 17px; line-height: 1.6; max-width: none; }
+  .sm-pair > .pull .pull-sig { margin-top: auto; }
+
   /* ─── SUB-BRAND ARCHITECTURE (Sunset) ─── */
   .sm-arch {
     display: grid; grid-template-columns: 1fr 1fr;
@@ -305,15 +340,24 @@
     border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
   }
   .sm-arch-cell {
-    background: var(--bg-soft); padding: 36px 32px 30px;
+    background: var(--bg-soft);
+    padding: 44px 38px 38px;
     display: flex; flex-direction: column; gap: 12px;
+    transition: background .25s;
   }
+  .sm-arch-cell:hover { background: var(--bg); }
   .sm-arch-cell .num { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
-  .sm-arch-cell .name { font-family: var(--sans); font-weight: 700; font-size: clamp(24px, 2.6vw, 36px); letter-spacing: -0.03em; line-height: 1; margin: 0; }
+  .sm-arch-cell .name { font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 2.8vw, 40px); letter-spacing: -0.03em; line-height: 1; margin: 2px 0 0; }
   .sm-arch-cell .name .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
-  .sm-arch-cell .line { font-family: var(--italic); font-style: italic; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.15; letter-spacing: -0.015em; margin: 6px 0 4px; color: var(--fg); text-wrap: balance; }
+  .sm-arch-cell .line { font-family: var(--italic); font-style: italic; font-size: clamp(24px, 2.6vw, 36px); line-height: 1.12; letter-spacing: -0.015em; margin: 8px 0 6px; color: var(--fg); text-wrap: balance; }
   .sm-arch-cell .line em { color: var(--accent); font-style: italic; }
-  .sm-arch-cell .body { font-size: 16px; line-height: 1.6; color: var(--fg-2); padding-top: 12px; border-top: 1px solid var(--rule); margin: 0; }
+  .sm-arch-cell .body { font-size: 17px; line-height: 1.6; color: var(--fg-2); padding-top: 14px; border-top: 1px solid var(--rule); margin: 0; }
+  .sm-arch-cell .sig { margin-top: auto; padding-top: 22px; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); display: flex; justify-content: space-between; gap: 12px; }
+
+  /* ─── LIVE SITE TILE (Sunset) ─── */
+  .sm-site { display: block; text-decoration: none; cursor: pointer; }
+  .sm-site img { transition: transform .8s ease, filter .3s ease; }
+  .sm-site:hover img { filter: brightness(1.05); }
 
   /* ─── HF COVER WRAP (clickable book/screen cover) ─── */
   .hf-cover-wrap {
@@ -457,6 +501,9 @@
     .ad-grid.g-3 { grid-template-columns: 1fr 1fr; }
     .hl-grid { grid-template-columns: 1fr 1fr; }
     .verbs { grid-template-columns: 1fr; }
+    .sm-pair, .sm-pair.apex { grid-template-columns: 1fr; gap: 14px; }
+    .sm-pair.reverse > .ad { order: 0; }
+    .sm-pair > .pull { padding: 36px 28px 28px; }
     .sm-arch { grid-template-columns: 1fr; }
     .extra-grid { grid-template-columns: 1fr; }
   }
@@ -726,69 +773,123 @@
 
       <div class="c-body">
 
-        <div class="case-grid">
-          <div class="case-cell">
-            <div class="cell-label">Problem</div>
-            <p class="cell-body">A legendary West Hollywood hotel needed to evolve over two decades without losing the rock-and-roll soul that made it famous. Current without chasing trends. Polished without being sterile. Exclusive without feeling corporate.</p>
+        <!-- ─── MOVEMENT I · THE APEX ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">I</span>
+          <span class="rule"></span>
+          <span class="label">The Apex · The Gallery Headline</span>
+        </div>
+
+        <div class="sm-pair apex reverse">
+          <div class="ad" data-gallery="sunset" data-index="0">
+            <img src="img/ads/sunset-legendary-nights.webp" alt="Yes That Beautiful · Sunset Marquis hotel print ad, Magritte-style gallery framing, West Hollywood">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Yes, that beautiful.</span></div></div>
           </div>
-          <div class="case-cell">
-            <div class="cell-label">Insight</div>
-            <p class="cell-body">The voice had to feel like the hotel already knew you. Understated. Confident. Never trying too hard. The best rock-and-roll doesn't announce itself. The brand voice had to work the same way — earned, not performed.</p>
-          </div>
-          <div class="case-cell">
-            <div class="cell-label">Line / Idea</div>
-            <div class="cell-line">Legendary Nights Begin at Sunset.</div>
-            <p class="cell-body" style="font-size:13.5px;color:var(--fg-3);margin-top:4px;">Ten years on the door, the print, the email, the sign-off.</p>
+          <div class="pull">
+            <span class="pull-format">The Headline · <em>Gallery</em></span>
+            <p class="pull-line">Yes, <em>that</em> beautiful.</p>
+            <div class="pull-body">
+              <p>Two words and a yes. The launch ad for the renovated suites: a hotel room framed like a museum painting, witnessed by a man in a bowler hat. Room tours, annotated by Magritte.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Full-Page Print</span>
+            </div>
           </div>
         </div>
 
-        <!-- selected lines / range -->
-        <div class="pull">
-          <span class="pull-format">Selected Lines · <em>Range</em></span>
-          <p class="pull-line"><em>Yes,</em> that beautiful.</p>
-          <div class="pull-body">
-            <p>Two words and a yes. The launch ad for the renovated suites: a hotel room framed like a museum painting, witnessed by a man in a bowler hat. Room tours, annotated by Magritte.</p>
-            <p><em>Unique. Even by Hollywood standards.</em> — The format where most hotel copy goes to die under bullet points. The headline carries the brand. The body keeps Cavatina, the Spa, and Bar 1200 sounding like themselves, not like amenities on a checklist.</p>
-          </div>
-          <div class="pull-sig"><span>Print · GDS · Email · Web</span><span>20 Years</span></div>
+        <!-- ─── MOVEMENT II · THE RANGE ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">II</span>
+          <span class="rule"></span>
+          <span class="label">The Range · Print Campaigns</span>
         </div>
 
-        <!-- sub-brand architecture -->
+        <div class="sm-pair">
+          <div class="ad" data-gallery="sunset" data-index="1">
+            <img src="img/ads/sunset-yes-that-beautiful.jpg" alt="Legendary Nights Begin at Sunset · Sunset Marquis property tagline print ad, rock star double exposure">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Legendary Nights Begin at Sunset.</span></div></div>
+          </div>
+          <div class="pull">
+            <span class="pull-format">The Tagline · <em>Rock &amp; Roll</em></span>
+            <p class="pull-line"><em>Legendary</em> nights begin at Sunset.</p>
+            <div class="pull-body">
+              <p>Ten years on the door, the print, the email, the sign-off. The line the rest of the brand ladders up to.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Full-Page Print</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm-pair reverse">
+          <div class="ad" data-gallery="sunset" data-index="2">
+            <img src="img/ads/ACM-Awards-2025.jpg" alt="Sure it's California but it's the southern part · Sunset Marquis ACM Awards Guide full-page print ad">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Sure, it's California.</span><span>ACM</span></div></div>
+          </div>
+          <div class="pull">
+            <span class="pull-format">The Wink · <em>ACM Awards Guide</em></span>
+            <p class="pull-line">Sure, it's California, but it's the <em>southern</em> part.</p>
+            <div class="pull-body">
+              <p>The American Country Music Awards Guide Ad. A rock-and-roll hotel walking into a country bar and fitting right in.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Full-Page Print · ACM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm-pair">
+          <div class="ad" data-gallery="sunset" data-index="3">
+            <img src="img/ads/SMBrochure.jpg" alt="Unique Even by Hollywood Standards · Sunset Marquis GDS one-sheet travel agent sell sheet" style="object-fit: contain; background: var(--bg-soft);">
+            <div class="overlay"><div class="overlay-inner"><span class="hl">Unique. Even by Hollywood standards.</span><span>GDS One-Sheet</span></div></div>
+          </div>
+          <div class="pull">
+            <span class="pull-format">The B2B · <em>GDS One-Sheet</em></span>
+            <p class="pull-line">Unique. Even by <em>Hollywood</em> standards.<sup style="font-size:0.4em;vertical-align:super;letter-spacing:0;">®</sup></p>
+            <div class="pull-body">
+              <p>The format where most hotel copy goes to die under bullet points. The headline carries the brand. The body keeps Cavatina, the Spa, and Bar 1200 sounding like themselves, not like amenities on a checklist.</p>
+            </div>
+            <div class="pull-sig">
+              <span>Trade Sell Sheet</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── MOVEMENT III · THE ARCHITECTURE ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">III</span>
+          <span class="rule"></span>
+          <span class="label">The Architecture · Sub-Brands</span>
+        </div>
+
         <div class="sm-arch">
           <div class="sm-arch-cell">
             <span class="num">// Restaurant</span>
             <h4 class="name">Cavatina</h4>
             <p class="line">Beauty in <em>simplicity.</em></p>
             <p class="body">The restaurant in its own register. Chef Luis Morales. Garden-set. Californian with an Italian twist. Menus, web, in-room dining, and private events written so the food sounds the way it tastes. The restaurant speaks for itself, not through the hotel's mouth.</p>
+            <div class="sig"><span>Sub-Brand</span></div>
           </div>
           <div class="sm-arch-cell">
             <span class="num">// Concert Series</span>
             <h4 class="name">LIVE@<span class="it">SunsetMarquis</span></h4>
             <p class="line">For those about to rock, we put you on <em>stage.</em></p>
             <p class="body">Named, branded, and written from the first show. A concert series staged at the hotel. Year one headlined Gary Clark Jr., the season before he won his first Grammys.</p>
+            <div class="sig"><span>Sub-Brand</span></div>
           </div>
         </div>
 
-        <!-- gallery -->
-        <div class="ad-grid g-3">
-          <div class="ad" data-gallery="sunset" data-index="0"><img src="img/ads/sunset-legendary-nights.webp" alt="Sunset Marquis · Legendary Nights Begin at Sunset campaign"><div class="overlay"><div class="overlay-inner"><span class="hl">Legendary Nights.</span><span>Brand</span></div></div></div>
-          <div class="ad" data-gallery="sunset" data-index="1"><img src="img/ads/sunset-yes-that-beautiful.jpg" alt="Sunset Marquis · Yes, that beautiful renovated suite campaign"><div class="overlay"><div class="overlay-inner"><span class="hl">Yes, that beautiful.</span><span>Suites</span></div></div></div>
-          <div class="ad" data-gallery="sunset" data-index="2"><img src="img/ads/Sunset-Marquis.jpg" alt="Sunset Marquis brand campaign"><div class="overlay"><div class="overlay-inner"><span class="hl">Sunset Marquis.</span><span>Brand</span></div></div></div>
+        <!-- ─── MOVEMENT IV · THE BRAND AT WORK ─── -->
+        <div class="sm-mvmt">
+          <span class="roman">IV</span>
+          <span class="rule"></span>
+          <span class="label">The Brand at Work · Live Site</span>
         </div>
 
-        <!-- outcome -->
-        <div class="case-grid-2">
-          <div class="case-cell">
-            <div class="cell-label">System</div>
-            <p class="cell-body">Agency of Record since 2004. Web copy, email campaigns, seasonal promotions, Cavatina restaurant, The SPA, villa copy, Bar 1200, LIVE@SunsetMarquis concert series, Sunset Marquis Motorcycle Club, print, in-room materials, display ads, brand voice governance, and ongoing creative direction. Adam wrote emails and banners for 15 years and now approves AI-assisted email and banner work.</p>
-          </div>
-          <div class="case-cell">
-            <div class="cell-label">Outcome</div>
-            <div class="cell-outcome">$125K/month in email revenue. 30% ROAS lift when creative returned in-house.</div>
-            <div class="cell-meta">// Why it matters now</div>
-            <p class="cell-body">This is proof of voice governance over time: keeping a brand recognizable across years, channels, teams, and now AI-assisted workflows. The email program contributes approximately $125,000 per month in attributed revenue. Banner ROAS rose 30 percent after creative direction was brought back from the media company.</p>
-          </div>
-        </div>
+        <a class="hf-cover-wrap sm-site" href="https://sunsetmarquis.com" target="_blank" rel="noopener" data-cursor="external" data-cursor-text="Visit">
+          <img src="img/ads/Sunset-Marquis.jpg" alt="SunsetMarquis.com · live website brand system by Adam R. Cagle, Agency689, West Hollywood">
+          <div class="overlay"><div class="overlay-inner"><span class="hl">Visit sunsetmarquis.com &rarr;</span><span>The Brand Operating in the Wild</span></div></div>
+        </a>
 
       </div>
     </div>

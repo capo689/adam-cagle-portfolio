@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brand Voice Systems | Adam R. Cagle</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
+<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- SEO -->
+<meta name="description" content="Tone guides, brand books, messaging frameworks, persona scaffolds, SKILL.md files, and AI voice governance systems for brands and marketing teams.">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<link rel="canonical" href="https://adamcagle.com/alpha/BrandVoice.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="Brand Voice Systems | Adam R. Cagle">
+<meta property="og:description" content="Tone guides, brand books, messaging frameworks, persona scaffolds, SKILL.md files, and AI voice governance systems for brands and marketing teams.">
+<meta property="og:url" content="https://adamcagle.com/alpha/BrandVoice.html">
+<meta property="og:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Brand Voice Systems | Adam R. Cagle">
+<meta name="twitter:description" content="Tone guides, brand books, messaging frameworks, persona scaffolds, and AI voice governance systems.">
+<meta name="twitter:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #4D8BE8;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02"; overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 36px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-title {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(48px, 8.5vw, 130px);
+    line-height: 0.86; letter-spacing: -0.05em; margin: 0 0 40px;
+  }
+  .hero-intro {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(20px, 2vw, 28px); line-height: 1.45;
+    color: var(--fg-2); max-width: 70ch; margin: 0;
+  }
+  .hero-intro em { color: var(--accent); font-style: italic; }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 64px; padding: 72px 0; border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: 0; }
+  .s-head { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 14px; }
+  .s-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .s-title { font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 2.6vw, 38px); line-height: 0.95; letter-spacing: -0.04em; margin: 0; }
+  .s-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .s-body { display: flex; flex-direction: column; gap: 32px; }
+
+  /* ─── DELIVERABLES LIST ─── */
+  .deliverables {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .deliv {
+    background: var(--bg-soft); padding: 24px 24px 20px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .deliv-icon { font-family: var(--mono); font-size: 16px; color: var(--accent); }
+  .deliv-name { font-family: var(--sans); font-weight: 600; font-size: 16px; letter-spacing: -0.01em; color: var(--fg); }
+  .deliv p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--fg-3); }
+
+  /* ─── PROOF POINTS ─── */
+  .proof-block {
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .proof-item {
+    padding: 28px 32px; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 200px 1fr; gap: 32px; align-items: start;
+  }
+  .proof-item:last-child { border-bottom: 0; }
+  .proof-client { font-family: var(--sans); font-weight: 700; font-size: 22px; letter-spacing: -0.03em; color: var(--fg); }
+  .proof-years { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
+  .proof-right { display: flex; flex-direction: column; gap: 8px; }
+  .proof-desc { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; }
+  .proof-line {
+    font-family: var(--italic); font-style: italic; font-size: 17px; color: var(--fg);
+    border-left: 2px solid var(--accent); padding-left: 14px; margin-top: 4px;
+  }
+
+  /* ─── CTA ─── */
+  .contact-cta {
+    background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 32px 32px; display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    transition: border-color .2s, background .2s;
+  }
+  .contact-cta:hover { border-color: var(--accent); background: var(--bg); }
+  .cta-text { font-family: var(--italic); font-style: italic; font-size: 22px; line-height: 1.4; color: var(--fg-2); max-width: 56ch; }
+  .cta-arrow { font-family: var(--mono); font-size: 22px; color: var(--accent); flex-shrink: 0; transition: transform .2s; }
+  .contact-cta:hover .cta-arrow { transform: translateX(6px); }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .hero { padding: 96px 0 36px; }
+    .hero-title { font-size: clamp(40px, 9vw, 80px); }
+    .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
+    .s-head { position: static; }
+    .deliverables { grid-template-columns: 1fr 1fr; }
+    .proof-item { grid-template-columns: 1fr; gap: 12px; }
+    .contact-cta { flex-direction: column; align-items: flex-start; gap: 20px; }
+  }
+  @media (max-width: 600px) {
+    .deliverables { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<script src="js/preloader.js"></script>
+
+<site-header active="brand-voice"></site-header>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Brand Voice Systems</span>
+    </div>
+    <h1 class="hero-title">Brand Voice<br>Systems.</h1>
+    <p class="hero-intro">Voice is not a vibe. It is <em>an operating system</em> for how a brand thinks, speaks, edits, approves, and scales. Adam builds the documents, rules, examples, campaign platforms, persona scaffolds, and review systems that keep brands from drifting.</p>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 01</span>
+      <h2 class="s-title">What the<span class="it"> Work Includes</span></h2>
+    </div>
+    <div class="s-body">
+      <div class="deliverables">
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Brand Books</div>
+          <p>Full identity and voice systems, from naming and positioning through editorial and design governance.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Tone Documents</div>
+          <p>How the brand sounds, what it avoids, and how to tell the difference in practice. With examples.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Messaging Frameworks</div>
+          <p>Positioning ladders, proof points, audience-specific messaging, and campaign themes organized for use.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Campaign Platforms</div>
+          <p>Overarching ideas that hold across media, channels, seasons, and teams without breaking.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Persona Scaffolds</div>
+          <p>Structured persona specifications with voice constraints for human writers and AI systems.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Editorial Rules</div>
+          <p>Channel-specific guidelines, approval criteria, and editorial standards that keep copy consistent.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">SKILL.md Files</div>
+          <p>AI voice scaffolding that extends brand governance into model workflows. The brand rules in a format Claude can follow.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Prompt Libraries</div>
+          <p>Reusable, brand-calibrated prompts for recurring copy types: email, social, product, ad, and in-app.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Human Review Loops</div>
+          <p>Approval routing, Telegram-based review queues, and standards AI checks before anything ships.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 02</span>
+      <h2 class="s-title">Proof<span class="it"> Points</span></h2>
+    </div>
+    <div class="s-body">
+      <div class="proof-block">
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">Sunset Marquis</div>
+            <div class="proof-years">Agency of Record · Since 2004</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">Long-running voice governance across hotel, restaurant, spa, villa, email, digital, print, and in-room channels. Adam wrote the voice for 15 years and now approves AI-assisted email and banner work. Email program contributes approximately $125,000 per month in attributed revenue.</p>
+            <div class="proof-line">Legendary Nights Begin at Sunset.</div>
+          </div>
+        </div>
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">Traveler Guitar</div>
+            <div class="proof-years">Brand Partner · 15+ Years</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">A product and lifestyle voice built around a single line that became a registered trademark. Held across retail, Amazon, trade show, advertising, and promotional channels for a decade of steady growth.</p>
+            <div class="proof-line">The World's Most Adventurous Guitar.</div>
+          </div>
+        </div>
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">FileKeepers</div>
+            <div class="proof-years">B2B Brand Build</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">A B2B operational service reframed through a campaign idea that repositioned the entire category. Voice, tagline, and visual system built and launched end to end. Contributed to a 5% year-over-year increase in new clients in targeted verticals.</p>
+            <div class="proof-line">Space. The File Frontier.</div>
+          </div>
+        </div>
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">Agency689 AI Systems</div>
+            <div class="proof-years">AI Voice Governance</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">Voice rules, prompt scaffolds, SKILL.md files, second-pass standards AI, and human review loops that keep AI-assisted work on brand. The same discipline that held Sunset Marquis's voice across 20 years, applied to AI-assisted marketing production.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 03</span>
+      <h2 class="s-title">Get in<span class="it"> Touch</span></h2>
+    </div>
+    <div class="s-body">
+      <a href="mailto:adamrcagle@gmail.com" class="contact-cta">
+        <p class="cta-text">Need the writing and the system behind it? Email Adam.</p>
+        <span class="cta-arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<site-footer></site-footer>
+
+<script src="theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Product & Campaign Work | Adam R. Cagle</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
+<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- SEO -->
+<meta name="description" content="Selected product marketing, campaign copy, brand voice, and launch work for brands including Killer Network, Traveler Guitar, FileKeepers, and Sunset Marquis.">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<link rel="canonical" href="https://adamcagle.com/alpha/Work.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="Product & Campaign Work | Adam R. Cagle">
+<meta property="og:description" content="Selected product marketing, campaign copy, brand voice, and launch work for brands including Killer Network, Traveler Guitar, FileKeepers, and Sunset Marquis.">
+<meta property="og:url" content="https://adamcagle.com/alpha/Work.html">
+<meta property="og:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Product & Campaign Work | Adam R. Cagle">
+<meta name="twitter:description" content="Product marketing, campaign copy, and brand voice for Killer Network, Traveler Guitar, FileKeepers, Sunset Marquis, and more.">
+<meta name="twitter:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #4D8BE8;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02"; overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 36px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-title { font-family: var(--sans); font-weight: 800; font-size: clamp(52px, 9vw, 140px); line-height: 0.86; letter-spacing: -0.05em; margin: 0 0 36px; }
+  .hero-intro {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(19px, 1.8vw, 24px); line-height: 1.5;
+    color: var(--fg-2); max-width: 70ch; margin: 0;
+  }
+
+  /* ─── CASE STUDY SECTIONS ─── */
+  .case {
+    padding: 80px 0; border-bottom: 1px solid var(--rule);
+    scroll-margin-top: 100px;
+  }
+  .case:last-of-type { border-bottom: 0; }
+  .case-header { margin-bottom: 48px; }
+  .case-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .case-title { font-family: var(--sans); font-weight: 800; font-size: clamp(40px, 6vw, 88px); line-height: 0.88; letter-spacing: -0.045em; margin: 0 0 12px; }
+  .case-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .case-tag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 10px;
+  }
+
+  .case-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+    margin-bottom: 1px;
+  }
+  .case-grid-2 {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 0 0 6px 6px; overflow: hidden;
+  }
+  .case-cell {
+    background: var(--bg-soft); padding: 28px 28px 24px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cell-label {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .cell-body { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; }
+  .cell-line {
+    font-family: var(--italic); font-style: italic;
+    font-size: 20px; line-height: 1.3; color: var(--fg);
+    border-left: 2px solid var(--accent); padding-left: 16px; margin: 4px 0;
+  }
+  .cell-outcome {
+    font-family: var(--sans); font-weight: 700;
+    font-size: 18px; letter-spacing: -0.02em; color: var(--fg);
+  }
+  .cell-meta {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--fg-3); margin-top: 4px;
+  }
+
+  /* ─── AD GALLERY ─── */
+  .ad-row {
+    display: grid; gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    margin-top: 32px;
+  }
+  .ad-img {
+    width: 100%; height: auto; display: block;
+    border-radius: 4px; border: 1px solid var(--rule);
+  }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .hero { padding: 96px 0 36px; }
+    .case-grid { grid-template-columns: 1fr; }
+    .case-grid-2 { grid-template-columns: 1fr; border-radius: 0 0 6px 6px; }
+    .hero-title { font-size: clamp(40px, 9vw, 80px); }
+  }
+  @media (max-width: 600px) {
+    .case-title { font-size: clamp(32px, 10vw, 52px); }
+    .cell-body { font-size: clamp(16px, 4.2vw, 18px); }
+  }
+</style>
+</head>
+<body>
+<script src="js/preloader.js"></script>
+
+<site-header active="work"></site-header>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Product &amp; Campaign Work</span>
+    </div>
+    <h1 class="hero-title">Product &amp;<br>Campaign<br>Work.</h1>
+    <p class="hero-intro">Selected work across tech, product launches, hospitality, entertainment, and consumer brands. The common thread is not category. It is turning a business problem into a line, a campaign, a voice, and a system people can actually use.</p>
+  </div>
+
+  <!-- ─── KILLER NETWORK ─── -->
+  <div class="case" id="killer">
+    <div class="case-header">
+      <div class="case-num">// 01</div>
+      <h2 class="case-title">Killer<br>Network</h2>
+      <div class="case-tags">
+        <span class="case-tag">Gaming</span>
+        <span class="case-tag">Brand Launch</span>
+        <span class="case-tag">Campaign</span>
+        <span class="case-tag">Qualcomm Exit</span>
+      </div>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-cell">
+        <div class="cell-label">Problem</div>
+        <p class="cell-body">A gaming networking brand needed to explain a technical performance advantage in a way gamers would actually care about. Hardware specs alone weren't enough. Lag was the enemy. The brand had to make that personal.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Insight</div>
+        <p class="cell-body">Gamers don't want networking hardware. They want the lag gone, the game smooth, and the win within reach. The product wasn't a NIC card. It was permission to stop losing to your connection.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Line / Idea</div>
+        <div class="cell-line">Winning is Killer.</div>
+        <div class="cell-line">End Lag Now.</div>
+      </div>
+    </div>
+    <div class="case-grid-2">
+      <div class="case-cell">
+        <div class="cell-label">System</div>
+        <p class="cell-body">Brand positioning, campaign strategy, product naming, product messaging, web copy, advertising, packaging design, heat sink design, channel marketing, trade show presence, TV spots, and launch support. Wrote, designed, and shipped end to end. Partnered with Blizzard on a commemorative World of Warcraft coin still collected today.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Outcome</div>
+        <div class="cell-outcome">Zero to Qualcomm acquisition in three years.</div>
+        <div class="cell-meta">// Why it matters now</div>
+        <p class="cell-body">This is product marketing at its cleanest: turn technical differentiation into human motivation. The same challenge lives inside every AI, SaaS, and hardware launch today.</p>
+      </div>
+    </div>
+
+    <div class="ad-row">
+      <img src="img/ads/killer-warrior.webp" alt="Killer NIC campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/killer-sniper.webp" alt="Killer NIC campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/killer-mage.webp" alt="Killer NIC campaign ad" class="ad-img" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ─── FILEKEEPERS ─── -->
+  <div class="case" id="filekeepers">
+    <div class="case-header">
+      <div class="case-num">// 02</div>
+      <h2 class="case-title">File&shy;Keepers</h2>
+      <div class="case-tags">
+        <span class="case-tag">B2B</span>
+        <span class="case-tag">Brand &amp; Rebrand</span>
+        <span class="case-tag">Campaign</span>
+        <span class="case-tag">Vertical Marketing</span>
+      </div>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-cell">
+        <div class="cell-label">Problem</div>
+        <p class="cell-body">A records management company serving seven of the top ten law firms in Southern California needed to stand out in a category most people viewed as storage, boxes, and logistics. Operational necessity isn't a brand.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Insight</div>
+        <p class="cell-body">The buyer wasn't really buying file storage. They were buying space, relief, order, and control. Reclaim the space in your office. Reclaim the space in your head. The product became a solution to a problem no one had named yet.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Line / Idea</div>
+        <div class="cell-line">Space. The File Frontier.</div>
+      </div>
+    </div>
+    <div class="case-grid-2">
+      <div class="case-cell">
+        <div class="cell-label">System</div>
+        <p class="cell-body">Logo, full rebrand, campaign copy, photography direction, vehicle graphics, sales materials, trade advertising, and vertical-specific marketing targeting law firms, healthcare, and financial services. Work was built and launched end to end.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Outcome</div>
+        <div class="cell-outcome">5% year-over-year increase in new clients in targeted verticals. 4% overall increase.</div>
+        <div class="cell-meta">// Why it matters now</div>
+        <p class="cell-body">This is the same problem many SaaS brands face: the feature may be operational, but the buyer is looking for a more useful future. The line is the bridge.</p>
+      </div>
+    </div>
+
+    <div class="ad-row">
+      <img src="img/ads/FileKeepers_SPACE1.jpg" alt="FileKeepers Space. The File Frontier campaign" class="ad-img" loading="lazy">
+      <img src="img/ads/FileKeepers_SPACE12.jpg" alt="FileKeepers campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/FileKeepers_SPACE13.jpg" alt="FileKeepers campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/FileKeepers_SPACE14.jpg" alt="FileKeepers campaign ad" class="ad-img" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ─── TRAVELER GUITAR ─── -->
+  <div class="case" id="traveler">
+    <div class="case-header">
+      <div class="case-num">// 03</div>
+      <h2 class="case-title">Traveler<br>Guitar</h2>
+      <div class="case-tags">
+        <span class="case-tag">Music &amp; Consumer</span>
+        <span class="case-tag">Brand Platform</span>
+        <span class="case-tag">Registered Trademark</span>
+        <span class="case-tag">15+ Years</span>
+      </div>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-cell">
+        <div class="cell-label">Problem</div>
+        <p class="cell-body">A portable guitar brand needed a line and brand platform that could hold across products, players, travel contexts, retail, Amazon, trade shows, and advertising over years of growth. Not just a tagline. A brand truth.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Insight</div>
+        <p class="cell-body">The product isn't just smaller. It gives musicians permission to take the instrument farther — to the airport gate, to the trail, to the place where they're actually living their life. Adventure is the brand, not portability.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Line / Idea</div>
+        <div class="cell-line">The World's Most Adventurous Guitar.</div>
+        <p class="cell-body" style="font-size:14px;margin-top:8px;">This line became Traveler Guitar's registered trademark.</p>
+      </div>
+    </div>
+    <div class="case-grid-2">
+      <div class="case-cell">
+        <div class="cell-label">System</div>
+        <p class="cell-body">Brand positioning, product copy, ad taglines, web copy, Amazon Store consulting, six NAMM trade show booths and all supporting materials, print and promotional campaigns, dealer presentations, and speaker decks over fifteen years. Agency689 has been at the helm for a decade of steady year-over-year growth.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Outcome</div>
+        <div class="cell-outcome">Line became a registered trademark. Steady year-over-year growth for a decade.</div>
+        <div class="cell-meta">// Why it matters now</div>
+        <p class="cell-body">A strong product line can become a brand system when it is elastic enough to carry campaigns, commerce, and community. That's the work product marketers need to know how to do.</p>
+      </div>
+    </div>
+
+    <div class="ad-row">
+      <img src="img/ads/traveler-endless-strummer.webp" alt="Traveler Guitar campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/traveler-flying-solo.webp" alt="Traveler Guitar campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/traveler-force.webp" alt="Traveler Guitar campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/traveler-jungle.webp" alt="Traveler Guitar campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/traveler-road.webp" alt="Traveler Guitar campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/traveler-sonic-bloom.webp" alt="Traveler Guitar campaign ad" class="ad-img" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ─── SUNSET MARQUIS ─── -->
+  <div class="case" id="sunset">
+    <div class="case-header">
+      <div class="case-num">// 04</div>
+      <h2 class="case-title">Sunset<br>Marquis</h2>
+      <div class="case-tags">
+        <span class="case-tag">Hospitality</span>
+        <span class="case-tag">Agency of Record</span>
+        <span class="case-tag">Voice Governance</span>
+        <span class="case-tag">Since 2004</span>
+      </div>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-cell">
+        <div class="cell-label">Problem</div>
+        <p class="cell-body">A legendary West Hollywood hotel needed to evolve over two decades without losing the rock-and-roll soul that made it famous. The brand had to remain current without chasing trends, polished without becoming sterile, exclusive without feeling corporate.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Insight</div>
+        <p class="cell-body">The voice had to feel like the hotel already knew you. Understated. Confident. Never trying too hard. The best rock-and-roll doesn't announce itself. The brand voice had to work the same way — earned, not performed.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Line / Idea</div>
+        <div class="cell-line">Legendary Nights Begin at Sunset.</div>
+        <p class="cell-body" style="font-size:14px;margin-top:8px;">Long-running voice governance system across hotel, restaurant, spa, villa, email, digital, print, and in-room channels.</p>
+      </div>
+    </div>
+    <div class="case-grid-2">
+      <div class="case-cell">
+        <div class="cell-label">System</div>
+        <p class="cell-body">Agency of Record since 2004. Web copy, email campaigns, seasonal promotions, Cavatina restaurant, The SPA, villa copy, Bar 1200, LIVE@SunsetMarquis concert series, Sunset Marquis Motorcycle Club, print, in-room materials, display ads, brand voice governance, and ongoing creative direction. Adam wrote emails and banners for 15 years and now approves AI-assisted email and banner work.</p>
+      </div>
+      <div class="case-cell">
+        <div class="cell-label">Outcome</div>
+        <div class="cell-outcome">$125K/month in email revenue. 30% ROAS lift when creative returned in-house.</div>
+        <div class="cell-meta">// Why it matters now</div>
+        <p class="cell-body">This is proof of voice governance over time: keeping a brand recognizable across years, channels, teams, and now AI-assisted workflows. The email program contributes approximately $125,000 per month in attributed revenue. Banner ROAS rose 30 percent after creative direction was brought back from the media company.</p>
+      </div>
+    </div>
+
+    <div class="ad-row">
+      <img src="img/ads/Sunset-Marquis.jpg" alt="Sunset Marquis brand campaign" class="ad-img" loading="lazy">
+      <img src="img/ads/sunset-yes-that-beautiful.jpg" alt="Sunset Marquis campaign ad" class="ad-img" loading="lazy">
+      <img src="img/ads/sunset-legendary-nights.webp" alt="Sunset Marquis campaign ad" class="ad-img" loading="lazy">
+    </div>
+  </div>
+
+</div>
+
+<site-footer></site-footer>
+
+<script src="theme.js"></script>
+</body>
+</html>

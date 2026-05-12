@@ -1,33 +1,36 @@
 // site-shell.js (ALPHA)
-// Minimal editorial nav: brand, nav links, CTA, theme toggle.
-// Scroll-shrink + accent progress hairline at bottom edge.
+// Nav: Resume, Product & Campaign Work, AI Writing Systems, Brand Voice Systems, Contact.
+// Books moved to footer as "Selected Writing".
 
 (function () {
   const NAV = [
-    { key: 'resume',    href: 'index.html',     label: 'Résumé'    },
-    { key: 'portfolio', href: 'Portfolio.html', label: 'Portfolio' },
-    { key: 'agents',    href: 'Agents.html',    label: 'AI Agents' },
-    { key: 'books',     href: 'Books.html',     label: 'Books'     }
+    { key: 'resume',      href: 'Resume.html',     label: 'Resume'                  },
+    { key: 'work',        href: 'Work.html',        label: 'Product & Campaign Work' },
+    { key: 'ai-writing',  href: 'AIWriting.html',   label: 'AI Writing Systems'      },
+    { key: 'brand-voice', href: 'BrandVoice.html',  label: 'Brand Voice Systems'     },
+    { key: 'contact',     href: 'Contact.html',     label: 'Contact'                 }
   ];
-  const EMAIL = 'adamrcagle@gmail.com';
+  const EMAIL   = 'adamrcagle@gmail.com';
+  const LINKEDIN = 'https://www.linkedin.com/in/adam-r-cagle-3b723a3/';
 
   function navLinks(active) {
-    return NAV.map((i) => {
-      const cls = 'nav-link' + (i.key === active ? ' is-active' : '');
+    return NAV.map(function (i) {
+      var cls = 'nav-link' + (i.key === active ? ' is-active' : '');
       return '<a href="' + i.href + '" class="' + cls + '" data-cursor="hover">' + i.label + '</a>';
     }).join('');
   }
 
   function inject(host, html) {
-    const tpl = document.createElement('template');
+    var tpl = document.createElement('template');
     tpl.innerHTML = html.trim();
-    host.replaceWith(...[...tpl.content.children]);
+    host.replaceWith.apply(host, Array.from(tpl.content.children));
   }
 
-  class SiteHeader extends HTMLElement {
-    connectedCallback() {
-      const active = this.getAttribute('active') || '';
-      const html =
+  var SiteHeader = (function (_super) {
+    function SiteHeader() { return _super !== null && _super.apply(this, arguments) || this; }
+    SiteHeader.prototype.connectedCallback = function () {
+      var active = this.getAttribute('active') || '';
+      var html =
 '<header class="rail" data-active="' + active + '">' +
   '<a href="index.html" class="rail-brand" data-cursor="hover">Adam R. Cagle</a>' +
   '<nav class="rail-nav">' + navLinks(active) + '</nav>' +
@@ -51,50 +54,61 @@
 '</div>';
       inject(this, html);
 
-      // Hamburger
-      const hb = document.getElementById('hamburger');
-      const mn = document.getElementById('mob-nav');
-      const cl = document.getElementById('mob-close');
+      var hb = document.getElementById('hamburger');
+      var mn = document.getElementById('mob-nav');
+      var cl = document.getElementById('mob-close');
       if (hb && mn) {
-        const close = () => { mn.classList.remove('open'); document.body.style.overflow = ''; };
-        hb.addEventListener('click', () => { mn.classList.add('open'); document.body.style.overflow = 'hidden'; });
+        var close = function () { mn.classList.remove('open'); document.body.style.overflow = ''; };
+        hb.addEventListener('click', function () { mn.classList.add('open'); document.body.style.overflow = 'hidden'; });
         if (cl) cl.addEventListener('click', close);
-        mn.addEventListener('click', (e) => { if (e.target === mn) close(); });
-        mn.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', close));
+        mn.addEventListener('click', function (e) { if (e.target === mn) close(); });
+        mn.querySelectorAll('nav a').forEach(function (a) { a.addEventListener('click', close); });
       }
 
-      // Scroll-shrink + progress hairline
-      const rail = document.querySelector('.rail');
+      var rail = document.querySelector('.rail');
       if (!rail) return;
-
       function update() {
-        const y      = window.pageYOffset || document.documentElement.scrollTop || 0;
-        const max    = (document.documentElement.scrollHeight - window.innerHeight) || 1;
-        const ratio  = Math.max(0, Math.min(1, y / max));
+        var y     = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var max   = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+        var ratio = Math.max(0, Math.min(1, y / max));
         rail.classList.toggle('is-shrunk', y > 80);
         rail.style.setProperty('--scroll-progress', (ratio * 100).toFixed(2) + '%');
       }
       update();
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);
-    }
-  }
+    };
+    return SiteHeader;
+  }(HTMLElement));
 
-  class SiteFooter extends HTMLElement {
-    connectedCallback() {
+  var SiteFooter = (function (_super) {
+    function SiteFooter() { return _super !== null && _super.apply(this, arguments) || this; }
+    SiteFooter.prototype.connectedCallback = function () {
       inject(this,
 '<footer class="foot">' +
-  '<div class="left">Adam R. Cagle</div>' +
-  '<div class="center">&copy; 2026</div>' +
-  '<div class="right"><a href="mailto:' + EMAIL + '">' + EMAIL + '</a></div>' +
+  '<div class="foot-brand">' +
+    '<div class="foot-name">Adam R. Cagle</div>' +
+    '<div class="foot-loc">Bend, Oregon &middot; <a href="mailto:' + EMAIL + '">' + EMAIL + '</a></div>' +
+    '<div class="foot-social"><a href="' + LINKEDIN + '" target="_blank" rel="noopener">LinkedIn</a> &middot; <span>&copy; 2026</span></div>' +
+  '</div>' +
+  '<nav class="foot-nav">' +
+    '<a href="Resume.html">Resume</a>' +
+    '<a href="Work.html">Product &amp; Campaign Work</a>' +
+    '<a href="AIWriting.html">AI Writing Systems</a>' +
+    '<a href="BrandVoice.html">Brand Voice Systems</a>' +
+    '<a href="Books.html">Selected Writing</a>' +
+    '<a href="Contact.html">Contact</a>' +
+    '<a href="mailto:' + EMAIL + '">Email</a>' +
+    '<a href="' + LINKEDIN + '" target="_blank" rel="noopener">LinkedIn</a>' +
+  '</nav>' +
 '</footer>');
-    }
-  }
+    };
+    return SiteFooter;
+  }(HTMLElement));
 
   customElements.define('site-header', SiteHeader);
   customElements.define('site-footer', SiteFooter);
 
-  // Flag internal navigation so the preloader skips on arrival
   document.addEventListener('click', function (e) {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (e.button !== 0 && e.button !== undefined) return;

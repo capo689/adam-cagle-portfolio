@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Systems | Adam R. Cagle</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light');</script>
+<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- SEO -->
+<meta name="description" content="Production AI systems and workflows built across Claude Projects, GPT Projects, and Anthropic API deployments. Brand voice, market intelligence, autonomous marketing, and satellite mineral prospectivity analysis.">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<link rel="canonical" href="https://adamcagle.com/AISystems.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="AI Systems | Adam R. Cagle">
+<meta property="og:description" content="Production AI systems and workflows built across Claude Projects, GPT Projects, and Anthropic API deployments. Brand voice, market intelligence, autonomous marketing, and satellite mineral prospectivity.">
+<meta property="og:url" content="https://adamcagle.com/AISystems.html">
+<meta property="og:image" content="https://adamcagle.com/img/agents/ssia-vrt-dashboard.png">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Systems | Adam R. Cagle">
+<meta name="twitter:description" content="Production AI systems and workflows built across Claude Projects, GPT Projects, and Anthropic API deployments.">
+<meta name="twitter:image" content="https://adamcagle.com/img/agents/ssia-vrt-dashboard.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #4D8BE8;
+    --accent-2:#2660cc;
+    --green:   #4ade80;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02"; overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 36px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-title {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(48px, 8.5vw, 130px);
+    line-height: 0.86; letter-spacing: -0.05em; margin: 0 0 36px;
+  }
+  .hero-sub {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;
+  }
+  .hero-intro {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(19px, 1.8vw, 24px); line-height: 1.5;
+    color: var(--fg-2); margin: 0;
+  }
+  .hero-meta { display: flex; flex-direction: column; gap: 0; }
+  .hero-stat {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 14px 0; border-top: 1px solid var(--rule-2);
+  }
+  .hero-stat:first-child { border-top: 0; padding-top: 0; }
+  .stat-num { font-family: var(--sans); font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--accent); }
+  .stat-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); line-height: 1.4; }
+
+  /* ─── SYSTEMS TAPE ─── */
+  .systems-tape {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tape-inner {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px;
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .tape-inner .dot { color: var(--accent); }
+
+  /* ─── SECTION BASE ─── */
+  .section {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 64px; padding: 72px 0; border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: 0; }
+  .s-head { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 12px; }
+  .s-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .s-title {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(26px, 2.6vw, 38px); line-height: 0.95;
+    letter-spacing: -0.04em; margin: 0;
+  }
+  .s-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .s-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--fg-3); line-height: 1.75; margin-top: 2px; }
+  .s-body { display: flex; flex-direction: column; gap: 28px; }
+
+  /* ─── STATUS TAGS ─── */
+  .sys-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+  .sys-tag {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em;
+    text-transform: uppercase; padding: 3px 8px;
+    border: 1px solid var(--rule); border-radius: 2px; color: var(--fg-3);
+  }
+  .sys-tag.live { border-color: rgba(74,222,128,0.35); color: var(--green); }
+  .sys-tag.open { border-color: rgba(77,139,232,0.35); color: var(--accent); }
+
+  /* ─── CTA BUTTONS ─── */
+  .cta-row { display: flex; flex-direction: column; gap: 7px; margin-top: 6px; }
+  .btn-wp {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--bg); background: var(--accent);
+    padding: 10px 14px; border-radius: 3px;
+    transition: background .2s, transform .15s; white-space: nowrap;
+  }
+  .btn-wp:hover { background: var(--accent-2); transform: translateY(-1px); }
+  .btn-gh {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--fg-2); background: transparent;
+    padding: 9px 14px; border: 1px solid var(--rule); border-radius: 3px;
+    transition: border-color .2s, color .2s, transform .15s; white-space: nowrap;
+  }
+  .btn-gh:hover { border-color: var(--fg-3); color: var(--fg); transform: translateY(-1px); }
+
+  /* ─── METRICS STRIP ─── */
+  .proj-metrics {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+  }
+  .pm-cell {
+    padding: 18px 16px; border-right: 1px solid var(--rule);
+    background: var(--bg-soft); display: flex; flex-direction: column; gap: 7px;
+  }
+  .pm-cell:last-child { border-right: 0; }
+  .pm-num {
+    font-family: var(--sans); font-weight: 700; font-size: 26px;
+    letter-spacing: -0.04em; color: var(--fg); line-height: 1;
+  }
+  .pm-num .u { font-size: 0.52em; color: var(--accent); margin-left: 1px; font-weight: 500; letter-spacing: 0; }
+  .pm-lab { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fg-3); line-height: 1.4; }
+
+  /* ─── CASE CELLS ─── */
+  .case-grid {
+    display: grid; gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+  }
+  .cg-3 { grid-template-columns: repeat(3, 1fr); }
+  .cg-2 { grid-template-columns: repeat(2, 1fr); }
+  .case-cell {
+    background: var(--bg-soft); padding: 22px 22px 20px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .cc-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .cc-body { font-size: 15px; line-height: 1.65; color: var(--fg-2); margin: 0; }
+  .cc-outcome { font-family: var(--sans); font-weight: 700; font-size: 16px; letter-spacing: -0.02em; color: var(--fg); line-height: 1.3; }
+  .cc-fine { margin-top: 8px; font-size: 13.5px; line-height: 1.6; color: var(--fg-3); }
+
+  /* ─── SCREENSHOTS ─── */
+  .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .screens img, .screen-full {
+    width: 100%; height: auto; display: block;
+    border-radius: 3px; border: 1px solid var(--rule);
+  }
+
+  /* ─── NOTICE BOX ─── */
+  .notice {
+    background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 18px 22px; display: flex; gap: 14px; align-items: flex-start;
+  }
+  .notice-icon { font-family: var(--mono); font-size: 15px; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .notice p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--fg-3); }
+  .notice strong { color: var(--fg-2); font-weight: 600; }
+
+  /* ─── SUPPORT GRID ─── */
+  .support-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+  }
+  .support-card {
+    background: var(--bg-soft); padding: 24px 22px 20px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .sc-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .sc-title { font-family: var(--sans); font-weight: 700; font-size: 17px; letter-spacing: -0.02em; color: var(--fg); }
+  .support-card p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--fg-2); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .hero { padding: 96px 0 36px; }
+    .hero-sub { grid-template-columns: 1fr; gap: 32px; }
+    .hero-title { font-size: clamp(40px, 9vw, 80px); }
+    .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
+    .s-head { position: static; }
+    .cg-3 { grid-template-columns: 1fr; }
+    .cg-2 { grid-template-columns: 1fr; }
+    .screens { grid-template-columns: 1fr; }
+    .proj-metrics { grid-template-columns: 1fr 1fr; }
+    .support-grid { grid-template-columns: 1fr; }
+    .cta-row { flex-direction: row; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<script src="js/preloader.js"></script>
+
+<site-header active="ai-writing"></site-header>
+
+<div class="page">
+
+  <!-- ─── HERO ─── -->
+  <div class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Production AI Systems</span>
+    </div>
+    <h1 class="hero-title">AI<br>Systems.</h1>
+    <div class="hero-sub">
+      <p class="hero-intro">Production AI systems and workflows built across Claude Projects, GPT Projects, and Anthropic API deployments. Brand voice and campaign production. Market intelligence with kill-switch discipline. Autonomous multi-channel marketing. Satellite image analysis for mineral prospectivity. Every system keeps a human in control of the decisions that matter.</p>
+      <div class="hero-meta">
+        <div class="hero-stat">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Production AI systems shipped</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">27</div>
+          <div class="stat-label">Data streams ingested daily by VRT2</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">72%</div>
+          <div class="stat-label">AuScan HIGH-confidence prospectivity score validated against USGS MRDS</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">½×</div>
+          <div class="stat-label">Production time per campaign cycle in AIW</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SYSTEMS TAPE ─── -->
+  <div class="systems-tape">
+    <div class="tape-inner">
+      <span>CLAUDE API</span><span class="dot">·</span>
+      <span>HUMAN REVIEW LOOPS</span><span class="dot">·</span>
+      <span>RAG &amp; BRAND CONTEXT</span><span class="dot">·</span>
+      <span>KILL-SWITCH DISCIPLINE</span><span class="dot">·</span>
+      <span>CLAUDE VISION</span><span class="dot">·</span>
+      <span>RECURSIVE LEARNING</span><span class="dot">·</span>
+      <span>APPROVAL ROUTING</span><span class="dot">·</span>
+      <span>SKILL.MD GOVERNANCE</span><span class="dot">·</span>
+      <span>NODE.JS + SQLITE</span><span class="dot">·</span>
+      <span>HYPOTHESIS TESTING</span><span class="dot">·</span>
+      <span>MULTI-PASS DRAFTING</span>
+    </div>
+  </div>
+
+  <!-- ─── 01 · AGENCY689 AI WRITING SYSTEMS ─── -->
+  <div class="section" id="sys-01">
+    <div class="s-head">
+      <span class="s-num">// 01 · PRODUCTION</span>
+      <h2 class="s-title">Agency689<br><span class="it">Writing Systems</span></h2>
+      <p class="s-kicker">Brand Voice · RAG · Campaign AI<br>Sunset Marquis · Agency689<br>Traveler Guitar</p>
+      <div class="sys-tags">
+        <span class="sys-tag live">● Active Daily</span>
+        <span class="sys-tag">Proprietary</span>
+      </div>
+      <div class="cta-row">
+        <a href="wpaper/aiw-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+      </div>
+    </div>
+    <div class="s-body">
+
+      <div class="proj-metrics">
+        <div class="pm-cell">
+          <div class="pm-num">½<span class="u">×</span></div>
+          <div class="pm-lab">Production time per campaign cycle</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">3<span class="u">+</span></div>
+          <div class="pm-lab">Viable first drafts per run</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">3<span class="u">/wk</span></div>
+          <div class="pm-lab">Sunset Marquis workflow runs during active cycles</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">3</div>
+          <div class="pm-lab">Active client brands in production</div>
+        </div>
+      </div>
+
+      <div class="case-grid cg-3">
+        <div class="case-cell">
+          <div class="cc-label">Problem</div>
+          <p class="cc-body">Agency work creates constant demand for strong first drafts across email, banners, ad creative, landing pages, and social copy — with zero tolerance for voice drift. Generic AI output is the enemy. Volume without precision just produces more wrong work faster.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">System</div>
+          <p class="cc-body">Brand context files, RAG-retrieved voice samples, SKILL.md governance, and persona specifications are assembled before any draft is generated. The system produces multiple first drafts, then routes them through a standards AI for quality and voice checks before anything reaches a human for approval.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Workflow</div>
+          <p class="cc-body">Context ingestion → multi-draft generation → standards-AI critique loop → Telegram approval routing → human edit and publish. Outputs span email campaigns, banner copy, landing pages, ad creative, campaign concepts, and social posts. Nothing ships without human sign-off.</p>
+        </div>
+      </div>
+
+      <div class="case-grid cg-2">
+        <div class="case-cell">
+          <div class="cc-label">Clients &amp; Scope</div>
+          <p class="cc-body">Sunset Marquis: high-frequency promotional and email copy inside a brand voice that took years to build. Agency689: proposals generated from discovery notes and project requirements, structured against years of precedent. Traveler Guitar: systems thinking extended into visual ideation — creating campaign worlds where the product lives without losing the brand's sense of adventure.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Outcome</div>
+          <div class="cc-outcome">Cuts production time by approximately half. Three or more usable first drafts in less time than one used to take.</div>
+          <p class="cc-fine">Used daily across Agency689 client work. The practical version of AI-assisted creative: faster iteration, tighter review loops, and human approval before anything publishes.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 02 · VRT2 · CLAW STOCK INTELLIGENCE ─── -->
+  <div class="section" id="sys-02">
+    <div class="s-head">
+      <span class="s-num">// 02 · PRODUCTION</span>
+      <h2 class="s-title">VRT2<span class="it"> · CLAW</span></h2>
+      <p class="s-kicker">Stock Intelligence Agent<br>27 Streams · 23 Hypotheses<br>Kill-Switch Architecture</p>
+      <div class="sys-tags">
+        <span class="sys-tag live">● Live System</span>
+        <span class="sys-tag open">MIT Open Source</span>
+      </div>
+      <div class="cta-row">
+        <a href="wpaper/ssia-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+        <a href="https://github.com/capo689/VRT2" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ GitHub</a>
+      </div>
+    </div>
+    <div class="s-body">
+
+      <div class="proj-metrics">
+        <div class="pm-cell">
+          <div class="pm-num">27</div>
+          <div class="pm-lab">Data streams ingested daily</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">23</div>
+          <div class="pm-lab">Active hypotheses across 6 tiers</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">67<span class="u">%</span></div>
+          <div class="pm-lab">S1_LAG signal pre-inclusion hit rate</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">5</div>
+          <div class="pm-lab">Verification states per signal change</div>
+        </div>
+      </div>
+
+      <div class="case-grid cg-3">
+        <div class="case-cell">
+          <div class="cc-label">Problem</div>
+          <p class="cc-body">Markets generate data at a pace no individual analyst can track. EDGAR filings, earnings transcripts, analyst revisions, macroeconomic feeds, and price signals all move simultaneously. Manual synthesis lags. Bad signals with high weights cause outsized damage. A system without governance is worse than no system at all.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">System</div>
+          <p class="cc-body">Node.js + SQLite backbone. Claude Haiku handles routine daily reviews; Claude Sonnet handles advanced analysis. Ingests Finnhub, EDGAR, earnings transcripts, analyst revisions, and macro feeds daily. Claude synthesizes everything into structured intelligence briefs. Signal weights are automatically adjusted based on observed hit rates over time.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Discipline</div>
+          <p class="cc-body">Every signal change moves through five verification states: UNVERIFIED → SYNTAX_OK → SQL_VERIFIED → RUNTIME_VERIFIED → PRODUCTION_VERIFIED. New signals receive 0.50× weight until proven. Sub-55% hit rates (n=15) trigger automatic deactivation. A 20% drawdown fires a system-wide kill-switch. Nothing trades automatically.</p>
+        </div>
+      </div>
+
+      <div class="case-grid cg-2">
+        <div class="case-cell">
+          <div class="cc-label">Architecture</div>
+          <p class="cc-body">Launchd scheduling on macOS. Historical backfill from 2022-present (162,439+ price rows). Six hypothesis tiers: fundamentals, peer dynamics, AI infrastructure, VRT-specific factors, macroeconomics, and emerging research. COMPOSITE_BULL averages +3.65% return over 3-day holds. Everything is logged, versioned, and auditable. The changelog reads like a system's operating history.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Outcome</div>
+          <div class="cc-outcome">A research and decision-support system — not a black box. Better-informed human judgment, not automated trading.</div>
+          <p class="cc-fine">The transferable design pattern: ingestion, hypothesis testing, composite scoring, human review, audit trail, continuous improvement. The SSIA white paper documents the full architecture.</p>
+        </div>
+      </div>
+
+      <div class="screens">
+        <img src="img/agents/ssia-vrt-dashboard.png" alt="VRT2 · CLAW intelligence dashboard" loading="lazy">
+        <img src="img/agents/ssia-vrt-graphs.png" alt="VRT2 signal performance graphs" loading="lazy">
+      </div>
+
+      <div class="notice">
+        <span class="notice-icon">ℹ</span>
+        <p>VRT2 and the SSIA white paper are included as <strong>technical architecture and systems-design samples</strong>, not as investment advice. The S1_LAG hit rate and COMPOSITE_BULL returns are backtested figures, not guarantees of future performance.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 03 · BOOKLITE ─── -->
+  <div class="section" id="sys-03">
+    <div class="s-head">
+      <span class="s-num">// 03 · OPEN SOURCE</span>
+      <h2 class="s-title">BookLite<span class="it"> · Auto</span></h2>
+      <p class="s-kicker">Autonomous Book Marketing<br>6 Platforms · Claude Brain<br>Human Approval Queue</p>
+      <div class="sys-tags">
+        <span class="sys-tag open">MIT Open Source</span>
+        <span class="sys-tag">Node.js</span>
+      </div>
+      <div class="cta-row">
+        <a href="wpaper/booklite-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+        <a href="https://github.com/capo689/BookLite" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ GitHub</a>
+      </div>
+    </div>
+    <div class="s-body">
+
+      <div class="proj-metrics">
+        <div class="pm-cell">
+          <div class="pm-num">6</div>
+          <div class="pm-lab">Channels: Reddit, X, FB, IG, Goodreads, KDP</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">1</div>
+          <div class="pm-lab">Claude brain — book, author voice, strategy unified</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">0</div>
+          <div class="pm-lab">Auto-posts — human approval required before every action</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">MIT</div>
+          <div class="pm-lab">License — fork it, adapt it, ship it</div>
+        </div>
+      </div>
+
+      <div class="case-grid cg-3">
+        <div class="case-cell">
+          <div class="cc-label">Problem</div>
+          <p class="cc-body">Indie authors need consistent multi-channel presence. Platform-native copy for Reddit, X, Instagram, Facebook, Goodreads, and KDP all have different voice expectations, character limits, and community norms. Maintaining all six manually is a second job. Generic AI copy, posted without human review, does more damage than nothing.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">System</div>
+          <p class="cc-body">A single Claude brain reads book metadata — title, author, target audience, ASIN — and generates platform-specific copy for all six channels in one run. OAuth2 and OAuth 1.0a handle platform authentication server-side. No credentials hit the frontend. KDP ranking data feeds back in via Rainforest API or CSV upload for attribution learning.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Architecture</div>
+          <p class="cc-body">Local Node.js server with a browser dashboard. Single HTML frontend, single server backend — no build step required. Server health checks show which channels are live. Attribution tracking identifies which content and which channels convert to sales, then feeds those learnings back into the next generation cycle.</p>
+        </div>
+      </div>
+
+      <div class="case-grid cg-2">
+        <div class="case-cell">
+          <div class="cc-label">What It Is (and Isn't)</div>
+          <p class="cc-body">BookLite is the open-source Lite release of the internal Agentic689 book and music marketing system. It runs one book, one author voice, one Claude brain, and posts to six platforms. The full production version handles multiple titles, multi-artist configurations, and cross-platform attribution at scale. The Lite release strips to the essentials so the architecture is readable.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Outcome</div>
+          <div class="cc-outcome">Platform-native copy across six channels in one run, reviewed by a human before any post goes live.</div>
+          <p class="cc-fine">Built on the Anthropic Claude Agent SDK. MIT licensed. The white paper covers the full internal architecture the Lite version was derived from, including the multi-title production system.</p>
+        </div>
+      </div>
+
+      <img src="img/agents/book-agent.png" alt="BookLite agent dashboard" class="screen-full" loading="lazy">
+
+    </div>
+  </div>
+
+  <!-- ─── 04 · AUSCAN ─── -->
+  <div class="section" id="sys-04">
+    <div class="s-head">
+      <span class="s-num">// 04 · PROOF OF CONCEPT</span>
+      <h2 class="s-title">AuScan<span class="it"> · Satellite</span></h2>
+      <p class="s-kicker">AI Gold Prospectivity<br>Claude Vision · 5 Sensors<br>USGS MRDS Validated</p>
+      <div class="sys-tags">
+        <span class="sys-tag live">● 72% Validation Hit</span>
+        <span class="sys-tag open">MIT Open Source</span>
+      </div>
+      <div class="cta-row">
+        <a href="wpaper/auscan-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+        <a href="https://github.com/capo689/auscan" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ GitHub</a>
+      </div>
+    </div>
+    <div class="s-body">
+
+      <div class="proj-metrics">
+        <div class="pm-cell">
+          <div class="pm-num">72<span class="u">%</span></div>
+          <div class="pm-lab">HIGH-confidence prospectivity score validated against USGS MRDS</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">5</div>
+          <div class="pm-lab">Sensor types: ESRI, EMIT, Landsat, ASTER, Sentinel-2</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">10</div>
+          <div class="pm-lab">World-class gold deposits used as training fingerprints</div>
+        </div>
+        <div class="pm-cell">
+          <div class="pm-num">5×5</div>
+          <div class="pm-lab">Maximum search grid across 100-mile radius</div>
+        </div>
+      </div>
+
+      <div class="case-grid cg-3">
+        <div class="case-cell">
+          <div class="cc-label">Problem</div>
+          <p class="cc-body">Traditional mineral exploration is expensive, slow, and requires specialist teams in the field. Satellite imagery covering every inch of Earth's surface is freely accessible but opaque to non-specialists. The gap between available data and actionable prospectivity intelligence is a systems problem — not a data problem.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">System</div>
+          <p class="cc-body">AuScan trains Claude Vision on the spectral and structural signatures of ten world-class gold deposits — Witwatersrand, Carlin Trend, Kalgoorlie, and others. Multi-sensor data — NASA EMIT hyperspectral, Landsat thermal, ASTER mineral mapping, Sentinel-2 vegetation indices, and ESRI RGB — is assembled into terrain fingerprints for each deposit.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Validation</div>
+          <p class="cc-body">In testing, the system scored a HIGH-confidence hit at 42.609°N, −119.299°W — Oregon's Pueblo Mining District, a documented former gold producer. Cross-referenced against the USGS Mineral Resources Data System. Search grids are configurable from 2×2 to 5×5 across 10–100 mile radii. Patterns and results persist across sessions.</p>
+        </div>
+      </div>
+
+      <div class="case-grid cg-2">
+        <div class="case-cell">
+          <div class="cc-label">Architecture</div>
+          <p class="cc-body">React-based browser application running in a Claude.ai artifact environment. Single-endpoint design — no CORS, no separate auth layer. Browser-native storage for session persistence. USGS MRDS integration via Claude's knowledge base for cross-referenced validation. Configurable search parameters allow rapid iteration across different regions and deposit types.</p>
+        </div>
+        <div class="case-cell">
+          <div class="cc-label">Outcome</div>
+          <div class="cc-outcome">From raw satellite data to prospectivity scores in a single session. Proof that Claude Vision can be applied to real-world image analysis at scale.</div>
+          <p class="cc-fine">The transferable insight: domain expertise can be distilled into a vision system that scales to any geographic target. The white paper covers the full methodology, sensor pipeline, and validation results.</p>
+        </div>
+      </div>
+
+      <div class="screens">
+        <img src="img/agents/auscan-dashboard.png" alt="AuScan satellite analysis dashboard" loading="lazy">
+        <img src="img/agents/auscan-report.png" alt="AuScan prospectivity analysis report" loading="lazy">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 05 · SUPPORTING SYSTEMS ─── -->
+  <div class="section" id="supporting">
+    <div class="s-head">
+      <span class="s-num">// 05</span>
+      <h2 class="s-title">Other<span class="it"> Systems</span></h2>
+      <p class="s-kicker">Additional workflows &amp; agents</p>
+    </div>
+    <div class="s-body">
+      <div class="support-grid">
+        <div class="support-card">
+          <div class="sc-tag">// Marketing Automation</div>
+          <div class="sc-title">Book &amp; Music Marketing Systems</div>
+          <p>The production-scale predecessor to BookLite. Multi-title, multi-artist, multi-channel closed loops for KDP titles and music releases. Platform-native copy for Reddit, Instagram, Facebook, X, and TikTok. Real sales and streams tracked through platform APIs. Attribution feedback, channel re-weighting every cycle, and human approval queues between every action.</p>
+        </div>
+        <div class="support-card">
+          <div class="sc-tag">// Identity Systems</div>
+          <div class="sc-title">Persona Governance System</div>
+          <p>Validated persona scaffolding with SKILL.md governance. Produces structured persona specifications with hard governance rules and voice constraints — defining what the AI can say, how it can say it, and where it must defer to human judgment. Used for brand persona development, editorial governance, and AI-assisted copy systems across Agency689 client work.</p>
+        </div>
+        <div class="support-card">
+          <div class="sc-tag">// Correlation Engine</div>
+          <div class="sc-title">COOK · Anomaly Correlation Engine</div>
+          <p>Multi-asset anomaly correlation engine with dashboard UI. Takes complex cross-market signal data and presents it in a form that supports human decision-making. Proof of systems thinking applied to data-to-narrative design: the goal is a human making a better-informed call, not a system making a call on their behalf.</p>
+        </div>
+        <div class="support-card">
+          <div class="sc-tag">// Site · Shipped by Agent</div>
+          <div class="sc-title">Agentic689 Site</div>
+          <p>The studio's own website — designed, written, coded, and shipped by one of the agents. Single self-contained HTML file. Cloudflare Pages Function for the contact form. No framework, no build step. Deploys in five seconds from the terminal with one command. The storefront is itself an honest sample of the work these systems produce.</p>
+        </div>
+      </div>
+      <div class="screens">
+        <img src="img/agents/music-agent.png" alt="Music marketing agent dashboard" loading="lazy">
+        <img src="img/agents/ssia-crdo-dashboard.png" alt="SSIA · CRDO intelligence dashboard" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<site-footer></site-footer>
+
+<script src="theme.js"></script>
+</body>
+</html>

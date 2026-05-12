@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Writing Systems | Adam R. Cagle</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark');</script>
+<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- SEO -->
+<meta name="description" content="Production AI writing workflows, prompt systems, RAG-supported brand tools, approval loops, and human-reviewed marketing systems built through Agentic689.">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<link rel="canonical" href="https://adamcagle.com/alpha/AIWriting.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="AI Writing Systems | Adam R. Cagle">
+<meta property="og:description" content="Production AI writing workflows, prompt systems, RAG-supported brand tools, approval loops, and human-reviewed marketing systems built through Agentic689.">
+<meta property="og:url" content="https://adamcagle.com/alpha/AIWriting.html">
+<meta property="og:image" content="https://adamcagle.com/img/agents/ssia-vrt-dashboard.png">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Writing Systems | Adam R. Cagle">
+<meta name="twitter:description" content="Production AI writing workflows, RAG-supported brand tools, approval loops, and human-reviewed marketing systems built through Agentic689.">
+<meta name="twitter:image" content="https://adamcagle.com/img/agents/ssia-vrt-dashboard.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #4D8BE8;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02"; overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 36px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-title {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(48px, 8.5vw, 130px);
+    line-height: 0.86; letter-spacing: -0.05em; margin: 0 0 36px;
+  }
+  .hero-sub {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;
+  }
+  .hero-intro {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(19px, 1.8vw, 24px); line-height: 1.5;
+    color: var(--fg-2); margin: 0;
+  }
+  .hero-meta { display: flex; flex-direction: column; gap: 16px; }
+  .hero-stat { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-top: 1px solid var(--rule-2); }
+  .hero-stat:first-child { border-top: 0; padding-top: 0; }
+  .stat-num { font-family: var(--sans); font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--accent); }
+  .stat-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 64px; padding: 72px 0; border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: 0; }
+  .s-head { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 14px; }
+  .s-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .s-title { font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 2.6vw, 38px); line-height: 0.95; letter-spacing: -0.04em; margin: 0; }
+  .s-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .s-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); line-height: 1.7; margin-top: 4px; }
+  .s-body { display: flex; flex-direction: column; gap: 32px; }
+
+  /* ─── LEAD CASE STUDY ─── */
+  .lead-case { display: flex; flex-direction: column; gap: 1px; }
+  .lc-grid-top {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px 6px 0 0; overflow: hidden;
+  }
+  .lc-grid-bot {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-top: 0; border-radius: 0 0 6px 6px; overflow: hidden;
+  }
+  .lc-cell {
+    background: var(--bg-soft); padding: 28px 28px 24px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cell-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .cell-body { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; }
+  .cell-outcome { font-family: var(--sans); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--fg); }
+
+  /* ─── DASHBOARD SCREENSHOTS ─── */
+  .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .screen-img { width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid var(--rule); }
+
+  /* ─── SECONDARY AGENT CARDS ─── */
+  .agent-cards {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .agent-card {
+    background: var(--bg-soft); padding: 28px 28px 24px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .ac-title { font-family: var(--sans); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; color: var(--fg); }
+  .ac-tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .agent-card p { margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg-2); }
+
+  /* ─── SSIA NOTE ─── */
+  .ssia-note {
+    background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 24px 28px; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .ssia-note-icon { font-family: var(--mono); font-size: 18px; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .ssia-note p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--fg-3); }
+  .ssia-note a { color: var(--accent); transition: opacity .2s; }
+  .ssia-note a:hover { opacity: 0.8; }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .hero { padding: 96px 0 36px; }
+    .hero-sub { grid-template-columns: 1fr; gap: 32px; }
+    .hero-title { font-size: clamp(40px, 9vw, 80px); }
+    .lc-grid-top { grid-template-columns: 1fr; }
+    .lc-grid-bot { grid-template-columns: 1fr; }
+    .agent-cards { grid-template-columns: 1fr; }
+    .screens { grid-template-columns: 1fr; }
+    .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
+    .s-head { position: static; }
+  }
+</style>
+</head>
+<body>
+<script src="js/preloader.js"></script>
+
+<site-header active="ai-writing"></site-header>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>AI Writing Systems</span>
+    </div>
+    <h1 class="hero-title">AI Writing<br>Systems.</h1>
+    <div class="hero-sub">
+      <p class="hero-intro">Production AI workflows for copy, campaigns, brand voice, review loops, and marketing speed. Selected AI systems and workflows built through Agentic689.</p>
+      <div class="hero-meta">
+        <div class="hero-stat">
+          <div class="stat-num">≈½</div>
+          <div class="stat-label">Production time reduced per campaign cycle</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">Or more first drafts delivered in the time one used to take</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">3×/wk</div>
+          <div class="stat-label">Used in active client campaigns</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── LEAD CASE: AGENCY689 WRITING SYSTEMS ─── -->
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 01</span>
+      <h2 class="s-title">Agency689<br><span class="it">Writing Systems</span></h2>
+      <p class="s-kicker">Lead case study</p>
+    </div>
+    <div class="s-body">
+      <div class="lead-case">
+        <div class="lc-grid-top">
+          <div class="lc-cell">
+            <div class="cell-label">Problem</div>
+            <p class="cell-body">Agency work creates constant demand for strong first drafts: emails, banners, promotional copy, campaign concepts, subject lines, landing pages, ad creative, and social copy. The risk with AI is obvious. It can increase volume while flattening voice.</p>
+          </div>
+          <div class="lc-cell">
+            <div class="cell-label">System</div>
+            <p class="cell-body">Built AI writing workflows for Agency689 client work, including Sunset Marquis, ima Social Club, and Traveler Guitar. Systems use brand context, RAG, recursive learning, SKILL.md files, persona files, and governance rules to create campaign-ready drafts.</p>
+          </div>
+          <div class="lc-cell">
+            <div class="cell-label">Workflow</div>
+            <p class="cell-body">The system produces multiple first drafts, runs through a second standards AI for quality and voice checks, then routes work for human input through Telegram before anything ships.</p>
+          </div>
+        </div>
+        <div class="lc-grid-bot">
+          <div class="lc-cell">
+            <div class="cell-label">Output &amp; Use</div>
+            <p class="cell-body">Email campaigns, banner copy, promotional copy, landing page copy, campaign concepts, social posts, subject lines, ad creative, and sometimes image and video support. Used by the Agency689 team and sometimes clients, roughly three times per week or around active campaign cycles.</p>
+          </div>
+          <div class="lc-cell">
+            <div class="cell-label">Outcome</div>
+            <div class="cell-outcome">Cuts production time by approximately half. Three or more usable first drafts in less time than one first draft used to take.</div>
+            <p class="cell-body" style="margin-top:8px;font-size:15px;color:var(--fg-3);">This is the practical version of AI-assisted marketing: faster iteration, stronger review loops, and human approval before publication.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECONDARY SYSTEMS ─── -->
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 02</span>
+      <h2 class="s-title">Other<span class="it"> Systems</span></h2>
+      <p class="s-kicker">Additional workflows &amp; agents</p>
+    </div>
+    <div class="s-body">
+      <div class="agent-cards">
+        <div class="agent-card">
+          <div class="ac-tag">// Marketing Automation</div>
+          <div class="ac-title">Book &amp; Music Marketing Systems</div>
+          <p>Closed-loop marketing systems for KDP titles and music releases. Platform-native copy for Reddit, Instagram, Facebook, X, and TikTok with human approval queues between every action. Tracks real sales and streams through platform APIs and learns which channels convert. Attribution feedback, recursive learning, approval queues, and channel re-weighting every loop.</p>
+        </div>
+        <div class="agent-card">
+          <div class="ac-tag">// Analytics Architecture</div>
+          <div class="ac-title">SSIA · Single Stock Intelligence Agent</div>
+          <p>Agent architecture and technical writing sample. Two production deployments running a hypothesis stack against regime indicators with composite scoring, position sizing, and drawdown kill-switches. Persistent memory through markdown config files. Multi-turn agentic loops on the Claude API. <a href="ssia-whitepaper.html" style="color:var(--accent);">Read the white paper &rarr;</a></p>
+        </div>
+        <div class="agent-card">
+          <div class="ac-tag">// Computer Vision</div>
+          <div class="ac-title">AuScan · Vision Workflow</div>
+          <p>Claude Vision and satellite imagery analysis. Trains Claude Vision on the spectral and structural signatures of world-class mineral deposits, then scores any region on a prospectivity grid. Proof of Claude Vision applied to real-world image analysis at scale.</p>
+        </div>
+        <div class="agent-card">
+          <div class="ac-tag">// Identity Systems</div>
+          <div class="ac-title">Persona Governance System</div>
+          <p>Validated persona scaffolding with SKILL.md governance. Produces structured persona specifications with hard governance rules and voice constraints. Used for brand persona development, editorial persona work, and AI-assisted copy governance.</p>
+        </div>
+        <div class="agent-card">
+          <div class="ac-tag">// Correlation Engine</div>
+          <div class="ac-title">COOK · Anomaly Correlation Engine</div>
+          <p>Multi-asset anomaly correlation engine with dashboard UI. Proof of systems thinking and data-to-narrative design: taking complex signal data and presenting it in a form that supports human decision-making rather than replacing it.</p>
+        </div>
+      </div>
+
+      <div class="ssia-note">
+        <span class="ssia-note-icon">ℹ</span>
+        <p>The SSIA white paper is included as a <strong>technical writing and agent-architecture sample</strong>, not as investment advice. The transferable point is the system design: ingestion, hypothesis testing, scoring, human review, audit trail, and continuous improvement. <a href="ssia-whitepaper.html">Read the white paper &rarr;</a></p>
+      </div>
+
+      <div class="screens">
+        <img src="img/agents/ssia-vrt-dashboard.png" alt="SSIA · VRT dashboard" class="screen-img" loading="lazy">
+        <img src="img/agents/ssia-crdo-dashboard.png" alt="SSIA · CRDO dashboard" class="screen-img" loading="lazy">
+        <img src="img/agents/book-agent.png" alt="Book Agent dashboard" class="screen-img" loading="lazy">
+        <img src="img/agents/auscan-dashboard.png" alt="AuScan satellite analysis dashboard" class="screen-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<site-footer></site-footer>
+
+<script src="theme.js"></script>
+</body>
+</html>

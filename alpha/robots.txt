@@ -17,4 +17,4 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://adamcagle.com/sitemap.xml
+Sitemap: https://adamcagle.com/alpha/sitemap.xml

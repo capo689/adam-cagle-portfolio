@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://adamcagle.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://adamcagle.com/Portfolio.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://adamcagle.com/Agents.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://adamcagle.com/ssia-whitepaper.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://adamcagle.com/Books.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://adamcagle.com/Studio.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://adamcagle.com/alpha/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://adamcagle.com/alpha/Portfolio.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://adamcagle.com/alpha/Work.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://adamcagle.com/alpha/AISystems.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://adamcagle.com/alpha/Agents.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://adamcagle.com/alpha/BrandVoice.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://adamcagle.com/alpha/WritingSamples.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://adamcagle.com/alpha/Studio.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://adamcagle.com/alpha/Resume.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://adamcagle.com/alpha/Contact.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://adamcagle.com/alpha/wpaper/aiw-whitepaper.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://adamcagle.com/alpha/wpaper/ssia-whitepaper.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://adamcagle.com/alpha/wpaper/booklite-whitepaper.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://adamcagle.com/alpha/wpaper/auscan-whitepaper.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://adamcagle.com/alpha/writing-samples/the-ledger.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://adamcagle.com/alpha/writing-samples/the-deal.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://adamcagle.com/alpha/writing-samples/ship-happens.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://adamcagle.com/alpha/writing-samples/the-vampires-babysitter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

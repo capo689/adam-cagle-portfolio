@@ -46,7 +46,7 @@ html[data-theme="light"] .rail {
 .nav-link {
   font-family: var(--sans);
   font-weight: 500;
-  font-size: 15px;
+  font-size: 16.5px;
   letter-spacing: -0.005em;
   color: var(--fg-2);
   text-decoration: none;

@@ -93,21 +93,8 @@
 }
 .sh-cover img {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center; display: block; z-index: 2;
-}
-/* Book-spine light/shadow treatment */
-.sh-cover::after {
-  content: '';
-  position: absolute; inset: 0; z-index: 3;
-  pointer-events: none;
-  background: linear-gradient(
-    to right,
-    rgba(255,255,255,0.07) 0%,
-    rgba(255,255,255,0.02) 4%,
-    transparent 10%,
-    transparent 88%,
-    rgba(0,0,0,0.22) 100%
-  );
+  object-fit: contain; object-position: center; display: block; z-index: 2;
+  background: var(--paper);
 }
 .sh-cover .cover-fallback {
   position: absolute; inset: 0; z-index: 1;

@@ -5,7 +5,7 @@
   const NAV = [
     { key: 'resume',           href: '/alpha/Resume.html',         label: 'Resume'          },
     { key: 'portfolio',        href: null,                          label: 'Portfolio',  hasMega: true },
-    { key: 'ai-writing',       href: '/alpha/AIWriting.html',       label: 'AI Systems'      },
+    { key: 'ai-writing',       href: '/alpha/AISystems.html',       label: 'AI Systems'      },
     { key: 'writing-samples',  href: '/alpha/WritingSamples.html',  label: 'Writing Samples' },
     { key: 'contact',          href: '/alpha/Contact.html',         label: 'Contact'         }
   ];
@@ -222,7 +222,7 @@
         '<nav class="foot-nav-links">' +
           '<a href="/alpha/Resume.html">Resume</a>' +
           '<a href="/alpha/Work.html">Product &amp; Campaign Work</a>' +
-          '<a href="/alpha/AIWriting.html">AI Systems</a>' +
+          '<a href="/alpha/AISystems.html">AI Systems</a>' +
           '<a href="/alpha/BrandVoice.html">Brand Voice Systems</a>' +
           '<a href="/alpha/Books.html">Selected Writing</a>' +
         '</nav>' +

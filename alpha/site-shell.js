@@ -4,11 +4,11 @@
 
 (function () {
   const NAV = [
-    { key: 'resume',      href: 'Resume.html',     label: 'Resume'                  },
-    { key: 'work',        href: 'Work.html',        label: 'Product & Campaign Work' },
-    { key: 'ai-writing',  href: 'AIWriting.html',   label: 'AI Writing Systems'      },
-    { key: 'brand-voice', href: 'BrandVoice.html',  label: 'Brand Voice Systems'     },
-    { key: 'contact',     href: 'Contact.html',     label: 'Contact'                 }
+    { key: 'resume',      href: '/alpha/Resume.html',     label: 'Resume'                  },
+    { key: 'work',        href: '/alpha/Work.html',        label: 'Product & Campaign Work' },
+    { key: 'ai-writing',  href: '/alpha/AIWriting.html',   label: 'AI Writing Systems'      },
+    { key: 'brand-voice', href: '/alpha/BrandVoice.html',  label: 'Brand Voice Systems'     },
+    { key: 'contact',     href: '/alpha/Contact.html',     label: 'Contact'                 }
   ];
   const EMAIL    = 'adamrcagle@gmail.com';
   const LINKEDIN = 'https://www.linkedin.com/in/adam-r-cagle-3b723a3/';
@@ -31,7 +31,7 @@
       const active = this.getAttribute('active') || '';
       const html =
 '<header class="rail" data-active="' + active + '">' +
-  '<a href="index.html" class="rail-brand" data-cursor="hover">Adam R. Cagle</a>' +
+  '<a href="/alpha/" class="rail-brand" data-cursor="hover">Adam R. Cagle</a>' +
   '<nav class="rail-nav">' + navLinks(active) + '</nav>' +
   '<div class="rail-right">' +
     '<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">' +
@@ -89,12 +89,12 @@
     '<div class="foot-social"><a href="' + LINKEDIN + '" target="_blank" rel="noopener">LinkedIn</a> &middot; <span>&copy; 2026</span></div>' +
   '</div>' +
   '<nav class="foot-nav">' +
-    '<a href="Resume.html">Resume</a>' +
-    '<a href="Work.html">Product &amp; Campaign Work</a>' +
-    '<a href="AIWriting.html">AI Writing Systems</a>' +
-    '<a href="BrandVoice.html">Brand Voice Systems</a>' +
-    '<a href="Books.html">Selected Writing</a>' +
-    '<a href="Contact.html">Contact</a>' +
+    '<a href="/alpha/Resume.html">Resume</a>' +
+    '<a href="/alpha/Work.html">Product &amp; Campaign Work</a>' +
+    '<a href="/alpha/AIWriting.html">AI Writing Systems</a>' +
+    '<a href="/alpha/BrandVoice.html">Brand Voice Systems</a>' +
+    '<a href="/alpha/Books.html">Selected Writing</a>' +
+    '<a href="/alpha/Contact.html">Contact</a>' +
     '<a href="mailto:' + EMAIL + '">Email</a>' +
     '<a href="' + LINKEDIN + '" target="_blank" rel="noopener">LinkedIn</a>' +
   '</nav>' +

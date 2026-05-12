@@ -154,6 +154,176 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 }
 .rail.is-shrunk .rail-progress { opacity: 1; }
 
+/* ─── MEGA MENU ─── */
+.nav-mega-wrap { position: relative; display: flex; align-items: center; }
+
+.nav-mega-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 16.5px;
+  letter-spacing: -0.005em;
+  color: var(--fg-2);
+  white-space: nowrap;
+  padding: 4px 0;
+  position: relative;
+  transition: color .25s;
+  display: flex; align-items: center; gap: 5px;
+}
+.nav-mega-btn:hover { color: var(--fg); }
+.nav-mega-btn.is-active { color: var(--accent); }
+
+.nav-mega-btn::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.nav-mega-btn:hover::after,
+.nav-mega-btn.is-active::after { transform: scaleX(1); }
+
+.mega-caret {
+  font-size: 8px;
+  opacity: 0.5;
+  display: inline-block;
+  transition: transform .2s;
+}
+.nav-mega-btn[aria-expanded="true"] .mega-caret { transform: rotate(180deg); }
+
+.mega-menu {
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  width: 680px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  z-index: 100;
+  overflow: hidden;
+}
+.mega-menu.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mega-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+}
+
+.mega-card {
+  display: flex; flex-direction: column;
+  background: var(--bg-soft);
+  text-decoration: none;
+  padding: 0;
+  transition: background .2s;
+}
+.mega-card:hover { background: var(--bg); }
+
+.mega-img {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--bg);
+}
+.mega-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.mega-card:hover .mega-img img { transform: scale(1.03); }
+
+.mega-eyebrow {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 14px 18px 4px;
+}
+.mega-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  padding: 0 18px 6px;
+}
+.mega-desc {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--fg-2);
+  padding: 0 18px 18px;
+}
+
+/* ─── MOBILE MEGA ─── */
+.mob-mega-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  width: 220px;
+  border-bottom: 1px solid var(--rule);
+}
+.mob-mega-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--fg-2);
+  padding: 22px 0;
+  width: 100%;
+  text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: color .25s;
+}
+.mob-mega-btn:hover { color: var(--fg); }
+.mob-mega-btn.is-active { color: var(--accent); }
+
+.mob-mega-panel {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 14px;
+}
+.mob-mega-panel.open { display: flex; }
+
+.mob-mega-link {
+  display: flex; flex-direction: column;
+  text-decoration: none;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+  transition: opacity .2s;
+}
+.mob-mega-link:hover { opacity: 0.75; }
+
+.mob-mega-title {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fg);
+  text-align: center;
+}
+.mob-mega-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  text-align: center;
+  margin-top: 3px;
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .rail { grid-template-columns: 1fr auto; padding: 0 22px; gap: 16px; }

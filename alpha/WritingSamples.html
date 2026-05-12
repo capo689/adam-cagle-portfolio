@@ -146,36 +146,25 @@
     transform: translateY(-3px);
   }
 
-  /* Top zone: small cover + title/subtitle/genre */
-  .sample-card-head {
-    display: grid;
-    grid-template-columns: 104px 1fr;
-    gap: 28px;
-    padding: 30px 32px 28px;
-    align-items: start;
-  }
-  .sc-cover-mini {
+  /* Landscape banner image at top of card — matches the 4:3 cover artwork */
+  .sample-card-banner {
     position: relative;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--paper);
-    border-radius: 2.5px;
-    box-shadow:
-      0 14px 30px rgba(0,0,0,0.38),
-      0 4px 10px rgba(0,0,0,0.28),
-      0 0 0 1px rgba(255,255,255,0.04) inset;
+    border-bottom: 1px solid var(--rule);
   }
-  .sc-cover-mini img {
+  .sample-card-banner img {
     position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: contain; object-position: center; display: block; z-index: 2;
-    background: var(--paper);
-    transition: transform .65s cubic-bezier(.2,.7,.2,1);
+    object-fit: cover; object-position: center; display: block; z-index: 2;
+    transition: transform .7s cubic-bezier(.2,.7,.2,1);
   }
-  .sample-card:hover .sc-cover-mini img { transform: scale(1.04); }
-  .sc-head-text {
+  .sample-card:hover .sample-card-banner img { transform: scale(1.03); }
+
+  /* Header section below banner: eyebrow + title + subtitle */
+  .sample-card-head {
+    padding: 26px 32px 22px;
     display: flex; flex-direction: column; gap: 8px;
-    padding-top: 4px;
-    min-width: 0;
   }
   .sc-eyebrow {
     font-family: var(--mono); font-size: 10.5px;
@@ -244,13 +233,12 @@
     color: var(--paper-ink); opacity: 0.45;
   }
 
-  /* Mini-cover scoped fallback overrides */
-  .sc-cover-mini .cover-fallback { padding: 12px 10px; }
-  .sc-cover-mini .cover-fallback::before { top: 6px; left: 6px; right: 6px; bottom: 6px; }
-  .sc-cover-mini .cf-label { font-size: 6.5px; letter-spacing: 0.16em; margin: 0 0 8px; }
-  .sc-cover-mini .cf-title { font-size: 14px; line-height: 1.05; }
-  .sc-cover-mini .cf-sub,
-  .sc-cover-mini .cf-corner { display: none; }
+  /* Banner-scoped fallback overrides for landscape format */
+  .sample-card-banner .cover-fallback { padding: 28px 36px; }
+  .sample-card-banner .cf-label { font-size: 9.5px; margin: 0 0 12px; }
+  .sample-card-banner .cf-title { font-size: clamp(28px, 3.4vw, 42px); }
+  .sample-card-banner .cf-sub { font-size: 12px; margin-top: 12px; }
+  .sample-card-banner .cf-corner { font-size: 9px; bottom: 18px; right: 18px; }
 
   /* Bottom zone: blurb + shows + CTA */
   .sample-card-body {
@@ -415,7 +403,7 @@
     .gallery-section { padding: 64px 0 32px; }
     .gallery-head { flex-direction: column; align-items: flex-start; gap: 8px; }
     .gallery-grid { grid-template-columns: 1fr; gap: 22px; }
-    .sample-card-head { grid-template-columns: 84px 1fr; gap: 20px; padding: 24px 22px 22px; }
+    .sample-card-head { padding: 22px 22px 18px; }
     .sample-card-body { padding: 20px 22px 24px; }
     .dossier-body { padding: 32px 24px 36px; }
     .crosslink { margin: 80px 0 100px; padding: 40px 0 0; }
@@ -454,19 +442,18 @@
 
       <!-- CARD 1: Ship Happens -->
       <a class="sample-card" href="/alpha/writing-samples/ship-happens.html" data-cursor="hover">
+        <div class="sample-card-banner">
+          <div class="cover-fallback">
+            <p class="cf-label">Comedic Fiction</p>
+            <h3 class="cf-title">Ship Happens</h3>
+            <p class="cf-sub">A Chad Cruz Zombie Adventure</p>
+          </div>
+          <img src="/img/ship.png" alt="Ship Happens cover" loading="lazy" onerror="this.style.display='none'">
+        </div>
         <div class="sample-card-head">
-          <div class="sc-cover-mini">
-            <div class="cover-fallback">
-              <p class="cf-label">Comedic Fiction</p>
-              <h3 class="cf-title">Ship Happens</h3>
-            </div>
-            <img src="/img/ship.png" alt="Ship Happens cover" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="sc-head-text">
-            <div class="sc-eyebrow">Comedic Fiction</div>
-            <h3 class="sc-title">Ship Happens</h3>
-            <p class="sc-subtitle">A Chad Cruz Zombie Adventure</p>
-          </div>
+          <div class="sc-eyebrow">Comedic Fiction</div>
+          <h3 class="sc-title">Ship Happens</h3>
+          <p class="sc-subtitle">A Chad Cruz Zombie Adventure</p>
         </div>
         <div class="sample-card-body">
           <p class="sc-teaser">A funeral-home salesman, a disputed inheritance, and one deeply satisfying act of financial jujitsu.</p>
@@ -477,19 +464,18 @@
 
       <!-- CARD 2: The Deal -->
       <a class="sample-card" href="/alpha/writing-samples/the-deal.html" data-cursor="hover">
+        <div class="sample-card-banner">
+          <div class="cover-fallback">
+            <p class="cf-label">Narrative Nonfiction</p>
+            <h3 class="cf-title">The Deal</h3>
+            <p class="cf-sub">Every Civilization Runs on a Deal.</p>
+          </div>
+          <img src="/img/thedeal.png" alt="The Deal cover" loading="lazy" onerror="this.style.display='none'">
+        </div>
         <div class="sample-card-head">
-          <div class="sc-cover-mini">
-            <div class="cover-fallback">
-              <p class="cf-label">Narrative Nonfiction</p>
-              <h3 class="cf-title">The Deal</h3>
-            </div>
-            <img src="/img/thedeal.png" alt="The Deal cover" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="sc-head-text">
-            <div class="sc-eyebrow">Narrative Nonfiction</div>
-            <h3 class="sc-title">The Deal</h3>
-            <p class="sc-subtitle">Every Civilization Runs on a Deal. It’s Time to Renegotiate.</p>
-          </div>
+          <div class="sc-eyebrow">Narrative Nonfiction</div>
+          <h3 class="sc-title">The Deal</h3>
+          <p class="sc-subtitle">Every Civilization Runs on a Deal. It’s Time to Renegotiate.</p>
         </div>
         <div class="sample-card-body">
           <p class="sc-teaser">Three ways history disappears: through neglect, through exclusion, and through deliberate destruction.</p>
@@ -500,19 +486,18 @@
 
       <!-- CARD 3: The Ledger -->
       <a class="sample-card" href="/alpha/writing-samples/the-ledger.html" data-cursor="hover">
+        <div class="sample-card-banner">
+          <div class="cover-fallback">
+            <p class="cf-label">Narrative Nonfiction</p>
+            <h3 class="cf-title">The Ledger</h3>
+            <p class="cf-sub">An Accounting of Gender Roles</p>
+          </div>
+          <img src="/img/theledger.png" alt="The Ledger cover" loading="lazy" onerror="this.style.display='none'">
+        </div>
         <div class="sample-card-head">
-          <div class="sc-cover-mini">
-            <div class="cover-fallback">
-              <p class="cf-label">Narrative Nonfiction</p>
-              <h3 class="cf-title">The Ledger</h3>
-            </div>
-            <img src="/img/theledger.png" alt="The Ledger cover" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="sc-head-text">
-            <div class="sc-eyebrow">Narrative Nonfiction</div>
-            <h3 class="sc-title">The Ledger</h3>
-            <p class="sc-subtitle">An Accounting of Gender Roles</p>
-          </div>
+          <div class="sc-eyebrow">Narrative Nonfiction</div>
+          <h3 class="sc-title">The Ledger</h3>
+          <p class="sc-subtitle">An Accounting of Gender Roles</p>
         </div>
         <div class="sample-card-body">
           <p class="sc-teaser">An excerpt tracing the male cost ledger: war, dangerous labor, suicide, isolation, and the architecture that cannot ask for help.</p>
@@ -523,19 +508,18 @@
 
       <!-- CARD 4: The Vampire’s Babysitter -->
       <a class="sample-card" href="/alpha/writing-samples/the-vampires-babysitter.html" data-cursor="hover">
+        <div class="sample-card-banner">
+          <div class="cover-fallback">
+            <p class="cf-label">Dark Historical Fiction</p>
+            <h3 class="cf-title">The Vampire’s Babysitter</h3>
+            <p class="cf-sub">Historical Horror · 1450 Edirne</p>
+          </div>
+          <img src="/img/vampiresbabysitter.png" alt="The Vampire’s Babysitter cover" loading="lazy" onerror="this.style.display=’none’">
+        </div>
         <div class="sample-card-head">
-          <div class="sc-cover-mini">
-            <div class="cover-fallback">
-              <p class="cf-label">Historical Horror</p>
-              <h3 class="cf-title">Vampire</h3>
-            </div>
-            <img src="/img/vampiresbabysitter.png" alt="The Vampire's Babysitter cover" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="sc-head-text">
-            <div class="sc-eyebrow">Dark Historical Fiction</div>
-            <h3 class="sc-title">The Vampire’s Babysitter</h3>
-            <p class="sc-subtitle">Historical Horror · 1450 Edirne</p>
-          </div>
+          <div class="sc-eyebrow">Dark Historical Fiction</div>
+          <h3 class="sc-title">The Vampire’s Babysitter</h3>
+          <p class="sc-subtitle">Historical Horror · 1450 Edirne</p>
         </div>
         <div class="sample-card-body">
           <p class="sc-teaser">A ritual killing, a stolen body, and the dreadful calm of a narrator trained to execute the impossible.</p>

@@ -10,27 +10,26 @@
     { key: 'brand-voice', href: 'BrandVoice.html',  label: 'Brand Voice Systems'     },
     { key: 'contact',     href: 'Contact.html',     label: 'Contact'                 }
   ];
-  const EMAIL   = 'adamrcagle@gmail.com';
+  const EMAIL    = 'adamrcagle@gmail.com';
   const LINKEDIN = 'https://www.linkedin.com/in/adam-r-cagle-3b723a3/';
 
   function navLinks(active) {
-    return NAV.map(function (i) {
-      var cls = 'nav-link' + (i.key === active ? ' is-active' : '');
+    return NAV.map((i) => {
+      const cls = 'nav-link' + (i.key === active ? ' is-active' : '');
       return '<a href="' + i.href + '" class="' + cls + '" data-cursor="hover">' + i.label + '</a>';
     }).join('');
   }
 
   function inject(host, html) {
-    var tpl = document.createElement('template');
+    const tpl = document.createElement('template');
     tpl.innerHTML = html.trim();
-    host.replaceWith.apply(host, Array.from(tpl.content.children));
+    host.replaceWith(...tpl.content.children);
   }
 
-  var SiteHeader = (function (_super) {
-    function SiteHeader() { return _super !== null && _super.apply(this, arguments) || this; }
-    SiteHeader.prototype.connectedCallback = function () {
-      var active = this.getAttribute('active') || '';
-      var html =
+  class SiteHeader extends HTMLElement {
+    connectedCallback() {
+      const active = this.getAttribute('active') || '';
+      const html =
 '<header class="rail" data-active="' + active + '">' +
   '<a href="index.html" class="rail-brand" data-cursor="hover">Adam R. Cagle</a>' +
   '<nav class="rail-nav">' + navLinks(active) + '</nav>' +
@@ -54,36 +53,34 @@
 '</div>';
       inject(this, html);
 
-      var hb = document.getElementById('hamburger');
-      var mn = document.getElementById('mob-nav');
-      var cl = document.getElementById('mob-close');
+      const hb = document.getElementById('hamburger');
+      const mn = document.getElementById('mob-nav');
+      const cl = document.getElementById('mob-close');
       if (hb && mn) {
-        var close = function () { mn.classList.remove('open'); document.body.style.overflow = ''; };
-        hb.addEventListener('click', function () { mn.classList.add('open'); document.body.style.overflow = 'hidden'; });
+        const close = () => { mn.classList.remove('open'); document.body.style.overflow = ''; };
+        hb.addEventListener('click', () => { mn.classList.add('open'); document.body.style.overflow = 'hidden'; });
         if (cl) cl.addEventListener('click', close);
-        mn.addEventListener('click', function (e) { if (e.target === mn) close(); });
-        mn.querySelectorAll('nav a').forEach(function (a) { a.addEventListener('click', close); });
+        mn.addEventListener('click', (e) => { if (e.target === mn) close(); });
+        mn.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', close));
       }
 
-      var rail = document.querySelector('.rail');
+      const rail = document.querySelector('.rail');
       if (!rail) return;
       function update() {
-        var y     = window.pageYOffset || document.documentElement.scrollTop || 0;
-        var max   = (document.documentElement.scrollHeight - window.innerHeight) || 1;
-        var ratio = Math.max(0, Math.min(1, y / max));
+        const y     = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const max   = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+        const ratio = Math.max(0, Math.min(1, y / max));
         rail.classList.toggle('is-shrunk', y > 80);
         rail.style.setProperty('--scroll-progress', (ratio * 100).toFixed(2) + '%');
       }
       update();
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);
-    };
-    return SiteHeader;
-  }(HTMLElement));
+    }
+  }
 
-  var SiteFooter = (function (_super) {
-    function SiteFooter() { return _super !== null && _super.apply(this, arguments) || this; }
-    SiteFooter.prototype.connectedCallback = function () {
+  class SiteFooter extends HTMLElement {
+    connectedCallback() {
       inject(this,
 '<footer class="foot">' +
   '<div class="foot-brand">' +
@@ -102,13 +99,13 @@
     '<a href="' + LINKEDIN + '" target="_blank" rel="noopener">LinkedIn</a>' +
   '</nav>' +
 '</footer>');
-    };
-    return SiteFooter;
-  }(HTMLElement));
+    }
+  }
 
   customElements.define('site-header', SiteHeader);
   customElements.define('site-footer', SiteFooter);
 
+  // Flag internal navigation so the preloader skips on arrival
   document.addEventListener('click', function (e) {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (e.button !== 0 && e.button !== undefined) return;

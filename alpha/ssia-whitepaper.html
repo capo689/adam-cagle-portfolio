@@ -461,10 +461,10 @@ ul li strong { color: var(--amber-bright); font-weight: 500; }
 /* ===== SVG DEFAULTS ===== */
 svg text { font-family: 'JetBrains Mono', monospace; }
 
-/* ===== STICKY RETURN BAR ===== */
+/* ===== STICKY UTILITY BAR ===== */
 .return-bar {
   position: sticky; top: 0; z-index: 100;
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 14px 50px;
   background: rgba(13, 11, 8, 0.92);
   backdrop-filter: blur(10px);
@@ -473,20 +473,26 @@ svg text { font-family: 'JetBrains Mono', monospace; }
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px; font-weight: 400;
   letter-spacing: 0.14em; text-transform: uppercase;
+}
+.return-bar a {
+  display: inline-flex; align-items: center; gap: 10px;
   color: var(--amber);
   text-decoration: none;
-  transition: color .2s, background .2s, border-color .2s;
+  transition: color .2s;
 }
-.return-bar:hover { color: var(--amber-bright); background: rgba(13, 11, 8, 0.98); border-bottom-color: var(--border-bright); }
+.return-bar a:hover { color: var(--amber-bright); }
 .return-bar .arrow { font-weight: 200; font-size: 16px; line-height: 1; }
 @media (max-width: 720px) {
-  .return-bar { padding: 12px 20px; font-size: 11px; letter-spacing: 0.1em; }
+  .return-bar { padding: 12px 20px; font-size: 11px; letter-spacing: 0.1em; gap: 10px; }
 }
 </style>
 </head>
 <body>
 
-<a class="return-bar" href="/alpha/AIWriting.html"><span class="arrow">←</span>Return to AI Writing Systems</a>
+<nav class="return-bar" aria-label="Sample navigation">
+  <a href="/alpha/WritingSamples.html"><span class="arrow">←</span>Writing Samples</a>
+  <a href="/alpha/AIWriting.html">AI Systems<span class="arrow">→</span></a>
+</nav>
 
 <div class="container">
 

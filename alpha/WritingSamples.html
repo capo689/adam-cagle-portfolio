@@ -149,8 +149,8 @@
   /* Top zone: small cover + title/subtitle/genre */
   .sample-card-head {
     display: grid;
-    grid-template-columns: 96px 1fr;
-    gap: 26px;
+    grid-template-columns: 104px 1fr;
+    gap: 28px;
     padding: 30px 32px 28px;
     align-items: start;
   }
@@ -159,18 +159,32 @@
     aspect-ratio: 2 / 3;
     overflow: hidden;
     background: var(--paper);
-    border-radius: 2px;
+    border-radius: 2.5px;
     box-shadow:
-      0 10px 24px rgba(0,0,0,0.32),
-      0 2px 6px rgba(0,0,0,0.22);
+      0 14px 30px rgba(0,0,0,0.38),
+      0 4px 10px rgba(0,0,0,0.28),
+      0 0 0 1px rgba(255,255,255,0.04) inset;
   }
   .sc-cover-mini img {
     position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: contain; object-position: center; display: block; z-index: 2;
-    background: var(--paper);
-    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+    object-fit: cover; object-position: center; display: block; z-index: 2;
+    transition: transform .65s cubic-bezier(.2,.7,.2,1);
   }
-  .sample-card:hover .sc-cover-mini img { transform: scale(1.04); }
+  /* Subtle light-and-spine treatment to make covers feel like physical books */
+  .sc-cover-mini::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      rgba(255,255,255,0.06) 0%,
+      rgba(255,255,255,0.02) 4%,
+      transparent 10%,
+      transparent 88%,
+      rgba(0,0,0,0.18) 100%
+    );
+  }
+  .sample-card:hover .sc-cover-mini img { transform: scale(1.05); }
   .sc-head-text {
     display: flex; flex-direction: column; gap: 8px;
     padding-top: 4px;
@@ -459,7 +473,7 @@
               <p class="cf-label">Comedic Fiction</p>
               <h3 class="cf-title">Ship Happens</h3>
             </div>
-            <img src="img/books/ship-happens.png" alt="Ship Happens cover" loading="lazy" onerror="this.style.display='none'">
+            <img src="img/ship.png" alt="Ship Happens cover" loading="lazy" onerror="this.style.display='none'">
           </div>
           <div class="sc-head-text">
             <div class="sc-eyebrow">Comedic Fiction</div>
@@ -482,7 +496,7 @@
               <p class="cf-label">Narrative Nonfiction</p>
               <h3 class="cf-title">The Deal</h3>
             </div>
-            <img src="img/books/the-deal.jpg" alt="The Deal cover" loading="lazy" onerror="this.style.display='none'">
+            <img src="img/thedeal.png" alt="The Deal cover" loading="lazy" onerror="this.style.display='none'">
           </div>
           <div class="sc-head-text">
             <div class="sc-eyebrow">Narrative Nonfiction</div>
@@ -505,7 +519,7 @@
               <p class="cf-label">Narrative Nonfiction</p>
               <h3 class="cf-title">The Ledger</h3>
             </div>
-            <img src="img/books/the-ledger.jpg" alt="The Ledger cover" loading="lazy" onerror="this.style.display='none'">
+            <img src="img/theledger.png" alt="The Ledger cover" loading="lazy" onerror="this.style.display='none'">
           </div>
           <div class="sc-head-text">
             <div class="sc-eyebrow">Narrative Nonfiction</div>
@@ -528,7 +542,7 @@
               <p class="cf-label">Historical Horror</p>
               <h3 class="cf-title">Vampire</h3>
             </div>
-            <img src="img/Vampire.png" alt="The Vampire’s Babysitter cover" loading="lazy" onerror="this.style.display=’none’">
+            <img src="img/vampiresbabysitter.png" alt="The Vampire's Babysitter cover" loading="lazy" onerror="this.style.display='none'">
           </div>
           <div class="sc-head-text">
             <div class="sc-eyebrow">Dark Historical Fiction</div>

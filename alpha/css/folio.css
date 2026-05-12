@@ -81,18 +81,33 @@
 /* Hero cover preview (right column) */
 .sh-cover {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 2 / 3;
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--rule);
   box-shadow:
-    0 30px 80px rgba(0,0,0,0.45),
-    0 6px 18px rgba(0,0,0,0.35);
+    0 36px 90px rgba(0,0,0,0.5),
+    0 10px 24px rgba(0,0,0,0.38),
+    0 0 0 1px rgba(255,255,255,0.04) inset;
   background: var(--paper);
 }
 .sh-cover img {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center top; display: block; z-index: 2;
+  object-fit: cover; object-position: center; display: block; z-index: 2;
+}
+/* Book-spine light/shadow treatment */
+.sh-cover::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0.07) 0%,
+    rgba(255,255,255,0.02) 4%,
+    transparent 10%,
+    transparent 88%,
+    rgba(0,0,0,0.22) 100%
+  );
 }
 .sh-cover .cover-fallback {
   position: absolute; inset: 0; z-index: 1;

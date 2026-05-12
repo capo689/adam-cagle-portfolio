@@ -138,11 +138,12 @@
 
 /* ─── STICKY READER UTILITY BAR ─── */
 .reader-bar {
-  position: sticky; top: 0; z-index: 60;
+  position: sticky; top: var(--header-h, 72px); z-index: 40;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   background: rgba(15,15,14,0.86);
   border-bottom: 1px solid var(--rule);
+  transition: top .35s cubic-bezier(.2,.7,.2,1);
 }
 html[data-theme="light"] .reader-bar { background: rgba(244,239,231,0.9); }
 .reader-bar-inner {
@@ -268,10 +269,11 @@ html[data-theme="light"] .reader-bar { background: rgba(244,239,231,0.9); }
 
 /* ─── PROGRESS RAIL ─── */
 .progress-rail {
-  position: sticky; top: 120px;
+  position: sticky; top: calc(var(--header-h, 72px) + 80px);
   align-self: start;
   display: flex; flex-direction: column; gap: 14px;
   padding: 16px 0;
+  transition: top .35s cubic-bezier(.2,.7,.2,1);
 }
 .pr-label {
   font-family: var(--mono); font-size: 9.5px;

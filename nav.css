@@ -508,5 +508,7 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 }
 
 /* ─── GLOBAL OVERFLOW SAFETY ─── */
-html, body { overflow-x: hidden; }
+/* Use `clip` not `hidden` — `hidden` establishes a scroll container on body,
+   which breaks `position: sticky` for descendants (reader-bar, progress-rail). */
+html, body { overflow-x: clip; }
 

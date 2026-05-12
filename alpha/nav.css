@@ -201,7 +201,7 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 .foot-tagline {
   font-family: var(--italic);
   font-style: italic;
-  font-size: 16px;
+  font-size: 19px;
   line-height: 1.5;
   color: var(--fg-3);
   margin: 0 0 24px;
@@ -211,7 +211,7 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
   align-items: center;
   gap: 8px;
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--fg-3);
@@ -222,7 +222,7 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 .foot-col { display: flex; flex-direction: column; }
 .foot-col-head {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--accent);
@@ -231,11 +231,11 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 .foot-nav-links {
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 14px;
 }
 .foot-nav-links a {
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: -0.005em;
   color: var(--fg-2);
@@ -248,7 +248,7 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 /* Contact column links */
 .foot-email {
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: 14.5px;
   letter-spacing: -0.01em;
   color: var(--fg-2);
   text-decoration: none;
@@ -261,11 +261,11 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  padding: 9px 18px;
+  padding: 10px 20px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 500;
   color: var(--fg-2);
   text-decoration: none;
@@ -281,7 +281,7 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 }
 .foot-contact-link {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--fg-3);
@@ -300,14 +300,14 @@ html[data-theme="light"] .mob-nav { background: rgba(244,239,231,0.97); }
 }
 .foot-copy {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   color: var(--fg-3);
 }
 .foot-craft {
   font-family: var(--italic);
   font-style: italic;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--fg-3);
 }
 

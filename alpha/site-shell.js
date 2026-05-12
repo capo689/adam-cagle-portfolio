@@ -224,7 +224,7 @@
           '<a href="/alpha/Work.html">Product &amp; Campaign Work</a>' +
           '<a href="/alpha/AISystems.html">AI Systems</a>' +
           '<a href="/alpha/BrandVoice.html">Brand Voice Systems</a>' +
-          '<a href="/alpha/Books.html">Selected Writing</a>' +
+          '<a href="/alpha/WritingSamples.html">Writing Samples</a>' +
         '</nav>' +
       '</div>' +
 

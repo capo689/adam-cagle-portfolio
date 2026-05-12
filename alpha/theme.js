@@ -1,5 +1,5 @@
 (function () {
-  var stored = localStorage.getItem('theme') || 'dark';
+  var stored = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', stored);
 
   // Swap any [data-neon-dark]/[data-neon-light] images to match active theme

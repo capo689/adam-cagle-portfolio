@@ -1,0 +1,34 @@
+/* page-transitions.css
+   Black slab that wipes up from the bottom on link click, then on the next
+   page wipes off the top to reveal new content. */
+
+.transition-slab {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #000;
+  pointer-events: none;
+  transform: translateY(100%);
+  will-change: transform;
+  transition: transform .65s cubic-bezier(.7, 0, .25, 1);
+}
+
+/* Rising into view: wipe up from below */
+.transition-slab.is-rising {
+  transform: translateY(0);
+}
+
+/* On arrival: pre-positioned covering the screen */
+.transition-slab.is-covering {
+  transform: translateY(0);
+  transition: none; /* no animation on the initial paint */
+}
+
+/* Leaving off the top of the screen */
+.transition-slab.is-leaving {
+  transform: translateY(-100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transition-slab { display: none !important; }
+}

@@ -1,0 +1,1589 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIW · Agency689 AI Writing Systems · White Paper by Adam R. Cagle</title>
+<meta name="author" content="Adam R. Cagle">
+<meta name="description" content="A white paper on the Agency689 AI Writing Systems. Brand voice retrieval, multi-draft generation, standards-AI critique, human approval routing, recursive workflow learning. Sunset Marquis, Agency689 proposals, and Traveler Guitar visual ideation.">
+<meta name="robots" content="index, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Newsreader:opsz,wght,ital@6..72,200..800,0;6..72,200..800,1&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   AIW · AGENCY689 AI WRITING SYSTEMS · WHITE PAPER
+   Aesthetic match to ssia-whitepaper.html
+   Editorial mono-tech · cream ground · ink type · single accent
+   ============================================================ */
+
+:root{
+  --ink:#161311;
+  --ink-2:#2b2723;
+  --paper:#f4ede0;
+  --paper-2:#ece4d3;
+  --paper-3:#e2d8c2;
+  --rule:#1a1612;
+  --mute:#7a7166;
+  --mute-2:#a39989;
+  --accent:#1e4d8e;
+  --accent-soft:#4a78b8;
+
+  --f-display:"Fraunces", "Newsreader", Georgia, serif;
+  --f-body:"Newsreader", Georgia, serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --measure: 64ch;
+  --rail: 80px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper);scroll-behavior:smooth}
+body{
+  font-family:var(--f-body);
+  font-weight:400;
+  font-size:18px;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--paper);
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","ss02","onum";
+  overflow-x:hidden;
+}
+
+/* paper grain */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(22,19,17,.035) 1px, transparent 1px),
+    radial-gradient(rgba(22,19,17,.025) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 1px 2px;
+  mix-blend-mode:multiply;
+  z-index:1;
+}
+
+/* page frame */
+.frame{
+  position:relative;
+  z-index:2;
+  max-width:1240px;
+  margin:0 auto;
+  padding: clamp(28px, 4vw, 56px) clamp(24px, 5vw, 80px) 120px;
+}
+
+/* topnav */
+.topnav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink);
+  padding-bottom:18px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:28px;
+}
+.topnav a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;padding:2px 0;transition:border-color .25s}
+.topnav a:hover{border-color:var(--ink)}
+.topnav .crest{font-family:var(--f-display);font-weight:600;letter-spacing:.04em;font-size:14px;text-transform:none;font-style:italic}
+
+/* doc note */
+.docnote{
+  font-family:var(--f-mono);
+  font-size:12px;
+  line-height:1.7;
+  color:var(--ink-2);
+  background:transparent;
+  border-left:2px solid var(--ink);
+  padding:14px 0 14px 18px;
+  margin:32px 0 56px;
+  max-width:72ch;
+}
+.docnote .tag{display:block;font-weight:700;letter-spacing:.06em;margin-bottom:6px;color:var(--ink)}
+.docnote .tag::before{content:"// "}
+
+/* ============================================================
+   HEAD PLATE
+   ============================================================ */
+.plate{
+  border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:36px 0 28px;
+  margin-bottom:18px;
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:24px;
+  align-items:end;
+}
+.plate .crest-big{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-variation-settings:"opsz" 144, "SOFT" 0, "WONK" 0;
+  font-size:clamp(96px, 17vw, 220px);
+  line-height:.84;
+  letter-spacing:-.04em;
+  color:var(--ink);
+}
+.plate .crest-big em{
+  font-style:italic;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  color:var(--accent);
+}
+.plate .stamp{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  text-align:right;
+  line-height:2.1;
+  color:var(--ink);
+}
+.plate .stamp .accent{color:var(--accent)}
+
+/* metadata bars */
+.metarow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  padding:14px 0;
+  border-bottom:1px solid var(--rule);
+}
+.metarow.thin{padding:10px 0;font-size:10.5px}
+.metarow span + span{margin-left:14px}
+.metarow .dot{color:var(--accent);font-weight:700}
+
+/* full bleed rule */
+.rule{height:1px;background:var(--ink);margin:24px 0;border:0}
+.rule.heavy{height:2px}
+.rule.short{width:48px;height:2px;background:var(--ink);margin:24px 0}
+
+/* hero title */
+.hero-title{
+  font-family:var(--f-display);
+  font-weight:400;
+  font-variation-settings:"opsz" 144, "SOFT" 0, "WONK" 1;
+  font-size:clamp(34px, 5.6vw, 76px);
+  line-height:1.02;
+  letter-spacing:-.02em;
+  margin:48px 0 24px;
+  max-width:22ch;
+  color:var(--ink);
+}
+.hero-title em{font-style:italic;color:var(--accent);font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1}
+
+.hero-sub{
+  font-family:var(--f-mono);
+  font-size:12px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin-bottom:64px;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--rule);
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+section{
+  padding:56px 0 8px;
+  border-top:1px solid var(--rule);
+}
+section:first-of-type{border-top:0}
+
+.sec-head{
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  gap:32px;
+  align-items:baseline;
+  margin-bottom:36px;
+}
+.sec-head .num{
+  font-family:var(--f-mono);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:.18em;
+  color:var(--mute);
+  padding-top:14px;
+  border-top:1px solid var(--ink);
+}
+.sec-head h2{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 60, "SOFT" 30;
+  font-size:clamp(28px, 3.8vw, 46px);
+  line-height:1.04;
+  letter-spacing:-.015em;
+  color:var(--ink);
+}
+.sec-head h2 .label{
+  display:block;
+  font-family:var(--f-mono);
+  font-size:11.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--mute);
+  margin-top:14px;
+  font-variation-settings:normal;
+}
+
+.sec-body{
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  gap:32px;
+}
+.sec-body > .gutter{display:block}
+.sec-body > .col{max-width:var(--measure)}
+
+@media (max-width: 760px){
+  .sec-head, .sec-body{grid-template-columns:1fr;gap:14px}
+  .sec-head .num{border-top:0;padding-top:0}
+}
+
+p{margin-bottom:1.05em}
+p + p{margin-top:0}
+
+strong{font-weight:700;color:var(--ink)}
+em.terra{color:var(--accent);font-style:italic}
+
+/* drop cap on first paragraph after a section head */
+.dropcap::first-letter{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  font-size:5.8em;
+  float:left;
+  line-height:.8;
+  padding:.04em .08em 0 0;
+  color:var(--accent);
+}
+
+/* lists */
+ul.aiw, ol.aiw{
+  list-style:none;
+  padding:0;
+  margin:0 0 1.25em;
+  max-width:var(--measure);
+}
+ul.aiw li, ol.aiw li{
+  position:relative;
+  padding:6px 0 6px 32px;
+  border-bottom:1px dashed rgba(22,19,17,.18);
+  font-size:17px;
+  line-height:1.5;
+}
+ul.aiw li:last-child, ol.aiw li:last-child{border-bottom:0}
+ul.aiw li::before{
+  content:"+";
+  position:absolute;
+  left:0;
+  top:6px;
+  font-family:var(--f-mono);
+  font-size:13px;
+  color:var(--accent);
+  font-weight:500;
+}
+ol.aiw{counter-reset:aiw}
+ol.aiw li{counter-increment:aiw}
+ol.aiw li::before{
+  content: counter(aiw, decimal-leading-zero);
+  position:absolute;
+  left:0;
+  top:8px;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  color:var(--mute);
+  font-weight:500;
+}
+
+/* pull block / callouts */
+.pull{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  font-size:clamp(22px, 2.6vw, 30px);
+  line-height:1.22;
+  color:var(--ink);
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:28px 0;
+  margin:36px 0;
+  max-width:46ch;
+}
+.pull::before{
+  content:"//";
+  display:block;
+  font-family:var(--f-mono);
+  font-style:normal;
+  font-size:11px;
+  letter-spacing:.2em;
+  color:var(--accent);
+  margin-bottom:10px;
+  font-variation-settings:normal;
+}
+
+/* principles deck */
+.deck{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:0;
+  border-top:1px solid var(--ink);
+  border-left:1px solid var(--ink);
+  margin:32px 0 44px;
+}
+.deck .card{
+  border-right:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:22px 24px 26px;
+  background:transparent;
+}
+.deck .card .n{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.2em;
+  color:var(--accent);
+  margin-bottom:12px;
+}
+.deck .card h4{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 60;
+  font-size:22px;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  margin-bottom:10px;
+}
+.deck .card p{
+  font-size:15.5px;
+  line-height:1.5;
+  margin:0;
+  color:var(--ink-2);
+}
+
+/* layer block, used for the architecture layer descriptions */
+.layer{
+  display:grid;
+  grid-template-columns: 130px 1fr;
+  gap:32px;
+  padding:24px 0;
+  border-bottom:1px solid rgba(22,19,17,.2);
+  align-items:start;
+}
+.layer:last-child{border-bottom:0}
+.layer .layer-key{
+  text-align:right;
+  padding-right:18px;
+  border-right:1px solid var(--ink);
+  min-height:90px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-end;
+}
+.layer .layer-key .letter{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  font-style:italic;
+  font-size:72px;
+  line-height:.85;
+  letter-spacing:-.02em;
+  color:var(--accent);
+}
+.layer .layer-key .tag{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-top:8px;
+  white-space:nowrap;
+}
+.layer .layer-title{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 36;
+  font-size:21px;
+  margin-bottom:8px;
+  color:var(--ink);
+  line-height:1.15;
+}
+.layer p{font-size:15.5px;line-height:1.55;color:var(--ink-2);margin:0}
+.layer ul{list-style:none;padding:0;margin:10px 0 0}
+.layer ul li{
+  display:inline-block;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--mute);
+  padding:3px 8px;
+  margin:3px 4px 3px 0;
+  border:1px solid rgba(22,19,17,.25);
+  background:rgba(22,19,17,.02);
+}
+@media (max-width: 640px){
+  .layer{grid-template-columns:1fr;gap:14px}
+  .layer .layer-key{
+    text-align:left;
+    border-right:0;
+    border-bottom:1px solid var(--ink);
+    padding-right:0;
+    padding-bottom:10px;
+    flex-direction:row;
+    align-items:baseline;
+    gap:14px;
+    min-height:0;
+  }
+  .layer .layer-key .letter{font-size:48px}
+  .layer .layer-key .tag{margin-top:0}
+}
+
+/* big stat row (results) */
+.stats{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:0;
+  margin:36px 0;
+  border-top:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+}
+.stats .stat{
+  padding:24px 22px;
+  border-right:1px solid var(--ink);
+}
+.stats .stat:last-child{border-right:0}
+.stats .stat .big{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-variation-settings:"opsz" 144, "SOFT" 30, "WONK" 1;
+  font-size:clamp(44px, 6vw, 72px);
+  line-height:.92;
+  letter-spacing:-.03em;
+  color:var(--ink);
+}
+.stats .stat .big .unit{font-size:.4em;color:var(--accent);margin-left:4px;letter-spacing:0}
+.stats .stat .lab{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-top:14px;
+  line-height:1.5;
+}
+
+/* comparison table */
+.compare{
+  width:100%;
+  border-collapse:collapse;
+  margin:32px 0;
+  font-size:15.5px;
+  border-top:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+}
+.compare thead th{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  font-weight:500;
+  text-align:left;
+  padding:14px 18px;
+  color:var(--ink);
+  border-bottom:1px solid var(--ink);
+}
+.compare thead th + th{color:var(--accent)}
+.compare tbody td{
+  padding:14px 18px;
+  vertical-align:top;
+  border-bottom:1px dashed rgba(22,19,17,.2);
+  color:var(--ink);
+}
+.compare tbody td:first-child{color:var(--mute);font-family:var(--f-mono);font-size:13px}
+.compare tbody tr:last-child td{border-bottom:0}
+
+/* diagram frame */
+.diagram{
+  margin:36px 0;
+  padding:28px 24px 22px;
+  border:1px solid var(--ink);
+  background:rgba(22,19,17,.015);
+  position:relative;
+}
+.diagram .dcap{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-top:18px;
+  text-align:center;
+}
+.diagram .dcap .dot{color:var(--accent)}
+.diagram svg{display:block;width:100%;height:auto;max-width:920px;margin:0 auto}
+
+/* small subhead inside section */
+.subhead{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:32px 0 14px;
+}
+.subhead::before{content:"// "}
+
+h3.minor{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 36;
+  font-size:22px;
+  line-height:1.2;
+  letter-spacing:-.01em;
+  margin:28px 0 10px;
+  color:var(--ink);
+}
+
+/* footer */
+.docfoot{
+  margin-top:120px;
+  padding-top:28px;
+  border-top:2px solid var(--ink);
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.docfoot .right{color:var(--accent)}
+
+/* selection */
+::selection{background:var(--ink);color:var(--paper)}
+
+/* anchor offset */
+section{scroll-margin-top:24px}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- TOPNAV -->
+  <nav class="topnav" aria-label="document">
+    <a href="https://adamcagle.com/alpha/AISystems.html">← AI Systems</a>
+    <span class="crest">Agency<span style="color:var(--accent)">689</span></span>
+    <a href="https://adamcagle.com/alpha/wpaper/ssia-whitepaper.html">SSIA Whitepaper →</a>
+  </nav>
+
+  <!-- DOC NOTE -->
+  <div class="docnote">
+    <span class="tag">Note</span>
+    This white paper describes Agency689's internal AI writing systems. It is a methodology overview and architecture sample. Specific prompts, brand-knowledge structures, evaluation rubrics, and client-confidential details remain proprietary.
+  </div>
+
+  <!-- HEAD PLATE -->
+  <header class="plate">
+    <div class="crest-big">A<em>I</em>W</div>
+    <div class="stamp">
+      Agency<span class="accent">689</span> · AI Writing Systems<br>
+      White Paper · Architecture · Methodology<br>
+      Draft · <span class="accent">03.15.26</span>
+    </div>
+  </header>
+
+  <div class="metarow">
+    <span>Creative Operations · Brand Voice · Campaign Production · Proposals</span>
+    <span>Agentic Processing Layer <span class="dot">·</span> A689</span>
+  </div>
+  <div class="metarow thin">
+    <span>Sunset Marquis <span class="dot">·</span> Agency689 <span class="dot">·</span> Traveler Guitar</span>
+    <span>By Adam R. Cagle</span>
+  </div>
+
+  <!-- HERO TITLE -->
+  <h1 class="hero-title">
+    Building <em>Human-Reviewed</em><br>
+    AI Workflows for Brand Voice, Campaign Production, Proposals, and Creative Scale
+  </h1>
+  <div class="hero-sub">
+    Architecture · Voice · Workflow · Approval · Recursive Learning
+  </div>
+
+  <!-- ============================================================
+       00 · EXECUTIVE SUMMARY
+       ============================================================ -->
+  <section id="s00">
+    <div class="sec-head">
+      <div class="num">00</div>
+      <h2>Executive Summary <span class="label">Overview</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p class="dropcap">Most organizations are experimenting with generative AI as a faster way to produce words. Agency689 has taken a different approach, using AI to build <strong>repeatable creative production systems</strong> that preserve brand voice, widen the range of viable first drafts, accelerate campaign throughput, and keep humans in control of the decisions that matter.</p>
+
+        <p>The Agency689 AI Writing Systems began as a practical response to recurring creative demands across long-running client relationships. For Sunset Marquis, the system supports high-frequency email, banner, and promotional copy production inside a brand voice that took years to build and cannot be allowed to flatten. For Agency689 itself, it supports communications and proposal generation by transforming discovery notes, project requirements, and past precedent into structured, editable business documents. For Traveler Guitar, the same systems thinking extends beyond copy into visual ideation, helping create surreal campaign worlds where the product can live without losing the brand's sense of adventure.</p>
+
+        <p>These are not one-off prompts. They are <strong>project-based AI workflows</strong> built from curated brand context, retrieval-augmented source material, persona and SKILL.md governance, multi-pass drafting, standards review, human approval routing, and recursive workflow learning.</p>
+
+        <div class="subhead">Operational outcomes to date</div>
+        <ul class="aiw">
+          <li>AI writing and marketing workflows are used <strong>daily across Agency689 client work</strong>.</li>
+          <li>The Sunset Marquis writing workflow alone runs roughly <strong>three times per week</strong> during active campaign cycles.</li>
+          <li>The systems cut production time by approximately <strong>half</strong>.</li>
+          <li>They generate <strong>three or more viable first drafts</strong> in less time than one first draft previously required.</li>
+          <li>They are used by Adam, the Agency689 team, and in some cases by clients.</li>
+          <li>Nothing publishes automatically. Outputs pass through standards review and human approval.</li>
+        </ul>
+
+        <div class="pull">
+          The goal is not to replace copywriters, art directors, or strategists. The goal is to move the creative team past the blank page faster, with more options, better context, and a stronger first pass.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       01 · THE PROBLEM
+       ============================================================ -->
+  <section id="s01">
+    <div class="sec-head">
+      <div class="num">01</div>
+      <h2>Creative Teams Do Not Need More Generic Copy <span class="label">The Problem</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p>Generative AI makes producing language cheap. It does not automatically make producing <strong>good, brand-specific, commercially useful language</strong> easier.</p>
+
+        <p>For a creative agency, the problem is not simply volume. The problem is that recurring work often lives at the intersection of tight deadlines, deep brand histories, highly specific voice rules, campaign continuity, factual constraints, channel-specific formatting, and the need for fresh thinking under pressure.</p>
+
+        <p>A monthly promotion is not just a monthly promotion if the brand is Sunset Marquis. A proposal is not just a scope of work if it must sound like Agency689, reflect the actual value of the engagement, and pull intelligently from years of precedent. A guitar advertisement is not just an image prompt if it must hold the emotional territory of <em class="terra">The World's Most Adventurous Guitar</em> while still showing a real product credibly and beautifully.</p>
+
+        <div class="subhead">Two common failure modes</div>
+        <ol class="aiw">
+          <li>It produces <strong>competent beige</strong>. Grammatically fine copy that could belong to anyone.</li>
+          <li>It over-indexes on stylistic mimicry without understanding the <strong>strategic logic</strong> beneath the style.</li>
+        </ol>
+
+        <p>Agency689's systems were built to solve both problems.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       02 · DESIGN PRINCIPLES
+       ============================================================ -->
+  <section id="s02">
+    <div class="sec-head">
+      <div class="num">02</div>
+      <h2>AI as a Creative Production System <span class="label">Design Principles</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">The Agency689 approach treats AI not as a chatbot that occasionally helps with drafting, but as a <strong>structured production layer</strong> inside creative operations. The system rests on six design principles.</p>
+
+        <div class="deck">
+          <div class="card">
+            <div class="n">// 01</div>
+            <h4>Retrieval before generation</h4>
+            <p>The model works from brand books, prior approved copy, campaign references, product facts, tone rules, and active briefs before it writes a word.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 02</div>
+            <h4>Voice rules are operational data</h4>
+            <p>A brand voice is not a mood board. It translates into explicit rules, preferred constructions, forbidden clichés, approved registers, and examples of what good actually sounds like.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 03</div>
+            <h4>Breadth before refinement</h4>
+            <p>The first value of AI is not perfection. It is the ability to produce multiple credible directions fast enough that humans choose the best strategic path sooner.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 04</div>
+            <h4>Critique before approval</h4>
+            <p>A second-pass standards layer evaluates drafts before humans spend time on them. It checks for tone drift, factual error, repetition, generic filler, policy issues, and brief drift.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 05</div>
+            <h4>Humans remain the publication gate</h4>
+            <p>The system can draft, revise, score, and route. It does not publish. Human judgment remains explicit and mandatory.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 06</div>
+            <h4>Every approval improves the next cycle</h4>
+            <p>Approved outputs, rejected tropes, editorial corrections, revised instructions, and campaign decisions become operating memory for future work.</p>
+          </div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <p><strong>Important distinction.</strong> This is not a claim that the foundation model's weights are retrained after every project. The learning happens at the workflow and retrieval level. Better source material, better rules, better examples, better evaluation prompts, and better routing of human decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       03 · ARCHITECTURE · SEVEN LAYER STACK
+       ============================================================ -->
+  <section id="s03">
+    <div class="sec-head">
+      <div class="num">03</div>
+      <h2>System Architecture <span class="label">Seven-Layer Stack</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">The Agency689 AI Writing Systems use a modular architecture that adapts to different brands and output types. Each layer has a defined responsibility, and the stack runs end-to-end inside every project.</p>
+
+        <div style="max-width:920px">
+          <div class="layer">
+            <div class="layer-key"><span class="letter">A</span><span class="tag">Brand</span></div>
+            <div>
+              <div class="layer-title">Brand Knowledge Layer</div>
+              <p>A curated project knowledge base assembled per client and updated continuously.</p>
+              <ul>
+                <li>Brand books</li><li>Style guides</li><li>Persona files</li><li>SKILL.md</li><li>Approved headlines</li><li>Email history</li><li>Promotions</li><li>Service descriptions</li><li>Product facts</li><li>Do/don't lists</li><li>Prior proposals</li><li>Scope language</li><li>Performance notes</li><li>Visual references</li><li>Deprecated copy</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">B</span><span class="tag">Retrieval</span></div>
+            <div>
+              <div class="layer-title">Retrieval Layer</div>
+              <p>A RAG-supported process surfaces the most relevant source material for the brief at hand. Retrieval is selective, not generic.</p>
+              <ul>
+                <li>By client</li><li>By campaign type</li><li>By channel</li><li>By season or event</li><li>By product or offer</li><li>By historical similarity</li><li>By recency</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">C</span><span class="tag">Intake</span></div>
+            <div>
+              <div class="layer-title">Brief Intake Layer</div>
+              <p>Rough inputs convert into a structured working brief with missing-information flags where needed. Inputs may include email requests, promotional calendars, limited client notes, seasonal offers, event details, product facts, proposal requests, discovery notes, or visual campaign directions.</p>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">D</span><span class="tag">Draft</span></div>
+            <div>
+              <div class="layer-title">Draft Generation Layer</div>
+              <p>The system produces multiple first-draft options aligned to the intended channel.</p>
+              <ul>
+                <li>Subject lines</li><li>Preheaders</li><li>Email body</li><li>Display ads</li><li>Banners</li><li>Social posts</li><li>Landing blocks</li><li>Concept territories</li><li>Proposal narratives</li><li>Scope sections</li><li>Follow-up emails</li><li>Image prompts</li><li>Video concepts</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">E</span><span class="tag">Standards</span></div>
+            <div>
+              <div class="layer-title">Standards AI Layer</div>
+              <p>A second AI pass audits outputs before human review and can trigger revision before the work reaches an editor.</p>
+              <ul>
+                <li>Voice drift</li><li>Forbidden language</li><li>Factual error</li><li>Channel mismatch</li><li>Overclaiming</li><li>Repetition</li><li>Weak CTA logic</li><li>Poor hierarchy</li><li>Brief contradiction</li><li>Creatively dead copy</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">F</span><span class="tag">Review</span></div>
+            <div>
+              <div class="layer-title">Human Review Router</div>
+              <p>Outputs route for review through Telegram or an equivalent approval path. Humans may approve, request a revision, select a direction, reject a premise, or add new factual context. Edits are not noise. They are signal.</p>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">G</span><span class="tag">Learning</span></div>
+            <div>
+              <div class="layer-title">Recursive Workflow Learning Layer</div>
+              <p>Approval outcomes, revision patterns, and standards critiques improve future behavior through updated prompt rules, new brand examples, revised SKILL.md guidance, campaign-family memory, preferred offer framing, channel learnings, and sharper evaluation criteria.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       04 · ARCHITECTURE FLOW DIAGRAM
+       ============================================================ -->
+  <section id="s04">
+    <div class="sec-head">
+      <div class="num">04</div>
+      <h2>Architecture at a Glance <span class="label">System Flow</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">A brief enters from the left and reaches publication only after passing every gate in the system. The learning loop closes back into Brand Knowledge, where the next brief begins with stronger context than the last.</p>
+
+        <div class="diagram">
+          <svg viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agency689 AI Writing System architecture flow">
+            <defs>
+              <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#161311"/>
+              </marker>
+              <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#1e4d8e"/>
+              </marker>
+            </defs>
+
+            <style>
+              .nbox{ fill:#f4ede0; stroke:#161311; stroke-width:1.2; }
+              .ntitle{ font: 600 13px "JetBrains Mono", monospace; fill:#161311; letter-spacing:.04em; }
+              .nsub{ font: 400 11px "JetBrains Mono", monospace; fill:#7a7166; letter-spacing:.06em; }
+              .ntag{ font: 500 10px "JetBrains Mono", monospace; fill:#1e4d8e; letter-spacing:.16em; }
+              .flowline{ stroke:#161311; stroke-width:1.4; fill:none; }
+              .loopline{ stroke:#1e4d8e; stroke-width:1.4; stroke-dasharray:4 4; fill:none; }
+              .gridtxt{ font: 500 10px "JetBrains Mono", monospace; fill:#a39989; letter-spacing:.18em;}
+            </style>
+
+            <!-- grid markers -->
+            <text x="20" y="22" class="gridtxt">// 04 · SYSTEM FLOW</text>
+            <text x="940" y="22" class="gridtxt" text-anchor="end">A689 / AIW</text>
+
+            <!-- Node 1 -->
+            <g>
+              <rect class="nbox" x="60" y="60" width="220" height="64"/>
+              <text class="ntag" x="74" y="82">01 · INPUT</text>
+              <text class="ntitle" x="74" y="102">CLIENT / TEAM BRIEF</text>
+              <text class="nsub" x="74" y="116">rough inputs · notes · calendar</text>
+            </g>
+
+            <!-- Node 2 -->
+            <g>
+              <rect class="nbox" x="350" y="60" width="220" height="64"/>
+              <text class="ntag" x="364" y="82">02 · INTAKE</text>
+              <text class="ntitle" x="364" y="102">STRUCTURED BRIEF</text>
+              <text class="nsub" x="364" y="116">normalized · flag missing info</text>
+            </g>
+
+            <!-- Node 3 -->
+            <g>
+              <rect class="nbox" x="640" y="60" width="240" height="64"/>
+              <text class="ntag" x="654" y="82">03 · RETRIEVAL</text>
+              <text class="ntitle" x="654" y="102">BRAND + CAMPAIGN RAG</text>
+              <text class="nsub" x="654" y="116">docs · examples · rules</text>
+            </g>
+
+            <!-- Node 4 (centered, drafting) -->
+            <g>
+              <rect class="nbox" x="640" y="200" width="240" height="80" fill="#ece4d3"/>
+              <text class="ntag" x="654" y="222">04 · GENERATE</text>
+              <text class="ntitle" x="654" y="244">MULTI-DRAFT GENERATION</text>
+              <text class="nsub" x="654" y="260">copy · proposals · art prompts</text>
+              <text class="nsub" x="654" y="274">3+ directions per assignment</text>
+            </g>
+
+            <!-- Node 5 (Standards) -->
+            <g>
+              <rect class="nbox" x="350" y="200" width="220" height="80" fill="#ece4d3"/>
+              <text class="ntag" x="364" y="222">05 · CRITIQUE</text>
+              <text class="ntitle" x="364" y="244">STANDARDS AI REVIEW</text>
+              <text class="nsub" x="364" y="260">tone · facts · hierarchy</text>
+              <text class="nsub" x="364" y="274">may trigger revision loop</text>
+            </g>
+
+            <!-- Node 6 (Human Review) -->
+            <g>
+              <rect class="nbox" x="60" y="200" width="220" height="80"/>
+              <text class="ntag" x="74" y="222">06 · APPROVAL</text>
+              <text class="ntitle" x="74" y="244">HUMAN REVIEW ROUTER</text>
+              <text class="nsub" x="74" y="260">Telegram · team review</text>
+              <text class="nsub" x="74" y="274">publication gate</text>
+            </g>
+
+            <!-- Node 7 (Final Output) -->
+            <g>
+              <rect class="nbox" x="60" y="360" width="220" height="64"/>
+              <text class="ntag" x="74" y="382">07 · OUTPUT</text>
+              <text class="ntitle" x="74" y="402">FINAL PACKAGING</text>
+              <text class="nsub" x="74" y="416">publish-ready materials</text>
+            </g>
+
+            <!-- Node 8 (Recursive) -->
+            <g>
+              <rect class="nbox" x="350" y="360" width="530" height="64" fill="#f4ede0" stroke="#1e4d8e" stroke-width="1.4"/>
+              <text class="ntag" x="364" y="382">08 · LEARN</text>
+              <text class="ntitle" x="364" y="402">RECURSIVE WORKFLOW LEARNING</text>
+              <text class="nsub" x="364" y="416">approval signals update rules · examples · SKILL.md · retrieval priors</text>
+            </g>
+
+            <!-- Flow arrows row 1 -->
+            <path class="flowline" d="M280 92 L350 92" marker-end="url(#arrA)"/>
+            <path class="flowline" d="M570 92 L640 92" marker-end="url(#arrA)"/>
+
+            <!-- 03 -> 04 (down) -->
+            <path class="flowline" d="M760 124 L760 200" marker-end="url(#arrA)"/>
+            <!-- 04 -> 05 (left) -->
+            <path class="flowline" d="M640 240 L570 240" marker-end="url(#arrA)"/>
+            <!-- revision loop 05 -> 04 (small) -->
+            <path class="flowline" d="M570 218 C 610 198, 610 198, 640 218" marker-end="url(#arrA)" stroke-dasharray="3 3"/>
+            <text class="nsub" x="605" y="195" text-anchor="middle" fill="#7a7166">revise</text>
+            <!-- 05 -> 06 -->
+            <path class="flowline" d="M350 240 L280 240" marker-end="url(#arrA)"/>
+            <!-- 06 -> 07 -->
+            <path class="flowline" d="M170 280 L170 360" marker-end="url(#arrA)"/>
+            <!-- 07 -> 08 -->
+            <path class="flowline" d="M280 392 L350 392" marker-end="url(#arrA)"/>
+
+            <!-- loop back 08 -> 03 (recursive line, routed outside the right edge) -->
+            <path class="loopline" d="M880 392 L920 392 L920 92 L880 92" marker-end="url(#arrR)"/>
+            <text class="ntag" x="930" y="232" fill="#1e4d8e" transform="rotate(90 930 232)">FEEDBACK LOOP</text>
+
+            <!-- bottom rule + caption inside svg -->
+            <line x1="60" y1="490" x2="900" y2="490" stroke="#1a1612" stroke-width="1"/>
+            <text x="60" y="515" class="gridtxt">FORWARD FLOW · BLACK</text>
+            <text x="340" y="515" class="gridtxt" fill="#1e4d8e">LEARNING RETURN · ACCENT</text>
+            <text x="900" y="515" class="gridtxt" text-anchor="end">HUMAN GATE · STEP 06</text>
+
+            <!-- big subtitle inside svg -->
+            <text x="480" y="570" text-anchor="middle" style="font: 500 14px 'Fraunces', serif; fill:#161311; font-style:italic; letter-spacing:.01em">Eight stations. One loop. Nothing publishes without a human.</text>
+          </svg>
+          <div class="dcap">Eight-Phase Flow <span class="dot">·</span> Standards Review Closes Before Human <span class="dot">·</span> Learning Returns to Retrieval</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       05 · SUNSET MARQUIS
+       ============================================================ -->
+  <section id="s05">
+    <div class="sec-head">
+      <div class="num">05</div>
+      <h2>Sunset Marquis Campaign Production <span class="label">System One</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <h3 class="minor">5.1 Why Sunset Marquis Was the Right Test Case</h3>
+        <p>Sunset Marquis is not a forgiving environment for generic hospitality copy. Agency689 has helped steward the brand for more than two decades. The voice is distinct, established, and continuously evolving. It must be cool without trying too hard, exclusive without sounding stiff, atmospheric without dissolving into fluff, and accurate down to the specific restaurant, villa, spa, or seasonal offer being promoted.</p>
+
+        <p>The workflow supports three especially recurring production categories.</p>
+        <ol class="aiw">
+          <li><strong>Email campaigns</strong></li>
+          <li><strong>Banner and digital ad copy</strong></li>
+          <li><strong>Promotional copy blocks</strong></li>
+        </ol>
+
+        <h3 class="minor">5.2 Inputs</h3>
+        <p>The system may receive monthly promotional calendars, seasonal campaigns, holiday menus, room or villa updates, restaurant or spa promotions, event schedules, occupancy-oriented booking pushes, historical campaign references, and any factual restrictions tied to renovations, availability, or service offerings.</p>
+
+        <h3 class="minor">5.3 Retrieval Context</h3>
+        <p>The Sunset workflow retrieves from a curated brand memory that may include approved email history, website language, house style rules, campaign-level tone rules, CTA patterns, promotional phrasing that has been approved before, vocabulary to avoid, and channel-specific copy examples.</p>
+
+        <p>The system can be tuned to understand rules such as:</p>
+        <ul class="aiw">
+          <li>Do not use generic hospitality language.</li>
+          <li>Do not flatten the brand into interchangeable luxury-hotel copy.</li>
+          <li>Preserve the brand's cool, confident, slightly mysterious tone.</li>
+          <li>Keep language experience-led rather than over-descriptive.</li>
+          <li>Maintain the editorial discipline Agency689 expects.</li>
+        </ul>
+
+        <h3 class="minor">5.4 Outputs</h3>
+        <p>A single promotional brief can produce subject line options, preheaders, three-paragraph email body copy, hero banner copy, secondary banner copy, paid display variants, web promotional blocks, and optional social or ad extensions.</p>
+
+        <div class="pull">
+          The workflow produces multiple credible directions rather than one answer. This shifts the human reviewer from blank-page authoring to editorial selection and elevation.
+        </div>
+
+        <h3 class="minor">5.5 Standards Review</h3>
+        <p>Before human review, a standards pass evaluates whether the copy sounds like Sunset Marquis, whether it accidentally introduces unsupported facts, whether it repeats phrases that have been overused, whether the CTA fits the promotion, whether the copy is sufficiently differentiated between email and banner contexts, and whether the work has drifted toward generic hotel language.</p>
+
+        <h3 class="minor">5.6 Human Approval</h3>
+        <p>Approved or critique-ready outputs are routed for human review. Adam or the team may select the winning direction, request a fresh angle, revise a headline, adjust factual nuance, or update the voice system when the critique reveals a repeat issue.</p>
+
+        <h3 class="minor">5.7 Operational Result</h3>
+        <p>The Sunset Marquis workflow runs roughly <strong>three times per week during active campaign cycles</strong>. Across Agency689 more broadly, AI writing and marketing systems are used daily.</p>
+
+        <p>The result is not merely faster copy. The result is more strategic options earlier, faster first-pass execution, stronger brand consistency, more efficient reuse of approved context, and less energy wasted rebuilding a brand voice from scratch every time a new promotional need arrives.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       06 · AGENCY689 PROPOSAL GENERATOR
+       ============================================================ -->
+  <section id="s06">
+    <div class="sec-head">
+      <div class="num">06</div>
+      <h2>Communications and Proposal Generator <span class="label">System Two</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <h3 class="minor">6.1 The Problem</h3>
+        <p>Creative agencies write a surprising amount of consequential business material that is not campaign copy. Proposals, scopes of work, outreach emails, pitch follow-ups, internal summaries, capability narratives, client-facing process explanations, and strategic positioning documents.</p>
+
+        <p>These materials often begin from fragmented notes, emails, meeting takeaways, or rough bullets. The challenge is not simply wording them. The challenge is turning incomplete inputs into a clear, persuasive, appropriately scoped business document that reflects how Agency689 actually works.</p>
+
+        <h3 class="minor">6.2 Proposal Generator Inputs</h3>
+        <p>The proposal workflow can draw from client discovery notes, email chains, prior proposals, scope templates, service descriptions, Agency689 positioning language, standard payment and deliverable structures, example timelines, and precedent from similar engagements.</p>
+
+        <h3 class="minor">6.3 Outputs</h3>
+        <p>Depending on the assignment, the system can generate polished outreach emails, proposal introductions, executive summaries, project objectives, phased scopes of work, deliverables tables, timeline language, payment terms language, process narratives, follow-up correspondence, and tailored language for specific prospects or categories.</p>
+
+        <h3 class="minor">6.4 Why It Matters</h3>
+        <p>Proposal writing is often where agencies either sound clear and senior or diffuse and generic. A strong proposal generator helps preserve tone, institutional memory, commercial precision, and the ability to move quickly without sacrificing judgment. The system also reduces the chance that a strong opportunity receives a weak first draft simply because the team is busy.</p>
+
+        <h3 class="minor">6.5 Suggested Next-Phase Enhancements</h3>
+        <ul class="aiw">
+          <li><strong>Scope gap detection.</strong> Identify where a proposed deliverable set lacks implementation, revision rounds, training, or handoff language.</li>
+          <li><strong>Pricing precedent retrieval.</strong> Surface comparable past work without exposing confidential information.</li>
+          <li><strong>Risk flagging.</strong> Call out ambiguous asks, missing decision-makers, or unclear approval paths.</li>
+          <li><strong>Proposal-to-contract consistency.</strong> Ensure that what is promised in the proposal is reflected in later agreement language.</li>
+          <li><strong>Tone modes.</strong> Formal, friendly, decisive, or founder-led depending on prospect type.</li>
+          <li><strong>Before-and-after memory.</strong> Capture what edits Adam or Zander tend to make and use those patterns to sharpen future drafts.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       07 · TRAVELER GUITAR
+       ============================================================ -->
+  <section id="s07">
+    <div class="sec-head">
+      <div class="num">07</div>
+      <h2>Traveler Guitar Surreal Art Generation <span class="label">System Three</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <h3 class="minor">7.1 The Creative Challenge</h3>
+        <p>Traveler Guitar's long-running brand idea, <em class="terra">The World's Most Adventurous Guitar</em>, creates an unusually fertile campaign territory. The work must make the product feel portable, iconic, and alive with possibility. Agency689's recent Traveler work pushed that territory into surreal visual storytelling. Guitars played in impossible places, natural scenes expanded into dreamlike worlds, and the product placed inside environments that feel as adventurous as the headline claims.</p>
+
+        <p>The visual system supports campaigns built around lines such as:</p>
+        <ul class="aiw">
+          <li><strong>Next Stop, Greatness</strong></li>
+          <li><strong>Sonic Bloom</strong></li>
+          <li><strong>Endless Strummer</strong></li>
+          <li><strong>A Force of Nature</strong></li>
+          <li><strong>Hey Jungle, Welcome to Me</strong></li>
+          <li><strong>Flying Solo</strong></li>
+        </ul>
+
+        <h3 class="minor">7.2 AI's Role</h3>
+        <p>The role of AI is not to make an ad. It is to accelerate visual exploration, widen compositional options, and help art directors test campaign worlds at a speed that would otherwise be impractical. The system can support surreal setting ideation, mood and material exploration, environmental storytelling, photographic reference generation, background generation, fantastical natural elements, product-scene prompt construction, and refinement passes that help human designers move faster into final compositing.</p>
+
+        <h3 class="minor">7.3 Human Art Direction</h3>
+        <p>Human designers remain central. Final campaign images are refined, corrected, composited, and made credible through human art direction. The system is valuable because it helps the creative team explore more possibilities before locking into a final direction.</p>
+
+        <h3 class="minor">7.4 Potential Workflow</h3>
+
+        <div class="diagram">
+          <svg viewBox="0 0 920 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Traveler Guitar visual workflow">
+            <defs>
+              <marker id="arrT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#161311"/>
+              </marker>
+            </defs>
+            <style>
+              .tnum{ font: 600 14px "JetBrains Mono", monospace; fill:#1e4d8e; letter-spacing:.04em;}
+              .ttitle{ font: 500 13px "Fraunces", serif; fill:#161311; }
+              .tsub{ font: 400 10px "JetBrains Mono", monospace; fill:#7a7166; letter-spacing:.06em;}
+              .ttop{ font: 500 10px "JetBrains Mono", monospace; fill:#a39989; letter-spacing:.18em;}
+              .tline{ stroke:#161311; stroke-width:1; fill:none;}
+            </style>
+
+            <text x="20" y="22" class="ttop">// 07 · VISUAL WORKFLOW · TRAVELER GUITAR</text>
+            <text x="900" y="22" class="ttop" text-anchor="end">A FORCE OF NATURE</text>
+
+            <line x1="60" y1="180" x2="860" y2="180" class="tline" stroke-dasharray="2 4"/>
+
+            <!-- 8 station markers -->
+            <g>
+              <circle cx="110" cy="180" r="14" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="110" y="184" text-anchor="middle" class="tnum">01</text>
+              <text x="110" y="130" text-anchor="middle" class="ttitle">Campaign line</text>
+              <text x="110" y="146" text-anchor="middle" class="tsub">selected</text>
+            </g>
+            <g>
+              <circle cx="215" cy="180" r="14" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="215" y="184" text-anchor="middle" class="tnum">02</text>
+              <text x="215" y="220" text-anchor="middle" class="ttitle">Visual territory</text>
+              <text x="215" y="236" text-anchor="middle" class="tsub">defined</text>
+            </g>
+            <g>
+              <circle cx="320" cy="180" r="14" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="320" y="184" text-anchor="middle" class="tnum">03</text>
+              <text x="320" y="130" text-anchor="middle" class="ttitle">Prompt families</text>
+              <text x="320" y="146" text-anchor="middle" class="tsub">setting · light · mood</text>
+            </g>
+            <g>
+              <circle cx="425" cy="180" r="14" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="425" y="184" text-anchor="middle" class="tnum">04</text>
+              <text x="425" y="220" text-anchor="middle" class="ttitle">Image territories</text>
+              <text x="425" y="236" text-anchor="middle" class="tsub">explored at speed</text>
+            </g>
+            <g>
+              <circle cx="530" cy="180" r="14" fill="#ece4d3" stroke="#161311" stroke-width="1.4"/>
+              <text x="530" y="184" text-anchor="middle" class="tnum">05</text>
+              <text x="530" y="130" text-anchor="middle" class="ttitle">Art director</text>
+              <text x="530" y="146" text-anchor="middle" class="tsub">critique pass</text>
+            </g>
+            <g>
+              <circle cx="635" cy="180" r="14" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="635" y="184" text-anchor="middle" class="tnum">06</text>
+              <text x="635" y="220" text-anchor="middle" class="ttitle">Prompt refinement</text>
+              <text x="635" y="236" text-anchor="middle" class="tsub">targeted second pass</text>
+            </g>
+            <g>
+              <circle cx="740" cy="180" r="14" fill="#ece4d3" stroke="#1e4d8e" stroke-width="1.6"/>
+              <text x="740" y="184" text-anchor="middle" class="tnum">07</text>
+              <text x="740" y="130" text-anchor="middle" class="ttitle">Designers composite</text>
+              <text x="740" y="146" text-anchor="middle" class="tsub">final campaign art</text>
+            </g>
+            <g>
+              <circle cx="845" cy="180" r="14" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="845" y="184" text-anchor="middle" class="tnum">08</text>
+              <text x="845" y="220" text-anchor="middle" class="ttitle">Visual language</text>
+              <text x="845" y="236" text-anchor="middle" class="tsub">saved for reuse</text>
+            </g>
+
+            <!-- arrows -->
+            <path class="tline" d="M124 180 L201 180" marker-end="url(#arrT)"/>
+            <path class="tline" d="M229 180 L306 180" marker-end="url(#arrT)"/>
+            <path class="tline" d="M334 180 L411 180" marker-end="url(#arrT)"/>
+            <path class="tline" d="M439 180 L516 180" marker-end="url(#arrT)"/>
+            <path class="tline" d="M544 180 L621 180" marker-end="url(#arrT)"/>
+            <path class="tline" d="M649 180 L726 180" marker-end="url(#arrT)"/>
+            <path class="tline" d="M754 180 L831 180" marker-end="url(#arrT)"/>
+
+            <text x="460" y="340" text-anchor="middle" style="font: italic 500 14px 'Fraunces', serif; fill:#161311">Eight stations from line to locked campaign world.</text>
+          </svg>
+          <div class="dcap">Linear Workflow <span class="dot">·</span> Human Critique at Station Five <span class="dot">·</span> Designer Finishing at Station Seven</div>
+        </div>
+
+        <h3 class="minor">7.5 Suggested Next-Phase Enhancements</h3>
+        <ul class="aiw">
+          <li><strong>Visual prompt libraries</strong> organized by Traveler tagline or campaign territory.</li>
+          <li><strong>Style-memory boards</strong> that preserve successful lighting, surrealism level, and composition logic.</li>
+          <li><strong>Product accuracy checks</strong> to reduce distortion of guitar proportions, hardware, and branding.</li>
+          <li><strong>Art direction critics</strong> that evaluate generated images against campaign goals before they reach designers.</li>
+          <li><strong>Multi-format generation logic</strong> for magazine ads, billboards, social crops, and trade-show materials.</li>
+          <li><strong>Asset lineage tracking</strong> so the team can see which prompt family produced which final approved piece.</li>
+          <li><strong>Creative novelty controls</strong> that prevent future Traveler campaigns from recycling the same fantasy-world tropes.</li>
+        </ul>
+
+        <h3 class="minor">7.6 Why This Belongs in a Writing Systems White Paper</h3>
+        <p>Because the deeper system is not limited to text. It is a <strong>creative operations architecture</strong>. Brand context, strategic rules, promptable execution, standards review, human approval, and recursive accumulation of what works. Traveler Guitar demonstrates that the same architecture that helps write better copy can also help create stronger visual campaign territories.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       08 · STANDARDS AI
+       ============================================================ -->
+  <section id="s08">
+    <div class="sec-head">
+      <div class="num">08</div>
+      <h2>Why One Model Should Critique Another <span class="label">The Standards AI</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">One of the key distinctions in Agency689's workflow is the use of a <strong>second standards AI</strong> before human review. The drafting model is encouraged to explore. The standards model is encouraged to interrogate.</p>
+
+        <div class="diagram">
+          <svg viewBox="0 0 920 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-model tension between drafting and standards">
+            <defs>
+              <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#161311"/>
+              </marker>
+            </defs>
+            <style>
+              .stitle{ font: 500 22px "Fraunces", serif; fill:#161311;}
+              .stitle.italic{ font-style:italic; fill:#1e4d8e;}
+              .stag{ font: 500 10px "JetBrains Mono", monospace; fill:#1e4d8e; letter-spacing:.18em;}
+              .sbody{ font: 400 12px "JetBrains Mono", monospace; fill:#2b2723; letter-spacing:.02em;}
+              .ssub{ font: 400 11px "JetBrains Mono", monospace; fill:#7a7166; letter-spacing:.04em;}
+              .sline{ stroke:#161311; stroke-width:1.2; fill:none;}
+            </style>
+
+            <text x="20" y="22" class="stag">// 08 · TWO MODELS · ONE TENSION</text>
+            <text x="900" y="22" class="stag" text-anchor="end">A689 / AIW</text>
+
+            <!-- Left box -->
+            <rect x="40" y="60" width="340" height="200" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+            <text x="60" y="92" class="stag">01 · DRAFTING AI</text>
+            <text x="60" y="124" class="stitle">Explores.</text>
+            <text x="60" y="158" class="sbody">Generates breadth.</text>
+            <text x="60" y="178" class="sbody">Multiple credible angles.</text>
+            <text x="60" y="198" class="sbody">Strategic territory.</text>
+            <text x="60" y="218" class="sbody">Tone variation.</text>
+            <text x="60" y="244" class="ssub">Permission to take swings.</text>
+
+            <!-- Right box -->
+            <rect x="540" y="60" width="340" height="200" fill="#ece4d3" stroke="#1e4d8e" stroke-width="1.4"/>
+            <text x="560" y="92" class="stag" fill="#1e4d8e">02 · STANDARDS AI</text>
+            <text x="560" y="124" class="stitle italic">Interrogates.</text>
+            <text x="560" y="158" class="sbody">Did this follow the brief?</text>
+            <text x="560" y="178" class="sbody">Does it sound like the brand?</text>
+            <text x="560" y="198" class="sbody">Did it accidentally overclaim?</text>
+            <text x="560" y="218" class="sbody">Would a senior editor reject this?</text>
+            <text x="560" y="244" class="ssub">Permission to be ruthless.</text>
+
+            <!-- arrows meeting in middle -->
+            <path class="sline" d="M380 160 L428 160" marker-end="url(#arrS)"/>
+            <path class="sline" d="M540 160 L492 160" marker-end="url(#arrS)"/>
+
+            <!-- center node -->
+            <circle cx="460" cy="160" r="34" fill="#161311"/>
+            <text x="460" y="165" text-anchor="middle" style="font: 600 11px 'JetBrains Mono', monospace; fill:#f4ede0; letter-spacing:.14em">REVIEW</text>
+
+            <!-- caption -->
+            <text x="460" y="305" text-anchor="middle" style="font: italic 500 16px 'Fraunces', serif; fill:#161311">The first pass expands. The second pass disciplines.</text>
+            <text x="460" y="325" text-anchor="middle" class="ssub">The human reviewer receives a real reviewable draft, not raw model exhaust.</text>
+          </svg>
+          <div class="dcap">Drafting Encouraged To Explore <span class="dot">·</span> Standards Encouraged To Interrogate <span class="dot">·</span> Human Receives Reviewable Draft</div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <div class="subhead">The standards layer asks</div>
+          <ul class="aiw">
+            <li>Did this follow the brief?</li>
+            <li>Does it sound like the brand?</li>
+            <li>Did it accidentally overclaim?</li>
+            <li>Did it use language the brand avoids?</li>
+            <li>Does it repeat old phrasing too closely?</li>
+            <li>Is the hierarchy clear?</li>
+            <li>Is the CTA appropriate?</li>
+            <li>Would a senior human editor reject this immediately?</li>
+          </ul>
+          <p>This creates an internal tension that improves quality. The first pass expands. The second pass disciplines. The human reviewer receives something closer to a real reviewable draft rather than raw model exhaust.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       09 · RECURSIVE LEARNING
+       ============================================================ -->
+  <section id="s09">
+    <div class="sec-head">
+      <div class="num">09</div>
+      <h2>Recursive Workflow Learning <span class="label">Memory · Curation</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">The phrase recursive learning can sound grandiose if it is not defined. In the Agency689 system, it means something precise.</p>
+
+        <div class="diagram">
+          <svg viewBox="0 -30 920 490" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Recursive workflow learning cycle">
+            <defs>
+              <marker id="arrL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#1e4d8e"/>
+              </marker>
+            </defs>
+            <style>
+              .lnum{ font: 600 14px "JetBrains Mono", monospace; fill:#1e4d8e; letter-spacing:.06em;}
+              .ltitle{ font: 500 14px "Fraunces", serif; fill:#161311;}
+              .lsub{ font: 400 10.5px "JetBrains Mono", monospace; fill:#7a7166; letter-spacing:.04em;}
+              .ltop{ font: 500 10px "JetBrains Mono", monospace; fill:#a39989; letter-spacing:.18em;}
+              .ldash{ stroke:#1e4d8e; stroke-width:1.4; fill:none;}
+            </style>
+
+            <text x="20" y="-8" class="ltop">// 09 · LEARNING CYCLE</text>
+            <text x="900" y="-8" class="ltop" text-anchor="end">CURATED · NOT PASSIVE</text>
+
+            <!-- circle path -->
+            <circle cx="460" cy="240" r="170" fill="none" stroke="#1e4d8e" stroke-width="1.2" stroke-dasharray="3 4"/>
+
+            <!-- six stations placed around circle -->
+            <!-- station 01 - top -->
+            <g>
+              <circle cx="460" cy="70" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="460" y="68" text-anchor="middle" class="lnum">01</text>
+              <text x="460" y="84" text-anchor="middle" class="lsub">brief</text>
+              <text x="460" y="18" text-anchor="middle" class="ltitle">Brief produces outputs</text>
+            </g>
+            <!-- station 02 - upper right -->
+            <g>
+              <circle cx="617" cy="155" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="617" y="153" text-anchor="middle" class="lnum">02</text>
+              <text x="617" y="169" text-anchor="middle" class="lsub">critique</text>
+              <text x="660" y="110" class="ltitle">Standards AI critiques</text>
+            </g>
+            <!-- station 03 - lower right -->
+            <g>
+              <circle cx="617" cy="325" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="617" y="323" text-anchor="middle" class="lnum">03</text>
+              <text x="617" y="339" text-anchor="middle" class="lsub">approve</text>
+              <text x="660" y="385" class="ltitle">Humans approve / revise / reject</text>
+            </g>
+            <!-- station 04 - bottom -->
+            <g>
+              <circle cx="460" cy="410" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="460" y="408" text-anchor="middle" class="lnum">04</text>
+              <text x="460" y="424" text-anchor="middle" class="lsub">capture</text>
+              <text x="460" y="455" text-anchor="middle" class="ltitle">Decisions captured</text>
+            </g>
+            <!-- station 05 - lower left -->
+            <g>
+              <circle cx="303" cy="325" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="303" y="323" text-anchor="middle" class="lnum">05</text>
+              <text x="303" y="339" text-anchor="middle" class="lsub">update</text>
+              <text x="20" y="385" class="ltitle">Brand guidance + prompts updated</text>
+            </g>
+            <!-- station 06 - upper left -->
+            <g>
+              <circle cx="303" cy="155" r="32" fill="#ece4d3" stroke="#1e4d8e" stroke-width="1.6"/>
+              <text x="303" y="153" text-anchor="middle" class="lnum">06</text>
+              <text x="303" y="169" text-anchor="middle" class="lsub">stronger</text>
+              <text x="20" y="110" class="ltitle">Next brief begins stronger</text>
+            </g>
+
+            <!-- center label -->
+            <g>
+              <text x="460" y="232" text-anchor="middle" style="font: italic 500 22px 'Fraunces', serif; fill:#161311">Recursive</text>
+              <text x="460" y="256" text-anchor="middle" style="font: italic 500 22px 'Fraunces', serif; fill:#1e4d8e">Workflow Learning</text>
+              <text x="460" y="278" text-anchor="middle" class="lsub">curated improvement</text>
+            </g>
+          </svg>
+          <div class="dcap">Six Stations <span class="dot">·</span> Closed Loop <span class="dot">·</span> Each Pass Sharpens The Operating Context</div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <p>This is not passive accumulation. It is <strong>curated improvement</strong>.</p>
+
+          <div class="subhead">Examples of recursive learning signals</div>
+          <ul class="aiw">
+            <li>Headline types that repeatedly survive review.</li>
+            <li>CTAs that consistently feel wrong for a brand.</li>
+            <li>Clichés or filler words frequently removed by humans.</li>
+            <li>Offer framings that preserve brand tone under promotional pressure.</li>
+            <li>Proposal clauses Adam routinely adds back in.</li>
+            <li>Art-generation prompts that create useful Traveler worlds versus dead-end imagery.</li>
+            <li>Channel-specific length or structure corrections.</li>
+          </ul>
+
+          <p>Over time, the system becomes more useful because the agency becomes more explicit about its own standards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       10 · DIFFERENCE TABLE
+       ============================================================ -->
+  <section id="s10">
+    <div class="sec-head">
+      <div class="num">10</div>
+      <h2>What Makes This Different <span class="label">Generic AI vs A689</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Generic AI Use</th>
+              <th>Agency689 AI Writing Systems</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>One-off prompt</td><td>Reusable project workflow</td></tr>
+            <tr><td>No durable context</td><td>Brand knowledge base and retrieval layer</td></tr>
+            <tr><td>One answer</td><td>Multiple strategic directions</td></tr>
+            <tr><td>Human edits after raw output</td><td>Standards AI before human review</td></tr>
+            <tr><td>Tone described vaguely</td><td>Voice rules, examples, persona files, SKILL.md guidance</td></tr>
+            <tr><td>No memory of approvals</td><td>Recursive workflow learning</td></tr>
+            <tr><td>Mostly text-only</td><td>Copy, proposals, and visual ideation</td></tr>
+            <tr><td>Speed is the main goal</td><td>Speed, quality, consistency, and adoption</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       11 · WHAT REMAINS HUMAN
+       ============================================================ -->
+  <section id="s11">
+    <div class="sec-head">
+      <div class="num">11</div>
+      <h2>What Remains Human <span class="label">Authorship · Accountability · Taste</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p>The Agency689 systems are deliberately designed around the belief that the most valuable creative decisions remain human.</p>
+
+        <div class="subhead">Humans still own</div>
+        <ul class="aiw">
+          <li>The brief.</li>
+          <li>The strategic leap.</li>
+          <li>The final headline judgment.</li>
+          <li>Whether a draft actually has taste.</li>
+          <li>Whether a campaign territory is worth pursuing.</li>
+          <li>Whether a proposal says enough or promises too much.</li>
+          <li>Whether an image feels alive or merely generated.</li>
+          <li>Whether the final work should exist at all.</li>
+        </ul>
+
+        <div class="pull">
+          The AI system expands the field of options and compresses repetitive production. It does not replace authorship, accountability, or taste.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       12 · RESULTS
+       ============================================================ -->
+  <section id="s12">
+    <div class="sec-head">
+      <div class="num">12</div>
+      <h2>Measured and Observable Results <span class="label">Live Snapshot · 03.15.26</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <div class="stats">
+          <div class="stat">
+            <div class="big">DAILY<span class="unit"></span></div>
+            <div class="lab">Use Across Agency689 Client Work</div>
+          </div>
+          <div class="stat">
+            <div class="big">3<span class="unit">×/wk</span></div>
+            <div class="lab">Sunset Marquis Workflow Cadence</div>
+          </div>
+          <div class="stat">
+            <div class="big">~50<span class="unit">%</span></div>
+            <div class="lab">Reduction in Production Time</div>
+          </div>
+          <div class="stat">
+            <div class="big">3+<span class="unit">drafts</span></div>
+            <div class="lab">In Less Time Than One Previously Required</div>
+          </div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <p>Beyond the headline numbers, the system has produced increased consistency across recurring promotions and campaign families, faster proposal and communication drafting inside Agency689, broader visual exploration for Traveler Guitar campaign worlds, and team adoption beyond the person who built the systems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       13 · ROADMAP
+       ============================================================ -->
+  <section id="s13">
+    <div class="sec-head">
+      <div class="num">13</div>
+      <h2>Next-Phase Build Opportunities <span class="label">Roadmap</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <div class="deck">
+          <div class="card">
+            <div class="n">// 13.1</div>
+            <h4>Evaluation Dashboard</h4>
+            <p>First-pass acceptance rate, average human revision depth, time from brief to approved draft, standards-AI pass/fail, options per assignment, and recurring rejection reasons.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 13.2</div>
+            <h4>Brand Freshness Governor</h4>
+            <p>A retrieval filter that favors recent approved work when the brand has evolved, while still allowing older canonical copy to be retrieved intentionally.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 13.3</div>
+            <h4>Novelty Guardrail</h4>
+            <p>A critic that identifies when AI drafts are too similar to previous approved campaigns and requests fresh conceptual territory.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 13.4</div>
+            <h4>Proposal Risk Checker</h4>
+            <p>Flags missing scope, ambiguous deliverables, unaddressed implementation needs, mismatched payment terms, or client responsibilities that should be stated explicitly.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 13.5</div>
+            <h4>Visual Accuracy Critic</h4>
+            <p>For Traveler Guitar. Identifies distorted product proportions, implausible placement, inconsistent brand treatment, and environmental concepts that are visually interesting but strategically off-brand.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 13.6</div>
+            <h4>Campaign Outcome Memory</h4>
+            <p>Where reliable performance data exists, connect approved creative approaches to observed outcomes without overstating causality. The point is not to chase the metric. The point is to make creative history queryable.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 13.7</div>
+            <h4>Unified Creative Brief Compiler</h4>
+            <p>A layer that accepts messy source inputs and outputs a structured brief used by copy, visual, and proposal systems alike. Reduces repeated translation of client asks across departments.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       14 · CONCLUSION
+       ============================================================ -->
+  <section id="s14">
+    <div class="sec-head">
+      <div class="num">14</div>
+      <h2>Creative Operations Design <span class="label">Conclusion</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p>The Agency689 AI Writing Systems were not built to prove that AI can write. That proof is trivial and no longer interesting.</p>
+
+        <p>They were built to answer a harder question.</p>
+
+        <div class="pull">
+          Can AI be structured so that it helps a creative team move faster without becoming less itself?
+        </div>
+
+        <p>For Agency689, the answer is yes, when the system is grounded in real brand memory, retrieval before generation, explicit voice governance, critique before approval, humans as the publication gate, and recursive workflow learning that turns repeated work into institutional intelligence.</p>
+
+        <p>Sunset Marquis demonstrates how a long-standing brand voice can be extended into high-frequency campaign production without flattening it. Agency689's proposal and communications workflows show how internal business writing can become faster and more coherent without losing senior judgment. Traveler Guitar shows that the same architecture can expand into visual campaign ideation, producing more adventurous creative territory while keeping art direction human.</p>
+
+        <p>This is not content automation. It is creative operations design.</p>
+
+        <p>And for agencies, marketing teams, and brands facing an ever-growing demand for quality at speed, that distinction matters.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="docfoot">
+    <span>AIW · Agency689 · Draft 1.0 · Agentic Processing Layer · A689</span>
+    <span class="right">March 2026 · Adam R. Cagle</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

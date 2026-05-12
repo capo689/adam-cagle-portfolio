@@ -671,7 +671,7 @@ svg text { font-family: 'JetBrains Mono', monospace; }
     <p>Every hypothesis on the stack passes through a defined lifecycle. The visible dashboard surfaces these states explicitly.</p>
 
     <div class="figure" data-figure="Figure 02 · Hypothesis State Machine">
-      <svg viewBox="0 0 820 280" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 820 295" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="arr2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
             <polygon points="0 0, 10 3, 0 6" fill="#4D8BE8"/>
@@ -681,61 +681,61 @@ svg text { font-family: 'JetBrains Mono', monospace; }
           </marker>
         </defs>
 
+        <!-- Decorative top frame -->
+        <line x1="40" y1="42" x2="780" y2="42" stroke="#c8bda3" stroke-width="1"/>
+        <text x="40" y="32" fill="#6b5e50" font-size="9" letter-spacing="2">// 04 · STATE FLOW</text>
+        <text x="780" y="32" text-anchor="end" fill="#6b5e50" font-size="9" letter-spacing="2">9 OF 27 CULLED</text>
+
+        <!-- Top descriptor labels (above boxes, well-clear of box content) -->
+        <text x="110" y="63" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="1.5">candidate idea</text>
+        <text x="310" y="63" text-anchor="middle" fill="#4D8BE8" font-size="9" letter-spacing="1.5">data accumulating</text>
+        <text x="510" y="63" text-anchor="middle" fill="#2e8839" font-size="9" letter-spacing="1.5">production-grade</text>
+        <text x="710" y="63" text-anchor="middle" fill="#c8342a" font-size="9" letter-spacing="0.5">removed from composite</text>
+
         <!-- State 1: UNTESTED -->
         <g>
-          <rect x="40" y="100" width="140" height="80" fill="#ede5d4" stroke="#a39080" stroke-width="1.5"/>
-          <text x="110" y="124" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">STATE 01</text>
-          <text x="110" y="148" text-anchor="middle" fill="#1a1714" font-size="14" letter-spacing="2" font-weight="400">UNTESTED</text>
-          <text x="110" y="166" text-anchor="middle" fill="#a39080" font-size="9">no weight</text>
+          <rect x="40" y="78" width="140" height="82" fill="#faf7f0" stroke="#a39080" stroke-width="1.5"/>
+          <text x="110" y="101" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">STATE 01</text>
+          <text x="110" y="126" text-anchor="middle" fill="#1a1714" font-size="14" letter-spacing="2" font-weight="400">UNTESTED</text>
+          <text x="110" y="147" text-anchor="middle" fill="#a39080" font-size="9">no weight</text>
         </g>
 
         <!-- State 2: PROVISIONAL -->
         <g>
-          <rect x="240" y="100" width="140" height="80" fill="#ede5d4" stroke="#4D8BE8" stroke-width="1.5"/>
-          <text x="310" y="124" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">STATE 02</text>
-          <text x="310" y="148" text-anchor="middle" fill="#4D8BE8" font-size="14" letter-spacing="2" font-weight="400">PROVISIONAL</text>
-          <text x="310" y="166" text-anchor="middle" fill="#6b5e50" font-size="9">reduced weight</text>
+          <rect x="240" y="78" width="140" height="82" fill="#faf7f0" stroke="#4D8BE8" stroke-width="1.5"/>
+          <text x="310" y="101" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">STATE 02</text>
+          <text x="310" y="126" text-anchor="middle" fill="#4D8BE8" font-size="12" letter-spacing="1" font-weight="400">PROVISIONAL</text>
+          <text x="310" y="147" text-anchor="middle" fill="#6b5e50" font-size="9">reduced weight</text>
         </g>
 
         <!-- State 3: BACKTESTED -->
         <g>
-          <rect x="440" y="100" width="140" height="80" fill="#ede5d4" stroke="#2e8839" stroke-width="1.5"/>
-          <text x="510" y="124" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">STATE 03</text>
-          <text x="510" y="148" text-anchor="middle" fill="#2e8839" font-size="14" letter-spacing="2" font-weight="400">BACKTESTED</text>
-          <text x="510" y="166" text-anchor="middle" fill="#6b5e50" font-size="9">full weight</text>
+          <rect x="440" y="78" width="140" height="82" fill="#faf7f0" stroke="#2e8839" stroke-width="1.5"/>
+          <text x="510" y="101" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">STATE 03</text>
+          <text x="510" y="126" text-anchor="middle" fill="#2e8839" font-size="12" letter-spacing="1" font-weight="400">BACKTESTED</text>
+          <text x="510" y="147" text-anchor="middle" fill="#6b5e50" font-size="9">full weight</text>
         </g>
 
         <!-- State 4: KILLED -->
         <g>
-          <rect x="640" y="100" width="140" height="80" fill="#ede5d4" stroke="#c8342a" stroke-width="1.5"/>
-          <text x="710" y="124" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">TERMINAL</text>
-          <text x="710" y="148" text-anchor="middle" fill="#c8342a" font-size="14" letter-spacing="2" font-weight="400">KILLED</text>
-          <text x="710" y="166" text-anchor="middle" fill="#6b5e50" font-size="9">audit-retained</text>
+          <rect x="640" y="78" width="140" height="82" fill="#faf7f0" stroke="#c8342a" stroke-width="1.5"/>
+          <text x="710" y="101" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="2">TERMINAL</text>
+          <text x="710" y="126" text-anchor="middle" fill="#c8342a" font-size="14" letter-spacing="2" font-weight="400">KILLED</text>
+          <text x="710" y="147" text-anchor="middle" fill="#6b5e50" font-size="9">audit-retained</text>
         </g>
 
-        <!-- Forward arrows -->
-        <line x1="180" y1="140" x2="240" y2="140" stroke="#4D8BE8" stroke-width="1.5" marker-end="url(#arr2)"/>
-        <line x1="380" y1="140" x2="440" y2="140" stroke="#4D8BE8" stroke-width="1.5" marker-end="url(#arr2)"/>
+        <!-- Forward arrows at mid-box -->
+        <line x1="180" y1="119" x2="238" y2="119" stroke="#4D8BE8" stroke-width="1.5" marker-end="url(#arr2)"/>
+        <line x1="380" y1="119" x2="438" y2="119" stroke="#4D8BE8" stroke-width="1.5" marker-end="url(#arr2)"/>
 
-        <!-- Promotion gate label -->
-        <text x="210" y="125" text-anchor="middle" fill="#6b5e50" font-size="8" letter-spacing="1">≥10 fires</text>
-        <text x="410" y="125" text-anchor="middle" fill="#2e8839" font-size="8" letter-spacing="1">55% gate · n≥30</text>
+        <!-- Gate labels: above the arrows, in the inter-box gaps -->
+        <text x="210" y="111" text-anchor="middle" fill="#6b5e50" font-size="8">≥10 fires</text>
+        <text x="410" y="111" text-anchor="middle" fill="#2e8839" font-size="8">55% · n≥30</text>
 
-        <!-- Kill arrows from PROVISIONAL & BACKTESTED -->
-        <path d="M 310 180 Q 310 230 580 230 Q 700 230 710 180" 
+        <!-- Kill arc from PROVISIONAL &amp; BACKTESTED to KILLED -->
+        <path d="M 310 160 Q 310 222 540 222 Q 700 222 710 160"
           fill="none" stroke="#c8342a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrRed)"/>
-        <text x="450" y="248" text-anchor="middle" fill="#c8342a" font-size="9" letter-spacing="1">hit rate decay · falsification · derivative</text>
-
-        <!-- Top labels -->
-        <text x="110" y="80" text-anchor="middle" fill="#6b5e50" font-size="9" letter-spacing="1.5">candidate idea</text>
-        <text x="310" y="80" text-anchor="middle" fill="#4D8BE8" font-size="9" letter-spacing="1.5">data accumulating</text>
-        <text x="510" y="80" text-anchor="middle" fill="#2e8839" font-size="9" letter-spacing="1.5">production-grade</text>
-        <text x="710" y="80" text-anchor="middle" fill="#c8342a" font-size="9" letter-spacing="1.5">removed from composite</text>
-
-        <!-- Decorative top frame -->
-        <line x1="40" y1="40" x2="780" y2="40" stroke="#c8bda3" stroke-width="1"/>
-        <text x="40" y="32" fill="#6b5e50" font-size="9" letter-spacing="2">// 04 · STATE FLOW</text>
-        <text x="780" y="32" text-anchor="end" fill="#6b5e50" font-size="9" letter-spacing="2">9 OF 27 CULLED</text>
+        <text x="510" y="241" text-anchor="middle" fill="#c8342a" font-size="9" letter-spacing="0.5">hit rate decay · falsification · derivative</text>
       </svg>
       <div class="figure-caption">Hypotheses Earn Promotion · They Do Not Inherit It</div>
     </div>

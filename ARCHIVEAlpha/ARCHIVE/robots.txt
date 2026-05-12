@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Disallow: /uploads/
+Disallow: /chats/
+Disallow: /banners/
+
+# AI crawlers — explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://adamcagle.com/sitemap.xml

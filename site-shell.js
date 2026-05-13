@@ -185,8 +185,10 @@
         var y     = window.pageYOffset || document.documentElement.scrollTop || 0;
         var max   = (document.documentElement.scrollHeight - window.innerHeight) || 1;
         var ratio = Math.max(0, Math.min(1, y / max));
-        rail.classList.toggle('is-shrunk', y > 80);
+        var shrunk = y > 80;
+        rail.classList.toggle('is-shrunk', shrunk);
         rail.style.setProperty('--scroll-progress', (ratio * 100).toFixed(2) + '%');
+        document.documentElement.style.setProperty('--header-h', shrunk ? '52px' : '72px');
       }
       update();
       window.addEventListener('scroll', update, { passive: true });

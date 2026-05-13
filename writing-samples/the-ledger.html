@@ -90,20 +90,6 @@
   </header>
 </div>
 
-<nav class="reader-bar" aria-label="Reader controls">
-  <div class="reader-bar-inner">
-    <a class="rb-back" href="/WritingSamples.html" data-cursor="hover"><span>←</span> Writing Samples</a>
-    <div class="rb-center">
-      <div class="rb-title">The Ledger</div>
-      <div class="rb-progress">Page <strong id="rb-current">1</strong> of <strong id="rb-total">7</strong></div>
-    </div>
-    <div class="rb-right">
-      <button class="rb-prev" id="rb-prev" type="button" disabled>← Prev</button>
-      <button class="rb-next" id="rb-next" type="button">Next →</button>
-    </div>
-  </div>
-  <div class="mobile-chips" id="mobile-chips" aria-hidden="false"></div>
-</nav>
 
 <section class="reader-stage">
   <div class="reader-shell">
@@ -233,10 +219,6 @@
       </article>
 
     </div>
-
-    <aside class="progress-rail" aria-label="Page progress" id="progress-rail">
-      <div class="pr-label">Folio</div>
-    </aside>
   </div>
 </section>
 
@@ -250,6 +232,19 @@
     </div>
   </div>
 </footer>
+
+<!-- Reader Dock + top progress bar -->
+<div class="reader-progress-bar" aria-hidden="true"><span class="rpb-fill"></span></div>
+
+<nav class="reader-dock" id="reader-dock" aria-label="Reader navigation">
+  <button class="dock-btn dock-prev" id="dock-prev" type="button" disabled aria-label="Previous folio">
+    <span class="arrow" aria-hidden="true">&larr;</span><span class="dock-btn-label">Prev</span>
+  </button>
+  <div class="dock-pages" id="dock-pages" role="tablist" aria-label="Folio pages"></div>
+  <button class="dock-btn dock-next" id="dock-next" type="button" aria-label="Next folio">
+    <span class="dock-btn-label">Next</span><span class="arrow" aria-hidden="true">&rarr;</span>
+  </button>
+</nav>
 
 <site-footer></site-footer>
 

@@ -30,7 +30,7 @@
   ];
 
   const EMAIL    = 'adamrcagle@gmail.com';
-  const LINKEDIN = 'https://www.linkedin.com/in/adam-r-cagle-3b723a3/';
+  const LINKEDIN = 'https://www.linkedin.com/in/adamcagle/';
 
   function isPortfolioActive(active) {
     return active === 'work' || active === 'brand-voice' || active === 'portfolio';

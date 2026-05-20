@@ -47,7 +47,7 @@
       linesClass: 'split-line',
       charsClass: 'split-char'
     });
-    gsap.set(split.chars, { yPercent: 110 });
+    gsap.set(split.chars, { yPercent: 130 });
     gsap.to(split.chars, {
       yPercent: 0,
       duration: opts.duration || 0.95,
@@ -119,6 +119,11 @@
           charsClass: 'split-char'
         });
 
+        // Push chars below the mask BEFORE we make the title visible so
+        // there's no single-frame flash of un-translated glyphs.
+        gsap.set(split.chars, { yPercent: 130 });
+        gsap.set(heroName, { opacity: 1 });
+
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         if (heroKick) {
@@ -128,8 +133,6 @@
             0.15);
         }
 
-        gsap.set(heroName, { opacity: 1 });
-        gsap.set(split.chars, { yPercent: 110 });
         tl.to(split.chars, {
           yPercent: 0,
           duration: 1.0,

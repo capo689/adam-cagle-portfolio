@@ -211,18 +211,6 @@
     width: 100%; height: auto; display: block;
     border-radius: 3px; border: 1px solid var(--rule);
   }
-  .site-art {
-    display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 10px;
-  }
-  .site-art img {
-    width: 100%; display: block; object-fit: cover;
-    border-radius: 3px; border: 1px solid var(--rule);
-    background: var(--bg-soft);
-  }
-  .site-art-main { aspect-ratio: 16 / 7; object-position: center; }
-  .site-art-stack { display: grid; gap: 10px; }
-  .site-art-stack img:first-child { aspect-ratio: 4 / 5; object-position: center 18%; }
-  .site-art-stack img:last-child { aspect-ratio: 4 / 3; object-position: center; }
 
   /* ─── NOTICE BOX ─── */
   .notice {
@@ -258,8 +246,6 @@
     .cg-3 { grid-template-columns: 1fr; }
     .cg-2 { grid-template-columns: 1fr; }
     .screens { grid-template-columns: 1fr; }
-    .site-art { grid-template-columns: 1fr; }
-    .site-art-main { aspect-ratio: 16 / 9; }
     .proj-metrics { grid-template-columns: 1fr 1fr; }
     .support-grid { grid-template-columns: 1fr; }
     .cta-row { flex-direction: row; flex-wrap: wrap; }
@@ -285,7 +271,7 @@
       <p class="hero-intro">Production AI systems and workflows built across Claude Projects, GPT Projects, and Anthropic API deployments. Brand voice and campaign production. Market intelligence with kill-switch discipline. Autonomous multi-channel marketing. Satellite image analysis for mineral prospectivity. Every system keeps a human in control of the decisions that matter.</p>
       <div class="hero-meta">
         <div class="hero-stat">
-          <div class="stat-num">6</div>
+          <div class="stat-num">5</div>
           <div class="stat-label">Production AI systems shipped</div>
         </div>
         <div class="hero-stat">
@@ -319,7 +305,6 @@
       <span>HYPOTHESIS TESTING</span><span class="dot">·</span>
       <span>MULTI-PASS DRAFTING</span><span class="dot">·</span>
       <span>FIRST-PRINCIPLES RESEARCH</span><span class="dot">·</span>
-      <span>STATIC SITE SYSTEMS</span><span class="dot">·</span>
       <span>ASTRO STATIC BUILD</span>
     </div>
   </div>
@@ -674,84 +659,10 @@
     </div>
   </div>
 
-  <!-- ─── 06 · ADAM CAGLE PORTFOLIO ─── -->
-  <div class="section" id="sys-06">
-    <div class="s-head">
-      <span class="s-num">// 06 · LIVE SITE</span>
-      <h2 class="s-title">AdamCagle.com<br><span class="it">Portfolio System</span></h2>
-      <p class="s-kicker">Static Site · AI-Assisted Build<br>Shared Shell · GitHub + Vercel<br>Writing, Work, Systems</p>
-      <div class="sys-tags">
-        <span class="sys-tag live">● Live Site</span>
-        <span class="sys-tag">Static HTML</span>
-        <span class="sys-tag open">GitHub</span>
-      </div>
-      <div class="cta-row">
-        <a href="https://github.com/capo689/adam-cagle-portfolio" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ GitHub</a>
-      </div>
-    </div>
-    <div class="s-body">
-
-      <div class="proj-metrics">
-        <div class="pm-cell">
-          <div class="pm-num">0</div>
-          <div class="pm-lab">Build step required to ship the public site</div>
-        </div>
-        <div class="pm-cell">
-          <div class="pm-num">1</div>
-          <div class="pm-lab">Shared shell for nav, mobile menu, and footer</div>
-        </div>
-        <div class="pm-cell">
-          <div class="pm-num">9</div>
-          <div class="pm-lab">Core pages across resume, work, writing, contact, and AI systems</div>
-        </div>
-        <div class="pm-cell">
-          <div class="pm-num">100<span class="u">%</span></div>
-          <div class="pm-lab">Hand-authored front end: HTML, CSS, and JavaScript</div>
-        </div>
-      </div>
-
-      <div class="case-grid cg-3">
-        <div class="case-cell">
-          <div class="cc-label">Problem</div>
-          <p class="cc-body">A working portfolio has to do more than display work. It has to prove range quickly, hold a distinctive voice, surface technical credibility, and make the site itself feel like evidence. A generic template would flatten the very thing the site is meant to sell: taste, structure, speed, and judgment.</p>
-        </div>
-        <div class="case-cell">
-          <div class="cc-label">System</div>
-          <p class="cc-body">A static front end organized around reusable site-shell infrastructure, shared theme controls, page-specific animation hooks, and hand-tuned content pages. The architecture keeps the site fast and portable while letting each page carry its own rhythm: portfolio, writing samples, brand voice, resume, contact, and AI systems all feel related without becoming repetitive.</p>
-        </div>
-        <div class="case-cell">
-          <div class="cc-label">Workflow</div>
-          <p class="cc-body">AI-assisted iteration handles structure, code passes, copy refinement, and deployment hygiene, while human direction controls taste, claims, hierarchy, and final judgment. The loop is simple: define the intent, generate a clean implementation, inspect the page, tighten the language and spacing, then ship through GitHub.</p>
-        </div>
-      </div>
-
-      <div class="case-grid cg-2">
-        <div class="case-cell">
-          <div class="cc-label">Architecture</div>
-          <p class="cc-body">The repo uses plain HTML pages with shared CSS and JavaScript instead of a heavy framework. <code>site-shell.js</code> owns the persistent navigation and footer. <code>theme.js</code> preserves light/dark mode. Page scripts add movement only where the experience needs it. Sitemap, robots, LLM-readable context, archives, alpha staging, and Vercel configuration all live beside the production files.</p>
-        </div>
-        <div class="case-cell">
-          <div class="cc-label">Outcome</div>
-          <div class="cc-outcome">The portfolio becomes a working proof of the method: brand voice, technical structure, AI collaboration, and production discipline in one live artifact.</div>
-          <p class="cc-fine">The transferable pattern is the same one used across the agent work: strong source material, strict structure, reusable system pieces, fast iteration, and human approval before anything public ships.</p>
-        </div>
-      </div>
-
-      <div class="site-art">
-        <img src="img/neon-bluex.png" alt="Adam Cagle neon wordmark artwork from the portfolio site" class="site-art-main" loading="lazy">
-        <div class="site-art-stack">
-          <img src="img/adamart.jpg" alt="Adam Cagle portrait artwork used on the site" loading="lazy">
-          <img src="images/poolsup.png" alt="Portfolio site pool artwork detail" loading="lazy">
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ─── 07 · SUPPORTING SYSTEMS ─── -->
+  <!-- ─── 06 · SUPPORTING SYSTEMS ─── -->
   <div class="section" id="supporting">
     <div class="s-head">
-      <span class="s-num">// 07</span>
+      <span class="s-num">// 06</span>
       <h2 class="s-title">Other<span class="it"> Systems</span></h2>
       <p class="s-kicker">Additional workflows &amp; agents</p>
     </div>

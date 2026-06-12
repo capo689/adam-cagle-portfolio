@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<base href="/alpha/">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brand Voice Systems | Adam R. Cagle</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light');</script>
+<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- SEO -->
+<meta name="description" content="Tone guides, brand books, messaging frameworks, persona scaffolds, SKILL.md files, and AI voice governance systems for brands and marketing teams.">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<link rel="canonical" href="https://adamcagle.com/alpha/BrandVoice.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="Brand Voice Systems | Adam R. Cagle">
+<meta property="og:description" content="Tone guides, brand books, messaging frameworks, persona scaffolds, SKILL.md files, and AI voice governance systems for brands and marketing teams.">
+<meta property="og:url" content="https://adamcagle.com/alpha/BrandVoice.html">
+<meta property="og:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Brand Voice Systems | Adam R. Cagle">
+<meta name="twitter:description" content="Tone guides, brand books, messaging frameworks, persona scaffolds, and AI voice governance systems.">
+<meta name="twitter:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #4D8BE8;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02"; overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 36px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+  .hero-title {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(48px, 8.5vw, 130px);
+    line-height: 0.86; letter-spacing: -0.05em; margin: 0 0 40px;
+  }
+  .hero-intro {
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(20px, 2vw, 28px); line-height: 1.45;
+    color: var(--fg-2); max-width: 70ch; margin: 0;
+  }
+  .hero-intro em { color: var(--accent); font-style: italic; }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 64px; padding: 72px 0; border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: 0; }
+  .s-head { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 14px; }
+  .s-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .s-title { font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 2.6vw, 38px); line-height: 0.95; letter-spacing: -0.04em; margin: 0; }
+  .s-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .s-body { display: flex; flex-direction: column; gap: 32px; }
+
+  /* ─── DELIVERABLES LIST ─── */
+  .deliverables {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .deliv {
+    background: var(--bg-soft); padding: 24px 24px 20px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .deliv-icon { font-family: var(--mono); font-size: 16px; color: var(--accent); }
+  .deliv-name { font-family: var(--sans); font-weight: 600; font-size: 16px; letter-spacing: -0.01em; color: var(--fg); }
+  .deliv p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--fg-3); }
+
+  /* ─── PROOF POINTS ─── */
+  .proof-block {
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .proof-item {
+    padding: 28px 32px; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 200px 1fr; gap: 32px; align-items: start;
+  }
+  .proof-item:last-child { border-bottom: 0; }
+  .proof-client { font-family: var(--sans); font-weight: 700; font-size: 22px; letter-spacing: -0.03em; color: var(--fg); }
+  .proof-years { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
+  .proof-right { display: flex; flex-direction: column; gap: 8px; }
+  .proof-desc { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; }
+  .proof-line {
+    font-family: var(--italic); font-style: italic; font-size: 17px; color: var(--fg);
+    border-left: 2px solid var(--accent); padding-left: 14px; margin-top: 4px;
+  }
+
+  /* ─── CTA ─── */
+  .contact-cta {
+    background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 32px 32px; display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    transition: border-color .2s, background .2s;
+  }
+  .contact-cta:hover { border-color: var(--accent); background: var(--bg); }
+  .cta-text { font-family: var(--italic); font-style: italic; font-size: 22px; line-height: 1.4; color: var(--fg-2); max-width: 56ch; }
+  .cta-arrow { font-family: var(--mono); font-size: 22px; color: var(--accent); flex-shrink: 0; transition: transform .2s; }
+  .contact-cta:hover .cta-arrow { transform: translateX(6px); }
+
+  /* ─── FEATURED VOICE SYSTEM ─── */
+  .fv-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; align-items: start; margin-bottom: 48px;
+  }
+  .fv-copy { display: flex; flex-direction: column; gap: 20px; }
+  .fv-kicker {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  }
+  .fv-copy h3 {
+    font-family: var(--italic); font-style: italic; font-weight: 400;
+    font-size: clamp(28px, 3vw, 42px); line-height: 1.15;
+    letter-spacing: -0.025em; margin: 0; color: var(--fg);
+  }
+  .fv-copy p { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; }
+  .fv-details {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px 6px 0 0; overflow: hidden;
+  }
+  .fv-detail-block {
+    background: var(--bg-soft); padding: 28px 28px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .fv-detail-label {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  }
+  .fv-detail-headline {
+    font-family: var(--italic); font-style: italic;
+    font-size: 19px; line-height: 1.3; color: var(--fg); margin: 0;
+  }
+  .fv-detail-block p { font-size: 15px; line-height: 1.6; color: var(--fg-2); margin: 0; }
+  .fv-why {
+    background: var(--bg-soft);
+    border: 1px solid var(--rule); border-top: 0;
+    border-radius: 0 0 6px 6px;
+    padding: 28px 32px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .fv-why p { font-size: 17px; line-height: 1.65; color: var(--fg-2); margin: 0; }
+
+  /* ─── HF COVER WRAP ─── */
+  .hf-cover-wrap {
+    width: 100%; background: #0a0a09;
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative;
+  }
+  .hf-cover-wrap img { max-height: 560px; width: 100%; object-fit: contain; display: block; }
+  .hf-cover-wrap .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(15,15,14,0.88) 100%);
+    display: flex; align-items: flex-end; padding: 20px 22px;
+    opacity: 0; transition: opacity .25s;
+  }
+  .hf-cover-wrap:hover .overlay { opacity: 1; }
+  .hf-cover-wrap .overlay-inner {
+    width: 100%; display: flex; justify-content: space-between; align-items: baseline;
+    gap: 10px; font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-2);
+  }
+  .hf-cover-wrap .overlay-inner .hl {
+    font-family: var(--italic); font-style: italic;
+    font-size: 17px; letter-spacing: -0.01em; text-transform: none; color: var(--accent);
+  }
+
+  /* ─── HF VIEWER ─── */
+  #hf-viewer {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(6,6,5,0.97); backdrop-filter: blur(20px);
+    display: none; align-items: center; justify-content: center;
+    flex-direction: column; padding: 56px 80px 56px;
+    opacity: 0; transition: opacity .2s;
+  }
+  #hf-viewer.open { display: flex; }
+  #hf-viewer.visible { opacity: 1; }
+  .hf-spread-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    width: 100%; perspective: 2200px; perspective-origin: 50% 50%;
+  }
+  #hf-spread {
+    display: flex; gap: 3px; align-items: stretch; justify-content: center;
+    max-height: calc(100vh - 160px); width: 100%;
+    transform-style: preserve-3d; will-change: transform, opacity;
+  }
+  .hf-pg { display: flex; align-items: center; justify-content: center; overflow: hidden; background: #0d0d0c; }
+  .hf-pg.solo { max-width: min(90vw, 1400px); }
+  .hf-pg.pair { flex: 1; min-width: 0; }
+  .hf-pg img {
+    display: block; max-width: 100%; max-height: calc(100vh - 160px);
+    object-fit: contain;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .hf-spine { width: 2px; background: rgba(246,243,236,0.05); align-self: stretch; flex-shrink: 0; }
+  .hf-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; max-width: 1100px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  #hf-counter { color: var(--accent); }
+  .hf-hint { color: var(--fg-3); }
+  .hf-btn {
+    position: absolute; background: rgba(18,17,16,0.9);
+    border: 1px solid rgba(246,243,236,0.16); color: var(--fg);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 15px; cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s, transform .2s; z-index: 2;
+  }
+  .hf-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .hf-close-btn { top: 20px; right: 20px; }
+  .hf-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+  .hf-next { right: 20px; top: 50%; transform: translateY(-50%); }
+  .hf-prev:hover { transform: translateY(-50%) translateX(-2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .hf-next:hover { transform: translateY(-50%) translateX(2px); background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  body.lb-open { overflow: hidden; }
+
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .hero { padding: 96px 0 36px; }
+    .hero-title { font-size: clamp(40px, 9vw, 80px); }
+    .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
+    .s-head { position: static; }
+    .deliverables { grid-template-columns: 1fr 1fr; }
+    .proof-item { grid-template-columns: 1fr; gap: 12px; }
+    .contact-cta { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .fv-grid { grid-template-columns: 1fr; gap: 32px; }
+    .fv-details { grid-template-columns: 1fr; border-radius: 6px 6px 0 0; }
+    #hf-viewer { padding: 56px 12px 48px; }
+    #hf-spread { flex-direction: column; align-items: center; gap: 4px; overflow-y: auto; }
+    .hf-pg.pair { max-width: 100%; width: 100%; }
+    .hf-spine { display: none; }
+    .hf-hint { display: none; }
+  }
+  @media (max-width: 600px) {
+    .deliverables { grid-template-columns: 1fr; }
+    .fv-details { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<script src="js/preloader.js"></script>
+
+<site-header active="brand-voice"></site-header>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Brand Voice Systems</span>
+    </div>
+    <h1 class="hero-title">Brand Voice<br>Systems.</h1>
+    <p class="hero-intro">Voice is not a vibe. It is <em>an operating system</em> for how a brand thinks, speaks, edits, approves, and scales. Adam builds the documents, rules, examples, campaign platforms, persona scaffolds, and review systems that keep brands from drifting.</p>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 01</span>
+      <h2 class="s-title">What the<span class="it"> Work Includes</span></h2>
+    </div>
+    <div class="s-body">
+      <div class="deliverables">
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Brand Books</div>
+          <p>Full identity and voice systems, from naming and positioning through editorial and design governance.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Tone Documents</div>
+          <p>How the brand sounds, what it avoids, and how to tell the difference in practice. With examples.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Messaging Frameworks</div>
+          <p>Positioning ladders, proof points, audience-specific messaging, and campaign themes organized for use.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Campaign Platforms</div>
+          <p>Overarching ideas that hold across media, channels, seasons, and teams without breaking.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Persona Scaffolds</div>
+          <p>Structured persona specifications with voice constraints for human writers and AI systems.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Editorial Rules</div>
+          <p>Channel-specific guidelines, approval criteria, and editorial standards that keep copy consistent.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">SKILL.md Files</div>
+          <p>AI voice scaffolding that extends brand governance into model workflows. The brand rules in a format Claude can follow.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Prompt Libraries</div>
+          <p>Reusable, brand-calibrated prompts for recurring copy types: email, social, product, ad, and in-app.</p>
+        </div>
+        <div class="deliv">
+          <div class="deliv-icon">&#9632;</div>
+          <div class="deliv-name">Human Review Loops</div>
+          <p>Approval routing, Telegram-based review queues, and standards AI checks before anything ships.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 02</span>
+      <h2 class="s-title">Featured<span class="it"> Voice System</span></h2>
+    </div>
+    <div class="s-body">
+
+      <div class="fv-grid">
+        <div class="fv-copy">
+          <div class="fv-kicker">Hotel Figueroa · Brand Book · Editorial Voice · DTLA Relaunch</div>
+          <h3>To relate to artists, we must be artists.</h3>
+          <p>Hotel Figueroa is the clearest single example of voice as a complete operating system. For the 1925 DTLA icon's reopening, Agency689 developed the full brand identity and editorial framework: mission, promise, vision, six brand pillars, visual language, image standards, collateral logic, and a complete voice guide that gave every expression of the brand a shared point of view.</p>
+          <p>This was not a tone paragraph added at the end of a design project. It was the system beneath the work: the strategic and editorial architecture that kept the brand coherent across launch messaging, web, email, merchandise, trade show materials, photography direction, and the client's internal decision-making.</p>
+        </div>
+        <div class="hf-cover-wrap" id="hf-cover" data-cursor="view" data-cursor-text="Open Book">
+          <img src="img/HF/HotelFigueroa%2062.jpeg" alt="Hotel Figueroa Brand Book cover · 61-page brand identity system by Agency689, DTLA luxury hotel relaunch">
+          <div class="overlay"><div class="overlay-inner"><span class="hl">Open Brand Book &rarr;</span><span>61 Pages · Agency689 · DTLA</span></div></div>
+        </div>
+      </div>
+
+      <div class="fv-details">
+        <div class="fv-detail-block">
+          <div class="fv-detail-label">The Brand Thesis</div>
+          <p class="fv-detail-headline">To relate to artists, we must be artists.</p>
+          <p>The single sentence that holds the entire brand. Written as the mission foundation for a 1925 DTLA hotel reopening as a home for the creative class. Six brand pillars, a complete voice guide, and sixty-one pages of identity work flow from this one line.</p>
+        </div>
+        <div class="fv-detail-block">
+          <div class="fv-detail-label">System</div>
+          <p>Mission, promise, vision, six brand pillars, logo system in two-color, metallic, and red variants, twelve Pantone palettes, Din OT and Xtreem typography, Blue Fig Leaf graphic mark, three-tier imagery system, complete Editorial Voice guide, full collateral across stationery, merchandise, trade show, email, and web, plus governance authority through launch.</p>
+        </div>
+        <div class="fv-detail-block">
+          <div class="fv-detail-label">Outcome</div>
+          <p>61-page brand book. Full editorial and identity system. A complete voice architecture built to hold across a major public relaunch.</p>
+        </div>
+      </div>
+
+      <div class="fv-why">
+        <div class="fv-detail-label">Why it matters now</div>
+        <p>This is brand voice as infrastructure: mission, pillars, visual language, editorial standards, collateral, and governance built to hold across a major relaunch. It is exactly the kind of system AI writing workflows and brand voice tools need to extend, not replace.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 03</span>
+      <h2 class="s-title">Proof<span class="it"> Points</span></h2>
+    </div>
+    <div class="s-body">
+      <div class="proof-block">
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">Sunset Marquis</div>
+            <div class="proof-years">Agency of Record · Since 2004</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">Long-running voice governance across hotel, restaurant, spa, villa, email, digital, print, and in-room channels. Adam wrote the voice for 15 years and now approves AI-assisted email and banner work. Email program contributes approximately $125,000 per month in attributed revenue.</p>
+            <div class="proof-line">Legendary Nights Begin at Sunset.</div>
+          </div>
+        </div>
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">Traveler Guitar</div>
+            <div class="proof-years">Brand Partner · 15+ Years</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">A product and lifestyle voice built around a single line that became a registered trademark. Held across retail, Amazon, trade show, advertising, and promotional channels for a decade of steady growth.</p>
+            <div class="proof-line">The World's Most Adventurous Guitar.</div>
+          </div>
+        </div>
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">FileKeepers</div>
+            <div class="proof-years">B2B Brand Build</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">A B2B operational service reframed through a campaign idea that repositioned the entire category. Voice, tagline, and visual system built and launched end to end. Contributed to a 5% year-over-year increase in new clients in targeted verticals.</p>
+            <div class="proof-line">Space. The File Frontier.</div>
+          </div>
+        </div>
+        <div class="proof-item">
+          <div>
+            <div class="proof-client">Agency689 AI Systems</div>
+            <div class="proof-years">AI Voice Governance</div>
+          </div>
+          <div class="proof-right">
+            <p class="proof-desc">Voice rules, prompt scaffolds, SKILL.md files, second-pass standards AI, and human review loops that keep AI-assisted work on brand. The same discipline that held Sunset Marquis's voice across 20 years, applied to AI-assisted marketing production.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 04</span>
+      <h2 class="s-title">Get in<span class="it"> Touch</span></h2>
+    </div>
+    <div class="s-body">
+      <a href="mailto:adamrcagle@gmail.com" class="contact-cta">
+        <p class="cta-text">Need the writing and the system behind it? Email Adam.</p>
+        <span class="cta-arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── HF VIEWER (brand book) ─── -->
+<div id="hf-viewer" aria-hidden="true">
+  <button class="hf-btn hf-close-btn" aria-label="Close">&times;</button>
+  <button class="hf-btn hf-nav hf-prev" aria-label="Previous page">&larr;</button>
+  <button class="hf-btn hf-nav hf-next" aria-label="Next page">&rarr;</button>
+  <div class="hf-spread-wrap">
+    <div id="hf-spread"></div>
+    <div class="hf-footer">
+      <span id="hf-counter"></span>
+      <span class="hf-hint">&larr; &rarr; navigate &middot; esc close</span>
+    </div>
+  </div>
+</div>
+
+<site-footer></site-footer>
+
+<script>
+// Hotel Figueroa Brand Book viewer
+(function () {
+  if (!document.getElementById('hf-cover')) return;
+
+  const views = [{ type: 'single', files: [62] }];
+  for (let f = 63; f < 121; f += 2) views.push({ type: 'spread', files: [f, f + 1] });
+  views.push({ type: 'single', files: [121] });
+  views.push({ type: 'single', files: [122] });
+  const total = views.length;
+
+  let cur = 0;
+  const viewer   = document.getElementById('hf-viewer');
+  const spreadEl = document.getElementById('hf-spread');
+  const counter  = document.getElementById('hf-counter');
+
+  function src(n) { return `img/HF/HotelFigueroa%20${n}.jpeg`; }
+  function makeImg(n) {
+    const img = document.createElement('img');
+    img.src = src(n); img.alt = 'Hotel Figueroa Brand Book';
+    return img;
+  }
+  function drawNow() {
+    const v = views[cur];
+    spreadEl.innerHTML = '';
+    if (v.type === 'single') {
+      const pg = document.createElement('div');
+      pg.className = 'hf-pg solo';
+      pg.appendChild(makeImg(v.files[0]));
+      spreadEl.appendChild(pg);
+    } else {
+      const left  = document.createElement('div'); left.className  = 'hf-pg pair'; left.appendChild(makeImg(v.files[0]));
+      const spine = document.createElement('div'); spine.className = 'hf-spine';
+      const right = document.createElement('div'); right.className = 'hf-pg pair'; right.appendChild(makeImg(v.files[1]));
+      spreadEl.appendChild(left); spreadEl.appendChild(spine); spreadEl.appendChild(right);
+    }
+    const label = cur === 0 ? 'Cover' : cur === total - 1 ? 'Back Cover' : `Spread ${cur} of ${total - 2}`;
+    counter.textContent = `${label}  ·  ${cur + 1} / ${total}`;
+    [cur - 1, cur + 1].forEach(i => {
+      if (i >= 0 && i < total) views[i].files.forEach(f => { new Image().src = src(f); });
+    });
+  }
+
+  let flipping = false;
+  function flipTo(newCur, dir) {
+    if (flipping || newCur === cur) return;
+    flipping = true;
+    const out = dir > 0 ? -92 : 92;
+    const inFrom = -out;
+    const dur = 280;
+    spreadEl.style.transition = `transform ${dur}ms cubic-bezier(.5,0,.75,.2), opacity ${dur}ms ease-in`;
+    spreadEl.style.transform = `translateZ(-60px) rotateY(${out}deg)`;
+    spreadEl.style.opacity = '0';
+    setTimeout(() => {
+      cur = newCur;
+      drawNow();
+      spreadEl.style.transition = 'none';
+      spreadEl.style.transform = `translateZ(-60px) rotateY(${inFrom}deg)`;
+      spreadEl.style.opacity = '0';
+      void spreadEl.offsetWidth;
+      spreadEl.style.transition = `transform ${dur}ms cubic-bezier(.25,.8,.5,1), opacity ${dur}ms ease-out`;
+      spreadEl.style.transform = 'translateZ(0) rotateY(0deg)';
+      spreadEl.style.opacity = '1';
+      setTimeout(() => { spreadEl.style.transition = ''; flipping = false; }, dur + 20);
+    }, dur);
+  }
+
+  function openViewer() {
+    cur = 0;
+    spreadEl.style.transition = '';
+    spreadEl.style.transform = '';
+    spreadEl.style.opacity = '';
+    drawNow();
+    viewer.classList.add('open');
+    requestAnimationFrame(() => viewer.classList.add('visible'));
+    viewer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+  }
+  function closeViewer() {
+    viewer.classList.remove('open', 'visible');
+    viewer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+  }
+  function step(d) {
+    const newCur = Math.max(0, Math.min(total - 1, cur + d));
+    if (newCur === cur) return;
+    flipTo(newCur, d);
+  }
+
+  document.getElementById('hf-cover').addEventListener('click', openViewer);
+  viewer.querySelector('.hf-close-btn').addEventListener('click', closeViewer);
+  viewer.querySelector('.hf-prev').addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  viewer.querySelector('.hf-next').addEventListener('click', e => { e.stopPropagation(); step(1); });
+  viewer.addEventListener('click', e => { if (e.target === viewer) closeViewer(); });
+  document.addEventListener('keydown', e => {
+    if (!viewer.classList.contains('open')) return;
+    if (e.key === 'Escape') closeViewer();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+</script>
+
+<script src="theme.js"></script>
+</body>
+</html>

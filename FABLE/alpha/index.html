@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<base href="/alpha/">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Adam R. Cagle | Senior Copywriter for AI, Software, and Brand Voice</title>
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light');</script>
+<link rel="icon" type="image/png" href="img/cross.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+<!-- SEO -->
+<meta name="description" content="Senior copywriter, creative director, and AI writing systems lead. Product launches, campaign copy, brand voice, and AI-assisted workflows for tech and marketing teams.">
+<meta name="keywords" content="senior copywriter, product marketing copywriter, brand voice systems, AI writing systems, AI copywriter, copywriter for hire, Adam Cagle, Agency689, Agentic689">
+<meta name="author" content="Adam R. Cagle">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f0f0e">
+<meta name="geo.region" content="US-OR">
+<meta name="geo.placename" content="Bend, Oregon">
+<link rel="canonical" href="https://adamcagle.com/alpha/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Adam R. Cagle">
+<meta property="og:title" content="Adam R. Cagle | Senior Copywriter for AI, Software, and Brand Voice">
+<meta property="og:description" content="Senior copywriter, creative director, and AI writing systems lead. Product launches, campaign copy, brand voice, and AI-assisted workflows for tech and marketing teams.">
+<meta property="og:url" content="https://adamcagle.com/alpha/">
+<meta property="og:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:alt" content="Adam R. Cagle · Senior Copywriter for AI, Software, and Brand Voice">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Adam R. Cagle | Senior Copywriter for AI, Software, and Brand Voice">
+<meta name="twitter:description" content="Senior copywriter, creative director, and AI writing systems lead. Product launches, campaign copy, brand voice, and AI-assisted workflows.">
+<meta name="twitter:image" content="https://adamcagle.com/img/ads/Sunset-Marquis.jpg">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Adam R. Cagle",
+  "jobTitle": "Senior Copywriter, Creative Director, AI Writing Systems Lead",
+  "description": "Senior copywriter and creative director specializing in product marketing copy, brand voice systems, and AI writing workflows. Co-founder of Agency689 and Agentic689.",
+  "url": "https://adamcagle.com/alpha",
+  "email": "mailto:adamrcagle@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Bend", "addressRegion": "OR", "addressCountry": "US" },
+  "sameAs": ["https://www.linkedin.com/in/adam-r-cagle-3b723a3/"]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/preloader.css">
+<script src="site-shell.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/cursor.js" defer></script>
+<script src="js/smooth-scroll.js" defer></script>
+<script src="js/animations.js" defer></script>
+<script src="js/pages/home.js" defer></script>
+<style>
+  :root {
+    --bg:      #0f0f0e;
+    --bg-soft: #141312;
+    --fg:      #f6f3ec;
+    --fg-2:    rgba(246,243,236,0.72);
+    --fg-3:    rgba(246,243,236,0.45);
+    --rule:    rgba(246,243,236,0.14);
+    --rule-2:  rgba(246,243,236,0.08);
+    --accent:  #4D8BE8;
+    --sans:    "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, Menlo, monospace;
+    --italic:  "Instrument Serif", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font-family: var(--sans);
+    font-size: 15px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01","ss02";
+    overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  .page { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── HERO ─── */
+  .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
+  .hero-kicker {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 36px;
+  }
+  .hero-kicker .dash { width: 40px; height: 1px; background: var(--fg-3); }
+  .hero-kicker .accent { color: var(--accent); }
+
+  .hero-namerow {
+    display: grid; grid-template-columns: 1.2fr 0.8fr;
+    gap: 56px; align-items: center;
+  }
+  .hero-name {
+    font-family: var(--sans); font-weight: 800;
+    font-size: clamp(64px, 11vw, 180px);
+    line-height: 0.84; letter-spacing: -0.055em; margin: 0;
+  }
+  .hero-name .it {
+    font-family: var(--italic); font-style: italic;
+    font-weight: 400; color: var(--accent); letter-spacing: -0.03em;
+  }
+  .portrait-img {
+    display: block; justify-self: start;
+    width: clamp(190px, 18vw, 300px); height: auto;
+    filter: contrast(1.04) saturate(1.08) drop-shadow(0 8px 24px rgba(0,0,0,0.45));
+  }
+
+  .hero-headline {
+    margin: 40px 0 18px;
+    font-family: var(--italic); font-style: italic;
+    font-size: clamp(22px, 2.4vw, 34px); line-height: 1.3;
+    font-weight: 400; color: var(--fg-2); max-width: 72ch;
+    letter-spacing: -0.01em;
+  }
+  .hero-headline em { color: var(--accent); font-style: italic; }
+
+  .hero-subtext {
+    margin: 0 0 36px;
+    font-size: clamp(16px, 1.5vw, 20px); line-height: 1.65;
+    color: var(--fg-3); max-width: 64ch;
+  }
+
+  /* ─── CTA BUTTONS ─── */
+  .hero-btns {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    margin-bottom: 24px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--sans); font-weight: 600; font-size: 14px;
+    letter-spacing: -0.01em; text-decoration: none;
+    padding: 12px 22px; border-radius: 6px;
+    border: 1px solid transparent;
+    transition: background .2s, border-color .2s, color .2s, transform .15s;
+    white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+  .btn-primary:hover { background: #3a78d5; border-color: #3a78d5; }
+  .btn-secondary {
+    background: var(--bg-soft); color: var(--fg); border-color: var(--rule);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-email {
+    font-family: var(--mono); font-size: 13px; color: var(--fg-3);
+    letter-spacing: 0.06em;
+    transition: color .2s;
+  }
+  .hero-email:hover { color: var(--accent); }
+  .hero-email .arrow { display: inline-block; margin-left: 4px; transition: transform .2s; }
+  .hero-email:hover .arrow { transform: translateX(4px); }
+
+  /* ─── PROOF STRIP ─── */
+  .proof-strip {
+    margin-top: 56px;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px;
+    background: var(--rule);
+  }
+  .proof-item {
+    background: var(--bg);
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 22px 20px;
+  }
+  .proof-num {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(26px, 2.8vw, 40px);
+    letter-spacing: -0.03em; line-height: 1; color: var(--fg);
+  }
+  .proof-num.it {
+    font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent);
+  }
+  .proof-label {
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3);
+    line-height: 1.5;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 64px; padding: 72px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: 0; }
+  .s-head { position: sticky; top: 100px; align-self: start; display: flex; flex-direction: column; gap: 14px; }
+  .s-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .s-title {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(26px, 2.6vw, 38px);
+    line-height: 0.95; letter-spacing: -0.04em; margin: 0;
+  }
+  .s-title .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+  .s-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); line-height: 1.7; margin-top: 4px; }
+  .s-body { display: flex; flex-direction: column; gap: 32px; }
+
+  /* ─── SERVICE CARDS (What I Do) ─── */
+  .service-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .service-card {
+    background: var(--bg-soft); padding: 32px 28px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .sc-title {
+    font-family: var(--sans); font-weight: 700;
+    font-size: 20px; letter-spacing: -0.02em; color: var(--fg);
+  }
+  .service-card p {
+    margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg-2);
+  }
+
+  /* ─── START HERE ─── */
+  .start-intro {
+    font-family: var(--italic); font-style: italic;
+    font-size: 19px; line-height: 1.55; color: var(--fg-2);
+    margin: 0 0 28px;
+  }
+  .start-links {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .start-link {
+    background: var(--bg-soft);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 20px 24px;
+    font-family: var(--sans); font-weight: 600; font-size: 17px;
+    letter-spacing: -0.02em; color: var(--fg);
+    text-decoration: none;
+    transition: background .2s, color .2s;
+  }
+  .start-link .arrow { font-family: var(--mono); font-size: 13px; color: var(--fg-3); transition: transform .2s, color .2s; }
+  .start-link:hover { background: var(--bg); color: var(--accent); }
+  .start-link:hover .arrow { transform: translateX(4px); color: var(--accent); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    .page { padding: 0 20px; }
+    .hero { padding: 96px 0 36px; }
+    .hero-namerow { grid-template-columns: 1.45fr 1fr; gap: 24px; }
+    .portrait-img { width: 100%; max-width: 220px; }
+    .hero-headline { font-size: clamp(20px, 5vw, 28px); }
+    .proof-strip { grid-template-columns: repeat(3, 1fr); }
+    .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
+    .s-head { position: static; }
+    .service-cards { grid-template-columns: 1fr; }
+    .start-links { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero-namerow { grid-template-columns: 1.5fr 1fr; gap: 16px; align-items: center; }
+    .portrait-img { max-width: 160px; }
+    .hero-btns { gap: 10px; }
+    .btn { font-size: 13px; padding: 11px 18px; }
+    .proof-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<script src="js/preloader.js"></script>
+
+<site-header active="home"></site-header>
+<noscript>
+  <header style="padding:20px 32px;border-bottom:1px solid #333;font-family:sans-serif;">
+    <a href="/alpha/"><strong>Adam R. Cagle</strong></a> &middot; Senior Copywriter &amp; Creative Director
+    <nav style="margin-top:8px;font-size:14px;">
+      <a href="/alpha/Resume.html">Resume</a> &middot;
+      <a href="/alpha/Work.html">Product &amp; Campaign Work</a> &middot;
+      <a href="/alpha/AISystems.html">AI Systems</a> &middot;
+      <a href="/alpha/BrandVoice.html">Brand Voice Systems</a> &middot;
+      <a href="/alpha/Contact.html">Contact</a>
+    </nav>
+  </header>
+</noscript>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-kicker">
+      <span class="dash"></span>
+      <span class="accent">//</span>
+      <span>Senior Copywriter</span>
+      <span>·</span>
+      <span>Bend, Oregon</span>
+      <span>·</span>
+      <span>Available 2026</span>
+    </div>
+    <div class="hero-namerow">
+      <h1 class="hero-name">Adam R<span style="color:var(--accent)">.</span><br>Cagle</h1>
+      <img src="img/adampic.png" alt="Adam R. Cagle · Senior Copywriter & Creative Director" class="portrait-img">
+    </div>
+    <img src="img/neon-bluex.png" alt="The Write Guy For The Job" data-preloader-target data-neon-dark="img/neon-bluex.png" data-neon-light="img/neon-bluex.png" style="display:block;width:520px;max-width:70%;height:auto;margin:20px 0 0;opacity:0.9;">
+
+    <h2 class="hero-headline">Senior copywriter for AI, software, and brands that need <em>sharper words</em> at higher speed.</h2>
+    <p class="hero-subtext">I write product launches, campaign systems, brand voice, and AI-assisted workflows that help marketing teams move faster without sounding like everyone else.</p>
+
+    <div class="hero-btns">
+      <a href="/alpha/Work.html" class="btn btn-primary">View Portfolio &rarr;</a>
+      <a href="/alpha/AISystems.html" class="btn btn-secondary">View AI Systems</a>
+      <a href="/alpha/ARC-Resume.pdf" class="btn btn-secondary" download>Download Resume</a>
+    </div>
+    <a href="mailto:adamrcagle@gmail.com" class="hero-email">Email Adam <span class="arrow">&rarr;</span> adamrcagle@gmail.com</a>
+
+    <div class="proof-strip">
+      <div class="proof-item">
+        <div class="proof-num">25</div>
+        <div class="proof-label">Years leading copy &amp; creative direction</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num it">Xbox · Traveler Guitar · Sunset Marquis</div>
+        <div class="proof-label">Plus Killer, FileKeepers, Hotel Figueroa &amp; more</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num it">//</div>
+        <div class="proof-label">Production AI workflows &amp; agents built through Agentic689</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num it">≈½</div>
+        <div class="proof-label">Production time cut by AI writing systems in active client campaigns</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num it">Clio</div>
+        <div class="proof-label">Ad Club, Webby, and Netty recognition for copy &amp; creative</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 01</span>
+      <h2 class="s-title">What I<span class="it"> Do</span></h2>
+    </div>
+    <div class="s-body">
+      <div class="service-cards">
+        <div class="service-card">
+          <div class="sc-title">Product Marketing Copy</div>
+          <p>Copy for product launches, feature announcements, web, email, social, in-app, campaigns, decks, and event support. Complex products translated into copy people can understand without sanding off the interesting parts.</p>
+        </div>
+        <div class="service-card">
+          <div class="sc-title">Brand Voice Systems</div>
+          <p>Tone documents, brand books, messaging frameworks, persona scaffolds, governance rules, and editorial systems that keep a voice consistent across humans, channels, and AI workflows.</p>
+        </div>
+        <div class="service-card">
+          <div class="sc-title">AI Writing Systems</div>
+          <p>Prompt libraries, SKILL.md files, RAG-supported workflows, recursive learning, second-pass standards AI, Telegram approval routing, and human review loops that help teams produce better first drafts faster.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-head">
+      <span class="s-num">// 02</span>
+      <h2 class="s-title">Start<span class="it"> Here</span></h2>
+      <p class="s-kicker">For AI, SaaS, and product marketing roles</p>
+    </div>
+    <div class="s-body">
+      <p class="start-intro">The fastest way to evaluate my fit is to look at the places where product storytelling, campaign copy, brand voice, and AI-assisted workflows overlap.</p>
+      <div class="start-links">
+        <a href="/alpha/AISystems.html" class="start-link">AI Systems <span class="arrow">&rarr;</span></a>
+        <a href="/alpha/Work.html#killer" class="start-link">Killer Network <span class="arrow">&rarr;</span></a>
+        <a href="/alpha/Work.html#filekeepers" class="start-link">FileKeepers <span class="arrow">&rarr;</span></a>
+        <a href="/alpha/Work.html#traveler" class="start-link">Traveler Guitar <span class="arrow">&rarr;</span></a>
+        <a href="/alpha/Work.html#sunset" class="start-link">Sunset Marquis <span class="arrow">&rarr;</span></a>
+        <a href="/alpha/Resume.html" class="start-link">Resume <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<site-footer></site-footer>
+<noscript>
+  <footer style="padding:36px 32px;border-top:1px solid #333;margin-top:60px;font-family:sans-serif;font-size:13px;">
+    Adam R. Cagle &middot; &copy; 2026 &middot;
+    <a href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a>
+  </footer>
+</noscript>
+
+<script src="theme.js"></script>
+</body>
+</html>

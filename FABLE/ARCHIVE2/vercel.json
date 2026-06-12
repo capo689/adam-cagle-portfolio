@@ -1,0 +1,26 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "adam-cagle-portfolio.vercel.app" }],
+      "destination": "https://adamcagle.com/$1",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/alpha/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/alpha/",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ]
+}

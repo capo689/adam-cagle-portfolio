@@ -1,0 +1,90 @@
+/* preloader.css
+   Black overlay with the neon sign. Sign positions itself at the page's
+   resting neon location (queried by JS) so the reveal expands from there.
+   Falls back to centered when no target exists on the page. */
+
+.preloader {
+  /* --hole drives the radius of the transparent reveal hole, animated by JS.
+     --reveal-x and --reveal-y are set in pixels by JS to match the target.
+     The mask is only applied once .preloader--revealing is set, so the
+     overlay stays fully opaque during the flicker (no halo bleed of the
+     page's resting on-state neon). */
+  --hole: 0;
+  --reveal-x: 50%;
+  --reveal-y: 50%;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  pointer-events: none;
+  overflow: hidden;
+
+  transition: opacity .25s linear;
+}
+
+.preloader--revealing {
+  /* Tight aperture: the transparent stop trails the black stop by --soft%.
+     At --hole: 0 the transparent stop sits at -3% (off-canvas) and the
+     black stop is at 0%, so the dead-center pixel is fully opaque. As
+     --hole grows, a small soft-edged transparent disc opens and expands. */
+  --soft: 3;
+  -webkit-mask-image: radial-gradient(
+    circle at var(--reveal-x) var(--reveal-y),
+    transparent calc((var(--hole) - var(--soft)) * 1%),
+    black calc(var(--hole) * 1%)
+  );
+  mask-image: radial-gradient(
+    circle at var(--reveal-x) var(--reveal-y),
+    transparent calc((var(--hole) - var(--soft)) * 1%),
+    black calc(var(--hole) * 1%)
+  );
+}
+
+.preloader--gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader__neon {
+  /* Absolute by default. JS moves it to the target element's rect, or leaves
+     it centered if no target. */
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(260px, 52vw, 620px);
+  height: auto;
+  /* Dark mode: bright royal-blue glow (matches --accent #4D8BE8) */
+  filter: drop-shadow(0 0 28px rgba(77, 139, 232, 0.45))
+          drop-shadow(0 0 60px rgba(77, 139, 232, 0.15));
+  transition: filter .12s linear, opacity .25s linear;
+  user-select: none;
+  -webkit-user-drag: none;
+  opacity: 0;
+}
+
+.preloader__neon[data-state="off"] {
+  filter: drop-shadow(0 0 4px rgba(77, 139, 232, 0.06));
+}
+
+/* Light mode: deeper denim-blue glow (matches --accent #1F4E8C) */
+html[data-theme="light"] .preloader__neon {
+  filter: drop-shadow(0 0 28px rgba(31, 78, 140, 0.45))
+          drop-shadow(0 0 60px rgba(31, 78, 140, 0.15));
+}
+html[data-theme="light"] .preloader__neon[data-state="off"] {
+  filter: drop-shadow(0 0 4px rgba(31, 78, 140, 0.06));
+}
+
+.preloader__neon[data-ready="true"] {
+  opacity: 1;
+}
+
+body.preloader-active {
+  overflow: hidden !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader { mask-image: none; -webkit-mask-image: none; }
+  .preloader__neon { filter: none; }
+}

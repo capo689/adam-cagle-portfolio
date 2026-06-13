@@ -11,15 +11,16 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..620;1,9..144,300..620&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..620,0..100,0..1;1,9..144,300..620,0..100,0..1&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
   <link rel="stylesheet" href="css/fable2.css">
 </head>
 <body>
 
-  <div class="inkfield" aria-hidden="true"></div>
+  <div class="pressfield" aria-hidden="true"></div>
 
   <header class="topbar">
-    <a class="mark" href="index2.html"><b>Adam R. Cagle</b></a>
+    <a class="mark" href="index2.html"><b>Adam R. Cagle</b><span class="stop" aria-hidden="true">.</span></a>
     <nav aria-label="Primary">
       <a href="Work.html">Work</a>
       <a href="AISystems.html">AI Systems</a>
@@ -62,26 +63,26 @@
         <span>Agency689</span>
       </p>
 
-      <h2 class="line">Kill Faster<span class="dot">.</span></h2>
+      <h2 class="line" data-split>Kill Faster<span class="dot">.</span></h2>
       <p class="underline-note">The Body Line · <b>Less lag. More frag.</b></p>
 
       <div class="wall">
-        <a class="print" href="Work.html#killer">
+        <a class="print" href="img/ads/killer-warrior.webp" data-pswp-width="1400" data-pswp-height="1812" data-cursor="view">
           <figure>
-            <div class="art"><img src="img/ads/killer-warrior.webp" width="1400" height="1812" alt="Killer Network Warrior print ad. Charge, Overpower, Slam, Rend, Execute, Cleave. Kill Faster." loading="eager" decoding="async"></div>
-            <figcaption><span>Warrior · Full-Page Print</span><span class="view">View →</span></figcaption>
+            <div class="art"><img src="img/ads/killer-warrior.webp" width="1400" height="1812" data-press alt="Killer Network Warrior print ad. Charge, Overpower, Slam, Rend, Execute, Cleave. Kill Faster." loading="eager" decoding="async"></div>
+            <figcaption><span>PL.01 · Warrior · Full-Page Print</span><span class="view">View →</span></figcaption>
           </figure>
         </a>
-        <a class="print" href="Work.html#killer">
+        <a class="print" href="img/ads/killer-mage.webp" data-pswp-width="1400" data-pswp-height="1812" data-cursor="view">
           <figure>
-            <div class="art"><img src="img/ads/killer-mage.webp" width="1400" height="1812" alt="Killer Network Mage print ad. Scorch, Frost, Sheep, Ignite, Pyroblast, Incinerate. Kill Faster." loading="lazy" decoding="async"></div>
-            <figcaption><span>Mage · Full-Page Print</span><span class="view">View →</span></figcaption>
+            <div class="art"><img src="img/ads/killer-mage.webp" width="1400" height="1812" data-press alt="Killer Network Mage print ad. Scorch, Frost, Sheep, Ignite, Pyroblast, Incinerate. Kill Faster." loading="lazy" decoding="async"></div>
+            <figcaption><span>PL.02 · Mage · Full-Page Print</span><span class="view">View →</span></figcaption>
           </figure>
         </a>
-        <a class="print" href="Work.html#killer">
+        <a class="print" href="img/ads/killer-sniper.webp" data-pswp-width="1400" data-pswp-height="1812" data-cursor="view">
           <figure>
-            <div class="art"><img src="img/ads/killer-sniper.webp" width="1400" height="1812" alt="Killer Network Sniper print ad. Spot, Follow, Target, Crouch, Zoom, Aim. Kill Faster." loading="lazy" decoding="async"></div>
-            <figcaption><span>Sniper · Full-Page Print</span><span class="view">View →</span></figcaption>
+            <div class="art"><img src="img/ads/killer-sniper.webp" width="1400" height="1812" data-press alt="Killer Network Sniper print ad. Spot, Follow, Target, Crouch, Zoom, Aim. Kill Faster." loading="lazy" decoding="async"></div>
+            <figcaption><span>PL.03 · Sniper · Full-Page Print</span><span class="view">View →</span></figcaption>
           </figure>
         </a>
       </div>
@@ -115,11 +116,18 @@
         </div>
       </div>
 
-      <div class="outcome">
+      <div class="outcome" data-rise>
         <span class="k">Outcome</span>
         <p>Zero to Qualcomm acquisition in three years.</p>
       </div>
     </section>
+
+    <div class="wrap">
+      <a class="nextchapter" href="figueroa.html" data-cursor="view">
+        <span class="k">Next chapter · 02</span>
+        <span class="t">To relate to artists, we must be artists<span class="stop">.</span> <span class="arrow">→</span></span>
+      </a>
+    </div>
 
   </main>
 
@@ -130,10 +138,23 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
   <script src="js/fable2.js"></script>
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
   </script>
   <script type="module" src="js/fable2-gl.js"></script>
+  <script type="module">
+    import PhotoSwipeLightbox from "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js";
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: ".wall, .book__strip",
+      children: "a[data-pswp-width]",
+      pswpModule: () => import("https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js"),
+      secondaryZoomLevel: 1,
+      bgOpacity: 0.94
+    });
+    lightbox.init();
+  </script>
 </body>
 </html>

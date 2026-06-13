@@ -48,10 +48,86 @@ a { color: inherit; }
 
 .wrap { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
 
-/* WebGL ink layer sits under everything; pure decoration */
-.inkfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-.inkfield canvas { display: block; width: 100%; height: 100%; }
-main, .topbar, .basebar { position: relative; z-index: 1; }
+/* The press layer: DOM-synced WebGL planes draw the artwork. It sits above
+   the page surface but below chrome, and never takes pointer events. */
+.pressfield { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
+.pressfield canvas { display: block; width: 100%; height: 100%; }
+main, .basebar { position: relative; z-index: 1; }
+.topbar { position: relative; z-index: 10; }
+/* once a plane is live, the DOM img yields the pixels but keeps the layout */
+.art.press-live img { opacity: 0; }
+
+/* ── THE FULL STOP ────────────────────────────────────── */
+
+/* the brand mark: a red period that travels between pages */
+.stop { color: var(--accent); }
+.topbar .stop {
+  display: inline-block;
+  view-transition-name: period;
+}
+
+/* cross-document page transitions (progressive: Chromium + Safari 18.2) */
+@media not (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: auto; }
+}
+::view-transition-old(root) {
+  animation: 0.4s cubic-bezier(0.7, 0, 0.3, 1) both vt-leave;
+}
+::view-transition-new(root) {
+  animation: 0.5s 0.06s cubic-bezier(0.16, 1, 0.3, 1) both vt-enter;
+}
+@keyframes vt-leave { to { opacity: 0; transform: translateY(-2.2%); } }
+@keyframes vt-enter { from { opacity: 0; transform: translateY(2.6%); } }
+::view-transition-group(period) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+/* the period cursor */
+html.has-stopcursor body,
+html.has-stopcursor a,
+html.has-stopcursor button { cursor: none; }
+.stopcursor {
+  position: fixed;
+  top: -7px; left: -7px;
+  width: 14px; height: 14px;
+  z-index: 300;
+  pointer-events: none;
+}
+.stopcursor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stopcursor.is-down::before { transform: scale(0.6); }
+.stopcursor.is-view::before,
+.stopcursor.is-drag::before,
+.stopcursor.is-read::before,
+.stopcursor.is-email::before { transform: scale(2.1); }
+.stopcursor__label {
+  position: absolute;
+  top: 22px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* SplitText masks */
+.mask-wrap { display: block; overflow: hidden; }
+[data-split] .mask-line { display: block; }
+
+/* Fraunces under pressure: the italic goes wonky as you scroll */
+.hero h1 .r2 {
+  --wonk: 0;
+  font-variation-settings: "SOFT" 0, "WONK" var(--wonk);
+}
 
 /* ── Top bar ─────────────────────────────────────────── */
 
@@ -359,6 +435,113 @@ main, .topbar, .basebar { position: relative; z-index: 1; }
   font-size: clamp(26px, 3.6vw, 58px);
   letter-spacing: -0.02em;
   line-height: 1.1;
+}
+
+/* ── Brand book reader ────────────────────────────────── */
+
+.book { margin-top: clamp(36px, 6vh, 72px); }
+
+.book__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.book__count {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.book__count b { color: var(--ink); font-weight: 500; }
+.book__count .stop { font-weight: 700; }
+.book__nav { display: flex; gap: 10px; }
+.book__nav button {
+  font-family: var(--mono);
+  font-size: 13px;
+  width: 44px; height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.7);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.book__nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+.book__strip {
+  display: flex;
+  gap: clamp(14px, 1.8vw, 28px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 2px 22px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+.book__strip figure {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  width: min(86vw, 880px);
+}
+.book__strip .art { padding: clamp(10px, 1.2vw, 18px); }
+.book__strip img { width: 100%; height: auto; }
+.book__strip figcaption {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+/* ── Next chapter ─────────────────────────────────────── */
+
+.nextchapter {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: clamp(44px, 8vh, 96px) 0;
+  border-top: 1px solid var(--rule);
+}
+.nextchapter .k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: block;
+  margin-bottom: 14px;
+}
+.nextchapter .t {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 360;
+  font-size: clamp(34px, 6.4vw, 104px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  transition: color 0.25s;
+}
+.nextchapter:hover .t { color: var(--accent); }
+.nextchapter .t .arrow {
+  font-style: normal;
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nextchapter:hover .t .arrow { transform: translateX(0.25em); }
+
+/* ── PhotoSwipe skin ──────────────────────────────────── */
+
+.pswp { --pswp-bg: rgba(16, 13, 11, 0.94); }
+.pswp__counter {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
 }
 
 /* ── Base bar ────────────────────────────────────────── */

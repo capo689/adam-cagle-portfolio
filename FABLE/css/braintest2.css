@@ -1,0 +1,137 @@
+/* braintest2.css — clean build.
+   The brain art is genuinely transparent (no parchment), so there are no masks,
+   no plates, no background hacks here. Background is a single token; change it
+   freely. */
+
+:root {
+  --bg-1:   #f2efe9;
+  --bg-2:   #e2ddd2;
+  --ink:    #211d18;
+  --ink-2:  rgba(33, 29, 24, 0.62);
+  --sepia:  #4a3f30;
+  --blue:   #2f6fed;
+  --bsize:  clamp(300px, 42vw, 560px);
+
+  --display:  "Fraunces", Georgia, serif;
+  --garamond: "EB Garamond", Georgia, serif;
+  --mono:     "IBM Plex Mono", "SF Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  min-height: 100svh;
+  background: radial-gradient(120% 120% at 50% 42%, var(--bg-1) 0%, var(--bg-2) 100%);
+  color: var(--ink);
+  font-family: var(--mono);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* header */
+.bar {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: clamp(16px, 2.4vw, 28px) clamp(18px, 3vw, 40px);
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-2); z-index: 3;
+}
+.bar b { color: var(--ink); font-weight: 500; }
+.bar .dot { color: var(--ink); }
+
+/* stage: side | brain | side */
+.stage {
+  flex: 1; min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr var(--bsize) 1fr;
+  align-items: center; justify-items: center;
+}
+
+.brain { position: relative; width: var(--bsize); height: var(--bsize); display: grid; place-items: center; }
+.brain__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity .6s ease; pointer-events: none; }
+.brain__canvas { position: relative; display: block; }
+
+/* side panels hold the rest-label and the hover-menu, cross-faded */
+.side { position: relative; width: 100%; height: var(--bsize); }
+.side > * { position: absolute; top: 50%; transform: translateY(-50%); }
+.side--l > * { right: clamp(14px, 2.5vw, 40px); text-align: right; }
+.side--r > * { left:  clamp(14px, 2.5vw, 40px); text-align: left; }
+
+/* vintage plate caption + leader line */
+.label { display: flex; align-items: center; gap: 14px; transition: opacity .4s ease, transform .4s ease; }
+.side--r .label { flex-direction: row-reverse; }
+.label .t {
+  font-family: var(--garamond); font-style: italic;
+  font-size: clamp(16px, 1.7vw, 24px); letter-spacing: .01em;
+  color: var(--sepia); white-space: nowrap;
+}
+.label .lead { position: relative; width: clamp(30px, 5vw, 86px); height: 1px; background: var(--sepia); opacity: .75; }
+.label .lead::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--sepia); }
+.side--l .label .lead::after { right: -2px; }
+.side--r .label .lead::after { left: -2px; }
+
+/* menus (hidden until the matching side is active) */
+.menu { display: flex; flex-direction: column; gap: clamp(8px, 1.4vh, 16px); pointer-events: none; }
+.menu a { opacity: 0; text-decoration: none; transition: opacity .5s ease, transform .5s ease, color .25s ease, background-position .55s ease, filter .25s ease; }
+.menu a:nth-child(1) { transition-delay: .04s; }
+.menu a:nth-child(2) { transition-delay: .10s; }
+.menu a:nth-child(3) { transition-delay: .16s; }
+.menu a:nth-child(4) { transition-delay: .22s; }
+
+/* LEFT menu: digital / blue */
+.menu--l a {
+  font-family: var(--mono); font-size: clamp(12px, 1vw, 15px); letter-spacing: .14em;
+  text-transform: uppercase; color: #20407a; transform: translateX(-16px);
+  display: flex; align-items: baseline; gap: 10px; justify-content: flex-end;
+}
+.menu--l a i { font-style: normal; font-size: 10px; color: var(--blue); opacity: .7; }
+.menu--l a:hover { color: var(--blue); text-shadow: 0 0 14px rgba(47,111,237,.55); }
+.menu--l a.stack { margin-top: 6px; color: #15346b; font-weight: 500; }
+.menu--l a.stack::before { content: "\203A"; color: var(--blue); margin-right: 4px; }
+
+/* RIGHT menu: creative / oil pigment */
+.menu--r a {
+  font-family: var(--display); font-style: italic; font-weight: 500;
+  font-size: clamp(20px, 2.05vw, 34px); line-height: 1.04; letter-spacing: -.014em;
+  transform: translateX(16px);
+  background-image: linear-gradient(95deg, #7a1f2b 0%, #9d4a1c 26%, #b3892f 50%, #356b60 76%, #3c2a48 100%);
+  background-size: 230% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  text-shadow: 0 1px 1px rgba(40,20,15,.10);
+}
+.menu--r a:nth-child(1) { background-position: 2% 0; }
+.menu--r a:nth-child(2) { background-position: 36% 0; }
+.menu--r a:nth-child(3) { background-position: 68% 0; }
+.menu--r a:hover { background-position: 100% 0; filter: saturate(1.12) contrast(1.05); }
+.menu--r a.stack {
+  font-family: var(--mono); font-style: normal; font-weight: 500;
+  font-size: clamp(12px, .95vw, 15px); letter-spacing: .18em; text-transform: uppercase;
+  margin-top: 10px; background: none; -webkit-text-fill-color: #8a6d2b; color: #8a6d2b; text-shadow: none;
+}
+.menu--r a.stack:hover { -webkit-text-fill-color: #b08a33; color: #b08a33; }
+
+/* state machine */
+.stage.is-left  .side--l .label { opacity: 0; transform: translateY(-50%) translateX(-10px); }
+.stage.is-left  .side--l .menu  { pointer-events: auto; }
+.stage.is-left  .side--l .menu a { opacity: 1; transform: translateX(0); }
+.stage.is-right .side--r .label { opacity: 0; transform: translateY(-50%) translateX(10px); }
+.stage.is-right .side--r .menu  { pointer-events: auto; }
+.stage.is-right .side--r .menu a { opacity: 1; transform: translateX(0); }
+
+/* mobile: stack, menus always visible, brain still reacts */
+@media (max-width: 760px) {
+  body { overflow-y: auto; }
+  .stage { display: flex; flex-direction: column; gap: 22px; padding: 10px 18px 40px; }
+  .brain { width: min(74vw, 360px); height: min(74vw, 360px); }
+  .side { height: auto; width: 100%; max-width: 360px; }
+  .side > * { position: static; transform: none; text-align: center; }
+  .side--l > *, .side--r > * { right: auto; left: auto; text-align: center; }
+  .label { display: none; }
+  .menu { pointer-events: auto; align-items: center; }
+  .menu--l a, .menu--r a { opacity: 1; transform: none; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brain__img, .label, .menu a { transition: none; }
+}

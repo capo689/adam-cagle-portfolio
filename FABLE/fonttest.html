@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Font Test · Brain Nav Options</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f2efe9">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600;1,700&family=EB+Garamond:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-1: #f2efe9; --bg-2: #e2ddd2;
+      --ink: #211d18; --ink-2: rgba(33,29,24,.6);
+      --mono: "IBM Plex Mono","SF Mono",Menlo,monospace;
+    }
+    * { box-sizing: border-box; }
+    html,body { margin: 0; }
+    body {
+      background: radial-gradient(130% 130% at 50% 0%, var(--bg-1), var(--bg-2));
+      color: var(--ink);
+      font-family: var(--mono);
+      min-height: 100vh;
+      padding: 0 0 80px;
+    }
+
+    .bar {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 24px clamp(20px,4vw,56px);
+      font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2);
+      border-bottom: 1px solid rgba(33,29,24,.1);
+    }
+    .bar b { color: var(--ink); font-weight: 500; }
+
+    .wrap { width: min(100% - 2*clamp(20px,4vw,56px), 1200px); margin: 0 auto; }
+
+    /* color reference */
+    .ref { display: flex; align-items: center; gap: 28px; padding: 36px 0 8px; flex-wrap: wrap; }
+    .ref img { width: 150px; height: 150px; object-fit: contain; }
+    .ref .swatches { display: flex; gap: 0; border-radius: 4px; overflow: hidden; }
+    .ref .swatches i { width: 38px; height: 38px; display: block; }
+    .ref .cap { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
+
+    .group-h {
+      font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-2);
+      margin: 56px 0 0; padding-bottom: 10px; border-bottom: 1px solid rgba(33,29,24,.14);
+    }
+
+    /* each option card */
+    .opt { padding: 34px 0 38px; border-bottom: 1px solid rgba(33,29,24,.08); }
+    .opt .tag {
+      font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: #9c7a32;
+      margin-bottom: 6px;
+    }
+    .opt .name { font-family: var(--mono); font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+    .opt .desc { font-size: 13px; color: var(--ink-2); margin-bottom: 26px; max-width: 60ch; }
+    .opt .hint { font-size: 11px; color: var(--ink-2); letter-spacing: .1em; margin-top: 8px; opacity: .7; }
+
+    /* ============ BATCH 1 — DIRECTIONS ============ */
+
+    /* A1 · thin tech/art hybrid */
+    .navA1 { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+    .navA1 a {
+      font-family: "Inter","Neue Haas Grotesk",Arial,sans-serif;
+      font-size: 13px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500;
+      color: #203040; text-decoration: none; padding-left: 12px; line-height: 1;
+      transition: color .2s ease;
+    }
+    .navA1 a:nth-child(1) { border-left: 2px solid #ff5b1f; }
+    .navA1 a:nth-child(2) { border-left: 2px solid #00a7ff; }
+    .navA1 a:nth-child(3) { border-left: 2px solid #18b986; }
+    .navA1 a { border-left-width: 2px; border-left-style: solid; padding-top: 4px; padding-bottom: 4px; }
+    .navA1 a:hover { color: #000; }
+
+    /* A2 · elegant Cormorant italic, brain-gradient hover */
+    .navA2 { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+    .navA2 a {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 28px; font-style: italic; font-weight: 600; color: #2d2d2a; text-decoration: none;
+      line-height: 1.15;
+    }
+    .navA2 a:hover {
+      background: linear-gradient(90deg,#ff5b1f,#7a1fa2,#008fd3,#18b986);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* A3 · recommendation — numbered uppercase, electric leader + gradient hover */
+    .navA3 { display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
+    .navA3 a {
+      position: relative;
+      font-family: "Inter",Arial,sans-serif; font-size: 14px; letter-spacing: .14em;
+      text-transform: uppercase; color: #3d352a; text-decoration: none; padding-left: 42px; line-height: 1;
+    }
+    .navA3 a::before {
+      content: ""; position: absolute; left: 0; top: 50%; width: 24px; height: 1px; background: #9c7a32;
+      transition: height .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .navA3 a:hover {
+      background: linear-gradient(90deg,#00b7ff,#ff5b1f,#b0188f,#00a884);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .navA3 a:hover::before { height: 2px; background: #00b7ff; box-shadow: 0 0 8px rgba(0,183,255,.75); }
+
+    /* ============ BATCH 2 — OPTIONS ============ */
+
+    /* B1 · Painted Editorial */
+    .navB1 { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+    .navB1 a {
+      font-family: Georgia,"Times New Roman",serif;
+      font-size: clamp(28px,3vw,44px); font-style: italic; font-weight: 700; line-height: 1;
+      text-decoration: none; color: #6f2a24; transition: transform .25s ease, color .25s ease;
+    }
+    .navB1 a:nth-child(2) { color: #a45a1f; }
+    .navB1 a:nth-child(3) { color: #3f6f63; }
+    .navB1 a:hover { transform: translateX(-8px); color: #e24b2d; }
+
+    /* B2 · Watercolor Gallery Labels */
+    .navB2 { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+    .navB2 a {
+      position: relative; font-family: Georgia,"Times New Roman",serif;
+      font-size: clamp(24px,2.6vw,38px); font-style: italic; font-weight: 700; line-height: 1.1;
+      text-decoration: none; color: #442b22; padding: 6px 14px 8px 14px;
+    }
+    .navB2 a::before {
+      content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 999px; opacity: .18;
+      transform: rotate(-1deg);
+      background: linear-gradient(90deg,#ffb000,#ff4b2b,#b0188f,#008fd3,#00a884);
+      filter: blur(2px); transition: opacity .25s ease, transform .25s ease;
+    }
+    .navB2 a:hover::before { opacity: .35; transform: rotate(1deg) scale(1.04); }
+
+    /* B3 · Hand-Painted Museum Menu */
+    .navB3 { display: flex; flex-direction: column; gap: 26px; align-items: flex-start; }
+    .navB3 a {
+      position: relative; font-family: Georgia,"Times New Roman",serif;
+      font-size: clamp(26px,2.8vw,42px); font-style: italic; font-weight: 700; line-height: 1;
+      text-decoration: none; color: #63301f; padding-bottom: 10px;
+    }
+    .navB3 a::after {
+      content: ""; position: absolute; left: 2px; bottom: 0; width: 72px; height: 3px; border-radius: 999px;
+      background: linear-gradient(90deg,#f6b300,#ff4b2b,#b0188f,#007ec7,#00a884);
+      opacity: .65; transform: rotate(-1deg); transition: width .25s ease, opacity .25s ease;
+    }
+    .navB3 a:hover::after { width: 100%; opacity: .95; }
+  </style>
+</head>
+<body>
+
+  <header class="bar">
+    <span><b>Adam R. Cagle</b> · Font Test</span>
+    <span>Brain nav options · hover each</span>
+  </header>
+
+  <div class="wrap">
+
+    <div class="ref">
+      <img src="img/brain/brain-on.png" alt="Colored brain, for palette reference" decoding="async">
+      <div>
+        <div class="cap" style="margin-bottom:10px">Palette pulled from the brain</div>
+        <div class="swatches">
+          <i style="background:#00a7ff"></i><i style="background:#ff5b1f"></i><i style="background:#b0188f"></i>
+          <i style="background:#7a1fa2"></i><i style="background:#f6b300"></i><i style="background:#18b986"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATCH 1 -->
+    <h2 class="group-h">Batch 1 · Directions</h2>
+
+    <section class="opt">
+      <div class="tag">Direction A1</div>
+      <div class="name">Thin Tech / Art Hybrid</div>
+      <div class="desc">Clean spaced uppercase (Inter) with a tiny color cue from the brain on the left edge. Structured like the tech side, color nods to the creative side.</div>
+      <nav class="navA1">
+        <a href="#">Creative Direction</a>
+        <a href="#">Copywriting</a>
+        <a href="#">Creative Writing</a>
+      </nav>
+    </section>
+
+    <section class="opt">
+      <div class="tag">Direction A2</div>
+      <div class="name">Elegant Italic Serif</div>
+      <div class="desc">Cormorant Garamond italic keeps literary personality. Hover floods the word with the brain gradient.</div>
+      <nav class="navA2">
+        <a href="#">Creative Direction</a>
+        <a href="#">Copywriting</a>
+        <a href="#">Creative Writing</a>
+      </nav>
+      <div class="hint">↳ hover to see the gradient</div>
+    </section>
+
+    <section class="opt">
+      <div class="tag">Direction A3 · your recommendation</div>
+      <div class="name">Numbered Signal Labels</div>
+      <div class="desc">Minimal numbered uppercase. The personality lives in the hover: an electric blue leader line draws in and the text shifts into the brain gradient.</div>
+      <nav class="navA3">
+        <a href="#">01 Creative Direction</a>
+        <a href="#">02 Copywriting</a>
+        <a href="#">03 Creative Writing</a>
+      </nav>
+      <div class="hint">↳ hover to see the electric line + gradient</div>
+    </section>
+
+    <!-- BATCH 2 -->
+    <h2 class="group-h">Batch 2 · Options</h2>
+
+    <section class="opt">
+      <div class="tag">Option B1</div>
+      <div class="name">Painted Editorial</div>
+      <div class="desc">Big italic serif, each label in a warm pigment tone. Hover nudges left and warms to vermilion.</div>
+      <nav class="navB1">
+        <a href="#">Creative Direction</a>
+        <a href="#">Copywriting</a>
+        <a href="#">Creative Writing</a>
+      </nav>
+    </section>
+
+    <section class="opt">
+      <div class="tag">Option B2</div>
+      <div class="name">Watercolor Gallery Labels</div>
+      <div class="desc">Italic serif sitting on a soft, rotated watercolor wash. Hover blooms the wash.</div>
+      <nav class="navB2">
+        <a href="#"><span>Creative Direction</span></a>
+        <a href="#"><span>Copywriting</span></a>
+        <a href="#"><span>Creative Writing</span></a>
+      </nav>
+      <div class="hint">↳ hover to bloom the wash</div>
+    </section>
+
+    <section class="opt">
+      <div class="tag">Option B3</div>
+      <div class="name">Hand-Painted Museum Menu</div>
+      <div class="desc">Italic serif with a small painted underline that grows into a full brain-gradient brushstroke on hover.</div>
+      <nav class="navB3">
+        <a href="#">Creative Direction</a>
+        <a href="#">Copywriting</a>
+        <a href="#">Creative Writing</a>
+      </nav>
+      <div class="hint">↳ hover to extend the brushstroke</div>
+    </section>
+
+  </div>
+
+  <script>
+    // keep the # links from jumping the page so hover states are easy to test
+    document.querySelectorAll('a[href="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){ e.preventDefault(); });
+    });
+  </script>
+</body>
+</html>

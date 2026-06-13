@@ -73,18 +73,9 @@
       transition: opacity 0.6s ease;
       pointer-events: none;
     }
-    /* feather the square plate into the paper so the brain floats, no box */
-    .brain__canvas {
-      position: relative; display: block;
-      -webkit-mask:
-        linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
-        linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
-      -webkit-mask-composite: source-in;
-      mask:
-        linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
-        linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
-      mask-composite: intersect;
-    }
+    /* brain is a transparent cutout (alpha from the shader); it sits directly
+       on the page, no plate, no box */
+    .brain__canvas { position: relative; display: block; }
 
     /* ── Side panels (hold the rest-label and the hover-menu, cross-faded) ── */
     .side { position: relative; width: 100%; height: var(--bsize); }
@@ -173,30 +164,44 @@
       margin-right: 4px;
     }
 
-    /* RIGHT menu: creative / vibrant / painterly */
+    /* RIGHT menu: creative / oil-pigment, text painted with a single rich
+       palette so it reads as fine art, not primary-color flashcards */
     .menu--r a {
       font-family: var(--display);
       font-style: italic;
-      font-weight: 420;
-      font-size: clamp(18px, 1.9vw, 31px);
-      line-height: 1.05;
-      letter-spacing: -0.01em;
+      font-weight: 500;
+      font-size: clamp(20px, 2.05vw, 34px);
+      line-height: 1.04;
+      letter-spacing: -0.014em;
       transform: translateX(16px);
+      background-image: linear-gradient(95deg,
+        #7a1f2b 0%, #9d4a1c 26%, #b3892f 50%, #356b60 76%, #3c2a48 100%);
+      background-size: 230% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      text-shadow: 0 1px 1px rgba(40, 20, 15, 0.10);
+      transition: opacity 0.5s ease, transform 0.5s ease, background-position 0.55s ease, filter 0.25s ease;
     }
-    .menu--r a:nth-child(1) { color: #f0561d; }
-    .menu--r a:nth-child(2) { color: #d81e7a; }
-    .menu--r a:nth-child(3) { color: #7b35d6; }
+    .menu--r a:nth-child(1) { background-position: 2% 0; }
+    .menu--r a:nth-child(2) { background-position: 36% 0; }
+    .menu--r a:nth-child(3) { background-position: 68% 0; }
+    .menu--r a:hover { background-position: 100% 0; filter: saturate(1.12) contrast(1.05); }
     .menu--r a.stack {
-      font-style: normal;
-      font-weight: 600;
-      font-size: clamp(13px, 1vw, 16px);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
       font-family: var(--mono);
-      color: #0a9a8a;
-      margin-top: 8px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: clamp(12px, 0.95vw, 15px);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      background: none;
+      -webkit-text-fill-color: #8a6d2b;
+      color: #8a6d2b;
+      text-shadow: none;
     }
-    .menu--r a:hover { filter: saturate(1.35) brightness(1.08); }
+    .menu--r a.stack:hover { -webkit-text-fill-color: #b08a33; color: #b08a33; }
 
     /* state machine */
     .stage.is-left  .side--l .annot { opacity: 0; transform: translateY(-50%) translateX(-10px); }
@@ -253,7 +258,7 @@
     </div>
 
     <div class="brain" data-brain>
-      <img class="brain__img" src="img/brain/brain-46.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+      <img class="brain__img" src="img/brain/brain-46-cut.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
     </div>
 
     <div class="side side--r">

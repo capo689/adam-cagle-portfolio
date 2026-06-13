@@ -36,8 +36,8 @@ function init() {
   const loader = new THREE.TextureLoader();
   let loaded = 0;
   const onLoad = () => { if (++loaded === 2) { wrap.classList.add("is-ready"); if (fallback) fallback.style.opacity = "0"; } };
-  const pencil = loader.load("img/brain/brain-46.png", onLoad);
-  const color  = loader.load("img/brain/brain-41.png", onLoad);
+  const pencil = loader.load("img/brain/brain-46-cut.png", onLoad);
+  const color  = loader.load("img/brain/brain-41-cut.png", onLoad);
   [pencil, color].forEach((t) => { t.colorSpace = THREE.SRGBColorSpace; t.minFilter = THREE.LinearFilter; });
 
   const uniforms = {
@@ -75,8 +75,10 @@ function init() {
 
       void main(){
         vec2 uv = vUv;
-        vec3 pencil = texture2D(uPencil, uv).rgb;
-        vec3 color  = texture2D(uColor,  uv).rgb;
+        vec4 pencilT = texture2D(uPencil, uv);
+        vec4 colorT  = texture2D(uColor,  uv);
+        vec3 pencil = pencilT.rgb;
+        vec3 color  = colorT.rgb;
 
         float seam = 0.5;
         float leftSide  = smoothstep(seam + 0.005, seam - 0.005, uv.x);
@@ -112,7 +114,12 @@ function init() {
         float seamF = (uLeft + uRight) * smoothstep(0.012, 0.0, abs(uv.x - seam));
         outc += vec3(1.0, 0.96, 0.9) * seamF * 0.22;
 
-        gl_FragColor = vec4(outc, 1.0);
+        /* composited transparency: pencil shape at rest, colored shape where revealed,
+           so the brain sits on the page with no parchment square */
+        float alpha = pencilT.a;
+        alpha = mix(alpha, colorT.a, revealL);
+        alpha = mix(alpha, colorT.a, revealR);
+        gl_FragColor = vec4(outc, alpha);
       }
     `,
   });

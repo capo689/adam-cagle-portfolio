@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brain Test · Two Minds</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#e7dfcc">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #e7dfcc;
+      --ink:   #2a2520;
+      --ink-3: rgba(42, 37, 32, 0.55);
+      --display: "Fraunces", Georgia, serif;
+      --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      min-height: 100svh;
+      background:
+        radial-gradient(120% 120% at 50% 35%, #efe8d8 0%, #e7dfcc 45%, #d8ccb4 100%);
+      color: var(--ink);
+      font-family: var(--mono);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: clamp(16px, 2.4vw, 28px) clamp(18px, 3vw, 40px);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      z-index: 2;
+    }
+    .head b { color: var(--ink); font-weight: 500; }
+
+    .stage {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      min-height: 0;
+      position: relative;
+    }
+
+    .brain {
+      position: relative;
+      width: min(86vw, 86vh, 900px);
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+    }
+    .brain__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    .brain__canvas { position: relative; display: block; border-radius: 4px; }
+
+    /* hemisphere hint labels */
+    .label {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 360;
+      font-size: clamp(15px, 1.5vw, 22px);
+      color: var(--ink-3);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .label--l { left: clamp(8px, 4vw, 64px); }
+    .label--r { right: clamp(8px, 4vw, 64px); }
+    .brain.is-ready .label { opacity: 1; }
+    .brain.is-touched .label { opacity: 0; }
+
+    .hint {
+      position: absolute;
+      bottom: clamp(14px, 4vh, 40px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10.5px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      z-index: 2;
+      text-align: center;
+    }
+    .brain.is-ready ~ .hint { opacity: 1; }
+    .brain.is-touched ~ .hint { opacity: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .brain__img, .label, .hint { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="head">
+    <span><b>Adam R. Cagle</b> · Brain Test</span>
+    <span>Two minds<span style="color:var(--ink)">.</span> One brain<span style="color:var(--ink)">.</span></span>
+  </header>
+
+  <main class="stage">
+    <div class="brain" data-brain>
+      <img class="brain__img" src="img/brain/brain-46.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+      <span class="label label--l">Logic.</span>
+      <span class="label label--r">Imagination.</span>
+    </div>
+    <p class="hint">Hover each hemisphere</p>
+  </main>
+
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+  <script type="module" src="js/braintest.js"></script>
+</body>
+</html>

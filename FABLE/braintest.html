@@ -3,28 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brain Test · Two Minds</title>
+  <title>Two Minds · One Brain</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#e7dfcc">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --paper: #e7dfcc;
-      --ink:   #2a2520;
-      --ink-3: rgba(42, 37, 32, 0.55);
+      --paper:   #e7dfcc;
+      --ink:     #2a2520;
+      --ink-3:   rgba(42, 37, 32, 0.55);
+      --sepia:   #4a3f30;
+      --bsize:   clamp(300px, 42vw, 560px);
+      --blue:    #2f6fed;
       --display: "Fraunces", Georgia, serif;
-      --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+      --garamond:"EB Garamond", Georgia, serif;
+      --mono:    "IBM Plex Mono", "SF Mono", Menlo, monospace;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; }
     body {
       min-height: 100svh;
-      background:
-        radial-gradient(120% 120% at 50% 35%, #efe8d8 0%, #e7dfcc 45%, #d8ccb4 100%);
+      background: radial-gradient(118% 118% at 50% 44%, #e4ddcc 0%, #ddd5c4 50%, #cfc6b3 100%);
       color: var(--ink);
       font-family: var(--mono);
       display: flex;
@@ -41,92 +44,231 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--ink-3);
-      z-index: 2;
+      z-index: 3;
     }
     .head b { color: var(--ink); font-weight: 500; }
+    .head .dot { color: var(--ink); }
 
+    /* ── Stage: left column | brain | right column ── */
     .stage {
       flex: 1;
-      display: grid;
-      place-items: center;
       min-height: 0;
-      position: relative;
+      display: grid;
+      grid-template-columns: 1fr var(--bsize) 1fr;
+      align-items: center;
+      justify-items: center;
     }
 
     .brain {
       position: relative;
-      width: min(86vw, 86vh, 900px);
-      aspect-ratio: 1 / 1;
+      width: var(--bsize);
+      height: var(--bsize);
       display: grid;
       place-items: center;
     }
     .brain__img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: contain;
       transition: opacity 0.6s ease;
       pointer-events: none;
     }
-    .brain__canvas { position: relative; display: block; border-radius: 4px; }
+    /* feather the square plate into the paper so the brain floats, no box */
+    .brain__canvas {
+      position: relative; display: block;
+      -webkit-mask:
+        linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask:
+        linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
+        linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+      mask-composite: intersect;
+    }
 
-    /* hemisphere hint labels */
-    .label {
+    /* ── Side panels (hold the rest-label and the hover-menu, cross-faded) ── */
+    .side { position: relative; width: 100%; height: var(--bsize); }
+    .side > * {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-family: var(--display);
+    }
+    .side--l > * { right: clamp(14px, 2.5vw, 40px); text-align: right; }
+    .side--r > * { left:  clamp(14px, 2.5vw, 40px); text-align: left; }
+
+    /* rest annotation: vintage plate caption + leader line */
+    .annot {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .side--r .annot { flex-direction: row-reverse; }
+    .annot .t {
+      font-family: var(--garamond);
       font-style: italic;
-      font-weight: 360;
-      font-size: clamp(15px, 1.5vw, 22px);
-      color: var(--ink-3);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
+      font-size: clamp(16px, 1.7vw, 24px);
+      letter-spacing: 0.01em;
+      color: var(--sepia);
       white-space: nowrap;
     }
-    .label--l { left: clamp(8px, 4vw, 64px); }
-    .label--r { right: clamp(8px, 4vw, 64px); }
-    .brain.is-ready .label { opacity: 1; }
-    .brain.is-touched .label { opacity: 0; }
-
-    .hint {
-      position: absolute;
-      bottom: clamp(14px, 4vh, 40px);
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 10.5px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      z-index: 2;
-      text-align: center;
+    .annot .lead {
+      display: inline-block;
+      width: clamp(30px, 5vw, 86px);
+      height: 1px;
+      background: var(--sepia);
+      position: relative;
+      opacity: 0.75;
     }
-    .brain.is-ready ~ .hint { opacity: 1; }
-    .brain.is-touched ~ .hint { opacity: 0; }
+    .annot .lead::after {
+      content: "";
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--sepia);
+    }
+    .side--l .annot .lead::after { right: -2px; }
+    .side--r .annot .lead::after { left: -2px; }
+
+    /* ── Menus (hidden until the matching half is active) ── */
+    .menu { display: flex; flex-direction: column; gap: clamp(8px, 1.4vh, 16px); pointer-events: none; }
+    .menu a {
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease, color 0.25s ease;
+      text-decoration: none;
+    }
+
+    /* LEFT menu: digital / blue / techy */
+    .menu--l a {
+      font-family: var(--mono);
+      font-size: clamp(12px, 1vw, 15px);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #20407a;
+      transform: translateX(-16px);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .menu--l a i {
+      font-style: normal;
+      font-size: 10px;
+      color: var(--blue);
+      opacity: 0.7;
+    }
+    .menu--l a:hover {
+      color: var(--blue);
+      text-shadow: 0 0 14px rgba(47, 111, 237, 0.55);
+    }
+    .menu--l a.stack {
+      margin-top: 6px;
+      color: #15346b;
+      font-weight: 500;
+    }
+    .menu--l a.stack::before {
+      content: "›";
+      color: var(--blue);
+      margin-right: 4px;
+    }
+
+    /* RIGHT menu: creative / vibrant / painterly */
+    .menu--r a {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 420;
+      font-size: clamp(18px, 1.9vw, 31px);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      transform: translateX(16px);
+    }
+    .menu--r a:nth-child(1) { color: #f0561d; }
+    .menu--r a:nth-child(2) { color: #d81e7a; }
+    .menu--r a:nth-child(3) { color: #7b35d6; }
+    .menu--r a.stack {
+      font-style: normal;
+      font-weight: 600;
+      font-size: clamp(13px, 1vw, 16px);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-family: var(--mono);
+      color: #0a9a8a;
+      margin-top: 8px;
+    }
+    .menu--r a:hover { filter: saturate(1.35) brightness(1.08); }
+
+    /* state machine */
+    .stage.is-left  .side--l .annot { opacity: 0; transform: translateY(-50%) translateX(-10px); }
+    .stage.is-left  .side--l .menu  { pointer-events: auto; }
+    .stage.is-left  .side--l .menu a { opacity: 1; transform: translateX(0); }
+    .stage.is-right .side--r .annot { opacity: 0; transform: translateY(-50%) translateX(10px); }
+    .stage.is-right .side--r .menu  { pointer-events: auto; }
+    .stage.is-right .side--r .menu a { opacity: 1; transform: translateX(0); }
+
+    /* stagger */
+    .menu a:nth-child(1) { transition-delay: 0.04s; }
+    .menu a:nth-child(2) { transition-delay: 0.10s; }
+    .menu a:nth-child(3) { transition-delay: 0.16s; }
+    .menu a:nth-child(4) { transition-delay: 0.22s; }
+
+    /* ── Mobile: stack, menus always visible, brain still reacts ── */
+    @media (max-width: 760px) {
+      body { overflow-y: auto; }
+      .stage { display: flex; flex-direction: column; gap: 22px; padding: 10px 18px 40px; }
+      .brain { width: min(74vw, 360px); height: min(74vw, 360px); }
+      .side { height: auto; width: 100%; max-width: 360px; }
+      .side > * { position: static; transform: none; text-align: center; }
+      .side--l > *, .side--r > * { right: auto; left: auto; text-align: center; }
+      .annot { display: none; }
+      .menu { pointer-events: auto; align-items: center; }
+      .menu--l a, .menu--r a { opacity: 1; transform: none; justify-content: center; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
-      .brain__img, .label, .hint { transition: none; }
+      .brain__img, .annot, .menu a { transition: none; }
     }
   </style>
 </head>
 <body>
 
   <header class="head">
-    <span><b>Adam R. Cagle</b> · Brain Test</span>
-    <span>Two minds<span style="color:var(--ink)">.</span> One brain<span style="color:var(--ink)">.</span></span>
+    <span><b>Adam R. Cagle</b></span>
+    <span>Two minds<span class="dot">.</span> One brain<span class="dot">.</span></span>
   </header>
 
   <main class="stage">
+
+    <div class="side side--l">
+      <div class="annot annot--l">
+        <span class="t">Left Brain Work</span>
+        <span class="lead"></span>
+      </div>
+      <nav class="menu menu--l" aria-label="Left brain navigation">
+        <a href="AISystems.html"><i>01</i> AI Systems</a>
+        <a href="#"><i>02</i> UX / UI Design</a>
+        <a href="WritingSamples.html"><i>03</i> Technical Writing</a>
+        <a class="stack" href="Resume.html">Stack</a>
+      </nav>
+    </div>
+
     <div class="brain" data-brain>
       <img class="brain__img" src="img/brain/brain-46.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
-      <span class="label label--l">Logic.</span>
-      <span class="label label--r">Imagination.</span>
     </div>
-    <p class="hint">Hover each hemisphere</p>
+
+    <div class="side side--r">
+      <div class="annot annot--r">
+        <span class="lead"></span>
+        <span class="t">Right Brain Work</span>
+      </div>
+      <nav class="menu menu--r" aria-label="Right brain navigation">
+        <a href="Work.html">Creative Direction</a>
+        <a href="Portfolio.html">Copy Writing</a>
+        <a href="WritingSamples.html">Creative Writing</a>
+        <a class="stack" href="Resume.html">Stack</a>
+      </nav>
+    </div>
+
   </main>
 
   <script type="importmap">

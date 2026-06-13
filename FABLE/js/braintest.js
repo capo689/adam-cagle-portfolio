@@ -119,35 +119,38 @@ function init() {
 
   scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
 
-  /* targets driven by pointer; values eased toward them each frame */
+  /* targets eased toward each frame; DOM classes drive the label/menu swap */
+  const stage = document.querySelector(".stage");
   let tLeft = 0, tRight = 0;
-  let firstTouch = false;
+
+  function applyState(side) {
+    tLeft  = side === "left"  ? 1 : 0;
+    tRight = side === "right" ? 1 : 0;
+    stage.classList.toggle("is-left",  side === "left");
+    stage.classList.toggle("is-right", side === "right");
+  }
+
+  /* Hit zone: a horizontal band level with the brain, split at its center.
+     Full page width so travelling out to a side menu keeps that half active. */
+  function sideFromPoint(cx, cy) {
+    const r = canvas.getBoundingClientRect();
+    const padY = r.height * 0.16;
+    if (cy < r.top - padY || cy > r.bottom + padY) return null;
+    uniforms.uMouse.value.set((cx - r.left) / r.width, 1 - (cy - r.top) / r.height);
+    return cx < r.left + r.width / 2 ? "left" : "right";
+  }
 
   const dbg = new URLSearchParams(location.search).get("dbg");
-  if (dbg === "left")  { tLeft = 1; }
-  if (dbg === "right") { tRight = 1; }
-  if (dbg === "both")  { tLeft = 1; tRight = 1; }
-
-  function setFromPoint(clientX, clientY) {
-    const r = canvas.getBoundingClientRect();
-    const nx = (clientX - r.left) / r.width;
-    const ny = 1 - (clientY - r.top) / r.height;
-    uniforms.uMouse.value.set(nx, ny);
-    if (nx < 0.5) { tLeft = 1; tRight = 0; } else { tRight = 1; tLeft = 0; }
-    if (!firstTouch) { firstTouch = true; wrap.classList.add("is-touched"); }
-  }
-  function clear() { tLeft = 0; tRight = 0; }
-
-  const coarse = window.matchMedia("(pointer: coarse)").matches;
-  if (coarse) { const h = document.querySelector(".hint"); if (h) h.textContent = "Touch each hemisphere"; }
-  if (!dbg) {
-    wrap.addEventListener("pointermove", (e) => setFromPoint(e.clientX, e.clientY), { passive: true });
+  if (dbg === "both") { tLeft = 1; tRight = 1; uniforms.uLeft.value = 1; uniforms.uRight.value = 1; }
+  else if (dbg) { applyState(dbg === "right" ? "right" : "left"); uniforms.uLeft.value = tLeft; uniforms.uRight.value = tRight; }
+  else {
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
     if (coarse) {
-      wrap.addEventListener("pointerdown", (e) => setFromPoint(e.clientX, e.clientY), { passive: true });
-      wrap.addEventListener("pointerup", clear);
-      wrap.addEventListener("pointercancel", clear);
+      document.addEventListener("pointerdown", (e) => applyState(sideFromPoint(e.clientX, e.clientY)), { passive: true });
     } else {
-      wrap.addEventListener("pointerleave", clear);
+      document.addEventListener("pointermove", (e) => applyState(sideFromPoint(e.clientX, e.clientY)), { passive: true });
+      document.addEventListener("pointerleave", () => applyState(null));
+      window.addEventListener("blur", () => applyState(null));
     }
   }
 

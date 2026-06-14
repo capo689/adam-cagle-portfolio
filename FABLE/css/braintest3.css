@@ -20,11 +20,20 @@ body {
 }
 
 /* header */
-.bar { display: flex; align-items: baseline; justify-content: space-between;
-  padding: clamp(16px,2.4vw,28px) clamp(18px,3vw,40px);
-  font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); z-index: 3; }
-.bar b { color: var(--ink); font-weight: 500; }
-.bar .dot { color: var(--ink); }
+.bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; column-gap: 16px;
+  padding: clamp(16px,2.4vw,28px) clamp(18px,3vw,40px); z-index: 3; }
+.bar a { text-decoration: none; transition: color .2s ease; }
+.bar__name, .bar__email {
+  font-family: var(--garamond); font-style: italic; font-size: clamp(15px,1.5vw,20px);
+  color: var(--ink); white-space: nowrap;
+}
+.bar__name { justify-self: start; }
+.bar__email { justify-self: end; text-align: right; }
+.bar__resume {
+  justify-self: center; font-family: var(--garamond); font-style: italic;
+  font-size: clamp(21px,2.3vw,30px); color: var(--ink);
+}
+.bar__resume:hover, .bar__email:hover { color: #0a84ff; }
 
 /* stage: side | brain | side — recedes when a stack is open */
 .stage { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr var(--bsize) 1fr;

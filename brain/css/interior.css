@@ -57,12 +57,19 @@ body.interior { overflow: hidden; }
 /* the single, gentle glide center -> dock (added by JS just before it moves) */
 .brain--float.sliding { transition: transform 1.35s cubic-bezier(.5,0,.22,1); }
 
+/* LEFT / tech side: brain docks at the RIGHT edge (left hemisphere visible) */
+.interior--left .brain--float { transform: translate(calc(100vw - 50%), -50%); }
+.interior--left .brain--float.enter { transform: translate(calc(52vw - 50%), -42%) scale(1.04); }
+
+/* a calmer brain footprint on content-heavy pages so the editorial breathes */
+.interior--work { --bint: clamp(300px, 46vh, 500px); }
+
 /* content sits clear of the visible brain half, and fades in after the glide */
 .page__content {
   position: relative; z-index: 2; height: 100%;
   padding: clamp(20px,4vh,60px) clamp(24px,5vw,80px);
   padding-left: clamp(24px, 32vw, 460px);
-  opacity: 0; transition: opacity .65s ease;
+  opacity: 0; transition: opacity .42s ease;
 }
 .interior.content-in .page__content { opacity: 1; }
 

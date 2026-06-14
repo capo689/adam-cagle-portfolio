@@ -11,6 +11,10 @@ const wrap = document.querySelector("[data-brain]");
 const veil = document.querySelector(".veil");
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// declared before wireNav() runs (avoid temporal-dead-zone on these in the handler)
+let swapping = false;
+const path = (href) => new URL(href, location.href).pathname;
+
 // entrance mode is decided by where we came from (set on the previous page)
 const mode = sessionStorage.getItem("brainEnter");
 sessionStorage.removeItem("brainEnter");
@@ -144,28 +148,67 @@ function initBrain(wrap) {
   });
 }
 
-/* ───────────────────────── navigation (veil cover -> go) ───────────────────────── */
+/* ───────────────────────── navigation ─────────────────────────
+   Same-side sub-nav swaps content IN PLACE (brain never moves or reloads).
+   The name (home) does a full veil dissolve since the brain changes. */
 function wireNav() {
-  function leave(href, enterMode) {
-    if (enterMode) sessionStorage.setItem("brainEnter", enterMode);
-    if (veil) veil.classList.remove("clear");    // re-cover: soft dissolve out
+  const navLinks = Array.from(document.querySelectorAll(".bar__nav a"));
+  const sameSide = new Set(navLinks.map((a) => path(a.getAttribute("href"))));
+
+  function leave(href) {                          // full dissolve -> reload (home)
+    if (veil) veil.classList.remove("clear");
     document.body.classList.remove("content-in");
     setTimeout(() => { window.location.href = href; }, reduced ? 0 : 470);
   }
-  // sibling section pages: brain stays docked (static)
-  document.querySelectorAll(".bar__nav a").forEach((a) => {
+
+  async function swap(href, push) {               // in-place content swap, brain stays
+    if (swapping) return; swapping = true;
+    const pc = document.querySelector(".page__content");
+    document.body.classList.remove("content-in"); // fade current content out
+    let doc;
+    try {
+      const res = await fetch(href, { credentials: "same-origin" });
+      doc = new DOMParser().parseFromString(await res.text(), "text/html");
+    } catch (e) { window.location.href = href; return; }
+    const newPC = doc.querySelector(".page__content");
+    if (!newPC) { window.location.href = href; return; }
+    setTimeout(() => {
+      pc.innerHTML = newPC.innerHTML;
+      pc.scrollTop = 0;
+      document.title = doc.title;
+      const tgt = path(href);
+      navLinks.forEach((a) => {
+        const on = path(a.getAttribute("href")) === tgt;
+        a.classList.toggle("is-active", on);
+        if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+      });
+      if (push) history.pushState({ spa: true }, "", href);
+      if (window.WorkLightbox) window.WorkLightbox.init();
+      if (window.WorkFlipbook) window.WorkFlipbook.init();
+      swapping = false;
+      setTimeout(() => document.body.classList.add("content-in"), 20);
+    }, reduced ? 0 : 360);
+  }
+
+  navLinks.forEach((a) => {
     a.addEventListener("click", (e) => {
       const href = a.getAttribute("href");
       if (!href || /^https?:|^mailto:|^#/.test(href)) return;
-      if (a.classList.contains("is-active")) { e.preventDefault(); return; }
-      e.preventDefault(); leave(href, "static");
+      e.preventDefault();
+      if (a.classList.contains("is-active")) return;
+      swap(href, true);
     });
   });
-  // back home: full dissolve, home fades itself in clean
+
+  window.addEventListener("popstate", () => {
+    if (sameSide.has(location.pathname)) swap(location.href, false);
+    else window.location.reload();
+  });
+
   const name = document.querySelector(".bar__name");
   if (name) name.addEventListener("click", (e) => {
     const href = name.getAttribute("href");
     if (!href || /^https?:|^mailto:/.test(href)) return;
-    e.preventDefault(); leave(href, null);
+    e.preventDefault(); leave(href);
   });
 }

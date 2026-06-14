@@ -190,7 +190,7 @@ if (veil) setTimeout(() => veil.classList.add("clear"), 60);
    The section page reveals the brain already painted and glides it into place. */
 function wireExit() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll(".menu--r a:not(.stack)").forEach((a) => {
+  document.querySelectorAll(".menu--l a:not(.stack), .menu--r a:not(.stack)").forEach((a) => {
     a.addEventListener("click", (e) => {
       const href = a.getAttribute("href");
       if (!href || href === "#" || /^https?:|^mailto:/.test(href)) return;

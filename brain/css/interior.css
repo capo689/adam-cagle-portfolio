@@ -31,7 +31,7 @@ body.interior { overflow: hidden; }
 /* hover + active: the blue-family shimmer the right-brain menu uses */
 .bar__nav a:hover,
 .bar__nav a.is-active {
-  background: linear-gradient(92deg, #00c2ff 0%, #0a84ff 30%, #2f6fed 55%, #58b6ff 80%, #00c2ff 100%);
+  background: linear-gradient(92deg, #8fc0f7 0%, #4D8BE8 30%, #3a78d8 55%, #7fb2f2 80%, #8fc0f7 100%);
   background-size: 220% 100%;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
@@ -39,7 +39,7 @@ body.interior { overflow: hidden; }
 }
 .bar__nav a.is-active::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-  background: #0a84ff; box-shadow: 0 0 8px rgba(10,132,255,.75);
+  background: #4D8BE8; box-shadow: 0 0 8px rgba(77,139,232,.75);
 }
 
 /* ── page body: floated brain on the left, content on the right ───────── */

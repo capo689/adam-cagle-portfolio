@@ -179,6 +179,25 @@ function wireResume() {
 }
 wireResume();
 
+/* ─────────────── exit to a right-brain section page ─────────────── */
+function wireExit() {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stage = document.querySelector(".stage");
+  document.querySelectorAll(".menu--r a:not(.stack)").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href");
+      if (!href || href === "#" || /^https?:|^mailto:/.test(href)) return;
+      if (reduce) return;                       // navigate normally for reduced motion
+      e.preventDefault();
+      if (window.__brain) window.__brain.sides(0, 1);   // hold the painted right side lit
+      stage && stage.classList.add("is-right");
+      document.body.classList.add("is-leaving"); // dissolve labels/nav, drift brain left
+      setTimeout(() => { window.location.href = href; }, 560);
+    });
+  });
+}
+wireExit();
+
 /* ───────────────────────── STACK overlays ───────────────────────── */
 function wireStack() {
   const overlays = { tech: document.getElementById("stack-tech"), paint: document.getElementById("stack-paint") };

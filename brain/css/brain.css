@@ -119,6 +119,12 @@ body.stack-open .bar  { opacity: .25; }
 .stage.is-right .side--r .menu  { pointer-events: auto; }
 .stage.is-right .side--r .menu a { opacity: 1; transform: translateX(0); }
 
+/* exit transition to a section page: labels/nav dissolve, brain drifts left */
+body.is-leaving .label,
+body.is-leaving .menu { opacity: 0 !important; pointer-events: none; transition: opacity .34s ease; }
+body.is-leaving .brain { transition: transform .56s cubic-bezier(.16,1,.3,1), opacity .56s ease; transform: translateX(-24vw) scale(.99); }
+body.is-leaving .bar { opacity: .55; transition: opacity .4s ease; }
+
 /* ===================== STACK OVERLAYS ===================== */
 
 /* scoped to section so it can never collide with the menu's <a class="stack"> link */

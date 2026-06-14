@@ -49,37 +49,25 @@ body.stack-open .bar  { opacity: .25; }
 .label .lead::after { content:""; position:absolute; top:50%; transform:translateY(-50%); width:5px; height:5px; border-radius:50%; background:var(--sepia); }
 .side--l .label .lead::after { right:-2px; } .side--r .label .lead::after { left:-2px; }
 
-.menu { display: flex; flex-direction: column; gap: clamp(14px,2.4vh,26px); pointer-events: none; }
-.menu a { opacity: 0; text-decoration: none; cursor: pointer; transition: opacity .5s ease, transform .5s ease, color .25s ease; }
+.menu { display: flex; flex-direction: column; gap: clamp(8px,1.4vh,16px); pointer-events: none; }
+.menu a { opacity: 0; text-decoration: none; cursor: pointer; transition: opacity .5s ease, transform .5s ease, color .25s ease, background-position .55s ease, filter .25s ease; }
 .menu a:nth-child(1){transition-delay:.04s} .menu a:nth-child(2){transition-delay:.10s}
 .menu a:nth-child(3){transition-delay:.16s} .menu a:nth-child(4){transition-delay:.22s}
 
-/* A3 "numbered signal labels": Inter uppercase, gold leader line, brain-gradient on hover */
-.menu a {
-  position: relative;
-  font-family: "Inter", Arial, sans-serif;
-  font-size: clamp(12px,1vw,14px);
-  letter-spacing: .14em; text-transform: uppercase; font-weight: 500;
-  line-height: 1; color: #3d352a;
-}
-.menu a::before {
-  content: ""; position: absolute; top: 50%; width: 24px; height: 1px; background: #9c7a32;
-  transition: width .2s ease, height .2s ease, background .2s ease, box-shadow .2s ease;
-}
-.menu a:hover {
-  background: linear-gradient(90deg,#00b7ff,#ff5b1f,#b0188f,#00a884);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-}
-.menu a:hover::before { height: 2px; background: #00b7ff; box-shadow: 0 0 8px rgba(0,183,255,.75); }
+/* LEFT menu: digital / blue mono — the technical mind (unchanged) */
+.menu--l a { font-family: var(--mono); font-size: clamp(12px,1vw,15px); letter-spacing: .14em; text-transform: uppercase; color: #20407a; transform: translateX(-16px); display: flex; align-items: baseline; gap: 10px; justify-content: flex-end; }
+.menu--l a i { font-style: normal; font-size: 10px; color: var(--blue); opacity: .7; }
+.menu--l a:hover { color: var(--blue); text-shadow: 0 0 14px rgba(47,111,237,.55); }
+.menu--l a.stack { margin-top: 6px; color: #15346b; font-weight: 500; }
+.menu--l a.stack::before { content:"\203A"; color: var(--blue); margin-right: 4px; }
 
-/* left side: hug the brain on the right, leader line points right toward it */
-.menu--l a { transform: translateX(-16px); padding-right: 42px; text-align: right; }
-.menu--l a::before { right: 0; }
-/* right side: hug the brain on the left, leader line points left toward it */
-.menu--r a { transform: translateX(16px); padding-left: 42px; text-align: left; }
-.menu--r a::before { left: 0; }
-
-.menu a.stack { margin-top: clamp(6px,1.2vh,14px); }
+/* RIGHT menu: A3 numbered signal labels — the creative mind */
+.menu--r { gap: clamp(14px,2.4vh,26px); }
+.menu--r a { position: relative; font-family: "Inter", Arial, sans-serif; font-size: clamp(12px,1vw,14px); letter-spacing: .14em; text-transform: uppercase; font-weight: 500; line-height: 1; color: #3d352a; transform: translateX(16px); padding-left: 42px; text-align: left; }
+.menu--r a::before { content: ""; position: absolute; left: 0; top: 50%; width: 24px; height: 1px; background: #9c7a32; transition: width .2s ease, height .2s ease, background .2s ease, box-shadow .2s ease; }
+.menu--r a:hover { background: linear-gradient(90deg,#00b7ff,#ff5b1f,#b0188f,#00a884); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.menu--r a:hover::before { height: 2px; background: #00b7ff; box-shadow: 0 0 8px rgba(0,183,255,.75); }
+.menu--r a.stack { margin-top: clamp(6px,1.2vh,14px); }
 
 .stage.is-left  .side--l .label { opacity: 0; transform: translateY(-50%) translateX(-10px); }
 .stage.is-left  .side--l .menu  { pointer-events: auto; }

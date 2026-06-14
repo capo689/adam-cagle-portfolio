@@ -358,6 +358,8 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
 
 /* agentic sub-systems (name + description) */
 .rz-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px 28px; margin-top: 24px; }
+.rz-cats--pack { display: block; columns: 260px 3; column-gap: 28px; }
+.rz-cats--pack .rz-cat { break-inside: avoid; margin: 0 0 18px; }
 .rz-cat .k { display: block; font-family: "Inter", Arial, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #0a84ff; margin-bottom: 6px; }
 .rz-cat .v { font-family: var(--garamond); font-size: 15px; line-height: 1.6; color: #43362a; }
 

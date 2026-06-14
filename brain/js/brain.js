@@ -119,54 +119,7 @@ function initBrain() {
   });
 
   /* control surface for the resume sequence */
-  window.__brain = {
-    sides(l, r) { tL = l; tR = r; },
-    fade(o) { canvas.style.transition = "opacity .6s ease"; canvas.style.opacity = String(o); },
-    rect() { return canvas.getBoundingClientRect(); },
-  };
-}
-
-/* ───────────────────────── confetti burst ───────────────────────── */
-function burstConfetti(rect) {
-  const cv = document.createElement("canvas");
-  cv.className = "confetti-cv";
-  document.body.appendChild(cv);
-  const ctx = cv.getContext("2d");
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  function size() { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
-  size();
-  window.addEventListener("resize", size, { once: true });
-  const r = rect || { left: innerWidth / 2, top: innerHeight / 2, width: 200, height: 200 };
-  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-  const colors = ["#0a84ff", "#00c2ff", "#ff5b1f", "#d81e7a", "#7b35d6", "#00a884", "#f6b300"];
-  const N = window.matchMedia("(max-width: 760px)").matches ? 90 : 180;
-  const P = [];
-  for (let i = 0; i < N; i++) {
-    const a = Math.random() * Math.PI * 2, sp = 4 + Math.random() * 12;
-    P.push({
-      x: cx + (Math.random() - 0.5) * r.width * 0.55,
-      y: cy + (Math.random() - 0.5) * r.height * 0.55,
-      vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 5,
-      g: 0.16 + Math.random() * 0.14, w: 5 + Math.random() * 7, h: 8 + Math.random() * 11,
-      rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.45,
-      col: colors[i % colors.length], life: 0, max: 64 + Math.random() * 46,
-    });
-  }
-  let frames = 0;
-  (function frame() {
-    frames++;
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    let alive = 0;
-    for (const p of P) {
-      p.life++; if (p.life > p.max) continue; alive++;
-      p.vy += p.g; p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.rot += p.vr;
-      ctx.globalAlpha = Math.max(0, 1 - p.life / p.max);
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-      ctx.fillStyle = p.col; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
-    }
-    if (alive > 0 && frames < 240) requestAnimationFrame(frame);
-    else cv.remove();
-  })();
+  window.__brain = { sides(l, r) { tL = l; tR = r; } };
 }
 
 /* ───────────────────────── resume reveal ───────────────────────── */
@@ -178,10 +131,23 @@ function wireResume() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let open = false, animating = false;
 
+  // elements that type/animate in, in document order
+  const animEls = Array.from(resume.querySelectorAll(
+    ".rz-name, .rz-pos, .rz-sec > h2, .rz-body, .rz-card, .rz-group, .rz-item, .rz-cg, .rz-cat, .rz-tcol, .rz-download"
+  ));
+  if (!reduce) animEls.forEach((el) => el.classList.add("rz-reveal"));
+
   function setTop(word) {
     if (reduce) { top.textContent = word; return; }
     top.style.transition = "opacity .2s ease"; top.style.opacity = "0";
     setTimeout(() => { top.textContent = word; top.style.opacity = "1"; }, 180);
+  }
+
+  function cascadeIn() {
+    animEls.forEach((el, i) => { el.style.transitionDelay = (i * 22) + "ms"; el.classList.add("in"); });
+  }
+  function cascadeReset() {
+    animEls.forEach((el) => { el.classList.remove("in"); el.style.transitionDelay = ""; });
   }
 
   function openR() {
@@ -189,11 +155,11 @@ function wireResume() {
     link.setAttribute("aria-expanded", "true");
     resume.setAttribute("aria-hidden", "false");
     setTop("Close");
-    document.body.classList.add("resume-anim");
-    if (window.__brain) window.__brain.sides(1, 1);
-    if (reduce) { if (window.__brain) window.__brain.fade(0); document.body.classList.add("resume-open"); animating = false; return; }
-    setTimeout(() => { if (window.__brain) { burstConfetti(window.__brain.rect()); window.__brain.fade(0); } }, 700);
-    setTimeout(() => { document.body.classList.add("resume-open"); animating = false; }, 1080);
+    document.body.classList.add("resume-anim");        // dissolve side labels
+    if (window.__brain) window.__brain.sides(1, 1);    // light both halves -> watermark
+    const reveal = () => { document.body.classList.add("resume-open"); cascadeIn(); animating = false; };
+    if (reduce) { reveal(); return; }
+    setTimeout(reveal, 620);                            // let both sides light first
   }
 
   function closeR() {
@@ -202,10 +168,10 @@ function wireResume() {
     resume.setAttribute("aria-hidden", "true");
     setTop("Open");
     document.body.classList.remove("resume-open");
-    resume.scrollTop = 0;
-    const done = () => { if (window.__brain) { window.__brain.sides(0, 0); window.__brain.fade(1); } document.body.classList.remove("resume-anim"); animating = false; };
+    cascadeReset();
+    const done = () => { if (window.__brain) window.__brain.sides(0, 0); document.body.classList.remove("resume-anim"); resume.scrollTop = 0; animating = false; };
     if (reduce) { done(); return; }
-    setTimeout(done, 720);
+    setTimeout(done, 700);
   }
 
   link.addEventListener("click", (e) => { e.preventDefault(); if (animating) return; open ? closeR() : openR(); });

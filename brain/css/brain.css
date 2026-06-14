@@ -119,11 +119,12 @@ body.stack-open .bar  { opacity: .25; }
 .stage.is-right .side--r .menu  { pointer-events: auto; }
 .stage.is-right .side--r .menu a { opacity: 1; transform: translateX(0); }
 
-/* exit transition to a section page: labels/nav dissolve, brain drifts left */
+/* exit to a section page: labels/nav dissolve, brain fades in place
+   (the section page does the single left+up glide so there is no jump) */
 body.is-leaving .label,
-body.is-leaving .menu { opacity: 0 !important; pointer-events: none; transition: opacity .34s ease; }
-body.is-leaving .brain { transition: transform .56s cubic-bezier(.16,1,.3,1), opacity .56s ease; transform: translateX(-24vw) scale(.99); }
-body.is-leaving .bar { opacity: .55; transition: opacity .4s ease; }
+body.is-leaving .menu { opacity: 0 !important; pointer-events: none; transition: opacity .3s ease; }
+body.is-leaving .brain { transition: opacity .34s ease; opacity: 0; }
+body.is-leaving .bar { opacity: .6; transition: opacity .3s ease; }
 
 /* ===================== STACK OVERLAYS ===================== */
 

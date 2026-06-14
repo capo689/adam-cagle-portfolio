@@ -191,8 +191,8 @@ function wireExit() {
       e.preventDefault();
       if (window.__brain) window.__brain.sides(0, 1);   // hold the painted right side lit
       stage && stage.classList.add("is-right");
-      document.body.classList.add("is-leaving"); // dissolve labels/nav, drift brain left
-      setTimeout(() => { window.location.href = href; }, 560);
+      document.body.classList.add("is-leaving"); // dissolve labels/nav, fade brain
+      setTimeout(() => { window.location.href = href; }, 340);
     });
   });
 }

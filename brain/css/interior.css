@@ -73,6 +73,10 @@ body.interior { overflow: hidden; }
 }
 .interior.content-in .page__content { opacity: 1; }
 
+/* while a lightbox/book viewer is open, lift the content's stacking context
+   above the bar (z-index:3) so the fullscreen overlay covers the header */
+body.lb-open .page__content { z-index: 50; }
+
 /* ── reduced motion: no glide ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .bar__nav { animation: none; opacity: 1; transform: none; }

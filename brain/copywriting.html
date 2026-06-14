@@ -620,17 +620,20 @@
           </figure>
         </div>
         
-        <!-- ─── HF VIEWER (brand book) ─── -->
+        <!-- ─── HF VIEWER (brand book · 3D page flip) ─── -->
         <div id="hf-viewer" aria-hidden="true">
           <button class="hf-btn hf-close-btn" aria-label="Close">&times;</button>
           <button class="hf-btn hf-nav hf-prev" aria-label="Previous page">&larr;</button>
           <button class="hf-btn hf-nav hf-next" aria-label="Next page">&rarr;</button>
-          <div class="hf-spread-wrap">
-            <div id="hf-spread"></div>
-            <div class="hf-footer">
-              <span id="hf-counter"></span>
-              <span class="hf-hint">&larr; &rarr; navigate &middot; esc close</span>
+          <div class="hf-stage">
+            <div class="hf-book" id="hf-book">
+              <div class="hf-side hf-left"></div>
+              <div class="hf-side hf-right"></div>
             </div>
+          </div>
+          <div class="hf-footer">
+            <span id="hf-counter"></span>
+            <span class="hf-hint">&larr; &rarr; turn &middot; esc close</span>
           </div>
         </div>
       </div>

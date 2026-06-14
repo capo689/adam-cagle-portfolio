@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/brain/">
+  <title>Two Minds · One Brain · The Stack</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f2efe9">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/brain.css">
+</head>
+<body>
+
+  <header class="bar">
+    <span class="bar__name">Adam R. Cagle</span>
+    <a class="bar__resume" href="/Resume.html">Resume</a>
+    <a class="bar__email" href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a>
+  </header>
+
+  <main class="stage">
+
+    <div class="side side--l">
+      <div class="label">
+        <span class="t">Left Brain Work</span>
+        <span class="lead"></span>
+      </div>
+      <nav class="menu menu--l" aria-label="Left brain navigation">
+        <a href="/AISystems.html"><i>01</i> AI Systems</a>
+        <a href="#"><i>02</i> UX / UI Design</a>
+        <a href="/WritingSamples.html"><i>03</i> Technical Writing</a>
+        <a class="stack" href="#stack-tech" data-stack="tech">Stack</a>
+      </nav>
+    </div>
+
+    <div class="brain" data-brain>
+      <img class="brain__img" src="img/brain/brain-off.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+    </div>
+
+    <div class="side side--r">
+      <div class="label">
+        <span class="lead"></span>
+        <span class="t">Right Brain Work</span>
+      </div>
+      <nav class="menu menu--r" aria-label="Right brain navigation">
+        <a href="/Work.html">01 Creative Direction</a>
+        <a href="/Portfolio.html">02 Copywriting</a>
+        <a href="/WritingSamples.html">03 Creative Writing</a>
+        <a class="stack" href="#stack-paint" data-stack="paint">Stack</a>
+      </nav>
+    </div>
+
+  </main>
+
+  <!-- ════ TECHNICAL STACK (left brain) ════ -->
+  <section class="stack stack--tech" id="stack-tech" role="dialog" aria-modal="true" aria-label="Technical stack" aria-hidden="true">
+    <button class="stack__close" aria-label="Close">Close ✕</button>
+    <figure class="stack__hero">
+      <img class="stack__hero-img" src="img/stack/syrinx.jpg" alt="A vast blue digital temple under a constellation of data, the Temples of Syrinx" decoding="async">
+      <figcaption class="stack__hero-cap">
+        <p class="stack__kicker">Left Brain · The Technical Stack</p>
+        <blockquote class="stack__quote">&ldquo;&hellip; We are the priests of the <em>Temples of Syrinx</em>. Our great computers fill the hallowed halls.&rdquo;<cite>Rush</cite></blockquote>
+      </figcaption>
+    </figure>
+    <div class="stack__inner">
+      <div class="stack__grid">
+        <div class="cat"><h3>Frontier Models</h3><ul><li>Claude Opus</li><li>Claude Sonnet</li><li>Claude Haiku</li><li>GPT-5.5</li><li>Gemini 3.1 Pro</li><li>Grok</li><li>DeepSeek</li><li>Llama</li></ul></div>
+        <div class="cat"><h3>Languages</h3><ul><li>JavaScript</li><li>TypeScript</li><li>Python 3</li><li>PHP</li><li>Node.js</li><li>Bash</li><li>HTML5</li><li>CSS3</li><li>Markdown</li><li>JSON / JSONL</li><li>SQL</li></ul></div>
+        <div class="cat"><h3>Frameworks &amp; Runtimes</h3><ul><li>React</li><li>Astro</li><li>WordPress</li><li>FastAPI / Starlette</li><li>Vanilla JS</li><li>Three.js</li><li>WebGL</li><li>OpenGL</li><li>Chart.js</li><li>Tailwind CSS</li></ul></div>
+        <div class="cat"><h3>AI / Agent Frameworks</h3><ul><li>Claude Agent SDK</li><li>LangGraph</li><li>Vercel AI SDK</li><li>OpenAI Agents SDK</li><li>CrewAI</li><li>MCP / FastMCP</li><li>Custom GPTs</li><li>ChatGPT Apps</li><li>Ollama</li><li>LoRA</li></ul></div>
+        <div class="cat"><h3>RAG &amp; Retrieval</h3><ul><li>Qdrant</li><li>Pinecone</li><li>Cohere Rerank</li><li>RAGAS</li><li>LlamaIndex</li></ul></div>
+        <div class="cat"><h3>Databases &amp; Data</h3><ul><li>Supabase</li><li>PostgreSQL</li><li>SQLite</li><li>Finnhub</li><li>EDGAR</li><li>Rainforest API</li></ul></div>
+        <div class="cat"><h3>Backend, Hosting &amp; Deploy</h3><ul><li>Render</li><li>Cloudflare Pages</li><li>Cloudflare Workers</li><li>Wrangler CLI</li><li>Vercel</li><li>OpenCLAW</li><li>Resend</li><li>Tailscale</li><li>ngrok</li><li>launchd</li><li>SSE</li></ul></div>
+        <div class="cat"><h3>Payments &amp; Commerce</h3><ul><li>Stripe</li><li>Stripe Checkout</li><li>Stripe Customer Portal</li></ul></div>
+        <div class="cat"><h3>Auth &amp; Security</h3><ul><li>Auth0</li><li>OAuth 2.0</li><li>OAuth 1.0a</li><li>Scoped access tokens</li></ul></div>
+        <div class="cat"><h3>Dev, Eval &amp; Governance</h3><ul><li>GitHub</li><li>GitHub Actions</li><li>Codex</li><li>Zapier</li><li>n8n</li><li>Anthropic eval tooling</li><li>SKILL.md governance</li><li>Persona MD governance</li></ul></div>
+        <div class="cat"><h3>SEO / Discovery</h3><ul><li>Singularity SEO</li><li>SEMrush</li><li>SerpApi</li><li>Google Search Console</li><li>GA4</li><li>Schema / JSON-LD</li><li>llms.txt</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CREATIVE STACK (right brain) ════ -->
+  <section class="stack stack--paint" id="stack-paint" role="dialog" aria-modal="true" aria-label="Creative stack" aria-hidden="true">
+    <button class="stack__close" aria-label="Close">Close ✕</button>
+    <figure class="stack__hero">
+      <img class="stack__hero-img" src="img/stack/orchids.jpg" alt="Rainbow watercolor orchids in bloom across cream paper" decoding="async">
+      <figcaption class="stack__hero-cap">
+        <p class="stack__kicker">Right Brain · The Creative Stack</p>
+        <blockquote class="stack__quote">&ldquo;You can&rsquo;t use up <em>creativity</em>. The more you use the more you have.&rdquo;<cite>Maya Angelou</cite></blockquote>
+      </figcaption>
+    </figure>
+    <div class="stack__inner">
+      <div class="stack__grid">
+        <div class="cat"><h3>Frontier Models</h3><ul><li>Claude Opus</li><li>Claude Sonnet</li><li>Claude Haiku</li><li>GPT-5.5</li><li>Gemini 3.1 Pro</li><li>Grok</li><li>DeepSeek</li></ul></div>
+        <div class="cat"><h3>Design &amp; Production</h3><ul><li>Adobe Creative Suite</li><li>Figma</li><li>Canva</li></ul></div>
+        <div class="cat"><h3>Office &amp; Docs</h3><ul><li>Microsoft Office Suite</li><li>Google Workspace</li></ul></div>
+        <div class="cat"><h3>Image Generation</h3><ul><li>Midjourney</li><li>Flux 2</li><li>GPT-Image-2</li><li>Adobe Firefly 3</li></ul></div>
+        <div class="cat"><h3>Video Generation</h3><ul><li>Runway Gen-4.5</li><li>Veo 3.1</li><li>Kling</li><li>SeeDance</li></ul></div>
+        <div class="cat"><h3>Storyboarding &amp; Pre-Production</h3><ul><li>Figma</li><li>Photoshop</li></ul></div>
+        <div class="cat"><h3>Voice, Music &amp; Sound</h3><ul><li>ElevenLabs</li><li>OpenAI Realtime API</li><li>Suno</li><li>ElevenLabs SFX</li></ul></div>
+        <div class="cat"><h3>Collaboration &amp; Workflow</h3><ul><li>Slack</li><li>Zapier</li><li>Telegram</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+  <script type="module" src="js/brain.js"></script>
+</body>
+</html>

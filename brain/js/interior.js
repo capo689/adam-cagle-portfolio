@@ -1,13 +1,26 @@
-/* interior.js — section-page brain.
-   Same shader as the home nav, but locked to one lit hemisphere. The brain
-   sits half off one edge with only its painted side showing; the lit side
-   blooms on as the page floats in. data-side="right" (or "left") drives it.
-   Vanilla, no libs beyond Three. */
+/* interior.js — section-page brain + page transitions.
+   Same shader as the home nav, locked to one lit hemisphere and rendered
+   ALREADY painted (no bloom). A veil masks the reload so navigation never
+   blinks. Arriving from home, the brain glides center -> dock, then the
+   content fades in. Arriving from another section (sub-nav), the brain is
+   already docked and does not move. Vanilla, no libs beyond Three. */
 
 import * as THREE from "three";
 
 const wrap = document.querySelector("[data-brain]");
-if (wrap) initBrain(wrap);
+const veil = document.querySelector(".veil");
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// entrance mode is decided by where we came from (set on the previous page)
+const mode = sessionStorage.getItem("brainEnter");
+sessionStorage.removeItem("brainEnter");
+const willSlide = !reduced && mode !== "static";
+
+// put the brain at its start spot up-front (under the veil) so it never jumps
+if (wrap && willSlide) wrap.classList.add("enter");
+
+wireNav();
+if (wrap) initBrain(wrap); else runEntrance();
 
 function supportsWebGL() {
   try { const c = document.createElement("canvas");
@@ -15,12 +28,38 @@ function supportsWebGL() {
   catch (e) { return false; }
 }
 
+/* ───────────────────────── entrance / reveal ───────────────────────── */
+let entered = false;
+function runEntrance() {
+  if (entered) return; entered = true;
+  if (veil) veil.classList.add("clear");        // dissolve the mask
+
+  if (!willSlide) {                              // sub-nav / reduced: brain stays put
+    setTimeout(() => document.body.classList.add("content-in"), reduced ? 0 : 160);
+    return;
+  }
+
+  // from home: let the veil clear, then glide center -> dock, then content
+  setTimeout(() => {
+    if (!wrap) { document.body.classList.add("content-in"); return; }
+    wrap.classList.add("sliding");
+    void wrap.offsetWidth;                       // commit the start frame
+    wrap.classList.remove("enter");              // -> docked, animated
+    let done = false;
+    const finish = () => { if (done) return; done = true; document.body.classList.add("content-in"); };
+    wrap.addEventListener("transitionend", finish, { once: true });
+    setTimeout(finish, 1500);                    // failsafe
+  }, 520);
+}
+// hard failsafe so the page can never stay veiled
+setTimeout(runEntrance, 2200);
+
+/* ───────────────────────── brain shader ───────────────────────── */
 function initBrain(wrap) {
   const side = wrap.getAttribute("data-side") || "right";
   const fallback = wrap.querySelector(".brain__img");
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!supportsWebGL()) { if (fallback) fallback.style.opacity = "1"; return; }
+  if (!supportsWebGL()) { if (fallback) fallback.style.opacity = "1"; runEntrance(); return; }
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -34,14 +73,24 @@ function initBrain(wrap) {
 
   const loader = new THREE.TextureLoader();
   let n = 0;
-  const ready = () => { if (++n === 2) { wrap.classList.add("is-ready"); if (fallback) fallback.style.opacity = "0"; } };
+  const ready = () => {
+    if (++n === 2) {
+      wrap.classList.add("is-ready");
+      if (fallback) fallback.style.opacity = "0";
+      // ensure one painted frame is on screen before we lift the veil
+      requestAnimationFrame(() => requestAnimationFrame(runEntrance));
+    }
+  };
   const offTex = loader.load("img/brain/brain-off.png", ready);
   const onTex  = loader.load("img/brain/brain-on.png", ready);
   [offTex, onTex].forEach((t) => { t.colorSpace = THREE.SRGBColorSpace; t.minFilter = THREE.LinearFilter; });
 
+  // locked, ALREADY lit (no bloom): right (or left) hemisphere painted from frame 1
+  const tL = side === "left" ? 1 : 0;
+  const tR = side === "right" ? 1 : 0;
   const u = {
     uOff: { value: offTex }, uOn: { value: onTex },
-    uTime: { value: 0 }, uLeft: { value: 0 }, uRight: { value: 0 }, uReduced: { value: reduced ? 1 : 0 },
+    uTime: { value: 0 }, uLeft: { value: tL }, uRight: { value: tR }, uReduced: { value: reduced ? 1 : 0 },
   };
 
   const mat = new THREE.ShaderMaterial({
@@ -78,11 +127,6 @@ function initBrain(wrap) {
   });
   scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
 
-  // locked target: one hemisphere lit, the other dark
-  const tL = side === "left" ? 1 : 0;
-  const tR = side === "right" ? 1 : 0;
-  if (reduced) { u.uLeft.value = tL; u.uRight.value = tR; }
-
   function resize() { const s = Math.min(wrap.clientWidth, wrap.clientHeight); renderer.setSize(s, s, false); canvas.style.width = s + "px"; canvas.style.height = s + "px"; }
   resize(); window.addEventListener("resize", resize);
 
@@ -91,13 +135,37 @@ function initBrain(wrap) {
   function tick() {
     raf = requestAnimationFrame(tick);
     u.uTime.value += Math.min(clock.getDelta(), 0.05);
-    u.uLeft.value  += (tL - u.uLeft.value)  * 0.06;   // gentle bloom-in
-    u.uRight.value += (tR - u.uRight.value) * 0.06;
     renderer.render(scene, camera);
   }
   tick();
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
     else if (!raf) { clock.getDelta(); tick(); }
+  });
+}
+
+/* ───────────────────────── navigation (veil cover -> go) ───────────────────────── */
+function wireNav() {
+  function leave(href, enterMode) {
+    if (enterMode) sessionStorage.setItem("brainEnter", enterMode);
+    if (veil) veil.classList.remove("clear");    // re-cover: soft dissolve out
+    document.body.classList.remove("content-in");
+    setTimeout(() => { window.location.href = href; }, reduced ? 0 : 470);
+  }
+  // sibling section pages: brain stays docked (static)
+  document.querySelectorAll(".bar__nav a").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href");
+      if (!href || /^https?:|^mailto:|^#/.test(href)) return;
+      if (a.classList.contains("is-active")) { e.preventDefault(); return; }
+      e.preventDefault(); leave(href, "static");
+    });
+  });
+  // back home: full dissolve, home fades itself in clean
+  const name = document.querySelector(".bar__name");
+  if (name) name.addEventListener("click", (e) => {
+    const href = name.getAttribute("href");
+    if (!href || /^https?:|^mailto:/.test(href)) return;
+    e.preventDefault(); leave(href, null);
   });
 }

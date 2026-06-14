@@ -179,20 +179,25 @@ function wireResume() {
 }
 wireResume();
 
-/* ─────────────── exit to a right-brain section page ─────────────── */
+/* ─────────────── page-transition veil ─────────────── */
+const veil = document.querySelector(".veil");
+
+// lift the veil once the home page is up (fades home in, incl. on return from a section)
+// setTimeout (not rAF) so it still fires if the tab loads in the background
+if (veil) setTimeout(() => veil.classList.add("clear"), 60);
+
+/* exit to a right-brain section page: cover with the veil, then navigate.
+   The section page reveals the brain already painted and glides it into place. */
 function wireExit() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const stage = document.querySelector(".stage");
   document.querySelectorAll(".menu--r a:not(.stack)").forEach((a) => {
     a.addEventListener("click", (e) => {
       const href = a.getAttribute("href");
       if (!href || href === "#" || /^https?:|^mailto:/.test(href)) return;
-      if (reduce) return;                       // navigate normally for reduced motion
       e.preventDefault();
-      if (window.__brain) window.__brain.sides(0, 1);   // hold the painted right side lit
-      stage && stage.classList.add("is-right");
-      document.body.classList.add("is-leaving"); // dissolve labels/nav, fade brain
-      setTimeout(() => { window.location.href = href; }, 340);
+      sessionStorage.setItem("brainEnter", "slide");   // tell the section page to glide in
+      if (veil) veil.classList.remove("clear");         // re-cover: soft dissolve out
+      setTimeout(() => { window.location.href = href; }, reduce ? 0 : 470);
     });
   });
 }

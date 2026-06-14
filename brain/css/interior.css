@@ -45,31 +45,33 @@ body.interior { overflow: hidden; }
 /* ── page body: floated brain on the left, content on the right ───────── */
 .page { position: relative; flex: 1; min-height: 0; }
 
+/* docked resting state (half off the left edge, painted side showing) */
 .brain--float {
   position: fixed; top: 50%; left: 0;
   width: var(--bint); height: var(--bint);
   transform: translate(-50%,-50%);
   z-index: 1; pointer-events: none;
-  animation: brainFloatIn 1.6s cubic-bezier(.55,0,.25,1) forwards;
 }
-/* starts near viewport center and lower, glides left + up to dock at the edge */
-@keyframes brainFloatIn {
-  0%   { opacity: 0; transform: translate(calc(48vw - 50%), -34%) scale(1.05); }
-  30%  { opacity: 1; }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
+/* start spot when arriving from home: near viewport centre, a touch lower */
+.brain--float.enter { transform: translate(calc(48vw - 50%), -42%) scale(1.04); }
+/* the single, gentle glide center -> dock (added by JS just before it moves) */
+.brain--float.sliding { transition: transform 1.35s cubic-bezier(.5,0,.22,1); }
 
-/* content sits clear of the visible brain half */
+/* content sits clear of the visible brain half, and fades in after the glide */
 .page__content {
   position: relative; z-index: 2; height: 100%;
   padding: clamp(20px,4vh,60px) clamp(24px,5vw,80px);
   padding-left: clamp(24px, 32vw, 460px);
+  opacity: 0; transition: opacity .65s ease;
 }
+.interior.content-in .page__content { opacity: 1; }
 
-/* ── reduced motion: no glide, no bloom drift ────────────────────────── */
+/* ── reduced motion: no glide ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .bar__nav { animation: none; opacity: 1; transform: none; }
-  .brain--float { animation: none; opacity: 1; transform: translate(-50%,-50%); }
+  .brain--float { transform: translate(-50%,-50%); }
+  .brain--float.sliding { transition: none; }
+  .page__content { opacity: 1; transition: none; }
   .bar__nav a.is-active, .bar__nav a:hover { animation: none; }
 }
 
@@ -80,10 +82,12 @@ body.interior { overflow: hidden; }
 }
 @media (max-width: 720px) {
   body.interior { overflow-y: auto; }
-  .brain--float {
-    position: relative; top: auto; left: auto; transform: none;
+  .brain--float,
+  .brain--float.enter,
+  .brain--float.sliding {
+    position: relative; top: auto; left: auto; transform: none; transition: none;
     width: min(72vw,360px); height: min(72vw,360px);
-    margin: 8px auto -6vw; opacity: 1; animation: none;
+    margin: 8px auto -6vw; opacity: 1;
   }
-  .page__content { padding-left: clamp(24px,5vw,80px); }
+  .page__content { padding-left: clamp(24px,5vw,80px); opacity: 1; }
 }

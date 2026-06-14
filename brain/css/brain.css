@@ -382,3 +382,12 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
   .resume { transition: none !important; }
   .rz-reveal, .rz-name.rz-reveal { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
 }
+
+/* ── page-transition veil: masks the reload so navigation never blinks ── */
+.veil {
+  position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+  background: radial-gradient(120% 120% at 50% 42%, var(--bg-1) 0%, var(--bg-2) 100%);
+  opacity: 1; transition: opacity .55s ease;
+}
+.veil.clear { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .veil { transition: opacity .2s ease; } }

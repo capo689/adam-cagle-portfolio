@@ -137,24 +137,23 @@ section.stack--paint.is-open .stack__hero-img { animation: none; }     /* no ken
 .stack--paint .stack__hero-cap {
   position: static; left: auto; width: min(100%, 1180px); margin: 0 auto;
   transform: translateY(16px);
-  padding: clamp(22px,4vh,46px) clamp(24px,5vw,72px) 0;
+  padding: clamp(4px,1vh,12px) clamp(24px,5vw,72px) 0;   /* tight up against the flowers */
 }
 section.stack--paint.is-open .stack__hero-cap { transform: translateY(0); }
 .stack--paint .stack__hero-cap .stack__kicker {
-  font-family: var(--mono); color: #c4198a; background: none; backdrop-filter: none;
+  font-family: var(--mono); color: #4c1d72; background: none; backdrop-filter: none;
   padding: 0; text-shadow: none;
 }
 .stack--paint .stack__hero-cap .stack__quote {
   font-family: "Inter", Arial, sans-serif; font-style: normal; font-weight: 600;
-  font-size: clamp(22px,2.7vw,38px); line-height: 1.2; letter-spacing: -.01em;
-  color: #2a2017; text-shadow: none; max-width: 24ch;
+  font-size: clamp(22px,2.6vw,36px); line-height: 1.18; letter-spacing: -.01em;
+  color: #2a2017; text-shadow: none; max-width: 34ch;       /* breaks to 2 lines */
 }
 .stack--paint .stack__hero-cap .stack__quote em {
   font-style: normal; font-weight: 700;
-  background-image: linear-gradient(92deg,#ff5b1f,#d81e7a,#7b35d6,#008fd3);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  background: none; -webkit-text-fill-color: #0a84ff; color: #0a84ff;
 }
-.stack--paint .stack__hero-cap .stack__quote cite { color: #c4198a; font-family: var(--mono); }
+.stack--paint .stack__hero-cap .stack__quote cite { color: #4c1d72; font-family: var(--mono); }
 .stack--paint .stack__close { backdrop-filter: blur(6px); background: rgba(243,233,214,.55); }
 .stack--tech  .stack__inner { transform: translateX(-46px); }
 .stack--paint .stack__inner { transform: translateX(46px); }
@@ -212,13 +211,6 @@ section.stack--paint.is-open .stack__hero-cap { transform: translateY(0); }
 
 /* ---- PAINT theme: studio wall ---- */
 .stack--paint { background: #f3e9d6; color: #2a2017; }
-.stack--paint::before {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
-  background:
-    radial-gradient(34% 30% at 82% 16%, rgba(240,86,29,.20), transparent 70%),
-    radial-gradient(30% 28% at 90% 60%, rgba(123,53,214,.16), transparent 72%),
-    radial-gradient(36% 34% at 70% 92%, rgba(0,168,132,.16), transparent 72%);
-}
 .stack--paint .stack__close { color: #7a3a1c; }
 .stack--paint .stack__close:hover { background: #7a3a1c; color: #f3e9d6; }
 .stack--paint .stack__kicker { color: #9c5a1f; }
@@ -228,7 +220,7 @@ section.stack--paint.is-open .stack__hero-cap { transform: translateY(0); }
 .stack--paint .cat { transform: translateY(14px); }
 .stack--paint .cat li { transform: translateY(12px); }
 .stack--paint .cat h3 { font-family: "Inter", Arial, sans-serif; font-style: normal; font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
-  background-image: linear-gradient(90deg,#ff5b1f,#d81e7a,#7b35d6,#008fd3); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  background: none; -webkit-text-fill-color: #0a84ff; color: #0a84ff; }
 .stack--paint .cat li { font-family: "Inter", Arial, sans-serif; font-size: 14px; line-height: 1.85; color: #43362a; }
 .stack--paint .cat li:hover { color: #111; }
 

@@ -91,12 +91,13 @@ function initBrain() {
     return cx < r.left + r.width / 2 ? "left" : "right";
   }
 
+  const busy = () => document.body.classList.contains("stack-open") || document.body.classList.contains("resume-anim");
   if (coarse) {
-    document.addEventListener("pointerdown", (e) => { if (!document.body.classList.contains("stack-open")) apply(sideAt(e.clientX, e.clientY)); }, { passive: true });
+    document.addEventListener("pointerdown", (e) => { if (!busy()) apply(sideAt(e.clientX, e.clientY)); }, { passive: true });
   } else {
-    document.addEventListener("pointermove", (e) => { if (!document.body.classList.contains("stack-open")) apply(sideAt(e.clientX, e.clientY)); }, { passive: true });
-    document.addEventListener("pointerleave", () => apply(null));
-    window.addEventListener("blur", () => apply(null));
+    document.addEventListener("pointermove", (e) => { if (!busy()) apply(sideAt(e.clientX, e.clientY)); }, { passive: true });
+    document.addEventListener("pointerleave", () => { if (!busy()) apply(null); });
+    window.addEventListener("blur", () => { if (!busy()) apply(null); });
   }
 
   function resize() { const s = Math.min(wrap.clientWidth, wrap.clientHeight); renderer.setSize(s, s, false); canvas.style.width = s + "px"; canvas.style.height = s + "px"; }
@@ -116,7 +117,101 @@ function initBrain() {
     if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
     else if (!raf) { clock.getDelta(); tick(); }
   });
+
+  /* control surface for the resume sequence */
+  window.__brain = {
+    sides(l, r) { tL = l; tR = r; },
+    fade(o) { canvas.style.transition = "opacity .6s ease"; canvas.style.opacity = String(o); },
+    rect() { return canvas.getBoundingClientRect(); },
+  };
 }
+
+/* ───────────────────────── confetti burst ───────────────────────── */
+function burstConfetti(rect) {
+  const cv = document.createElement("canvas");
+  cv.className = "confetti-cv";
+  document.body.appendChild(cv);
+  const ctx = cv.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function size() { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  size();
+  window.addEventListener("resize", size, { once: true });
+  const r = rect || { left: innerWidth / 2, top: innerHeight / 2, width: 200, height: 200 };
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const colors = ["#0a84ff", "#00c2ff", "#ff5b1f", "#d81e7a", "#7b35d6", "#00a884", "#f6b300"];
+  const N = window.matchMedia("(max-width: 760px)").matches ? 90 : 180;
+  const P = [];
+  for (let i = 0; i < N; i++) {
+    const a = Math.random() * Math.PI * 2, sp = 4 + Math.random() * 12;
+    P.push({
+      x: cx + (Math.random() - 0.5) * r.width * 0.55,
+      y: cy + (Math.random() - 0.5) * r.height * 0.55,
+      vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 5,
+      g: 0.16 + Math.random() * 0.14, w: 5 + Math.random() * 7, h: 8 + Math.random() * 11,
+      rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.45,
+      col: colors[i % colors.length], life: 0, max: 64 + Math.random() * 46,
+    });
+  }
+  let frames = 0;
+  (function frame() {
+    frames++;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    let alive = 0;
+    for (const p of P) {
+      p.life++; if (p.life > p.max) continue; alive++;
+      p.vy += p.g; p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.rot += p.vr;
+      ctx.globalAlpha = Math.max(0, 1 - p.life / p.max);
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.col; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+    }
+    if (alive > 0 && frames < 240) requestAnimationFrame(frame);
+    else cv.remove();
+  })();
+}
+
+/* ───────────────────────── resume reveal ───────────────────────── */
+function wireResume() {
+  const link = document.querySelector(".bar__resume");
+  const resume = document.getElementById("resume");
+  if (!link || !resume) return;
+  const top = link.querySelector(".top");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let open = false, animating = false;
+
+  function setTop(word) {
+    if (reduce) { top.textContent = word; return; }
+    top.style.transition = "opacity .2s ease"; top.style.opacity = "0";
+    setTimeout(() => { top.textContent = word; top.style.opacity = "1"; }, 180);
+  }
+
+  function openR() {
+    open = true; animating = true;
+    link.setAttribute("aria-expanded", "true");
+    resume.setAttribute("aria-hidden", "false");
+    setTop("Close");
+    document.body.classList.add("resume-anim");
+    if (window.__brain) window.__brain.sides(1, 1);
+    if (reduce) { if (window.__brain) window.__brain.fade(0); document.body.classList.add("resume-open"); animating = false; return; }
+    setTimeout(() => { if (window.__brain) { burstConfetti(window.__brain.rect()); window.__brain.fade(0); } }, 700);
+    setTimeout(() => { document.body.classList.add("resume-open"); animating = false; }, 1080);
+  }
+
+  function closeR() {
+    open = false; animating = true;
+    link.setAttribute("aria-expanded", "false");
+    resume.setAttribute("aria-hidden", "true");
+    setTop("Open");
+    document.body.classList.remove("resume-open");
+    resume.scrollTop = 0;
+    const done = () => { if (window.__brain) { window.__brain.sides(0, 0); window.__brain.fade(1); } document.body.classList.remove("resume-anim"); animating = false; };
+    if (reduce) { done(); return; }
+    setTimeout(done, 720);
+  }
+
+  link.addEventListener("click", (e) => { e.preventDefault(); if (animating) return; open ? closeR() : openR(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && open && !animating) closeR(); });
+}
+wireResume();
 
 /* ───────────────────────── STACK overlays ───────────────────────── */
 function wireStack() {

@@ -136,7 +136,11 @@ section.stack.is-open .stack__hero-cap { opacity: 1; transform: translateX(-50%)
     linear-gradient(90deg, rgba(239,231,214,.82) 0%, rgba(239,231,214,.25) 46%, rgba(239,231,214,0) 66%),
     linear-gradient(180deg, rgba(239,231,214,.30) 0%, rgba(239,231,214,0) 30%, rgba(239,231,214,.55) 72%, #efe7d6 100%);
 }
-.stack--paint .stack__hero-cap .stack__kicker { color: #9c5a1f; text-shadow: 0 1px 10px rgba(239,231,214,.95), 0 0 4px rgba(239,231,214,.9); }
+.stack--paint .stack__hero-cap .stack__kicker {
+  display: inline-block; color: #7a3a1c; text-shadow: none;
+  background: rgba(244,238,226,.88); backdrop-filter: blur(3px);
+  padding: 5px 11px; border-radius: 3px;
+}
 .stack--paint .stack__hero-cap .stack__quote {
   font-family: var(--display); font-style: italic; font-weight: 500;
   color: #2a2017; text-shadow: 0 1px 14px rgba(239,231,214,.9);

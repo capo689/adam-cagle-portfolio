@@ -79,8 +79,9 @@
   backface-visibility: hidden;
 }
 
-/* dim the field while one piece is in focus, lift the one under the cursor */
-.cdw:hover .cdw__tile { opacity: .34; filter: saturate(.82); }
+/* dim the field while one piece is in focus, lift the one under the cursor.
+   :not(:hover) keeps the rolled-over piece fully unscreened, the rest screened */
+.cdw:hover .cdw__tile:not(:hover) { opacity: .34; filter: saturate(.82); }
 .cdw__tile:hover,
 .cdw__tile:focus-visible {
   opacity: 1;
@@ -155,8 +156,7 @@
   width: auto; display: block;
   filter: drop-shadow(0 14px 20px rgba(40, 35, 28, .20));
 }
-/* drop the bears back a touch while a work piece is in focus */
-.cdw:hover .cdw__bear { opacity: .5; transition: opacity .42s ease; }
+/* bears are never screened — they stay full colour even while the wall dims */
 
 /* hold the reel still while a piece is zoomed */
 .cdw--frozen .cdw__track { animation-play-state: paused !important; }

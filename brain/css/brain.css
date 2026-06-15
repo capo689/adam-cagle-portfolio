@@ -5,7 +5,7 @@
 :root {
   --bg-1: #f2efe9; --bg-2: #e2ddd2;
   --ink: #211d18; --ink-2: rgba(33,29,24,.62); --sepia: #4a3f30; --blue: #4D8BE8;
-  --bsize: clamp(300px, 42vw, 560px);
+  --bsize: clamp(300px, 36vw, 460px);
   --display: "Fraunces", Georgia, serif;
   --garamond: "EB Garamond", Georgia, serif;
   --mono: "IBM Plex Mono","SF Mono",Menlo,monospace;
@@ -383,38 +383,53 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
   .rz-reveal, .rz-name.rz-reveal { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
 }
 
-/* ── page-transition veil: masks the reload so navigation never blinks ── */
-.veil {
-  position: fixed; inset: 0; z-index: 9000; pointer-events: none;
-  background: radial-gradient(120% 120% at 50% 42%, var(--bg-1) 0%, var(--bg-2) 100%);
-  opacity: 1; transition: opacity .55s ease;
+/* ═══════════ persistent-brain single-page app (the brain never reloads) ═══════════
+   On the home shell (body.app) the brain is ONE fixed element. Entering a section
+   does NOT navigate: the home UI fades, the SAME brain glides from centre to its
+   dock, and the fetched content flows in once it arrives. Nothing blinks. */
+.veil { display: none !important; }
+
+.app .brain {
+  position: fixed; top: 50%; left: 50%;
+  width: var(--bsize); height: var(--bsize);
+  transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+  z-index: 2; pointer-events: none;
+  transition: transform .85s cubic-bezier(.5, 0, .2, 1);
 }
-.veil.clear { opacity: 0; }
-@media (prefers-reduced-motion: reduce) { .veil { transition: opacity .2s ease; } }
+.brain-slot { width: var(--bsize); height: var(--bsize); }   /* keeps the home grid shape */
 
-/* ═══════════ cross-document view transitions: the brain persists ═══════════
-   The brain is captured on the leaving page and morphed to its position on the
-   arriving page — it never disappears. Links fade out, the brain glides, then
-   the new content flows in once the brain has (nearly) arrived. */
-@view-transition { navigation: auto; }
-.brain { view-transition-name: brain; }
+/* docks: the brain centre lands on the viewport edge, one half showing */
+.app.section-mode.side-right .brain { transform: translate(calc(-50% - 50vw), -50%); }
+.app.section-mode.side-left  .brain { transform: translate(calc(-50% + 50vw), -50%); }
 
-::view-transition-group(brain) {
-  animation-duration: .72s;
-  animation-timing-function: cubic-bezier(.5, 0, .2, 1);
+/* home UI fades out fast while the brain glides */
+.app .stage { transition: opacity .32s ease; }
+.app.section-mode .stage { opacity: 0; pointer-events: none; }
+
+/* section content: a scroll layer that clears the docked brain, flows in last */
+.app .page__content {
+  position: fixed; inset: 0; z-index: 1;
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: clamp(80px,10vh,104px) 0 0;
+  opacity: 0; visibility: hidden; transition: opacity .5s ease;
 }
-/* keep the brain crisp during the move (no cross-fade of the two snapshots) */
-::view-transition-old(brain) { animation: none; mix-blend-mode: normal; }
-::view-transition-new(brain) { animation: none; }
+.app.section-mode .page__content { visibility: visible; }
+.app.content-in .page__content { opacity: 1; }
 
-::view-transition-old(root) { animation: vtRootOut .28s ease both; }
-::view-transition-new(root) { animation: vtRootIn .42s ease .52s both; }
-@keyframes vtRootOut { to { opacity: 0; } }
-@keyframes vtRootIn { from { opacity: 0; } }
+/* the injected work scene clears the brain on the active side */
+.app.side-right .page__content .work__scene { margin: 0 auto 0 clamp(200px, 25vw, 320px); }
+.app.side-left  .page__content .work__scene { margin: 0 clamp(200px, 25vw, 320px) 0 auto; }
+
+/* bar above the brain; an open lightbox above the bar */
+.app .bar { z-index: 5; }
+.app.lb-open .page__content { z-index: 50; }
+
+/* bar centre: Open Resume (home) vs section sub-nav */
+.bar__center { justify-self: center; display: flex; align-items: center; justify-content: center; }
+.app.section-mode .bar__resume { display: none; }
+.bar__nav[hidden] { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  .app .brain, .app .stage, .app .page__content { transition: none; }
 }
-
-/* the veil is superseded by view transitions */
-.veil { display: none !important; }

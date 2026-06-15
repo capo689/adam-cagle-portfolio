@@ -10,16 +10,20 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/brain.css">
+  <link rel="stylesheet" href="css/interior.css">
+  <link rel="stylesheet" href="css/work.css">
+  <link rel="stylesheet" href="css/ai.css">
 </head>
-<body>
-
-  <div class="veil" aria-hidden="true"></div>
+<body class="app">
 
   <header class="bar">
     <a class="bar__name" href="/brain/">Adam R. Cagle</a>
-    <a class="bar__resume" href="#" aria-expanded="false"><span class="top">Open</span><span class="main">Resume</span></a>
+    <div class="bar__center">
+      <a class="bar__resume" href="#" aria-expanded="false"><span class="top">Open</span><span class="main">Resume</span></a>
+      <nav class="bar__nav" aria-label="Sections" hidden></nav>
+    </div>
     <a class="bar__contact" href="mailto:adamrcagle@gmail.com">Contact <span class="arrow">&#8594;</span></a>
   </header>
 
@@ -38,9 +42,7 @@
       </nav>
     </div>
 
-    <div class="brain" data-brain>
-      <img class="brain__img" src="img/brain/brain-off.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
-    </div>
+    <div class="brain-slot" aria-hidden="true"></div>
 
     <div class="side side--r">
       <div class="label">
@@ -56,6 +58,14 @@
     </div>
 
   </main>
+
+  <!-- the one persistent brain: glides between centre (home) and the docks -->
+  <div class="brain" data-brain>
+    <img class="brain__img" src="img/brain/brain-off.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+  </div>
+
+  <!-- section content flows in here (fetched, no reload) -->
+  <div class="page__content"></div>
 
   <!-- ════ TECHNICAL STACK (left brain) ════ -->
   <section class="stack stack--tech" id="stack-tech" role="dialog" aria-modal="true" aria-label="Technical stack" aria-hidden="true">
@@ -202,5 +212,8 @@
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
   </script>
   <script type="module" src="js/brain.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="js/work-lightbox.js" defer></script>
+  <script src="js/work-flipbook.js" defer></script>
 </body>
 </html>

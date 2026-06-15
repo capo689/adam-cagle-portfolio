@@ -1,15 +1,20 @@
-/* braintest3.js — braintest2 brain nav + STACK takeover overlays.
-   The shader/nav is unchanged from braintest2. Added: clicking a STACK link
-   opens that hemisphere's overlay, which pours its categories in with a stagger
-   (terminal print on the left, soft bloom on the right). Vanilla, no libs. */
+/* brain.js — the home shell IS the app. One persistent brain (never reloaded)
+   that hover-lights on home and GLIDES into its dock when you enter a section.
+   Entering/leaving a section does not navigate the document: the home UI fades,
+   the same brain moves, then the fetched section content flows in on arrival.
+   Vanilla, Three only. */
 
 import * as THREE from "three";
 
 const wrap = document.querySelector("[data-brain]");
 const fallback = wrap.querySelector(".brain__img");
 const stage = document.querySelector(".stage");
+const body = document.body;
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const coarse = window.matchMedia("(pointer: coarse)").matches;
+
+let tL = 0, tR = 0;     // brain hemisphere targets (lerped in the tick)
+let locked = false;     // true while a section is open (hover disabled)
 
 function supportsWebGL() {
   try { const c = document.createElement("canvas");
@@ -19,10 +24,12 @@ function supportsWebGL() {
 
 if (supportsWebGL()) initBrain();
 wireStack();
+wireResume();
+wireNav();
 
-/* ───────────────────────── brain shader + nav ───────────────────────── */
+/* ───────────────────────── brain shader + hover ───────────────────────── */
 function initBrain() {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   const canvas = renderer.domElement;
@@ -78,7 +85,6 @@ function initBrain() {
   });
   scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
 
-  let tL = 0, tR = 0;
   function apply(side) {
     tL = side === "left" ? 1 : 0; tR = side === "right" ? 1 : 0;
     stage.classList.toggle("is-left", side === "left");
@@ -91,7 +97,7 @@ function initBrain() {
     return cx < r.left + r.width / 2 ? "left" : "right";
   }
 
-  const busy = () => document.body.classList.contains("stack-open") || document.body.classList.contains("resume-anim");
+  const busy = () => locked || body.classList.contains("stack-open") || body.classList.contains("resume-anim");
   if (coarse) {
     document.addEventListener("pointerdown", (e) => { if (!busy()) apply(sideAt(e.clientX, e.clientY)); }, { passive: true });
   } else {
@@ -118,8 +124,128 @@ function initBrain() {
     else if (!raf) { clock.getDelta(); tick(); }
   });
 
-  /* control surface for the resume sequence */
-  window.__brain = { sides(l, r) { tL = l; tR = r; } };
+  // control surface for the resume sequence + section controller
+  window.__brain = {
+    sides(l, r) { tL = l; tR = r; },
+    lock(l, r) { locked = true; tL = l; tR = r; },
+    unlock() { locked = false; tL = 0; tR = 0; stage.classList.remove("is-left", "is-right"); },
+  };
+}
+
+/* ───────────────────────── section navigation (no reload) ───────────────────────── */
+function wireNav() {
+  const LEFT  = new Set(["ai-systems.html", "ux-ui.html", "technical-writing.html"]);
+  const RIGHT = new Set(["creative-direction.html", "copywriting.html", "creative-writing.html"]);
+  const barNav = document.querySelector(".bar__nav");
+  const pageContent = document.querySelector(".page__content");
+  const HOME_TITLE = document.title;
+  const baseName = (href) => (href || "").split("/").pop().split("?")[0].split("#")[0];
+  const sideOf = (name) => (LEFT.has(name) ? "left" : RIGHT.has(name) ? "right" : null);
+
+  let mode = "home", busyNav = false;
+
+  async function fetchSection(href) {
+    const res = await fetch(href, { credentials: "same-origin" });
+    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+    const pc = doc.querySelector(".page__content");
+    const nv = doc.querySelector(".bar__nav");
+    return { content: pc ? pc.innerHTML : "", nav: nv ? nv.innerHTML : "", title: doc.title };
+  }
+  function initContentScripts() {
+    if (window.WorkLightbox) window.WorkLightbox.init();
+    if (window.WorkFlipbook) window.WorkFlipbook.init();
+  }
+
+  async function enterSection(href, push) {
+    const name = baseName(href), side = sideOf(name);
+    if (!side || busyNav) return;
+    busyNav = true; mode = "section";
+
+    if (window.__brain) window.__brain.lock(side === "left" ? 1 : 0, side === "right" ? 1 : 0);
+    stage.classList.remove("is-left", "is-right");
+    body.classList.toggle("theme-tech", side === "left");
+    body.classList.remove("content-in");
+    body.classList.add("section-mode");
+    body.classList.toggle("side-left", side === "left");
+    body.classList.toggle("side-right", side === "right");
+
+    let data;
+    try { data = await fetchSection(href); }
+    catch (e) { window.location.href = href; return; }
+
+    const arrive = () => {
+      pageContent.innerHTML = data.content;
+      pageContent.scrollTop = 0;
+      if (barNav) { barNav.innerHTML = data.nav; barNav.hidden = false; }
+      if (data.title) document.title = data.title;
+      initContentScripts();
+      if (push) history.pushState({ section: name }, "", href);
+      requestAnimationFrame(() => body.classList.add("content-in"));
+      busyNav = false;
+    };
+    if (reduced) arrive(); else setTimeout(arrive, 720);   // flow in as the brain arrives
+  }
+
+  async function swapSection(href, push) {                 // same-side sub-nav: brain stays
+    const name = baseName(href);
+    if (busyNav) return; busyNav = true;
+    body.classList.remove("content-in");
+    let data;
+    try { data = await fetchSection(href); }
+    catch (e) { window.location.href = href; return; }
+    setTimeout(() => {
+      pageContent.innerHTML = data.content; pageContent.scrollTop = 0;
+      if (barNav) barNav.innerHTML = data.nav;
+      if (data.title) document.title = data.title;
+      initContentScripts();
+      if (push) history.pushState({ section: name }, "", href);
+      requestAnimationFrame(() => body.classList.add("content-in"));
+      busyNav = false;
+    }, reduced ? 0 : 300);
+  }
+
+  function goHome(push) {
+    if (busyNav || mode === "home") return;
+    busyNav = true; mode = "home";
+    body.classList.remove("content-in");                   // content fades out first
+    const finish = () => {
+      if (window.__brain) window.__brain.unlock();          // brain glides back to centre
+      body.classList.remove("section-mode", "side-left", "side-right", "theme-tech");
+      if (barNav) { barNav.hidden = true; barNav.innerHTML = ""; }
+      document.title = HOME_TITLE;
+      if (push) history.pushState({ home: true }, "", "/brain/");
+      setTimeout(() => { pageContent.innerHTML = ""; busyNav = false; }, reduced ? 0 : 850);
+    };
+    if (reduced) finish(); else setTimeout(finish, 340);
+  }
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (!href || /^https?:|^mailto:/.test(href)) return;
+
+    if (a.closest(".menu--l") || a.closest(".menu--r")) {
+      if (a.classList.contains("stack") || href.startsWith("#")) return;  // stack handled separately
+      e.preventDefault(); enterSection(href, true); return;
+    }
+    if (a.closest(".bar__nav")) {
+      e.preventDefault();
+      if (!a.classList.contains("is-active")) swapSection(href, true);
+      return;
+    }
+    if (a.classList.contains("bar__name")) {
+      e.preventDefault();
+      if (mode === "section") goHome(true);
+      return;
+    }
+  });
+
+  window.addEventListener("popstate", () => {
+    const name = baseName(location.pathname), side = sideOf(name);
+    if (side) { mode === "home" ? enterSection(location.pathname, false) : swapSection(location.pathname, false); }
+    else if (mode === "section") goHome(false);
+  });
 }
 
 /* ───────────────────────── resume reveal ───────────────────────── */
@@ -128,12 +254,11 @@ function wireResume() {
   const resume = document.getElementById("resume");
   if (!link || !resume) return;
   const top = link.querySelector(".top");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = reduced;
   let open = false, animating = false;
 
-  // elements that type/animate in, in document order
   const animEls = Array.from(resume.querySelectorAll(
-    ".rz-name, .rz-pos, .rz-sec > h2, .rz-body, .rz-card, .rz-group, .rz-item, .rz-cg, .rz-cat, .rz-tcol, .rz-download"
+    ".rz-name, .rz-pos, .rz-sec > h2, .rz-body, .rz-card, .rz-group, .rz-item, .rz-cat, .rz-tcol, .rz-download"
   ));
   if (!reduce) animEls.forEach((el) => el.classList.add("rz-reveal"));
 
@@ -142,34 +267,26 @@ function wireResume() {
     top.style.transition = "opacity .2s ease"; top.style.opacity = "0";
     setTimeout(() => { top.textContent = word; top.style.opacity = "1"; }, 180);
   }
-
-  function cascadeIn() {
-    animEls.forEach((el, i) => { el.style.transitionDelay = (i * 22) + "ms"; el.classList.add("in"); });
-  }
-  function cascadeReset() {
-    animEls.forEach((el) => { el.classList.remove("in"); el.style.transitionDelay = ""; });
-  }
+  function cascadeIn() { animEls.forEach((el, i) => { el.style.transitionDelay = (i * 22) + "ms"; el.classList.add("in"); }); }
+  function cascadeReset() { animEls.forEach((el) => { el.classList.remove("in"); el.style.transitionDelay = ""; }); }
 
   function openR() {
     open = true; animating = true;
-    link.setAttribute("aria-expanded", "true");
-    resume.setAttribute("aria-hidden", "false");
+    link.setAttribute("aria-expanded", "true"); resume.setAttribute("aria-hidden", "false");
     setTop("Close");
-    document.body.classList.add("resume-anim");        // dissolve side labels
-    if (window.__brain) window.__brain.sides(1, 1);    // light both halves -> watermark
-    const reveal = () => { document.body.classList.add("resume-open"); cascadeIn(); animating = false; };
+    body.classList.add("resume-anim");
+    if (window.__brain) window.__brain.sides(1, 1);
+    const reveal = () => { body.classList.add("resume-open"); cascadeIn(); animating = false; };
     if (reduce) { reveal(); return; }
-    setTimeout(reveal, 620);                            // let both sides light first
+    setTimeout(reveal, 620);
   }
-
   function closeR() {
     open = false; animating = true;
-    link.setAttribute("aria-expanded", "false");
-    resume.setAttribute("aria-hidden", "true");
+    link.setAttribute("aria-expanded", "false"); resume.setAttribute("aria-hidden", "true");
     setTop("Open");
-    document.body.classList.remove("resume-open");
+    body.classList.remove("resume-open");
     cascadeReset();
-    const done = () => { if (window.__brain) window.__brain.sides(0, 0); document.body.classList.remove("resume-anim"); resume.scrollTop = 0; animating = false; };
+    const done = () => { if (window.__brain) window.__brain.sides(0, 0); body.classList.remove("resume-anim"); resume.scrollTop = 0; animating = false; };
     if (reduce) { done(); return; }
     setTimeout(done, 700);
   }
@@ -177,11 +294,6 @@ function wireResume() {
   link.addEventListener("click", (e) => { e.preventDefault(); if (animating) return; open ? closeR() : openR(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && open && !animating) closeR(); });
 }
-wireResume();
-
-/* Navigation between home and the section pages is handled by cross-document
-   view transitions (see brain.css): the brain element morphs across the load,
-   so the menu links are left as plain navigations. */
 
 /* ───────────────────────── STACK overlays ───────────────────────── */
 function wireStack() {
@@ -191,18 +303,12 @@ function wireStack() {
   function openStack(which) {
     const ov = overlays[which]; if (!ov) return;
     open = which;
-    document.body.classList.add("stack-open");
-    document.body.classList.toggle("stack-" + which, true);
+    body.classList.add("stack-open"); body.classList.toggle("stack-" + which, true);
     ov.classList.add("is-open"); ov.setAttribute("aria-hidden", "false");
-
-    // pour: stagger every category header and item in document order
     const step = reduced ? 0 : 15;
-    const els = ov.querySelectorAll(".cat, .cat li");
-    els.forEach((el, i) => { el.style.transitionDelay = (i * step) + "ms"; el.classList.add("in"); });
-
+    ov.querySelectorAll(".cat, .cat li").forEach((el, i) => { el.style.transitionDelay = (i * step) + "ms"; el.classList.add("in"); });
     const close = ov.querySelector(".stack__close"); if (close) close.focus();
   }
-
   function closeStack() {
     if (!open) return;
     Object.values(overlays).forEach((ov) => {
@@ -210,7 +316,7 @@ function wireStack() {
       ov.classList.remove("is-open"); ov.setAttribute("aria-hidden", "true");
       ov.querySelectorAll(".in").forEach((el) => { el.classList.remove("in"); el.style.transitionDelay = ""; });
     });
-    document.body.classList.remove("stack-open", "stack-tech", "stack-paint");
+    body.classList.remove("stack-open", "stack-tech", "stack-paint");
     open = null;
   }
 

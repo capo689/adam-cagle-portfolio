@@ -1,5 +1,6 @@
-/* cd.js — Creative Direction gallery. Hover/tap a tile: every other tile fades
-   away, the hovered tile stays, and the full piece fills the space behind it.
+/* cd.js — Creative Direction gallery. The cursor maps directly to whatever tile
+   it's over: that piece fills the space behind the grid while every other tile
+   fades to a ghost. Roll across to change pieces; roll off the grid to reset.
    Re-initializable for the SPA. */
 (function () {
   let bound = false;
@@ -17,6 +18,7 @@
 
     let active = null;
     function show(tile) {
+      if (!tile || tile === active) return;
       if (active) active.classList.remove("on");
       active = tile;
       tile.classList.add("on");
@@ -29,12 +31,17 @@
       if (active) { active.classList.remove("on"); active = null; }
     }
 
-    tiles.forEach((t) => {
-      t.addEventListener("mouseenter", () => show(t));
-      t.addEventListener("focus", () => show(t));
-      t.addEventListener("click", (e) => { e.preventDefault(); active === t ? hide() : show(t); }); // tap toggles
+    // map the cursor position to the tile under it (handles rolling between tiles)
+    grid.addEventListener("pointermove", (e) => {
+      const t = e.target.closest(".cdg__tile");
+      if (t) show(t);
     });
-    grid.addEventListener("mouseleave", hide);
+    grid.addEventListener("pointerleave", hide);
+
+    // keyboard
+    tiles.forEach((t) => t.addEventListener("focus", () => show(t)));
+    // touch: tap a tile to feature it, tap again (or the active one) to clear
+    tiles.forEach((t) => t.addEventListener("click", (e) => { e.preventDefault(); active === t ? hide() : show(t); }));
 
     if (!bound) {
       bound = true;

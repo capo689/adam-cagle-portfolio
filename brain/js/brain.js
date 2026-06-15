@@ -187,10 +187,13 @@ function wireNav() {
     if (reduced) arrive(); else setTimeout(arrive, 720);   // flow in as the brain arrives
   }
 
-  async function swapSection(href, push) {                 // same-side sub-nav: brain stays
+  async function swapSection(href, push) {                 // same-side sub-nav
     const name = baseName(href);
+    const side = sideOf(name) || (body.classList.contains("side-left") ? "left" : "right");
     if (busyNav) return; busyNav = true;
-    body.classList.remove("content-in");
+    // the drawn brain stays; only the colour drains off, then floods back on
+    body.classList.remove("content-in");                   // content fades out
+    if (window.__brain) window.__brain.sides(0, 0);        // colour drains off the brain
     let data;
     try { data = await fetchSection(href); }
     catch (e) { window.location.href = href; return; }
@@ -200,9 +203,9 @@ function wireNav() {
       if (data.title) document.title = data.title;
       initContentScripts();
       if (push) history.pushState({ section: name }, "", href);
-      requestAnimationFrame(() => body.classList.add("content-in"));
-      busyNav = false;
-    }, reduced ? 0 : 300);
+      if (window.__brain) window.__brain.sides(side === "left" ? 1 : 0, side === "right" ? 1 : 0); // colour floods back
+      setTimeout(() => { body.classList.add("content-in"); busyNav = false; }, reduced ? 0 : 430); // content in once colour returns
+    }, reduced ? 0 : 480);
   }
 
   function goHome(push) {

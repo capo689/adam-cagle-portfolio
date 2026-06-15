@@ -505,3 +505,41 @@ body.lb-open .page__content { overflow: hidden; }
   .interior--right .page__content { height: auto; overflow: visible; }
   .work__scene { margin-left: 0; padding: 0 20px 70px; max-width: none; }
 }
+
+/* ── above-the-fold WINS flex band ───────────────────────────────────── */
+.work .hero { position: relative; }
+.work .wins {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  margin: 4px 0 44px;
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.work .win {
+  display: flex; flex-direction: column; gap: 9px;
+  padding: clamp(20px,2.3vw,34px) clamp(20px,2.4vw,38px);
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  text-decoration: none; color: var(--fg);
+  transition: background .25s ease;
+}
+.work .win:hover { background: var(--bg-soft); }
+.work .win-client {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--fg-3);
+}
+.work .win-client::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.work .win-num {
+  font-family: var(--sans); font-weight: 800;
+  font-size: clamp(50px, 6.4vw, 100px); line-height: .88; letter-spacing: -.045em;
+  color: var(--fg); margin-top: 2px;
+}
+.work .win-num em { font-style: normal; font-weight: 700; font-size: .30em; letter-spacing: 0; color: var(--accent); margin-left: .1em; }
+.work .win-line { font-family: var(--italic); font-style: italic; font-size: clamp(17px,1.55vw,23px); line-height: 1.22; color: var(--fg); }
+.work .win-sub { font-family: var(--sans); font-size: 13px; line-height: 1.5; color: var(--fg-2); }
+@media (max-width: 720px) { .work .wins { grid-template-columns: 1fr; } }
+
+/* ── a few gummy bears peeking into the page ─────────────────────────── */
+.work .cw-bear { position: absolute; pointer-events: none; z-index: 4; height: auto; filter: drop-shadow(0 14px 20px rgba(40,35,28,.2)); }
+.work .cw-bear--a { top: 26px;  right: 0;     width: clamp(78px, 8vw, 132px); }
+.work .cw-bear--b { top: 300px; right: -6px;  width: clamp(58px, 5.4vw, 92px); }
+.work .cw-bear--c { bottom: 92px; right: 1%;  width: clamp(60px, 5.6vw, 96px); }
+@media (max-width: 900px) { .work .cw-bear { display: none; } }

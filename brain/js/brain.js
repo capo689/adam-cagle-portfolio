@@ -22,7 +22,7 @@ wireStack();
 
 /* ───────────────────────── brain shader + nav ───────────────────────── */
 function initBrain() {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   const canvas = renderer.domElement;
@@ -179,29 +179,9 @@ function wireResume() {
 }
 wireResume();
 
-/* ─────────────── page-transition veil ─────────────── */
-const veil = document.querySelector(".veil");
-
-// lift the veil once the home page is up (fades home in, incl. on return from a section)
-// setTimeout (not rAF) so it still fires if the tab loads in the background
-if (veil) setTimeout(() => veil.classList.add("clear"), 60);
-
-/* exit to a right-brain section page: cover with the veil, then navigate.
-   The section page reveals the brain already painted and glides it into place. */
-function wireExit() {
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll(".menu--l a:not(.stack), .menu--r a:not(.stack)").forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href");
-      if (!href || href === "#" || /^https?:|^mailto:/.test(href)) return;
-      e.preventDefault();
-      sessionStorage.setItem("brainEnter", "slide");   // tell the section page to glide in
-      if (veil) veil.classList.remove("clear");         // re-cover: soft dissolve out
-      setTimeout(() => { window.location.href = href; }, reduce ? 0 : 470);
-    });
-  });
-}
-wireExit();
+/* Navigation between home and the section pages is handled by cross-document
+   view transitions (see brain.css): the brain element morphs across the load,
+   so the menu links are left as plain navigations. */
 
 /* ───────────────────────── STACK overlays ───────────────────────── */
 function wireStack() {

@@ -391,3 +391,30 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
 }
 .veil.clear { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .veil { transition: opacity .2s ease; } }
+
+/* ═══════════ cross-document view transitions: the brain persists ═══════════
+   The brain is captured on the leaving page and morphed to its position on the
+   arriving page — it never disappears. Links fade out, the brain glides, then
+   the new content flows in once the brain has (nearly) arrived. */
+@view-transition { navigation: auto; }
+.brain { view-transition-name: brain; }
+
+::view-transition-group(brain) {
+  animation-duration: .72s;
+  animation-timing-function: cubic-bezier(.5, 0, .2, 1);
+}
+/* keep the brain crisp during the move (no cross-fade of the two snapshots) */
+::view-transition-old(brain) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(brain) { animation: none; }
+
+::view-transition-old(root) { animation: vtRootOut .28s ease both; }
+::view-transition-new(root) { animation: vtRootIn .42s ease .52s both; }
+@keyframes vtRootOut { to { opacity: 0; } }
+@keyframes vtRootIn { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
+/* the veil is superseded by view transitions */
+.veil { display: none !important; }

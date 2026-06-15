@@ -64,14 +64,12 @@ body.interior { overflow: hidden; }
 /* a calmer brain footprint on content-heavy pages so the editorial breathes */
 .interior--work { --bint: clamp(300px, 46vh, 500px); }
 
-/* content sits clear of the visible brain half, and fades in after the glide */
+/* content sits clear of the visible brain half (view transitions fade it in) */
 .page__content {
   position: relative; z-index: 2; height: 100%;
   padding: clamp(20px,4vh,60px) clamp(24px,5vw,80px);
   padding-left: clamp(24px, 32vw, 460px);
-  opacity: 0; transition: opacity .42s ease;
 }
-.interior.content-in .page__content { opacity: 1; }
 
 /* while a lightbox/book viewer is open, lift the content's stacking context
    above the bar (z-index:3) so the fullscreen overlay covers the header */

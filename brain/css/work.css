@@ -508,12 +508,13 @@ body.lb-open .page__content { overflow: hidden; }
 
 /* ── above-the-fold WINS flex band ───────────────────────────────────── */
 .work .hero { position: relative; }
-/* lead-in line above the quoted wins */
-.work .wins-lead {
+/* lead-in line above the quoted wins, with the (static) business bear at right */
+.work .wins-lead { display: flex; align-items: center; flex-wrap: wrap; gap: clamp(14px, 2vw, 34px); margin: 8px 0 26px; }
+.work .wins-lead-text {
   font-family: var(--italic); font-style: italic;
-  font-size: clamp(22px, 2.6vw, 38px); line-height: 1.15; letter-spacing: -.01em;
-  color: var(--fg); margin: 8px 0 26px; max-width: 24ch;
+  font-size: clamp(22px, 2.6vw, 38px); line-height: 1.15; letter-spacing: -.01em; color: var(--fg);
 }
+.work .wins-lead-bear { height: clamp(54px, 7vw, 104px); width: auto; flex: 0 0 auto; filter: drop-shadow(0 12px 18px rgba(40,35,28,.18)); }
 /* the case header now sits BELOW the wins, smaller than the old hero title */
 .work .hero .hero-title {
   font-size: clamp(30px, 3.6vw, 60px); line-height: .96;
@@ -558,11 +559,14 @@ body.lb-open .page__content { overflow: hidden; }
   padding: clamp(36px, 6vh, 72px) 0 clamp(16px, 3vh, 36px);
 }
 .work .cw-lineup {
-  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center;
-  gap: clamp(10px, 1.8vw, 30px);
+  display: flex; flex-wrap: nowrap; align-items: flex-end; justify-content: space-between;
+  gap: clamp(4px, 0.8vw, 14px);
 }
 .work .cw-lineup img {
-  height: clamp(64px, 7.5vw, 120px); width: auto; display: block;
+  flex: 0 1 auto; min-width: 0;
+  height: auto; width: auto; display: block;
+  max-height: clamp(46px, 7.5vw, 104px);
+  max-width: calc((100% - 10 * clamp(4px, 0.8vw, 14px)) / 11);
   filter: drop-shadow(0 12px 18px rgba(40,35,28,.18));
   transition: transform .3s cubic-bezier(.2,.7,.2,1);
 }

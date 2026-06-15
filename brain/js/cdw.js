@@ -160,7 +160,7 @@
       const frag = document.createDocumentFragment();
       items.forEach((t, i) => {
         frag.appendChild(tileEl(t));
-        if (i % 5 === 4) { frag.appendChild(bearEl(((bear++ - 1) % 7) + 1)); }
+        if (i % 5 === 4) { frag.appendChild(bearEl(((bear++ - 1) % 11) + 1)); }
       });
       if (ri === 0) frag.insertBefore(amdEl(), frag.children[2] || null);
       const track = document.createElement("div");

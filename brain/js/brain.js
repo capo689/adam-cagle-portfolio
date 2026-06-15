@@ -160,6 +160,7 @@ function wireNav() {
     if (window.CDWall) window.CDWall.init();
     if (window.Flipbook) window.Flipbook.init();
     if (window.WritingReader) window.WritingReader.init();
+    if (window.CWBears) window.CWBears.init();
   }
 
   async function enterSection(href, push) {

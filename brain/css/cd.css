@@ -1,12 +1,11 @@
 /* cd.css — Creative Direction gallery: a cream square myasma of work.
-   Hover (or tap) a tile and the piece takes over the content area; the brain
-   stays docked. Client name only. Lives inside .page__content. */
+   Hover/tap a tile: every OTHER tile fades away, the hovered tile stays put,
+   and the full piece fills the space behind it. Brain stays docked. Client
+   name only. Lives inside .page__content. */
 
-.cdg { padding: 0 0 clamp(40px,7vh,90px); }
+.cdg { position: relative; isolation: isolate; padding: 0 0 clamp(40px,7vh,90px); }
 
-.cdg__head {
-  margin: 0 0 clamp(20px,3vh,34px);
-}
+.cdg__head { margin: 0 0 clamp(20px,3vh,34px); transition: opacity .4s ease; }
 .cdg__kicker {
   font-family: var(--mono, "IBM Plex Mono", monospace);
   font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
@@ -18,8 +17,9 @@
   color: #5a5145; margin: 0; max-width: 52ch;
 }
 
-/* the myasma: dense square grid */
+/* the myasma: dense square grid (above the takeover) */
 .cdg__grid {
+  position: relative; z-index: 2;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(clamp(118px, 14vw, 172px), 1fr));
   gap: clamp(8px, 0.9vw, 14px);
@@ -29,45 +29,46 @@
   background-image: var(--img); background-size: cover; background-position: center;
   background-color: #e7e1d6; cursor: pointer; overflow: hidden;
   filter: saturate(.94) brightness(.99);
-  transition: filter .3s ease, transform .35s cubic-bezier(.2,.8,.3,1), box-shadow .3s ease;
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.3,1), filter .3s ease, box-shadow .3s ease;
 }
-.cdg__tile::after {                       /* subtle frame */
-  content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(40,35,28,.10);
-}
-.cdg__tile:hover, .cdg__tile:focus-visible {
-  filter: saturate(1.08) brightness(1.02);
-  transform: translateY(-2px) scale(1.012);
-  box-shadow: 0 14px 30px -16px rgba(40,35,28,.5);
-  outline: none; z-index: 2;
+.cdg__tile::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(40,35,28,.10); }
+.cdg__tile:hover { filter: saturate(1.08) brightness(1.02); }
+
+/* hover state: others vanish, the active tile holds + lifts a touch */
+.cdg.is-active .cdg__tile { opacity: .04; pointer-events: none; }
+.cdg.is-active .cdg__head { opacity: 0; }
+.cdg.is-active .cdg__tile.on {
+  opacity: 1; pointer-events: auto;
+  transform: scale(1.05); z-index: 3;
+  box-shadow: 0 22px 50px -22px rgba(40,35,28,.6);
 }
 
-/* takeover: the piece fills the content area (brain stays docked left) */
+/* takeover: the full piece fills the content area, BEHIND the tiles */
 .cdg__takeover {
   position: fixed; top: clamp(78px, 10vh, 108px); right: 0; bottom: 0;
   left: clamp(188px, 24vw, 320px);          /* clear the docked brain */
-  z-index: 6; pointer-events: none;
-  opacity: 0; visibility: hidden;
-  transition: opacity .4s ease;
-  background: radial-gradient(120% 120% at 50% 42%, #f4efe6 0%, #e7ddcd 100%);
+  z-index: 1; pointer-events: none;
+  opacity: 0; visibility: hidden; transition: opacity .55s ease;
 }
-.cdg__takeover.show { opacity: 1; visibility: visible; }
+.cdg.is-active .cdg__takeover { opacity: 1; visibility: visible; }
 .cdg__big {
-  position: absolute; inset: clamp(18px,3vh,44px) clamp(20px,3vw,56px) clamp(54px,7vh,86px);
+  position: absolute; inset: clamp(8px,2vh,28px) clamp(10px,2vw,40px) clamp(46px,6vh,76px);
   background-size: contain; background-position: center; background-repeat: no-repeat;
 }
 .cdg__client {
-  position: absolute; left: clamp(20px,3vw,56px); bottom: clamp(20px,3vh,34px);
+  position: absolute; left: clamp(12px,2vw,40px); bottom: clamp(18px,3vh,30px);
   font-family: var(--mono, "IBM Plex Mono", monospace);
   font-size: clamp(12px,1.2vw,15px); letter-spacing: .2em; text-transform: uppercase;
-  color: #2a2620;
+  color: #2a2620; opacity: 0; transform: translateY(6px); transition: opacity .4s ease .15s, transform .4s ease .15s;
 }
+.cdg.is-active .cdg__client { opacity: 1; transform: none; }
 .cdg__client::before {
   content: ""; display: inline-block; width: 26px; height: 1px; vertical-align: middle;
   background: #4D8BE8; margin-right: 12px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cdg__tile, .cdg__takeover { transition: none; }
+  .cdg__tile, .cdg__takeover, .cdg__client, .cdg__head { transition: none; }
 }
 @media (max-width: 720px) {
   .cdg__takeover { left: 0; top: clamp(70px,9vh,96px); }

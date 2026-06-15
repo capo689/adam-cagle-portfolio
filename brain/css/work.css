@@ -508,6 +508,19 @@ body.lb-open .page__content { overflow: hidden; }
 
 /* ── above-the-fold WINS flex band ───────────────────────────────────── */
 .work .hero { position: relative; }
+/* lead-in line above the quoted wins */
+.work .wins-lead {
+  font-family: var(--italic); font-style: italic;
+  font-size: clamp(22px, 2.6vw, 38px); line-height: 1.15; letter-spacing: -.01em;
+  color: var(--fg); margin: 8px 0 26px; max-width: 24ch;
+}
+/* the case header now sits BELOW the wins, smaller than the old hero title */
+.work .hero .hero-title {
+  font-size: clamp(30px, 3.6vw, 60px); line-height: .96;
+  margin: clamp(36px,5vh,64px) 0 28px;
+}
+/* anchor jumps clear the floating bar */
+.work .case-rich { scroll-margin-top: clamp(80px, 12vh, 112px); }
 .work .wins {
   display: grid; grid-template-columns: repeat(2, 1fr);
   margin: 4px 0 44px;

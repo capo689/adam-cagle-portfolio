@@ -405,12 +405,13 @@ html.wr-lock { overflow: hidden; }
 .wr__next { right: clamp(4px,1.5vw,22px); }
 @media (max-width: 620px) { .wr__arrow { display: none; } }
 
-/* per-card mascot bear, bottom-right of each writing sample card */
-.cw .sc-bear {
-  position: absolute; right: 4px; bottom: 4px; z-index: 4;
-  width: clamp(78px, 12vw, 138px); height: auto;
-  pointer-events: none; user-select: none;
-  filter: drop-shadow(0 10px 16px rgba(0,0,0,.30));
-  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+/* wrench bear, flush right next to the Writing Samples title */
+.cw .hero-titlerow { display: flex; align-items: flex-end; justify-content: space-between; gap: clamp(20px, 4vw, 60px); }
+.cw .hero-bear {
+  flex: 0 0 auto; height: clamp(130px, 18vw, 250px); width: auto;
+  filter: drop-shadow(0 16px 26px rgba(0,0,0,.22));
 }
-.cw .sample-card:hover .sc-bear { transform: translateY(-5px) scale(1.05); }
+@media (max-width: 640px) {
+  .cw .hero-titlerow { gap: 14px; }
+  .cw .hero-bear { height: clamp(86px, 26vw, 130px); }
+}

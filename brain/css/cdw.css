@@ -46,9 +46,9 @@
   width: max-content;
   will-change: transform;
 }
-.cdw__row--a .cdw__track { animation: cdwL 68s linear infinite; }
-.cdw__row--b .cdw__track { animation: cdwR 86s linear infinite; }
-.cdw__row--c .cdw__track { animation: cdwL 76s linear infinite; }
+.cdw__row--a .cdw__track { animation: cdwL 240s linear infinite; }
+.cdw__row--b .cdw__track { animation: cdwR 290s linear infinite; }
+.cdw__row--c .cdw__track { animation: cdwL 265s linear infinite; }
 
 @keyframes cdwL { from { transform: translate3d(0, 0, 0); }    to { transform: translate3d(-50%, 0, 0); } }
 @keyframes cdwR { from { transform: translate3d(-50%, 0, 0); } to { transform: translate3d(0, 0, 0); } }

@@ -12,7 +12,7 @@
   let cur = 0, flipping = false, aspect = 1.3, keysBound = false;   // aspect = single-page w/h (HF pages are landscape)
   let viewer, book, leftSide, rightSide, counter;
 
-  const src = (n) => (n == null ? "" : `/img/HF/HotelFigueroa%20${n}.jpeg`);
+  const src = (n) => (n == null ? "" : `img/HF/HotelFigueroa%20${n}.jpeg`);
   function setFace(el, n) {
     if (n == null) { el.style.backgroundImage = "none"; el.classList.add("blank"); }
     else { el.style.backgroundImage = `url("${src(n)}")`; el.classList.remove("blank"); }

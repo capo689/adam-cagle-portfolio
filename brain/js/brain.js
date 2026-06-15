@@ -15,6 +15,7 @@ const coarse = window.matchMedia("(pointer: coarse)").matches;
 
 let tL = 0, tR = 0;     // brain hemisphere targets (lerped in the tick)
 let locked = false;     // true while a section is open (hover disabled)
+let colorK = 0.09;      // paint lerp speed (0.09 = snappy hover; lower = slow breath)
 
 function supportsWebGL() {
   try { const c = document.createElement("canvas");
@@ -114,8 +115,8 @@ function initBrain() {
   function tick() {
     raf = requestAnimationFrame(tick);
     u.uTime.value += Math.min(clock.getDelta(), 0.05);
-    u.uLeft.value  += (tL - u.uLeft.value)  * 0.09;
-    u.uRight.value += (tR - u.uRight.value) * 0.09;
+    u.uLeft.value  += (tL - u.uLeft.value)  * colorK;
+    u.uRight.value += (tR - u.uRight.value) * colorK;
     renderer.render(scene, camera);
   }
   tick();
@@ -127,8 +128,9 @@ function initBrain() {
   // control surface for the resume sequence + section controller
   window.__brain = {
     sides(l, r) { tL = l; tR = r; },
-    lock(l, r) { locked = true; tL = l; tR = r; },
-    unlock() { locked = false; tL = 0; tR = 0; stage.classList.remove("is-left", "is-right"); },
+    colorSpeed(k) { colorK = k; },                       // set the paint lerp speed
+    lock(l, r) { locked = true; tL = l; tR = r; colorK = 0.09; },
+    unlock() { locked = false; tL = 0; tR = 0; colorK = 0.09; stage.classList.remove("is-left", "is-right"); },
   };
 }
 
@@ -191,9 +193,9 @@ function wireNav() {
     const name = baseName(href);
     const side = sideOf(name) || (body.classList.contains("side-left") ? "left" : "right");
     if (busyNav) return; busyNav = true;
-    // the drawn brain stays; only the colour drains off, then floods back on
+    // the drawn brain stays; only the colour SLOWLY drains off, then floods back on
     body.classList.remove("content-in");                   // content fades out
-    if (window.__brain) window.__brain.sides(0, 0);        // colour drains off the brain
+    if (window.__brain) { window.__brain.colorSpeed(0.035); window.__brain.sides(0, 0); } // slow drain
     let data;
     try { data = await fetchSection(href); }
     catch (e) { window.location.href = href; return; }
@@ -203,9 +205,9 @@ function wireNav() {
       if (data.title) document.title = data.title;
       initContentScripts();
       if (push) history.pushState({ section: name }, "", href);
-      if (window.__brain) window.__brain.sides(side === "left" ? 1 : 0, side === "right" ? 1 : 0); // colour floods back
-      setTimeout(() => { body.classList.add("content-in"); busyNav = false; }, reduced ? 0 : 430); // content in once colour returns
-    }, reduced ? 0 : 480);
+      if (window.__brain) window.__brain.sides(side === "left" ? 1 : 0, side === "right" ? 1 : 0); // colour slowly floods back
+      setTimeout(() => { body.classList.add("content-in"); busyNav = false; }, reduced ? 0 : 850); // content in once colour returns
+    }, reduced ? 0 : 850);                                  // let the colour fully drain first
   }
 
   function goHome(push) {

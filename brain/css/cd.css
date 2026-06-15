@@ -34,8 +34,9 @@
 .cdg__tile::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(40,35,28,.10); }
 .cdg__tile:hover { filter: saturate(1.08) brightness(1.02); }
 
-/* hover state: others vanish, the active tile holds + lifts a touch */
-.cdg.is-active .cdg__tile { opacity: .04; pointer-events: none; }
+/* hover state: others fade to ghosts (but stay hittable so you can roll
+   between pieces), the active tile holds + lifts a touch */
+.cdg.is-active .cdg__tile { opacity: .07; }
 .cdg.is-active .cdg__head { opacity: 0; }
 .cdg.is-active .cdg__tile.on {
   opacity: 1; pointer-events: auto;

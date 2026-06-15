@@ -209,8 +209,15 @@ body.theme-tech .bar__resume .main { color: #f4f6f8; }
 body.theme-tech .bar__resume:hover { border-color: var(--blue); }
 body.theme-tech .bar__resume:hover .top,
 body.theme-tech .bar__resume:hover .main { color: var(--blue); }
-body.theme-tech .bar__contact { background: transparent; border-color: rgba(244,246,248,.3); color: #f4f6f8; }
-body.theme-tech .bar__contact:hover { background: #4D8BE8; border-color: #4D8BE8; color: #fff; }
+body.theme-tech .bar__contact > summary { border-color: rgba(244,246,248,.3); color: #f4f6f8; }
+body.theme-tech .bar__contact > summary:hover,
+body.theme-tech .bar__contact[open] > summary { background: #4D8BE8; border-color: #4D8BE8; color: #fff; }
+body.theme-tech .bar__contact-pop { background: rgba(36,42,51,.93); border-color: rgba(244,246,248,.14); }
+body.theme-tech .bar__contact-pop a { color: #f4f6f8; }
+body.theme-tech .bar__contact-pop a:hover { background: rgba(77,139,232,.18); }
+body.theme-tech .cp-ico { background: rgba(244,246,248,.08); }
+body.theme-tech .cp-k { color: rgba(244,246,248,.55); }
+body.theme-tech .cp-v { color: #f4f6f8; }
 body.theme-tech .bar__nav a { color: rgba(244,246,248,.74); }
 
 /* ── faint circuit lines, carried through from the digital brain (subtle) ── */

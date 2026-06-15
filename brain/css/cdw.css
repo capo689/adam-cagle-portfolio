@@ -248,3 +248,68 @@ html.cdwlb-lock { overflow: hidden; }
   .cdw__name { opacity: 1; transform: none; }   /* names always visible when tapping is the only input */
   .app.side-right .page__content .cdw { margin-left: 0; }
 }
+
+/* ── logo cards woven into the reel (decorative brand punctuation) ─────── */
+.cdw__logo {
+  flex: 0 0 auto;
+  margin-right: clamp(14px, 1.7vw, 28px);
+  height: clamp(140px, 20vh, 230px);
+  pointer-events: none; user-select: none;
+}
+.cdw__logo img {
+  height: 100%; width: auto; display: block; border-radius: 3px;
+  box-shadow: 0 12px 30px -20px rgba(40, 35, 28, .5);
+}
+.cdw:hover .cdw__logo { opacity: .5; transition: opacity .42s ease; }
+
+/* ── book tile cue (AMD comic opens the flipbook) ─────────────────────── */
+.cdw__tile--book::before {
+  content: "Flip Book";
+  position: absolute; top: 9px; left: 9px; z-index: 2;
+  font-family: "Inter", Arial, sans-serif; font-weight: 600;
+  font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: #fff; background: rgba(20,17,13,.62);
+  padding: 5px 9px; border-radius: 999px;
+  opacity: 0; transform: translateY(-4px); transition: opacity .26s ease, transform .26s ease;
+  pointer-events: none;
+}
+.cdw__tile--book:hover::before { opacity: 1; transform: none; }
+
+/* ════ generic 3D page-turn flipbook viewer (AMD comic, any book) ════ */
+html.fb-lock { overflow: hidden; }
+.fb {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(8,8,7,.985);
+  display: none; align-items: center; justify-content: center; flex-direction: column;
+  padding: 56px 80px; opacity: 0; transition: opacity .22s ease;
+}
+.fb.open { display: flex; }
+.fb.visible { opacity: 1; }
+.fb-stage { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; perspective: 2800px; perspective-origin: 50% 45%; }
+.fb-book { position: relative; transform-style: preserve-3d; --pw: 300px; --ph: 420px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.7); }
+.fb-side { position: absolute; top: 0; width: var(--pw); height: var(--ph); background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0d0d0c; }
+.fb-side.fb-left { left: 0; } .fb-side.fb-right { right: 0; }
+.fb-side.blank { background-color: transparent; }
+.fb-book::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 96px; transform: translateX(-50%); z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.20) 47%, rgba(0,0,0,.32) 50%, rgba(0,0,0,.20) 53%, rgba(0,0,0,0) 100%); }
+.fb-leaf { position: absolute; top: 0; width: var(--pw); height: var(--ph); transform-style: preserve-3d; will-change: transform; z-index: 5; }
+.fb-leaf.fwd { left: var(--pw); transform-origin: left center; }
+.fb-leaf.bwd { left: 0; transform-origin: right center; }
+.fb-leaf.turning { transition: transform .9s cubic-bezier(.45,.05,.25,1); }
+.fb-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0d0d0c; }
+.fb-front { transform: rotateY(0deg); } .fb-back { transform: rotateY(180deg); }
+.fb-shade { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(90deg, rgba(0,0,0,.5), rgba(0,0,0,0) 60%); }
+.fb-leaf.bwd .fb-shade { background: linear-gradient(270deg, rgba(0,0,0,.5), rgba(0,0,0,0) 60%); }
+.fb-leaf.turning .fb-shade { animation: fbShade .9s ease both; }
+@keyframes fbShade { 0% { opacity: 0; } 45% { opacity: .5; } 100% { opacity: 0; } }
+.fb-counter { font-family: var(--mono, monospace); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--blue, #4D8BE8); margin-top: 14px; }
+.fb-btn { position: absolute; background: rgba(18,17,16,.9); border: 1px solid rgba(246,243,236,.3); color: #f3efe6;
+  width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; cursor: pointer; transition: background .2s, border-color .2s, color .2s, transform .2s; z-index: 2; }
+.fb-btn:hover { background: var(--blue, #4D8BE8); border-color: var(--blue, #4D8BE8); color: #fff; }
+.fb-close { top: 20px; right: 20px; font-size: 26px; }
+.fb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+.fb-next { right: 20px; top: 50%; transform: translateY(-50%); }
+.fb-prev:hover { transform: translateY(-50%) scale(1.1); }
+.fb-next:hover { transform: translateY(-50%) scale(1.1); }
+@media (max-width: 760px) { .fb { padding: 56px 12px 48px; } }

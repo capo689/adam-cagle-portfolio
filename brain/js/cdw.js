@@ -91,7 +91,7 @@
       wall.__cdwBound = true;
       wall.addEventListener("click", (e) => {
         const tile = e.target.closest(".cdw__tile");
-        if (!tile) return;
+        if (!tile || tile.hasAttribute("data-flipbook") || !tile.getAttribute("data-full")) return;
         e.preventDefault();
         lb.open(tile.getAttribute("data-full"));
       });

@@ -37,15 +37,31 @@
     [cur - 1, cur + 1].forEach((i) => { if (i >= 0 && i < total) spreads[i].forEach((n) => { if (n != null) new Image().src = src(n); }); });
   }
 
-  function flip(dir) {
+  function decodeImg(n) {
+    if (n == null) return Promise.resolve();
+    const i = new Image(); i.src = src(n);
+    return (i.decode ? i.decode() : Promise.resolve()).catch(() => {});
+  }
+  function preloadAll() {
+    spreads.forEach((s) => s.forEach((n) => { if (n != null) { const i = new Image(); i.src = src(n); } }));
+  }
+
+  async function flip(dir) {
     if (flipping) return;
     const ni = cur + dir;
     if (ni < 0 || ni >= total) return;
     flipping = true;
 
     const fwd = dir > 0;
-    const frontN = fwd ? spreads[cur][1] : spreads[cur][0];
-    const backN  = fwd ? spreads[ni][0]  : spreads[ni][1];
+    const frontN  = fwd ? spreads[cur][1] : spreads[cur][0];
+    const backN   = fwd ? spreads[ni][0]  : spreads[ni][1];
+    const revealN = fwd ? spreads[ni][1]  : spreads[ni][0];
+
+    // decode the incoming art first so the turn never blanks then pops
+    await Promise.race([
+      Promise.all([decodeImg(backN), decodeImg(revealN)]),
+      new Promise((r) => setTimeout(r, 450)),
+    ]);
 
     // reveal the destination page that sits BEHIND the turning leaf
     if (fwd) setFace(rightSide, spreads[ni][1]);
@@ -55,18 +71,15 @@
     leaf.className = "hf-leaf " + (fwd ? "fwd" : "bwd");
     leaf.innerHTML =
       `<div class="hf-face hf-front"></div><div class="hf-face hf-back"></div><div class="hf-shade"></div>`;
-    const front = leaf.querySelector(".hf-front");
-    const back  = leaf.querySelector(".hf-back");
-    setFace(front, frontN);
-    setFace(back, backN);
+    setFace(leaf.querySelector(".hf-front"), frontN);
+    setFace(leaf.querySelector(".hf-back"), backN);
+    leaf.style.transform = "rotateY(0deg)";
     book.appendChild(leaf);
 
-    // start, then animate on the next frame
-    leaf.style.transform = "rotateY(0deg)";
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      leaf.classList.add("turning");
-      leaf.style.transform = `rotateY(${fwd ? -180 : 180}deg)`;
-    }));
+    // commit the start frame, then enable the transition and turn — one smooth move
+    void leaf.offsetWidth;
+    leaf.classList.add("turning");
+    leaf.style.transform = `rotateY(${fwd ? -180 : 180}deg)`;
 
     let done = false;
     const finish = () => {
@@ -76,11 +89,12 @@
       flipping = false;
     };
     leaf.addEventListener("transitionend", (e) => { if (e.propertyName === "transform") finish(); }, { once: true });
-    setTimeout(finish, 1100); // failsafe (also covers throttled tabs)
+    setTimeout(finish, 1200); // failsafe
   }
 
   function openViewer() {
     if (!sized) { sizeBook(); sized = true; }
+    preloadAll();
     cur = 0; render();
     viewer.classList.add("open"); viewer.setAttribute("aria-hidden", "false");
     document.body.classList.add("lb-open");

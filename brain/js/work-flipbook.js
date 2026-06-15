@@ -9,7 +9,7 @@
   for (let f = 63; f <= 122; f += 2) spreads.push([f, f + 1 <= 122 ? f + 1 : null]);
   const total = spreads.length;
 
-  let cur = 0, flipping = false, aspect = 0.72, keysBound = false, sized = false;
+  let cur = 0, flipping = false, aspect = 1.3, keysBound = false;   // aspect = single-page w/h (HF pages are landscape)
   let viewer, book, leftSide, rightSide, counter;
 
   const src = (n) => (n == null ? "" : `/img/HF/HotelFigueroa%20${n}.jpeg`);
@@ -19,10 +19,19 @@
   }
 
   function sizeBook() {
-    const maxH = window.innerHeight - 150;
-    const maxW = window.innerWidth - 110;
-    let h = Math.max(240, maxH), w = h * aspect * 2;
-    if (w > maxW) { w = maxW; h = (w / 2) / aspect; }
+    if (!book) return;
+    const narrow = window.innerWidth < 760;
+    const padX = narrow ? 16 : 72;
+    const chrome = narrow ? 120 : 150;             // room for footer + nav buttons
+    const maxW = Math.max(220, window.innerWidth - padX * 2);
+    const maxH = Math.max(220, window.innerHeight - chrome);
+    // fit a two-page spread (each page = aspect) into the available box, width-first
+    let w = maxW;
+    let h = (w / 2) / aspect;
+    if (h > maxH) { h = maxH; w = h * aspect * 2; }
+    // perspective tracks the book size so the 3D arc looks the same at any scale
+    const stage = book.parentElement;
+    if (stage) stage.style.perspective = Math.round(w * 1.6) + "px";
     book.style.width = w + "px";
     book.style.height = h + "px";
     book.style.setProperty("--pw", (w / 2) + "px");
@@ -86,7 +95,7 @@
   }
 
   function openViewer() {
-    if (!sized) { sizeBook(); sized = true; }
+    sizeBook();              // always size to the current window
     preloadAll();
     cur = 0; render();
     viewer.classList.add("open"); viewer.setAttribute("aria-hidden", "false");
@@ -106,9 +115,8 @@
     leftSide = viewer.querySelector(".hf-left");
     rightSide = viewer.querySelector(".hf-right");
     counter = document.getElementById("hf-counter");
-    sized = false;
 
-    // measure the real page aspect once, then (re)size if open
+    // measure the real page aspect up-front, then (re)size if open
     const probe = new Image();
     probe.onload = () => { if (probe.naturalWidth) { aspect = probe.naturalWidth / probe.naturalHeight; if (viewer.classList.contains("open")) { sizeBook(); render(); } } };
     probe.src = src(63);

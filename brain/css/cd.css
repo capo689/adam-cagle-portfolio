@@ -1,0 +1,75 @@
+/* cd.css — Creative Direction gallery: a cream square myasma of work.
+   Hover (or tap) a tile and the piece takes over the content area; the brain
+   stays docked. Client name only. Lives inside .page__content. */
+
+.cdg { padding: 0 0 clamp(40px,7vh,90px); }
+
+.cdg__head {
+  margin: 0 0 clamp(20px,3vh,34px);
+}
+.cdg__kicker {
+  font-family: var(--mono, "IBM Plex Mono", monospace);
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: #4D8BE8; margin: 0 0 6px;
+}
+.cdg__lead {
+  font-family: var(--garamond, "EB Garamond", Georgia, serif);
+  font-style: italic; font-size: clamp(15px,1.5vw,19px);
+  color: #5a5145; margin: 0; max-width: 52ch;
+}
+
+/* the myasma: dense square grid */
+.cdg__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(118px, 14vw, 172px), 1fr));
+  gap: clamp(8px, 0.9vw, 14px);
+}
+.cdg__tile {
+  position: relative; aspect-ratio: 1 / 1; border: 0; padding: 0; margin: 0;
+  background-image: var(--img); background-size: cover; background-position: center;
+  background-color: #e7e1d6; cursor: pointer; overflow: hidden;
+  filter: saturate(.94) brightness(.99);
+  transition: filter .3s ease, transform .35s cubic-bezier(.2,.8,.3,1), box-shadow .3s ease;
+}
+.cdg__tile::after {                       /* subtle frame */
+  content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(40,35,28,.10);
+}
+.cdg__tile:hover, .cdg__tile:focus-visible {
+  filter: saturate(1.08) brightness(1.02);
+  transform: translateY(-2px) scale(1.012);
+  box-shadow: 0 14px 30px -16px rgba(40,35,28,.5);
+  outline: none; z-index: 2;
+}
+
+/* takeover: the piece fills the content area (brain stays docked left) */
+.cdg__takeover {
+  position: fixed; top: clamp(78px, 10vh, 108px); right: 0; bottom: 0;
+  left: clamp(188px, 24vw, 320px);          /* clear the docked brain */
+  z-index: 6; pointer-events: none;
+  opacity: 0; visibility: hidden;
+  transition: opacity .4s ease;
+  background: radial-gradient(120% 120% at 50% 42%, #f4efe6 0%, #e7ddcd 100%);
+}
+.cdg__takeover.show { opacity: 1; visibility: visible; }
+.cdg__big {
+  position: absolute; inset: clamp(18px,3vh,44px) clamp(20px,3vw,56px) clamp(54px,7vh,86px);
+  background-size: contain; background-position: center; background-repeat: no-repeat;
+}
+.cdg__client {
+  position: absolute; left: clamp(20px,3vw,56px); bottom: clamp(20px,3vh,34px);
+  font-family: var(--mono, "IBM Plex Mono", monospace);
+  font-size: clamp(12px,1.2vw,15px); letter-spacing: .2em; text-transform: uppercase;
+  color: #2a2620;
+}
+.cdg__client::before {
+  content: ""; display: inline-block; width: 26px; height: 1px; vertical-align: middle;
+  background: #4D8BE8; margin-right: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cdg__tile, .cdg__takeover { transition: none; }
+}
+@media (max-width: 720px) {
+  .cdg__takeover { left: 0; top: clamp(70px,9vh,96px); }
+  .cdg__grid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); }
+}

@@ -154,6 +154,7 @@ function wireNav() {
   function initContentScripts() {
     if (window.WorkLightbox) window.WorkLightbox.init();
     if (window.WorkFlipbook) window.WorkFlipbook.init();
+    if (window.CDGallery) window.CDGallery.init();
   }
 
   async function enterSection(href, push) {

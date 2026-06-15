@@ -71,6 +71,11 @@ body.interior { overflow: hidden; }
   padding: clamp(20px,4vh,60px) clamp(24px,5vw,80px);
   padding-left: clamp(24px, 32vw, 460px);
 }
+/* left / tech pages dock the brain on the RIGHT, so clear that side instead */
+.interior--left .page__content {
+  padding-left: clamp(24px, 5vw, 80px);
+  padding-right: clamp(24px, 32vw, 460px);
+}
 
 /* while a lightbox/book viewer is open, lift the content's stacking context
    above the bar (z-index:3) so the fullscreen overlay covers the header */

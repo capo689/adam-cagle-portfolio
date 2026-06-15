@@ -32,6 +32,12 @@
       { src: 'img/ads/FileKeepers_SPACE13.jpg', hl: 'Space.', meta: 'FileKeepers · Room 3' },
       { src: 'img/ads/FileKeepers_SPACE14.jpg', hl: 'Space.', meta: 'FileKeepers · Room 4' }
     ],
+    navis: [
+      { src: 'img/ads/navis-grm.jpg',           hl: 'GRM.',                                            meta: 'Guest Relationship Management' },
+      { src: 'img/ads/navis-mightier.jpg',      hl: 'The phone is mightier than the mouse.',           meta: '46% vs 2% Conversion' },
+      { src: 'img/ads/navis-most-powerful.jpg', hl: 'The most powerful booking engine in the world.',  meta: 'Hospitality is a people business' },
+      { src: 'img/ads/navis-traffic.jpg',       hl: "Traffic doesn't make reservations.",             meta: 'Guests do' }
+    ],
     clink: [
       { src: 'img/CLINK/ws-panel_0000_homepage.jpg',                                                          hl: 'Homepage.',  meta: 'Clink Hostels' },
       { src: 'img/CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',            hl: 'Clink78.',   meta: 'London' },

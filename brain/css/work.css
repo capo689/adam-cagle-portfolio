@@ -354,7 +354,7 @@
   }
 .work .hf-leaf.fwd { left: var(--pw); transform-origin: left center; }
 .work .hf-leaf.bwd { left: 0;         transform-origin: right center; }
-.work .hf-leaf.turning { transition: transform .8s cubic-bezier(.46,.03,.34,1); }
+.work .hf-leaf.turning { transition: transform .9s cubic-bezier(.45,.05,.25,1); }
 .work .hf-face {
     position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
     background-size: contain; background-position: center; background-repeat: no-repeat;
@@ -368,7 +368,7 @@
   }
 .work .hf-leaf.bwd .hf-shade { background: linear-gradient(270deg, rgba(0,0,0,.5), rgba(0,0,0,0) 60%); }
 /* shade rises then clears, so removing the leaf never flashes */
-.work .hf-leaf.turning .hf-shade { animation: hfShade .8s ease both; }
+.work .hf-leaf.turning .hf-shade { animation: hfShade .9s ease both; }
 @keyframes hfShade { 0% { opacity: 0; } 45% { opacity: .5; } 100% { opacity: 0; } }
 .work .hf-footer {
     display: flex; align-items: center; justify-content: space-between;

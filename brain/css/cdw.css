@@ -1,0 +1,175 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Creative Direction — the kinetic studio wall.
+   Three rows of work scroll past at different speeds and directions, paint
+   blotches punctuate the reel. Hover anywhere pauses everything; the piece
+   under the cursor lifts out and names its client. Minimal data, lots of work.
+   Pure CSS: no JS init needed, so it works the moment it is injected by the SPA.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.cdw {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  height: calc(100dvh - clamp(112px, 14vh, 156px));
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(14px, 2.4vh, 30px);
+}
+
+/* whisper-quiet header, top-left of the wall */
+.cdw__intro {
+  position: absolute;
+  top: clamp(8px, 1.6vh, 22px);
+  left: clamp(2px, 1vw, 14px);
+  z-index: 5;
+  pointer-events: none;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: #6b6354;
+}
+.cdw__intro b { color: var(--blue, #4D8BE8); font-weight: 500; }
+
+/* faint paint texture on the studio wall, behind the work */
+.cdw__wash {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .16;
+  filter: saturate(.9);
+}
+.cdw__wash--tr { top: -4%;  right: -3%; width: clamp(220px, 26vw, 460px); transform: rotate(8deg); }
+.cdw__wash--bl { bottom: -6%; left: 6%;  width: clamp(200px, 22vw, 400px); transform: rotate(-12deg); }
+.cdw__wash img { width: 100%; height: auto; display: block; }
+
+/* ── rows ──────────────────────────────────────────────────────────────
+   .cdw clips horizontally; rows stay overflow:visible so a lifted tile can
+   scale into the gap without being sliced. */
+.cdw__row { position: relative; z-index: 1; overflow: visible; display: flex; }
+.cdw__track {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: max-content;
+  will-change: transform;
+}
+.cdw__row--a .cdw__track { animation: cdwL 68s linear infinite; }
+.cdw__row--b .cdw__track { animation: cdwR 86s linear infinite; }
+.cdw__row--c .cdw__track { animation: cdwL 76s linear infinite; }
+
+@keyframes cdwL { from { transform: translate3d(0, 0, 0); }    to { transform: translate3d(-50%, 0, 0); } }
+@keyframes cdwR { from { transform: translate3d(-50%, 0, 0); } to { transform: translate3d(0, 0, 0); } }
+
+/* hover the wall: everything halts so you can study the work */
+.cdw:hover .cdw__track { animation-play-state: paused; }
+
+/* ── work tiles ────────────────────────────────────────────────────────
+   margin-right (not flex gap) so each tile owns its trailing space and the
+   doubled track loops seamlessly at exactly -50%. */
+.cdw__tile {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(140px, 20vh, 230px);
+  margin-right: clamp(14px, 1.7vw, 28px);
+  border: 0; padding: 0; background: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transform-origin: center;
+  transition: transform .42s cubic-bezier(.2, .7, .2, 1), opacity .42s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.cdw__tile img {
+  height: 100%; width: auto; display: block;
+  border-radius: 3px;
+  box-shadow: 0 12px 34px -20px rgba(40, 35, 28, .6), 0 2px 6px -3px rgba(40, 35, 28, .35);
+  transition: box-shadow .42s ease, filter .42s ease;
+  backface-visibility: hidden;
+}
+
+/* dim the field while one piece is in focus */
+.cdw:hover .cdw__tile { opacity: .42; }
+.cdw__tile:hover,
+.cdw__tile:focus-visible {
+  opacity: 1;
+  transform: scale(1.07);
+  z-index: 6;
+}
+.cdw__tile:hover img,
+.cdw__tile:focus-visible img {
+  box-shadow: 0 34px 64px -26px rgba(40, 35, 28, .68), 0 6px 16px -6px rgba(40, 35, 28, .4);
+  filter: saturate(1.05);
+}
+.cdw__tile:focus-visible { outline: 2px solid var(--blue, #4D8BE8); outline-offset: 4px; }
+
+/* client name, revealed on the focused piece only */
+.cdw__name {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 26px 12px 11px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(to top, rgba(22, 18, 13, .82), rgba(22, 18, 13, .34) 55%, transparent);
+  color: #fff;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, .82vw, 13px);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+.cdw__name::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px; margin-right: 8px;
+  border-radius: 50%;
+  background: var(--blue, #4D8BE8);
+  vertical-align: middle;
+}
+.cdw__tile:hover .cdw__name,
+.cdw__tile:focus-visible .cdw__name { opacity: 1; transform: none; }
+
+/* ── paint blotches woven into the reel (decorative, not interactive) ──── */
+.cdw__blot {
+  flex: 0 0 auto;
+  margin-right: clamp(14px, 1.7vw, 28px);
+  display: grid;
+  place-items: center;
+  width: clamp(82px, 9vw, 150px);
+  pointer-events: none;
+  user-select: none;
+}
+.cdw__blot img {
+  max-height: clamp(96px, 14vh, 170px);
+  max-width: 100%;
+  width: auto; display: block;
+  opacity: .94;
+  filter: drop-shadow(0 8px 14px rgba(40, 35, 28, .18));
+}
+
+/* ── SPA: clear the brain docked on the left ──────────────────────────── */
+.app.side-right .page__content .cdw { margin-left: clamp(180px, 25vw, 340px); }
+
+/* ── motion off ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cdw__track { animation: none !important; }
+  .cdw { height: auto; overflow: visible; }
+  .cdw__row { overflow-x: auto; }
+}
+
+/* ── touch / small screens: calmer, no auto-scroll, simple scroll-snap ─── */
+@media (max-width: 760px), (pointer: coarse) {
+  .cdw { height: auto; min-height: 0; overflow: visible; gap: 14px; padding-top: 34px; }
+  .cdw__track { animation: none !important; transform: none !important; }
+  .cdw__row { overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .cdw__row::-webkit-scrollbar { display: none; }
+  .cdw__tile { scroll-snap-align: center; }
+  .cdw:hover .cdw__tile { opacity: 1; }
+  .cdw__name { opacity: 1; transform: none; }   /* names always visible when tapping is the only input */
+  .app.side-right .page__content .cdw { margin-left: 0; }
+}

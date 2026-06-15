@@ -1,13 +1,13 @@
 /* ai.css — AI Systems (tech) content, ported from AISystems.html.
    Scoped under body.theme-tech .work, dark palette kept, fonts remapped to the site stack. */
 body.theme-tech .work {
-    --bg:      #0f0f0e;
-    --bg-soft: #141312;
-    --fg:      #f6f3ec;
-    --fg-2:    rgba(246,243,236,0.72);
-    --fg-3:    rgba(246,243,236,0.45);
-    --rule:    rgba(246,243,236,0.14);
-    --rule-2:  rgba(246,243,236,0.08);
+    --bg:      #323a45;        /* slate gray (was near-black) */
+    --bg-soft: #3c4450;
+    --fg:      #f4f6f8;
+    --fg-2:    rgba(244,246,248,0.72);
+    --fg-3:    rgba(244,246,248,0.46);
+    --rule:    rgba(244,246,248,0.16);
+    --rule-2:  rgba(244,246,248,0.09);
     --accent:  #4D8BE8;
     --accent-2:#2660cc;
     --green:   #4ade80;
@@ -193,14 +193,22 @@ body.theme-tech .work__scene {
   body.theme-tech .work__scene { margin: 0; padding: 0 20px 70px; max-width: none; }
 }
 
-/* ───────────── dark "tech" theme for the shell (bar / body / veil) ───────────── */
-body.theme-tech { background: radial-gradient(120% 120% at 50% 40%, #15140f 0%, #0b0a09 100%); }
-body.theme-tech .veil { background: radial-gradient(120% 120% at 50% 40%, #15140f 0%, #0b0a09 100%); }
+/* ───────────── slate "tech" theme for the shell (bar / body / veil) ───────────── */
+body.theme-tech { background: radial-gradient(125% 125% at 50% 38%, #3a414e 0%, #262b33 100%); }
+body.theme-tech .veil { background: radial-gradient(125% 125% at 50% 38%, #3a414e 0%, #262b33 100%); }
 body.theme-tech .bar {
-  background: #17150f; border: 1px solid rgba(246,243,236,.14);
-  box-shadow: 0 12px 34px -22px rgba(0,0,0,.8);
+  background: #2d343f; border: 1px solid rgba(244,246,248,.16);
+  box-shadow: 0 12px 34px -22px rgba(0,0,0,.7);
 }
-body.theme-tech .bar__name { color: #f6f3ec; }
-body.theme-tech .bar__contact { background: #f0ece2; color: #17150f; }
+body.theme-tech .bar__name { color: #f4f6f8; }
+body.theme-tech .bar__contact { background: #eef0f3; color: #20242c; }
 body.theme-tech .bar__contact:hover { background: #4D8BE8; color: #fff; }
-body.theme-tech .bar__nav a { color: rgba(246,243,236,.72); }
+body.theme-tech .bar__nav a { color: rgba(244,246,248,.74); }
+
+/* ── faint circuit lines, carried through from the digital brain (subtle) ── */
+body.theme-tech::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: .14;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%234D8BE8' stroke-width='1'%3E%3Cpath d='M0 40 H50 V96 H104 V24 H160'/%3E%3Cpath d='M40 0 V64 H96 V160'/%3E%3Cpath d='M0 120 H72 V140'/%3E%3Cpath d='M120 60 H160'/%3E%3C/g%3E%3Cg fill='%234D8BE8'%3E%3Ccircle cx='50' cy='40' r='2.6'/%3E%3Ccircle cx='104' cy='96' r='2.6'/%3E%3Ccircle cx='96' cy='64' r='2.6'/%3E%3Ccircle cx='72' cy='120' r='2.6'/%3E%3Ccircle cx='120' cy='60' r='2.6'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 320px 320px;
+}

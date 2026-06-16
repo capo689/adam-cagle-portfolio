@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var p=new URLSearchParams(location.search);if(p.get("desktop"))sessionStorage.setItem("forceDesktop","1");if(sessionStorage.getItem("forceDesktop"))return;var coarse=window.matchMedia&&matchMedia("(pointer: coarse)").matches;var small=Math.min(screen.width||9999,window.innerWidth||9999)<=820;if(coarse&&small&&location.pathname.indexOf("/mobile/")===-1)location.replace("/launch/mobile/");}catch(e){}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/launch/">
+  <title>UX / UI Design · Adam R. Cagle</title>
+  <link rel="icon" href="/launch/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/launch/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/launch/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/launch/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/launch/apple-touch-icon.png">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0a09">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/brain.css?v=17">
+  <link rel="stylesheet" href="css/cursor.css?v=2">
+  <link rel="stylesheet" href="css/interior.css?v=28">
+  <link rel="stylesheet" href="css/ai.css?v=23">
+  <link rel="stylesheet" href="css/ux.css?v=5">
+</head>
+<body class="interior interior--left interior--work theme-tech">
+
+  <div class="xfade" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="bar">
+    <a class="bar__name" href="/launch/">Adam R<span class="bar__name-dot">.</span> Cagle</a>
+    <nav class="bar__nav" aria-label="Left brain sections">
+      <a href="ai-systems.html">AI Systems</a>
+      <a href="ux-ui.html" class="is-active" aria-current="page">UX / UI Design</a>
+      <a href="technical-writing.html">Technical Writing</a>
+    </nav>
+    <details class="bar__contact">
+      <summary class="bar__contact-btn">Contact <span class="arrow">&#8594;</span></summary>
+      <div class="bar__contact-pop" role="menu">
+        <a href="mailto:adamrcagle@gmail.com" role="menuitem">
+          <span class="cp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <span class="cp-tt"><span class="cp-k">Email</span><span class="cp-v">adamrcagle@gmail.com</span></span>
+        </a>
+        <a href="https://www.linkedin.com/in/adamcagle/" target="_blank" rel="noopener noreferrer" role="menuitem">
+          <span class="cp-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9s-2.04 1.38-2.04 2.8V21h-4z"/></svg></span>
+          <span class="cp-tt"><span class="cp-k">LinkedIn</span><span class="cp-v">/in/adamcagle</span></span>
+        </a>
+      </div>
+    </details>
+  </header>
+
+  <main class="page">
+    <div class="brain brain--float" data-brain data-side="left">
+      <img class="brain__img" src="img/brain/brain-off.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+    </div>
+
+    <div class="page__content">
+      <div class="ux">
+
+        <!-- ─── HERO ─── -->
+        <section class="ux-hero">
+          <span class="ux-kicker reveal">UX / UI Design</span>
+          <h1 class="ux-h1 reveal">Interface to <span class="it">Database.</span></h1>
+          <p class="ux-lead reveal">I can build anything you can dream. From the first pixel of an interface to the schema behind it, the design and the engineering live in one set of hands.</p>
+
+          <div class="ux-ladder reveal">
+            <div class="ux-rung"><span class="n">01</span><span class="l">Interface</span><span class="d">Layout, type, visual system</span></div>
+            <div class="ux-rung"><span class="n">02</span><span class="l">Interaction</span><span class="d">Flows, states, motion</span></div>
+            <div class="ux-rung"><span class="n">03</span><span class="l">Logic</span><span class="d">Front end, APIs, rules</span></div>
+            <div class="ux-rung"><span class="n">04</span><span class="l">Data</span><span class="d">Schema, storage, retrieval</span></div>
+          </div>
+        </section>
+
+        <!-- ─── GALLERY ─── -->
+        <div class="ux-grid ux-grid--top">
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="responsive" aria-label="View Responsive screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><span class="ux-badge">4 screens</span><img src="img/uiux/responsive-1.jpg" alt="Responsive insurance agent platform" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Responsive</span><span class="tag">Insurance Platform &middot; App</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="singularity" aria-label="View Singularity screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><img src="img/uiux/singularity-1.jpg" alt="Singularity SEO dashboard" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Singularity</span><span class="tag">SEO Dashboard &middot; App</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="redtouch" aria-label="View Red Touch Media screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><span class="ux-badge">2 screens</span><img src="img/uiux/redtouch-1.jpg" alt="Red Touch Media content platform" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Red Touch Media</span><span class="tag">Media Platform &middot; App</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="sunset" aria-label="View Sunset Marquis screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><span class="ux-badge">2 pages</span><img src="img/uiux/sunset-1.jpg" alt="Sunset Marquis hotel site" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Sunset Marquis</span><span class="tag">Luxury Hotel &middot; Site</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="pga" aria-label="View Residence Club at PGA West screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><span class="ux-badge">2 pages</span><img src="img/uiux/pga-1.jpg" alt="The Residence Club at PGA West site" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Residence Club at PGA West</span><span class="tag">Luxury Real Estate &middot; Site</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="raleigh" aria-label="View Raleigh Studios screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><span class="ux-badge">2 pages</span><img src="img/uiux/raleigh-1.jpg" alt="Raleigh Studios production campus site" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Raleigh Studios</span><span class="tag">Production Studio &middot; Site</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="playa" aria-label="View Playa screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><span class="ux-badge">2 pages</span><img src="img/uiux/playa-1.jpg" alt="Playa restaurant site" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Playa</span><span class="tag">Restaurant &middot; Site</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="mesa" aria-label="View Mesa del Sol screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><img src="img/uiux/mesa-1.jpg" alt="Mesa del Sol community site" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">Mesa del Sol</span><span class="tag">Planned Community &middot; Site</span></div>
+          </button>
+
+          <button class="ux-tile reveal" type="button" data-ux-open data-ux-key="donkey" aria-label="View The Donkey on the Edge screens">
+            <div class="ux-tile__bar"><i></i><i></i><i></i><span class="k">Interface</span></div>
+            <div class="ux-tile__shot"><span class="ux-badge">3 pages</span><img src="img/uiux/donkey-1.jpg" alt="The Donkey on the Edge research broadsheet" loading="lazy" decoding="async"><div class="ux-tile__view"><span>View</span></div></div>
+            <div class="ux-tile__cap"><span class="name">The Donkey on the Edge</span><span class="tag">Research Broadsheet &middot; Live Site</span></div>
+          </button>
+
+        </div>
+
+        <!-- ─── OUTRO ─── -->
+        <section class="ux-outro reveal">
+          <h2>If you can describe it, I can <span class="it">design it and build it.</span></h2>
+          <p>Interface, interaction, logic, data. <a class="mail" href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a></p>
+        </section>
+
+      </div>
+
+      <script id="ux-data" type="application/json">
+      {
+        "responsive": { "title": "Responsive", "role": "Insurance Agent Platform", "pages": [
+          { "src": "img/uiux/responsive-1.jpg", "cap": "Agent Desk" },
+          { "src": "img/uiux/responsive-2.jpg", "cap": "Auto Quote" },
+          { "src": "img/uiux/responsive-3.jpg", "cap": "Multi-line Bundle" },
+          { "src": "img/uiux/responsive-4.jpg", "cap": "Review & Bind" } ] },
+        "singularity": { "title": "Singularity", "role": "SEO Dashboard", "pages": [
+          { "src": "img/uiux/singularity-1.jpg", "cap": "Dashboard" } ] },
+        "redtouch": { "title": "Red Touch Media", "role": "Content Platform", "pages": [
+          { "src": "img/uiux/redtouch-1.jpg", "cap": "Discover" },
+          { "src": "img/uiux/redtouch-2.jpg", "cap": "Download Flow" } ] },
+        "sunset": { "title": "Sunset Marquis", "role": "West Hollywood Hotel", "pages": [
+          { "src": "img/uiux/sunset-1.jpg", "cap": "Home" },
+          { "src": "img/uiux/sunset-2.jpg", "cap": "Weddings" } ] },
+        "pga": { "title": "Residence Club at PGA West", "role": "Luxury Real Estate", "pages": [
+          { "src": "img/uiux/pga-1.jpg", "cap": "Home" },
+          { "src": "img/uiux/pga-2.jpg", "cap": "Residence Detail" } ] },
+        "raleigh": { "title": "Raleigh Studios", "role": "Production Campus", "pages": [
+          { "src": "img/uiux/raleigh-1.jpg", "cap": "Campus Central" },
+          { "src": "img/uiux/raleigh-2.jpg", "cap": "Locations" } ] },
+        "playa": { "title": "Playa", "role": "Restaurant, Los Angeles", "pages": [
+          { "src": "img/uiux/playa-1.jpg", "cap": "Home" },
+          { "src": "img/uiux/playa-2.jpg", "cap": "Interior" } ] },
+        "mesa": { "title": "Mesa del Sol", "role": "Master-Planned Community", "pages": [
+          { "src": "img/uiux/mesa-1.jpg", "cap": "Site Views" } ] },
+        "donkey": { "title": "The Donkey on the Edge", "role": "Research Broadsheet", "url": "https://donkey-mauve.vercel.app/", "pages": [
+          { "src": "img/uiux/donkey-1.jpg", "cap": "The Front Page" },
+          { "src": "img/uiux/donkey-2.jpg", "cap": "A Chart of the Territory" },
+          { "src": "img/uiux/donkey-3.jpg", "cap": "The Evolution" } ] }
+      }
+      </script>
+    </div>
+  </main>
+
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+  <script type="module" src="js/interior.js?v=7"></script>
+  <script src="js/transition.js?v=2" defer></script>
+  <script src="js/ux.js?v=3" defer></script>
+  <script src="js/cursor.js?v=2" defer></script>
+  <script src="js/contact.js?v=11" defer></script>
+</body>
+</html>

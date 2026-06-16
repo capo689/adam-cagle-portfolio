@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIC — The AI Corporation</title>
+  <link rel="icon" href="/launch/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/launch/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/launch/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/launch/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/launch/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07090F;
+    --bg-2: #0B0E17;
+    --panel: #0E1220;
+    --panel-2: #131829;
+    --panel-3: #181E33;
+    --line: rgba(140,170,255,0.10);
+    --line-strong: rgba(140,170,255,0.22);
+    --cyan: #2DE2E6;
+    --cyan-dim: #1B9CA0;
+    --violet: #8B5CF6;
+    --violet-bright: #A78BFA;
+    --magenta: #F03FB0;
+    --amber: #F5A524;
+    --green: #3DD68C;
+    --red: #FB5E6D;
+    --text: #E8ECF6;
+    --text-2: #9BA6C2;
+    --text-3: #5C6788;
+    --display: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(45,226,230,0.25); color: #fff; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; }
+
+  /* glow accents helper */
+  .grad-text {
+    background: linear-gradient(110deg, var(--cyan), var(--violet-bright) 55%, var(--magenta));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(1100px 520px at 72% -10%, rgba(139,92,246,0.20), transparent 60%),
+      radial-gradient(900px 480px at 12% 110%, rgba(45,226,230,0.14), transparent 60%),
+      var(--bg);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(140,170,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(140,170,255,0.05) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: radial-gradient(1000px 600px at 50% 30%, #000 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(1000px 600px at 50% 30%, #000 40%, transparent 85%);
+  }
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto;
+    padding: 88px 52px 72px;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid var(--line-strong);
+    padding: 7px 14px; border-radius: 100px;
+    background: rgba(45,226,230,0.05);
+    margin-bottom: 30px;
+  }
+  .kicker .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 0 rgba(45,226,230,0.6);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(45,226,230,0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(45,226,230,0); }
+    100% { box-shadow: 0 0 0 0 rgba(45,226,230,0); }
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(60px, 11vw, 150px);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+  .hero h1 .line2 { display:block; color: var(--text); }
+  .hero-sub {
+    font-size: clamp(17px, 2.3vw, 23px);
+    font-weight: 300; color: var(--text-2);
+    max-width: 660px; margin-top: 28px; line-height: 1.55;
+  }
+  .hero-sub b { color: var(--text); font-weight: 500; }
+  .formula {
+    margin-top: 36px;
+    font-family: var(--mono);
+    font-size: clamp(12px, 1.5vw, 14px);
+    color: var(--text-2);
+    border-left: 2px solid var(--violet);
+    padding: 4px 0 4px 18px;
+    line-height: 1.9;
+  }
+  .formula b { color: var(--cyan); font-weight: 500; }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 0;
+    margin-top: 48px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(14,18,32,0.6);
+    backdrop-filter: blur(6px);
+  }
+  .hero-meta .cell {
+    flex: 1 1 0; min-width: 160px;
+    padding: 18px 22px;
+    border-right: 1px solid var(--line);
+  }
+  .hero-meta .cell:last-child { border-right: none; }
+  .hero-meta .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 7px; }
+  .hero-meta .v { font-size: 14px; color: var(--text); font-weight: 400; }
+
+  /* ---- NAV ---- */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7,9,15,0.82);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 52px;
+    display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav a {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-3); text-decoration: none;
+    padding: 15px 16px; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
+  }
+  .nav a:hover { color: var(--cyan); border-color: var(--cyan); }
+
+  /* ---- SECTION ---- */
+  .section {
+    max-width: 1200px; margin: 0 auto;
+    padding: 80px 52px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sec-head { max-width: 760px; margin-bottom: 48px; }
+  .sec-num {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+    color: var(--cyan); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sec-num::before { content:''; width: 26px; height: 1px; background: var(--cyan); }
+  .sec-title {
+    font-family: var(--display);
+    font-size: clamp(30px, 4.4vw, 48px);
+    font-weight: 600; letter-spacing: -0.025em; line-height: 1.05;
+    margin-bottom: 14px;
+  }
+  .sec-intro { font-size: 16px; color: var(--text-2); line-height: 1.7; font-weight: 300; }
+  .sec-intro b { color: var(--text); font-weight: 500; }
+
+  /* ---- THESIS BANNER ---- */
+  .thesis {
+    display: grid; grid-template-columns: repeat(2,1fr); gap: 18px;
+  }
+  @media (max-width: 760px){ .thesis { grid-template-columns: 1fr; } }
+  .thesis-card {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: linear-gradient(160deg, var(--panel), var(--bg-2));
+    padding: 30px 32px; position: relative; overflow: hidden;
+  }
+  .thesis-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    opacity: .8;
+  }
+  .thesis-card .big {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(22px, 3vw, 30px); letter-spacing: -0.02em;
+    line-height: 1.2; margin-bottom: 12px;
+  }
+  .thesis-card p { color: var(--text-2); font-size: 14.5px; line-height: 1.65; }
+  .scarce {
+    margin-top: 22px; text-align: center;
+    border: 1px solid var(--line); border-radius: 12px;
+    padding: 34px 28px; grid-column: 1 / -1;
+    background: radial-gradient(600px 200px at 50% 0%, rgba(240,63,176,0.12), transparent 70%), var(--panel);
+  }
+  .scarce .small { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); margin-bottom: 12px; }
+  .scarce .punch { font-family: var(--display); font-size: clamp(24px, 4vw, 40px); font-weight: 700; letter-spacing: -0.03em; }
+
+  /* ---- CORE / EDGE diagram row ---- */
+  .shape-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 8px; }
+  @media (max-width: 860px){ .shape-row { grid-template-columns: repeat(2,1fr); } }
+  .shape {
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--panel); padding: 20px 16px; text-align: center;
+  }
+  .shape .sv { font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .shape .sl { font-size: 12px; color: var(--text-2); line-height: 1.4; }
+
+  /* ---- STACK (12 layers) ---- */
+  .stack { display: flex; flex-direction: column; gap: 8px; }
+  .layer {
+    display: grid; grid-template-columns: 44px 200px 1fr 130px;
+    align-items: center; gap: 18px;
+    border: 1px solid var(--line); border-radius: 10px;
+    background: linear-gradient(100deg, var(--panel), var(--bg-2));
+    padding: 16px 20px;
+    transition: border-color .15s, transform .15s, background .15s;
+    position: relative; overflow: hidden;
+  }
+  .layer::before {
+    content:''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--accent, var(--cyan)); opacity: .85;
+  }
+  .layer:hover { border-color: var(--line-strong); transform: translateX(3px); background: linear-gradient(100deg, var(--panel-2), var(--bg-2)); }
+  @media (max-width: 860px){
+    .layer { grid-template-columns: 40px 1fr; }
+    .layer .layer-desc, .layer .layer-metric { display: none; }
+  }
+  .layer-id { font-family: var(--mono); font-size: 13px; color: var(--accent, var(--cyan)); font-weight: 600; }
+  .layer-name { font-family: var(--display); font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+  .layer-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .layer-metric { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--text-3); text-transform: uppercase; text-align: right; }
+
+  /* ---- AGENT FLEET ---- */
+  .fleet { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  @media (max-width: 860px){ .fleet { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px){ .fleet { grid-template-columns: 1fr; } }
+  .agent {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--panel); padding: 22px;
+    transition: border-color .15s, background .15s;
+  }
+  .agent:hover { border-color: var(--line-strong); background: var(--panel-2); }
+  .agent-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .agent-glyph {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 600; font-size: 15px;
+    background: rgba(45,226,230,0.08); color: var(--cyan);
+    border: 1px solid var(--line-strong);
+  }
+  .agent-lvl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--text-3); text-transform: uppercase; }
+  .agent-name { font-family: var(--display); font-weight: 600; font-size: 17px; margin-bottom: 6px; }
+  .agent-job { font-size: 13px; color: var(--text-2); line-height: 1.55; }
+
+  /* ---- AUTHORITY LADDER ---- */
+  .ladder { display: flex; flex-direction: column; gap: 6px; }
+  .rung {
+    display: grid; grid-template-columns: 88px 1fr; align-items: center; gap: 20px;
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 22px; background: var(--panel);
+    position: relative;
+  }
+  .rung-meter { display: flex; gap: 4px; align-items: center; }
+  .rung-meter span { width: 10px; height: 22px; border-radius: 2px; background: var(--panel-3); }
+  .rung-l { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text); }
+  .rung-name { font-family: var(--display); font-weight: 600; font-size: 16px; }
+  .rung-desc { font-size: 13px; color: var(--text-2); }
+  .rung.l0 .rung-meter span:nth-child(-n+1),
+  .rung.l1 .rung-meter span:nth-child(-n+2),
+  .rung.l2 .rung-meter span:nth-child(-n+3),
+  .rung.l3 .rung-meter span:nth-child(-n+4),
+  .rung.l4 .rung-meter span:nth-child(-n+5),
+  .rung.l5 .rung-meter span:nth-child(-n+6) { background: linear-gradient(180deg, var(--cyan), var(--violet)); }
+  .rung-flag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-3); margin-left: 8px;
+  }
+  .rung.default-flag { border-color: var(--line-strong); box-shadow: inset 0 0 0 1px rgba(45,226,230,0.12); }
+
+  /* ---- WORKFLOW PIPELINE ---- */
+  .pipe { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pstep {
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--line); border-radius: 100px;
+    padding: 9px 16px 9px 12px; background: var(--panel);
+    font-size: 13px; color: var(--text);
+  }
+  .pstep .pn {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(139,92,246,0.14); color: var(--violet-bright);
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .pstep.review { border-color: rgba(45,226,230,0.4); background: rgba(45,226,230,0.06); }
+  .pstep.review .pn { background: rgba(45,226,230,0.18); color: var(--cyan); }
+  .pipe-arrow { color: var(--text-3); align-self: center; font-family: var(--mono); }
+
+  /* ---- DASHBOARDS GRID ---- */
+  .dash-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  @media (max-width: 860px){ .dash-grid { grid-template-columns: 1fr; } }
+  .dash {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--panel); padding: 22px; overflow: hidden;
+  }
+  .dash-h { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .dash-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  .dash-name { font-family: var(--display); font-weight: 600; font-size: 16px; }
+  .dash-metrics { list-style: none; }
+  .dash-metrics li {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12.5px; color: var(--text-2);
+    padding: 8px 0; border-top: 1px solid var(--line);
+    font-family: var(--mono);
+  }
+  .dash-metrics li:first-child { border-top: none; }
+  .dash-metrics .spark {
+    width: 56px; height: 16px; border-radius: 3px;
+    background: linear-gradient(90deg, rgba(45,226,230,0.08), rgba(139,92,246,0.18));
+    position: relative;
+  }
+  .dash-metrics .spark::after {
+    content:''; position:absolute; left: 8%; right: var(--gap,30%); bottom: 4px; height: 2px;
+    background: var(--cyan); border-radius: 2px;
+  }
+
+  /* ---- GOVERNANCE / RISK ---- */
+  .gov-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 760px){ .gov-grid { grid-template-columns: 1fr; } }
+  .gov-panel { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 26px; }
+  .gov-panel h4 { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
+  .chip-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 11.5px;
+    padding: 6px 12px; border-radius: 6px;
+    border: 1px solid var(--line); color: var(--text-2);
+    background: var(--bg-2);
+  }
+  .chip.danger { border-color: rgba(251,94,109,0.3); color: #ffb3ba; background: rgba(251,94,109,0.06); }
+  .gov-list { list-style: none; }
+  .gov-list li {
+    font-size: 13.5px; color: var(--text-2);
+    padding: 10px 0 10px 26px; position: relative;
+    border-top: 1px solid var(--line); line-height: 1.5;
+  }
+  .gov-list li:first-child { border-top: none; }
+  .gov-list li::before {
+    content:'⛬'; position:absolute; left:0; top: 9px; color: var(--violet-bright); font-size: 13px;
+  }
+  .killswitch {
+    margin-top: 20px; display: flex; align-items: center; gap: 14px;
+    border: 1px solid rgba(251,94,109,0.3); border-radius: 10px;
+    padding: 16px 20px; background: rgba(251,94,109,0.05);
+  }
+  .killswitch .ks-icon { font-size: 18px; }
+  .killswitch .ks-t { font-family: var(--mono); font-size: 12px; color: #ffb3ba; letter-spacing: 0.04em; }
+
+  /* ---- OFFER LADDER ---- */
+  .offers { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+  @media (max-width: 860px){ .offers { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px){ .offers { grid-template-columns: 1fr; } }
+  .offer {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--panel); padding: 24px 22px; position: relative;
+    display: flex; flex-direction: column;
+  }
+  .offer .step-n { font-family: var(--mono); font-size: 11px; color: var(--text-3); letter-spacing: 0.1em; margin-bottom: 10px; }
+  .offer .o-name { font-family: var(--display); font-weight: 600; font-size: 18px; margin-bottom: 8px; }
+  .offer .o-desc { font-size: 13px; color: var(--text-2); line-height: 1.55; flex: 1; }
+  .offer .o-tag { margin-top: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cyan); }
+  .offer:nth-child(1)::after, .offer:nth-child(2)::after, .offer:nth-child(3)::after {
+    content:'→'; position: absolute; right: -11px; top: 50%; transform: translateY(-50%);
+    color: var(--text-3); font-size: 16px; z-index: 2;
+  }
+  @media (max-width: 860px){ .offer::after { display: none !important; } }
+
+  /* ---- RUBRIC ---- */
+  .rubric { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .rubric-row {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .rubric-row:first-child { border-top: none; }
+  .rubric-row .rc { padding: 13px 18px; color: var(--text-2); border-right: 1px solid var(--line); }
+  .rubric-row .rc:last-child { border-right: none; }
+  .rubric-row .crit { color: var(--text); font-weight: 500; font-family: var(--body); }
+  .rubric-head { background: var(--panel-2); }
+  .rubric-head .rc { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+  .score1 { color: var(--text-3) !important; }
+  .score5 { color: var(--green) !important; }
+  .rubric-foot {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;
+  }
+  .band {
+    font-family: var(--mono); font-size: 12px;
+    border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px;
+    color: var(--text-2); flex: 1; min-width: 180px;
+  }
+  .band b { color: var(--text); }
+  .band.strong { border-color: rgba(61,214,140,0.35); background: rgba(61,214,140,0.05); }
+  .band.strong b { color: var(--green); }
+
+  /* ---- TIMELINE 30/90 ---- */
+  .timeline { display: grid; grid-template-columns: repeat(6,1fr); gap: 10px; }
+  @media (max-width: 980px){ .timeline { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 520px){ .timeline { grid-template-columns: 1fr; } }
+  .tl {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--panel); padding: 20px 18px;
+    position: relative;
+  }
+  .tl::before {
+    content:''; position:absolute; top: 18px; left: 18px;
+    width: 26px; height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+  }
+  .tl .tl-day { font-family: var(--mono); font-size: 11px; color: var(--cyan); letter-spacing: 0.06em; margin: 18px 0 8px; }
+  .tl .tl-phase { font-family: var(--display); font-weight: 600; font-size: 16px; margin-bottom: 10px; }
+  .tl ul { list-style: none; }
+  .tl li { font-size: 12.5px; color: var(--text-2); padding: 4px 0 4px 14px; position: relative; line-height: 1.45; }
+  .tl li::before { content:''; position:absolute; left: 0; top: 10px; width: 5px; height: 5px; border-radius: 50%; background: var(--violet); }
+
+  /* ---- FAILURE MODES ---- */
+  .fails { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+  @media (max-width: 760px){ .fails { grid-template-columns: 1fr; } }
+  .fail {
+    border: 1px solid var(--line); border-radius: 10px; background: var(--panel);
+    padding: 20px 22px; display: grid; grid-template-columns: 1fr; gap: 6px;
+  }
+  .fail .f-name { font-family: var(--display); font-weight: 600; font-size: 15.5px; color: #ffb3ba; }
+  .fail .f-prob { font-size: 13px; color: var(--text-2); }
+  .fail .f-fix { font-size: 13px; color: var(--text); }
+  .fail .f-fix b { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-right: 8px; }
+
+  /* ---- KIT ---- */
+  .kit { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+  @media (max-width: 860px){ .kit { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 460px){ .kit { grid-template-columns: 1fr; } }
+  .kit-item {
+    border: 1px solid var(--line); border-radius: 10px; background: var(--panel);
+    padding: 16px; display: flex; gap: 12px; align-items: flex-start;
+    font-size: 13.5px; color: var(--text);
+  }
+  .kit-item .kn { font-family: var(--mono); font-size: 12px; color: var(--cyan); flex-shrink: 0; }
+
+  .callout {
+    margin-top: 24px;
+    border: 1px solid var(--line-strong); border-radius: 12px;
+    background: radial-gradient(700px 220px at 0% 0%, rgba(139,92,246,0.12), transparent 70%), var(--panel);
+    padding: 28px 32px;
+  }
+  .callout .ch { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--violet-bright); margin-bottom: 10px; }
+  .callout .ct { font-size: 16px; color: var(--text); line-height: 1.65; font-weight: 300; }
+  .callout .ct b { font-weight: 500; }
+
+  /* ---- CLOSE ---- */
+  .close {
+    text-align: center; padding: 96px 52px;
+    border-bottom: 1px solid var(--line);
+    background: radial-gradient(800px 400px at 50% 120%, rgba(45,226,230,0.10), transparent 70%);
+  }
+  .close .cq {
+    font-family: var(--display);
+    font-size: clamp(24px, 4vw, 44px); font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1.25;
+    max-width: 880px; margin: 0 auto;
+  }
+  .close .ca { font-family: var(--mono); font-size: 13px; color: var(--text-3); margin-top: 24px; letter-spacing: 0.04em; }
+
+  /* ---- FOOTER ---- */
+  .footer { padding: 52px; }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px;
+  }
+  .footer-mark { font-family: var(--display); font-weight: 700; font-size: 30px; letter-spacing: -0.02em; }
+  .footer-rule { font-family: var(--mono); font-size: 12px; color: var(--text-3); margin-top: 8px; max-width: 420px; line-height: 1.6; }
+  .footer-meta { font-family: var(--mono); font-size: 11px; color: var(--text-3); text-align: right; line-height: 1.9; }
+  @media (max-width: 600px){ .footer-meta { text-align: left; } }
+
+  @media (max-width: 720px){
+    .hero-inner { padding: 56px 24px 48px; }
+    .nav-inner, .section { padding-left: 24px; padding-right: 24px; }
+    .section { padding-top: 56px; padding-bottom: 56px; }
+    .close { padding: 64px 24px; }
+    .footer { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="kicker"><span class="pulse"></span> Operating System Skill · v1.0</div>
+    <h1>AIC<span class="line2 grad-text">The AI Corporation</span></h1>
+    <p class="hero-sub">Not a normal company that uses AI tools. A <b>lean human core</b> surrounded by agents, workflows, dashboards, reviewers, community, and governed execution. This is the playbook for building one.</p>
+    <div class="formula">
+      <b>AIC</b> = MTP Constitution + Agent Fleet + Workflow Interfaces + Live Dashboards<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Human Review + Community Loops + Governance + FinOps
+    </div>
+    <div class="hero-meta">
+      <div class="cell"><div class="k">Core</div><div class="v">Small, smart, human</div></div>
+      <div class="cell"><div class="k">Edge</div><div class="v">Large, agentic, leveraged</div></div>
+      <div class="cell"><div class="k">Stack</div><div class="v">12 operating layers</div></div>
+      <div class="cell"><div class="k">Scarce resource</div><div class="v">Trusted coordination</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#thesis">Thesis</a>
+    <a href="#rules">Hard Rules</a>
+    <a href="#stack">The Stack</a>
+    <a href="#agents">Agent Fleet</a>
+    <a href="#authority">Authority</a>
+    <a href="#workflow">Workflow</a>
+    <a href="#offers">Offers</a>
+    <a href="#dashboards">Dashboards</a>
+    <a href="#governance">Governance</a>
+    <a href="#rubric">Scorecard</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#failures">Failure Modes</a>
+    <a href="#kit">Build Kit</a>
+  </div>
+</nav>
+
+<!-- THESIS -->
+<section class="section" id="thesis">
+  <div class="sec-head">
+    <div class="sec-num">01 — Thesis</div>
+    <h2 class="sec-title">Built for abundance, not scarcity.</h2>
+    <p class="sec-intro">The old organization was built for scarcity. The exponential organization was built for abundance. AIC updates the <b>source</b> of that abundance, from cloud and crowds to on-demand intelligence and tool-using agents.</p>
+  </div>
+
+  <div class="thesis">
+    <div class="thesis-card">
+      <div class="big grad-text">The old abundance</div>
+      <p>Cloud, mobile, platforms, APIs, gig labor, social networks, crowds, shared assets. The leverage of the last era.</p>
+    </div>
+    <div class="thesis-card">
+      <div class="big grad-text">The new abundance</div>
+      <p>On-demand intelligence, tool-using agents, human specialist clouds, automated research and execution, machine-readable knowledge, real-time dashboards, AI-assisted experimentation.</p>
+    </div>
+
+    <div class="scarce">
+      <div class="small">The scarce resource is no longer information</div>
+      <div class="punch">The scarce resource is <span class="grad-text">trusted coordination.</span></div>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:64px;margin-bottom:28px;">
+    <h2 class="sec-title" style="font-size:clamp(22px,3vw,30px);">The shape of the next company.</h2>
+  </div>
+  <div class="shape-row">
+    <div class="shape"><div class="sv grad-text">Small</div><div class="sl">at the core</div></div>
+    <div class="shape"><div class="sv grad-text">Large</div><div class="sl">at the edge</div></div>
+    <div class="shape"><div class="sv grad-text">Smart</div><div class="sl">in the middle</div></div>
+    <div class="shape"><div class="sv grad-text">Fast</div><div class="sl">in experiments</div></div>
+    <div class="shape"><div class="sv grad-text">Careful</div><div class="sl">in governance</div></div>
+    <div class="shape"><div class="sv grad-text">Relentless</div><div class="sl">on economics</div></div>
+  </div>
+</section>
+
+<!-- HARD RULES -->
+<section class="section" id="rules">
+  <div class="sec-head">
+    <div class="sec-num">02 — Non-negotiables</div>
+    <h2 class="sec-title">The hard rules.</h2>
+    <p class="sec-intro">Speed multiplies execution, so the guardrails come first. Break these and the system turns fast danger into a feature.</p>
+  </div>
+
+  <div class="stack">
+    <div class="layer" style="--accent:var(--cyan)"><div class="layer-id">R1</div><div class="layer-name">Do not overbuild</div><div class="layer-desc">Manual service → AI-assisted → repeatable workflow → internal tool → client dashboard → platform. In that order.</div><div class="layer-metric">prove the workflow first</div></div>
+    <div class="layer" style="--accent:var(--violet)"><div class="layer-id">R2</div><div class="layer-name">Do not sell vague AI</div><div class="layer-desc">Name the job, the buyer, the inputs, the workflow, the review, the cost, and the measurable outcome.</div><div class="layer-metric">outcome over technology</div></div>
+    <div class="layer" style="--accent:var(--magenta)"><div class="layer-id">R3</div><div class="layer-name">Keep human judgment where trust matters</div><div class="layer-desc">Regulated advice, strategy, public claims, brand and safety-sensitive output, and consequential decisions stay human-reviewed.</div><div class="layer-metric">trust layer required</div></div>
+    <div class="layer" style="--accent:var(--cyan)"><div class="layer-id">R4</div><div class="layer-name">Do not invent market proof</div><div class="layer-desc">Research current claims. Label every assumption as an assumption until verified.</div><div class="layer-metric">evidence or it is a guess</div></div>
+    <div class="layer" style="--accent:var(--violet)"><div class="layer-id">R5</div><div class="layer-name">Do not ignore unit economics</div><div class="layer-desc">Cost per run, cost per accepted output, cost per client, gross margin, review time, error and rework rate.</div><div class="layer-metric">cost per accepted output</div></div>
+    <div class="layer" style="--accent:var(--magenta)"><div class="layer-id">R6</div><div class="layer-name">Do not confuse autonomy with chaos</div><div class="layer-desc">Bound it with purpose, roles, authority limits, escalation, audit logs, approval gates, and kill switches.</div><div class="layer-metric">bounded authority</div></div>
+    <div class="layer" style="--accent:var(--cyan)"><div class="layer-id">R7</div><div class="layer-name">Do not let agents run blind</div><div class="layer-desc">Every agent gets a mission, allowed tools, forbidden actions, required I/O, review, evidence, memory, cost limits, and failure handling.</div><div class="layer-metric">no charter, no run</div></div>
+  </div>
+</section>
+
+<!-- THE STACK -->
+<section class="section" id="stack">
+  <div class="sec-head">
+    <div class="sec-num">03 — Architecture</div>
+    <h2 class="sec-title">The twelve-layer stack.</h2>
+    <p class="sec-intro">Define the company as an operating system, not an org chart. Each layer ships a first version, an owner, a tool, and a metric.</p>
+  </div>
+
+  <div class="stack">
+    <div class="layer" style="--accent:var(--cyan)"><div class="layer-id">01</div><div class="layer-name">MTP Constitution</div><div class="layer-desc">Purpose, rules, principles, decision filters, and evidence standards.</div><div class="layer-metric">machine-readable soul</div></div>
+    <div class="layer" style="--accent:var(--cyan)"><div class="layer-id">02</div><div class="layer-name">Sensing</div><div class="layer-desc">Market, customer, competitor, regulatory, and technology signals.</div><div class="layer-metric">live, not static</div></div>
+    <div class="layer" style="--accent:var(--cyan)"><div class="layer-id">03</div><div class="layer-name">Intake</div><div class="layer-desc">Forms, emails, calls, uploads, APIs, CRM entries, chat, internal requests.</div><div class="layer-metric">structured inputs</div></div>
+    <div class="layer" style="--accent:var(--violet)"><div class="layer-id">04</div><div class="layer-name">Knowledge</div><div class="layer-desc">Company memory, customer data, sources, style guides, SOPs, past work, facts.</div><div class="layer-metric">retrievable memory</div></div>
+    <div class="layer" style="--accent:var(--violet)"><div class="layer-id">05</div><div class="layer-name">Agent</div><div class="layer-desc">Specialized AI agents with defined roles, tools, authority, and outputs.</div><div class="layer-metric">narrow, governed</div></div>
+    <div class="layer" style="--accent:var(--violet)"><div class="layer-id">06</div><div class="layer-name">Interface</div><div class="layer-desc">Workflows, routers, APIs, MCP servers, approvals, automations, handoffs.</div><div class="layer-metric">the control plane</div></div>
+    <div class="layer" style="--accent:var(--magenta)"><div class="layer-id">07</div><div class="layer-name">Human Review</div><div class="layer-desc">Editors, strategists, experts, QA, legal when needed, final approvers.</div><div class="layer-metric">the trust layer</div></div>
+    <div class="layer" style="--accent:var(--magenta)"><div class="layer-id">08</div><div class="layer-name">Dashboard</div><div class="layer-desc">Live metrics for work, quality, cost, speed, revenue, risk, and learning.</div><div class="layer-metric">the manager</div></div>
+    <div class="layer" style="--accent:var(--magenta)"><div class="layer-id">09</div><div class="layer-name">Experiment</div><div class="layer-desc">Hypotheses, tests, variants, success thresholds, learning archives.</div><div class="layer-metric">cheap tests over opinions</div></div>
+    <div class="layer" style="--accent:var(--amber)"><div class="layer-id">10</div><div class="layer-name">Community</div><div class="layer-desc">Customers, contributors, expert network, advisors, creators, testers, fans.</div><div class="layer-metric">contribution engine</div></div>
+    <div class="layer" style="--accent:var(--amber)"><div class="layer-id">11</div><div class="layer-name">Governance</div><div class="layer-desc">Risk controls, permissions, audits, privacy, security boundaries, escalation.</div><div class="layer-metric">trust as a feature</div></div>
+    <div class="layer" style="--accent:var(--amber)"><div class="layer-id">12</div><div class="layer-name">FinOps</div><div class="layer-desc">AI, cloud, and tool spend, cost per output, gross margin, utilization.</div><div class="layer-metric">margin by offer</div></div>
+  </div>
+</section>
+
+<!-- AGENT FLEET -->
+<section class="section" id="agents">
+  <div class="sec-head">
+    <div class="sec-num">04 — The Workforce</div>
+    <h2 class="sec-title">The agent fleet.</h2>
+    <p class="sec-intro">Agents are not random chatbots. They are role-specific operating units with defined authority, tools, memory, and review rules. Narrow agents beat magical ones.</p>
+  </div>
+
+  <div class="fleet">
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">ST</div><div class="agent-lvl">Lvl 2</div></div><div class="agent-name">Strategy</div><div class="agent-job">Turns goals into plans, tradeoffs, briefs, and roadmaps.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">RE</div><div class="agent-lvl">Lvl 2</div></div><div class="agent-name">Research</div><div class="agent-job">Gathers evidence, sources claims, tracks competitors and signals.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">CU</div><div class="agent-lvl">Lvl 1</div></div><div class="agent-name">Customer</div><div class="agent-job">Analyzes pain, feedback, personas, journeys, objections, support.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">PR</div><div class="agent-lvl">Lvl 1</div></div><div class="agent-name">Product</div><div class="agent-job">Defines specs, priorities, MVPs, user stories, acceptance criteria.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">WF</div><div class="agent-lvl">Lvl 2</div></div><div class="agent-name">Workflow</div><div class="agent-job">Maps operations, handoffs, automations, bottlenecks, and SOPs.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">DA</div><div class="agent-lvl">Lvl 1</div></div><div class="agent-name">Data</div><div class="agent-job">Handles schemas, data quality, source lineage, reporting inputs.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">CR</div><div class="agent-lvl">Lvl 1</div></div><div class="agent-name">Creative</div><div class="agent-job">Creates copy, concepts, visual direction, campaigns, brand voice.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">EN</div><div class="agent-lvl">Lvl 1</div></div><div class="agent-name">Engineering</div><div class="agent-job">Drafts technical plans, scaffolds, API plans, data flows, specs.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">QA</div><div class="agent-lvl">Lvl 2</div></div><div class="agent-name">QA</div><div class="agent-job">Checks outputs against requirements, facts, brand, and risk rules.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">GV</div><div class="agent-lvl">Lvl 2</div></div><div class="agent-name">Governance</div><div class="agent-job">Checks policy, permissions, sensitive data, compliance, escalation.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">SA</div><div class="agent-lvl">Lvl 1</div></div><div class="agent-name">Sales</div><div class="agent-job">Builds outreach, proposals, qualification, CRM updates, follow-up.</div></div>
+    <div class="agent"><div class="agent-top"><div class="agent-glyph">FI</div><div class="agent-lvl">Lvl 2</div></div><div class="agent-name">Finance</div><div class="agent-job">Tracks cost, revenue, margins, forecasts, pricing, AI spend.</div></div>
+  </div>
+</section>
+
+<!-- AUTHORITY -->
+<section class="section" id="authority">
+  <div class="sec-head">
+    <div class="sec-num">05 — Bounded Agency</div>
+    <h2 class="sec-title">Six levels of authority.</h2>
+    <p class="sec-intro">No agent should have more authority than the company can monitor. New agents default to Level 1 or 2 until proven safe.</p>
+  </div>
+
+  <div class="ladder">
+    <div class="rung l0"><div class="rung-meter"><span></span><span></span><span></span><span></span><span></span><span></span></div><div><span class="rung-l">L0</span> &nbsp; <span class="rung-name">No agency</span><span class="rung-flag">— answers questions only</span></div></div>
+    <div class="rung l1 default-flag"><div class="rung-meter"><span></span><span></span><span></span><span></span><span></span><span></span></div><div><span class="rung-l">L1</span> &nbsp; <span class="rung-name">Drafting</span><span class="rung-flag">— drafts only; cannot send, publish, spend · DEFAULT</span></div></div>
+    <div class="rung l2 default-flag"><div class="rung-meter"><span></span><span></span><span></span><span></span><span></span><span></span></div><div><span class="rung-l">L2</span> &nbsp; <span class="rung-name">Recommendation</span><span class="rung-flag">— recommends with reasoning; humans decide · DEFAULT</span></div></div>
+    <div class="rung l3"><div class="rung-meter"><span></span><span></span><span></span><span></span><span></span><span></span></div><div><span class="rung-l">L3</span> &nbsp; <span class="rung-name">Controlled execution</span><span class="rung-flag">— executes bounded tasks after approval</span></div></div>
+    <div class="rung l4"><div class="rung-meter"><span></span><span></span><span></span><span></span><span></span><span></span></div><div><span class="rung-l">L4</span> &nbsp; <span class="rung-name">Limited autonomy</span><span class="rung-flag">— low-risk tasks within predefined limits</span></div></div>
+    <div class="rung l5"><div class="rung-meter"><span></span><span></span><span></span><span></span><span></span><span></span></div><div><span class="rung-l">L5</span> &nbsp; <span class="rung-name">Full bounded autonomy</span><span class="rung-flag">— continuous, governed domain, with logs, alerts, kill switches</span></div></div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section class="section" id="workflow">
+  <div class="sec-head">
+    <div class="sec-num">06 — The Operating System</div>
+    <h2 class="sec-title">How work moves.</h2>
+    <p class="sec-intro">AIC companies win by converting messy requests into repeatable workflows. Design the common path first, make status visible, and capture learning on every run.</p>
+  </div>
+
+  <div class="pipe">
+    <div class="pstep"><span class="pn">1</span> Intake</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">2</span> Clarify</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">3</span> Source</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">4</span> Route</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">5</span> Agent execution</div><span class="pipe-arrow">→</span>
+    <div class="pstep review"><span class="pn">6</span> Human review</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">7</span> Revise</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">8</span> Deliver</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">9</span> Feedback</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">10</span> Dashboard</div><span class="pipe-arrow">→</span>
+    <div class="pstep"><span class="pn">11</span> Capture learning</div><span class="pipe-arrow">→</span>
+    <div class="pstep review"><span class="pn">12</span> Improve template</div>
+  </div>
+
+  <div class="callout">
+    <div class="ch">The moat</div>
+    <div class="ct">Models will keep changing. The defensible layer is the <b>workflow</b>, not the model: customer knowledge, proprietary examples, evaluation criteria, expert review, distribution, trust, data feedback loops, and community. <b>Every run should improve the system.</b></div>
+  </div>
+</section>
+
+<!-- OFFERS -->
+<section class="section" id="offers">
+  <div class="sec-head">
+    <div class="sec-num">07 — Monetization</div>
+    <h2 class="sec-title">Offer architecture.</h2>
+    <p class="sec-intro">Turn the operating model into something a buyer can purchase. Start with a service. Software comes only after the workflow repeats.</p>
+  </div>
+
+  <div class="offers">
+    <div class="offer"><div class="step-n">STEP 01</div><div class="o-name">Diagnostic</div><div class="o-desc">A fast, low-friction entry product that reveals the problem and builds trust. An audit or opportunity scan.</div><div class="o-tag">creates trust</div></div>
+    <div class="offer"><div class="step-n">STEP 02</div><div class="o-name">Implementation</div><div class="o-desc">Done-for-you or done-with-you build that fixes the highest-value problem. The first workflow or agent team.</div><div class="o-tag">fixes the pain</div></div>
+    <div class="offer"><div class="step-n">STEP 03</div><div class="o-name">Managed operating</div><div class="o-desc">A recurring service that runs the system: monitoring, optimization, reporting, and experiments.</div><div class="o-tag">recurring revenue</div></div>
+    <div class="offer"><div class="step-n">STEP 04</div><div class="o-name">Platform</div><div class="o-desc">Only after repeatable demand exists. Client portal, workflow library, agent marketplace, self-service.</div><div class="o-tag">after repetition</div></div>
+  </div>
+</section>
+
+<!-- DASHBOARDS -->
+<section class="section" id="dashboards">
+  <div class="sec-head">
+    <div class="sec-num">08 — Mission Control</div>
+    <h2 class="sec-title">The dashboard is the manager.</h2>
+    <p class="sec-intro">Dashboards are not decoration. They are the management system. Start with decisions, not vanity metrics. Every metric needs an owner and an action.</p>
+  </div>
+
+  <div class="dash-grid">
+    <div class="dash"><div class="dash-h"><span class="dash-dot"></span><span class="dash-name">Company</span></div><ul class="dash-metrics"><li>Revenue <span class="spark" style="--gap:18%"></span></li><li>Gross margin <span class="spark" style="--gap:34%"></span></li><li>Retention <span class="spark" style="--gap:22%"></span></li><li>Active clients <span class="spark" style="--gap:40%"></span></li></ul></div>
+    <div class="dash"><div class="dash-h"><span class="dash-dot"></span><span class="dash-name">Workflow</span></div><ul class="dash-metrics"><li>Cycle time <span class="spark" style="--gap:28%"></span></li><li>Error rate <span class="spark" style="--gap:62%"></span></li><li>Rework rate <span class="spark" style="--gap:55%"></span></li><li>SLA performance <span class="spark" style="--gap:20%"></span></li></ul></div>
+    <div class="dash"><div class="dash-h"><span class="dash-dot"></span><span class="dash-name">Agent</span></div><ul class="dash-metrics"><li>Acceptance rate <span class="spark" style="--gap:24%"></span></li><li>Escalations <span class="spark" style="--gap:58%"></span></li><li>Cost per run <span class="spark" style="--gap:36%"></span></li><li>Tool failures <span class="spark" style="--gap:66%"></span></li></ul></div>
+    <div class="dash"><div class="dash-h"><span class="dash-dot"></span><span class="dash-name">Experiment</span></div><ul class="dash-metrics"><li>Active tests <span class="spark" style="--gap:42%"></span></li><li>Win rate <span class="spark" style="--gap:30%"></span></li><li>Decisions made <span class="spark" style="--gap:26%"></span></li><li>Learnings <span class="spark" style="--gap:33%"></span></li></ul></div>
+    <div class="dash"><div class="dash-h"><span class="dash-dot" style="background:var(--magenta);box-shadow:0 0 8px var(--magenta)"></span><span class="dash-name">Trust &amp; Governance</span></div><ul class="dash-metrics"><li>Approval exceptions <span class="spark" style="--gap:64%"></span></li><li>Risk flags <span class="spark" style="--gap:58%"></span></li><li>Policy violations <span class="spark" style="--gap:72%"></span></li><li>Audit gaps <span class="spark" style="--gap:60%"></span></li></ul></div>
+    <div class="dash"><div class="dash-h"><span class="dash-dot" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></span><span class="dash-name">FinOps</span></div><ul class="dash-metrics"><li>AI spend <span class="spark" style="--gap:38%"></span></li><li>Cost / deliverable <span class="spark" style="--gap:44%"></span></li><li>Margin by offer <span class="spark" style="--gap:25%"></span></li><li>Unused capacity <span class="spark" style="--gap:70%"></span></li></ul></div>
+  </div>
+</section>
+
+<!-- GOVERNANCE -->
+<section class="section" id="governance">
+  <div class="sec-head">
+    <div class="sec-num">09 — Keep speed from becoming danger</div>
+    <h2 class="sec-title">Governance and risk.</h2>
+    <p class="sec-intro">Agents multiply execution capacity, so governance is needed from day one. Trustworthy operation is not back-office compliance. It is part of the offer.</p>
+  </div>
+
+  <div class="gov-grid">
+    <div class="gov-panel">
+      <h4>Risk surface</h4>
+      <div class="chip-wrap">
+        <span class="chip danger">Data privacy</span><span class="chip danger">Security</span><span class="chip danger">Hallucination</span><span class="chip danger">Bad advice</span><span class="chip danger">Brand damage</span><span class="chip danger">Regulatory claims</span><span class="chip danger">Biased output</span><span class="chip danger">IP misuse</span><span class="chip danger">Rogue spend</span><span class="chip danger">Data leakage</span><span class="chip danger">Model drift</span><span class="chip danger">Prompt injection</span><span class="chip danger">Vendor lock-in</span><span class="chip danger">Cost sprawl</span>
+      </div>
+    </div>
+    <div class="gov-panel">
+      <h4>Controls</h4>
+      <ul class="gov-list">
+        <li>Role-based access and tool permissions</li>
+        <li>Sensitive data rules and approval gates</li>
+        <li>Audit logs and escalation paths</li>
+        <li>Incident response and vendor review</li>
+        <li>Data retention rules and model evaluation</li>
+        <li>Customer disclosure rules where needed</li>
+      </ul>
+      <div class="killswitch"><span class="ks-icon">⏻</span><span class="ks-t">KILL SWITCH — every governed agent ships with one.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- RUBRIC -->
+<section class="section" id="rubric">
+  <div class="sec-head">
+    <div class="sec-num">10 — Go / No-Go</div>
+    <h2 class="sec-title">The evaluation scorecard.</h2>
+    <p class="sec-intro">Score each idea from 1 to 5 across ten criteria. The total tells you whether to build, test, narrow, or wait.</p>
+  </div>
+
+  <div class="rubric">
+    <div class="rubric-row rubric-head"><div class="rc">Criterion</div><div class="rc">Score 1</div><div class="rc">Score 3</div><div class="rc">Score 5</div></div>
+    <div class="rubric-row"><div class="rc crit">Pain intensity</div><div class="rc score1">Mild</div><div class="rc">Annoying</div><div class="rc score5">Urgent &amp; expensive</div></div>
+    <div class="rubric-row"><div class="rc crit">Buyer clarity</div><div class="rc score1">Unknown</div><div class="rc">Likely buyer</div><div class="rc score5">Obvious budget owner</div></div>
+    <div class="rubric-row"><div class="rc crit">AI advantage</div><div class="rc score1">Cosmetic</div><div class="rc">Helpful</div><div class="rc score5">Changes cost or speed</div></div>
+    <div class="rubric-row"><div class="rc crit">Trust feasibility</div><div class="rc score1">Risky</div><div class="rc">Manageable</div><div class="rc score5">Strong review path</div></div>
+    <div class="rubric-row"><div class="rc crit">Workflow repeatability</div><div class="rc score1">Custom each time</div><div class="rc">Partial</div><div class="rc score5">Highly repeatable</div></div>
+    <div class="rubric-row"><div class="rc crit">Data availability</div><div class="rc score1">Weak</div><div class="rc">Some data</div><div class="rc score5">Strong inputs &amp; feedback</div></div>
+    <div class="rubric-row"><div class="rc crit">Speed to first test</div><div class="rc score1">Months</div><div class="rc">Weeks</div><div class="rc score5">Days</div></div>
+    <div class="rubric-row"><div class="rc crit">Revenue path</div><div class="rc score1">Unclear</div><div class="rc">Plausible</div><div class="rc score5">Immediate paid wedge</div></div>
+    <div class="rubric-row"><div class="rc crit">Moat potential</div><div class="rc score1">None</div><div class="rc">Some learning</div><div class="rc score5">Data, trust, community</div></div>
+    <div class="rubric-row"><div class="rc crit">Cost control</div><div class="rc score1">Unknown</div><div class="rc">Trackable</div><div class="rc score5">Strong unit economics</div></div>
+  </div>
+
+  <div class="rubric-foot">
+    <div class="band strong"><b>40–50</b> · Strong AIC candidate</div>
+    <div class="band"><b>30–39</b> · Test before building</div>
+    <div class="band"><b>20–29</b> · Narrow the wedge</div>
+    <div class="band"><b>Below 20</b> · Do not build yet</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section" id="roadmap">
+  <div class="sec-head">
+    <div class="sec-num">11 — Execution</div>
+    <h2 class="sec-title">The 90-day roadmap.</h2>
+    <p class="sec-intro">Clarity, then workflow, then sandbox delivery, then package, then sell, then systemize. Do not scale acquisition until delivery works.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl"><div class="tl-day">DAYS 1–15</div><div class="tl-phase">Clarity</div><ul><li>MTP Constitution</li><li>Customer &amp; wedge</li><li>Offer &amp; metrics</li><li>Governance rules</li></ul></div>
+    <div class="tl"><div class="tl-day">DAYS 16–30</div><div class="tl-phase">Workflow</div><ul><li>First workflow</li><li>Agent charters</li><li>Intake &amp; delivery</li><li>Dashboard v1</li></ul></div>
+    <div class="tl"><div class="tl-day">DAYS 31–45</div><div class="tl-phase">Sandbox</div><ul><li>Recruit partners</li><li>Deliver real output</li><li>Track cost &amp; quality</li><li>Capture examples</li></ul></div>
+    <div class="tl"><div class="tl-day">DAYS 46–60</div><div class="tl-phase">Package</div><ul><li>Productize workflow</li><li>Set pricing</li><li>Proof assets</li><li>Onboarding</li></ul></div>
+    <div class="tl"><div class="tl-day">DAYS 61–75</div><div class="tl-phase">Sell</div><ul><li>Outbound tests</li><li>Content tests</li><li>Referral tests</li><li>First paid clients</li></ul></div>
+    <div class="tl"><div class="tl-day">DAYS 76–90</div><div class="tl-phase">Systemize</div><ul><li>Automate repeats</li><li>Deepen dashboards</li><li>Add staff on demand</li><li>Decide platform path</li></ul></div>
+  </div>
+</section>
+
+<!-- FAILURE MODES -->
+<section class="section" id="failures">
+  <div class="sec-head">
+    <div class="sec-num">12 — Avoid</div>
+    <h2 class="sec-title">Common failure modes.</h2>
+    <p class="sec-intro">The same eight mistakes sink most AIC builds. Each has a one-line fix.</p>
+  </div>
+
+  <div class="fails">
+    <div class="fail"><div class="f-name">Platform fantasy</div><div class="f-prob">Building software before proving anyone wants the workflow.</div><div class="f-fix"><b>Fix</b>Start as a service.</div></div>
+    <div class="fail"><div class="f-name">Agent sprawl</div><div class="f-prob">Too many agents with overlapping jobs.</div><div class="f-fix"><b>Fix</b>Map the workflow first, then assign agents.</div></div>
+    <div class="fail"><div class="f-name">No review gate</div><div class="f-prob">AI output reaches customers without accountability.</div><div class="f-fix"><b>Fix</b>Define review gates before delivery.</div></div>
+    <div class="fail"><div class="f-name">No dashboard</div><div class="f-prob">Running the company by vibes.</div><div class="f-fix"><b>Fix</b>Track cycle time, quality, cost, revenue, learning.</div></div>
+    <div class="fail"><div class="f-name">No buyer</div><div class="f-prob">Building for a market instead of a person with a budget.</div><div class="f-fix"><b>Fix</b>Define the economic buyer and buying trigger.</div></div>
+    <div class="fail"><div class="f-name">No unit economics</div><div class="f-prob">Ignoring AI, cloud, tool, and review costs.</div><div class="f-fix"><b>Fix</b>Track cost per accepted output.</div></div>
+    <div class="fail"><div class="f-name">Generic positioning</div><div class="f-prob">Saying "AI-powered" instead of naming the result.</div><div class="f-fix"><b>Fix</b>Sell the outcome, not the technology.</div></div>
+    <div class="fail"><div class="f-name">Unbounded autonomy</div><div class="f-prob">Humans or agents acting without clear authority.</div><div class="f-fix"><b>Fix</b>Use authority levels and escalation rules.</div></div>
+  </div>
+</section>
+
+<!-- BUILD KIT -->
+<section class="section" id="kit">
+  <div class="sec-head">
+    <div class="sec-num">13 — Minimum Viable Company</div>
+    <h2 class="sec-title">The build kit.</h2>
+    <p class="sec-intro">For the first version, build only these twelve pieces. If they are not working, do not build more.</p>
+  </div>
+
+  <div class="kit">
+    <div class="kit-item"><span class="kn">01</span><span>One MTP Constitution</span></div>
+    <div class="kit-item"><span class="kn">02</span><span>One customer profile</span></div>
+    <div class="kit-item"><span class="kn">03</span><span>One wedge offer</span></div>
+    <div class="kit-item"><span class="kn">04</span><span>One intake form</span></div>
+    <div class="kit-item"><span class="kn">05</span><span>One workflow spec</span></div>
+    <div class="kit-item"><span class="kn">06</span><span>Three agent charters</span></div>
+    <div class="kit-item"><span class="kn">07</span><span>One review checklist</span></div>
+    <div class="kit-item"><span class="kn">08</span><span>One delivery template</span></div>
+    <div class="kit-item"><span class="kn">09</span><span>One dashboard</span></div>
+    <div class="kit-item"><span class="kn">10</span><span>One experiment backlog</span></div>
+    <div class="kit-item"><span class="kn">11</span><span>One risk register</span></div>
+    <div class="kit-item"><span class="kn">12</span><span>One sales page or script</span></div>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<div class="close">
+  <div class="cq">Do not build an AI company around a tool. Build it around a job that matters, a purpose that coordinates people, and a system that improves <span class="grad-text">every time it runs.</span></div>
+  <div class="ca">— The Final AIC Principle</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-mark grad-text">AIC</div>
+      <div class="footer-rule">A lean human core, surrounded by agents, workflows, dashboards, reviewers, community, and governed execution.</div>
+    </div>
+    <div class="footer-meta">
+      AI Corporation Skill · v1.0<br>
+      MTP + SCALE + IDEAS<br>
+      Purpose · Agents · Interfaces · Dashboards · Governance · FinOps
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

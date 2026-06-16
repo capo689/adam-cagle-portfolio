@@ -1,0 +1,1453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9NZT1JSQ54"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9NZT1JSQ54');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booklite · Autonomous Book Marketing · White Paper by Adam R. Cagle</title>
+  <link rel="icon" href="/launch/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/launch/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/launch/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/launch/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/launch/apple-touch-icon.png">
+<meta name="author" content="Adam R. Cagle">
+<meta name="description" content="A white paper on Booklite, the open-source Lite release of the Agentic689 internal book marketing system. Brain context, multi-channel posting, approval routing, attribution learning. Built on the Anthropic Claude API.">
+<meta name="robots" content="index, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Newsreader:opsz,wght,ital@6..72,200..800,0;6..72,200..800,1&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   BOOKLITE · AGENTIC689 · WHITE PAPER
+   Aesthetic match to aiw-whitepaper.html
+   Editorial mono-tech · cream ground · ink type · single accent
+   ============================================================ */
+
+:root{
+  --ink:#161311;
+  --ink-2:#2b2723;
+  --paper:#f4ede0;
+  --paper-2:#ece4d3;
+  --paper-3:#e2d8c2;
+  --rule:#1a1612;
+  --mute:#7a7166;
+  --mute-2:#a39989;
+  --accent:#1e4d8e;
+  --accent-soft:#4a78b8;
+
+  --f-display:"Fraunces", "Newsreader", Georgia, serif;
+  --f-body:"Newsreader", Georgia, serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --measure: 64ch;
+  --rail: 80px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper);scroll-behavior:smooth}
+body{
+  font-family:var(--f-body);
+  font-weight:400;
+  font-size:18px;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--paper);
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","ss02","onum";
+  overflow-x:hidden;
+}
+
+/* paper grain */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(22,19,17,.035) 1px, transparent 1px),
+    radial-gradient(rgba(22,19,17,.025) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 1px 2px;
+  mix-blend-mode:multiply;
+  z-index:1;
+}
+
+/* page frame */
+.frame{
+  position:relative;
+  z-index:2;
+  max-width:1240px;
+  margin:0 auto;
+  padding: clamp(28px, 4vw, 56px) clamp(24px, 5vw, 80px) 120px;
+}
+
+/* topnav */
+.topnav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink);
+  padding-bottom:18px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:28px;
+}
+.topnav a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;padding:2px 0;transition:border-color .25s}
+.topnav a:hover{border-color:var(--ink)}
+.topnav .crest{font-family:var(--f-display);font-weight:600;letter-spacing:.04em;font-size:14px;text-transform:none;font-style:italic}
+
+/* doc note */
+.docnote{
+  font-family:var(--f-mono);
+  font-size:12px;
+  line-height:1.7;
+  color:var(--ink-2);
+  background:transparent;
+  border-left:2px solid var(--ink);
+  padding:14px 0 14px 18px;
+  margin:32px 0 56px;
+  max-width:72ch;
+}
+.docnote .tag{display:block;font-weight:700;letter-spacing:.06em;margin-bottom:6px;color:var(--ink)}
+.docnote .tag::before{content:"// "}
+
+/* ============================================================
+   HEAD PLATE
+   ============================================================ */
+.plate{
+  border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:36px 0 28px;
+  margin-bottom:18px;
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:24px;
+  align-items:end;
+}
+.plate .crest-big{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-variation-settings:"opsz" 144, "SOFT" 0, "WONK" 0;
+  font-size:clamp(72px, 12vw, 180px);
+  line-height:.84;
+  letter-spacing:-.04em;
+  color:var(--ink);
+}
+.plate .crest-big em{
+  font-style:italic;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  color:var(--accent);
+}
+.plate .stamp{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  text-align:right;
+  line-height:2.1;
+  color:var(--ink);
+}
+.plate .stamp .accent{color:var(--accent)}
+
+/* metadata bars */
+.metarow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  padding:14px 0;
+  border-bottom:1px solid var(--rule);
+}
+.metarow.thin{padding:10px 0;font-size:10.5px}
+.metarow span + span{margin-left:14px}
+.metarow .dot{color:var(--accent);font-weight:700}
+
+/* full bleed rule */
+.rule{height:1px;background:var(--ink);margin:24px 0;border:0}
+.rule.heavy{height:2px}
+.rule.short{width:48px;height:2px;background:var(--ink);margin:24px 0}
+
+/* hero title */
+.hero-title{
+  font-family:var(--f-display);
+  font-weight:400;
+  font-variation-settings:"opsz" 144, "SOFT" 0, "WONK" 1;
+  font-size:clamp(34px, 5.6vw, 76px);
+  line-height:1.02;
+  letter-spacing:-.02em;
+  margin:48px 0 24px;
+  max-width:22ch;
+  color:var(--ink);
+}
+.hero-title em{font-style:italic;color:var(--accent);font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1}
+
+.hero-sub{
+  font-family:var(--f-mono);
+  font-size:12px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin-bottom:64px;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--rule);
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+section{
+  padding:56px 0 8px;
+  border-top:1px solid var(--rule);
+}
+section:first-of-type{border-top:0}
+
+.sec-head{
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  gap:32px;
+  align-items:baseline;
+  margin-bottom:36px;
+}
+.sec-head .num{
+  font-family:var(--f-mono);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:.18em;
+  color:var(--mute);
+  padding-top:14px;
+  border-top:1px solid var(--ink);
+}
+.sec-head h2{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 60, "SOFT" 30;
+  font-size:clamp(28px, 3.8vw, 46px);
+  line-height:1.04;
+  letter-spacing:-.015em;
+  color:var(--ink);
+}
+.sec-head h2 .label{
+  display:block;
+  font-family:var(--f-mono);
+  font-size:11.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--mute);
+  margin-top:14px;
+  font-variation-settings:normal;
+}
+
+.sec-body{
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  gap:32px;
+}
+.sec-body > .gutter{display:block}
+.sec-body > .col{max-width:var(--measure)}
+
+@media (max-width: 760px){
+  .sec-head, .sec-body{grid-template-columns:1fr;gap:14px}
+  .sec-head .num{border-top:0;padding-top:0}
+}
+
+p{margin-bottom:1.05em}
+p + p{margin-top:0}
+
+strong{font-weight:700;color:var(--ink)}
+em.terra{color:var(--accent);font-style:italic}
+
+/* drop cap on first paragraph after a section head */
+.dropcap::first-letter{
+  font-family:var(--f-display);
+  font-weight:700;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  font-size:5.8em;
+  float:left;
+  line-height:.8;
+  padding:.04em .08em 0 0;
+  color:var(--accent);
+}
+
+/* lists */
+ul.aiw, ol.aiw{
+  list-style:none;
+  padding:0;
+  margin:0 0 1.25em;
+  max-width:var(--measure);
+}
+ul.aiw li, ol.aiw li{
+  position:relative;
+  padding:6px 0 6px 32px;
+  border-bottom:1px dashed rgba(22,19,17,.18);
+  font-size:17px;
+  line-height:1.5;
+}
+ul.aiw li:last-child, ol.aiw li:last-child{border-bottom:0}
+ul.aiw li::before{
+  content:"+";
+  position:absolute;
+  left:0;
+  top:6px;
+  font-family:var(--f-mono);
+  font-size:13px;
+  color:var(--accent);
+  font-weight:500;
+}
+ol.aiw{counter-reset:aiw}
+ol.aiw li{counter-increment:aiw}
+ol.aiw li::before{
+  content: counter(aiw, decimal-leading-zero);
+  position:absolute;
+  left:0;
+  top:8px;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  color:var(--mute);
+  font-weight:500;
+}
+
+/* pull block / callouts */
+.pull{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  font-size:clamp(22px, 2.6vw, 30px);
+  line-height:1.22;
+  color:var(--ink);
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:28px 0;
+  margin:36px 0;
+  max-width:46ch;
+}
+.pull::before{
+  content:"//";
+  display:block;
+  font-family:var(--f-mono);
+  font-style:normal;
+  font-size:11px;
+  letter-spacing:.2em;
+  color:var(--accent);
+  margin-bottom:10px;
+  font-variation-settings:normal;
+}
+
+/* principles deck */
+.deck{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:0;
+  border-top:1px solid var(--ink);
+  border-left:1px solid var(--ink);
+  margin:32px 0 44px;
+}
+.deck .card{
+  border-right:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:22px 24px 26px;
+  background:transparent;
+}
+.deck .card .n{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.2em;
+  color:var(--accent);
+  margin-bottom:12px;
+}
+.deck .card h4{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 60;
+  font-size:22px;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  margin-bottom:10px;
+}
+.deck .card p{
+  font-size:15.5px;
+  line-height:1.5;
+  margin:0;
+  color:var(--ink-2);
+}
+
+/* layer block, used for the architecture layer descriptions */
+.layer{
+  display:grid;
+  grid-template-columns: 130px 1fr;
+  gap:32px;
+  padding:24px 0;
+  border-bottom:1px solid rgba(22,19,17,.2);
+  align-items:start;
+}
+.layer:last-child{border-bottom:0}
+.layer .layer-key{
+  text-align:right;
+  padding-right:18px;
+  border-right:1px solid var(--ink);
+  min-height:90px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-end;
+}
+.layer .layer-key .letter{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1;
+  font-style:italic;
+  font-size:72px;
+  line-height:.85;
+  letter-spacing:-.02em;
+  color:var(--accent);
+}
+.layer .layer-key .tag{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-top:8px;
+  white-space:nowrap;
+}
+.layer .layer-title{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 36;
+  font-size:21px;
+  margin-bottom:8px;
+  color:var(--ink);
+  line-height:1.15;
+}
+.layer p{font-size:15.5px;line-height:1.55;color:var(--ink-2);margin:0}
+.layer ul{list-style:none;padding:0;margin:10px 0 0}
+.layer ul li{
+  display:inline-block;
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--mute);
+  padding:3px 8px;
+  margin:3px 4px 3px 0;
+  border:1px solid rgba(22,19,17,.25);
+  background:rgba(22,19,17,.02);
+}
+@media (max-width: 640px){
+  .layer{grid-template-columns:1fr;gap:14px}
+  .layer .layer-key{
+    text-align:left;
+    border-right:0;
+    border-bottom:1px solid var(--ink);
+    padding-right:0;
+    padding-bottom:10px;
+    flex-direction:row;
+    align-items:baseline;
+    gap:14px;
+    min-height:0;
+  }
+  .layer .layer-key .letter{font-size:48px}
+  .layer .layer-key .tag{margin-top:0}
+}
+
+/* big stat row (results) */
+.stats{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:0;
+  margin:36px 0;
+  border-top:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+}
+.stats .stat{
+  padding:24px 22px;
+  border-right:1px solid var(--ink);
+}
+.stats .stat:last-child{border-right:0}
+.stats .stat .big{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-variation-settings:"opsz" 144, "SOFT" 30, "WONK" 1;
+  font-size:clamp(44px, 6vw, 72px);
+  line-height:.92;
+  letter-spacing:-.03em;
+  color:var(--ink);
+}
+.stats .stat .big .unit{font-size:.4em;color:var(--accent);margin-left:4px;letter-spacing:0}
+.stats .stat .lab{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-top:14px;
+  line-height:1.5;
+}
+
+/* comparison table */
+.compare{
+  width:100%;
+  border-collapse:collapse;
+  margin:32px 0;
+  font-size:15.5px;
+  border-top:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+}
+.compare thead th{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  font-weight:500;
+  text-align:left;
+  padding:14px 18px;
+  color:var(--ink);
+  border-bottom:1px solid var(--ink);
+}
+.compare thead th + th{color:var(--accent)}
+.compare tbody td{
+  padding:14px 18px;
+  vertical-align:top;
+  border-bottom:1px dashed rgba(22,19,17,.2);
+  color:var(--ink);
+}
+.compare tbody td:first-child{color:var(--mute);font-family:var(--f-mono);font-size:13px}
+.compare tbody tr:last-child td{border-bottom:0}
+
+/* diagram frame */
+.diagram{
+  margin:36px 0;
+  padding:28px 24px 22px;
+  border:1px solid var(--ink);
+  background:rgba(22,19,17,.015);
+  position:relative;
+}
+.diagram .dcap{
+  font-family:var(--f-mono);
+  font-size:10.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-top:18px;
+  text-align:center;
+}
+.diagram .dcap .dot{color:var(--accent)}
+.diagram svg{display:block;width:100%;height:auto;max-width:920px;margin:0 auto}
+
+/* small subhead inside section */
+.subhead{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:32px 0 14px;
+}
+.subhead::before{content:"// "}
+
+h3.minor{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-variation-settings:"opsz" 36;
+  font-size:22px;
+  line-height:1.2;
+  letter-spacing:-.01em;
+  margin:28px 0 10px;
+  color:var(--ink);
+}
+
+/* footer */
+.docfoot{
+  margin-top:120px;
+  padding-top:28px;
+  border-top:2px solid var(--ink);
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.docfoot .right{color:var(--accent)}
+
+/* selection */
+::selection{background:var(--ink);color:var(--paper)}
+
+/* anchor offset */
+section{scroll-margin-top:24px}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- TOPNAV -->
+  <nav class="topnav" aria-label="document">
+    <a href="/launch/ai-systems.html">← AI Systems</a>
+    <span class="crest">Agency<span style="color:var(--accent)">689</span></span>
+    <a href="/launch/wpaper/aiw-whitepaper.html">AIW Whitepaper →</a>
+  </nav>
+
+  <!-- DOC NOTE -->
+  <div class="docnote">
+    <span class="tag">Note</span>
+    This white paper describes Booklite, the open-source Lite release of an internal Agentic689 book marketing system. Booklite is the single-book, single-voice public version. The production system runs multiple author personas, multiple books in parallel, and generates creative assets across image, audio, and video APIs. This paper documents architecture and methodology. Specific brain prompts, persona files, attribution models, and client-confidential details remain proprietary to the production system.
+  </div>
+
+  <!-- HEAD PLATE -->
+  <header class="plate">
+    <div class="crest-big">Book<em>lite</em></div>
+    <div class="stamp">
+      Agentic<span class="accent">689</span> · Autonomous Book Marketing<br>
+      White Paper · Architecture · Methodology<br>
+      Lite Release · v1.0 · <span class="accent">05.12.26</span>
+    </div>
+  </header>
+
+  <div class="metarow">
+    <span>Brain Context · Multi-Channel Posting · Approval Routing · Attribution Loop</span>
+    <span>Agentic Processing Layer <span class="dot">·</span> A689</span>
+  </div>
+  <div class="metarow thin">
+    <span>Reddit <span class="dot">·</span> X <span class="dot">·</span> Facebook <span class="dot">·</span> Instagram <span class="dot">·</span> Goodreads <span class="dot">·</span> KDP</span>
+    <span>By Adam R. Cagle</span>
+  </div>
+
+  <!-- HERO TITLE -->
+  <h1 class="hero-title">
+    Book Marketing as a <em>Production System.</em><br>
+    Single Book, Single Voice, Six Channels, One Brain.
+  </h1>
+  <div class="hero-sub">
+    Architecture · Voice · Approval · Attribution · Lite vs Production
+  </div>
+
+  <!-- ============================================================
+       00 · EXECUTIVE SUMMARY
+       ============================================================ -->
+  <section id="s00">
+    <div class="sec-head">
+      <div class="num">00</div>
+      <h2>Executive Summary <span class="label">Overview</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p class="dropcap">Most authors marketing their own books have a problem that no commercial tool solves. The work requires posting intelligently across multiple platforms, in one voice, every day, without sounding like marketing. Enterprise tools assume a publisher's budget. Generic schedulers know nothing about books, ranks, or reader communities. The result is an industry of independent authors who either burn out posting manually or pay for services that flatten their voice into hospitality copy.</p>
+
+        <p>Booklite is the open-source Lite release of an internal Agentic689 system built to solve this. A local Node.js server runs on the author's machine. A single HTML dashboard runs in the browser. The Anthropic Claude API runs the strategic brain that writes copy, plans cadence, and reads what is and is not converting. Six channels live inside one workflow: Reddit, X, Facebook Pages, Instagram, Goodreads search, and KDP rank.</p>
+
+        <p>The Lite release is scoped to one book, one author voice, and one operator. It is the public reference implementation. The <strong>production system</strong> is the same architecture extended to many personas, many books in flight, autonomous cadence with role-based approval gates, and in-app creative asset generation through additional image, audio, and video APIs.</p>
+
+        <div class="subhead">What the Lite release ships with</div>
+        <ul class="aiw">
+          <li>Six channels wired through official APIs. No browser-side keys, ever.</li>
+          <li>One Claude brain driving voice, angle selection, and platform-specific drafting.</li>
+          <li>An approval queue with rejection feedback that flows back into the next generation cycle.</li>
+          <li>Live KDP rank through Rainforest API or a manual CSV upload from the KDP dashboard.</li>
+          <li>An authenticity ratio that defaults to seventy percent pure community contribution, thirty percent product-adjacent.</li>
+          <li>Two source files. One server, one dashboard. Auditable in an afternoon.</li>
+        </ul>
+
+        <div class="pull">
+          The goal is not to automate the author out of the loop. The goal is to give one person the operational reach of a marketing team without forcing them to sound like one.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       01 · THE PROBLEM
+       ============================================================ -->
+  <section id="s01">
+    <div class="sec-head">
+      <div class="num">01</div>
+      <h2>The Author Marketing Stack Is Structurally Broken <span class="label">The Problem</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p>Self-published and small-press authors live inside a structural gap. The data they need to operate is available through official APIs. Reddit, X, Facebook, Instagram, and Amazon collectively expose enough surface area to run a complete post, listen, attribute, and refine loop. The intelligence to operate that surface area, in one voice, without burning out, is what the market has not built.</p>
+
+        <p>Enterprise marketing platforms assume publisher-scale budgets and treat books as one more SKU. Generic schedulers like Buffer or Hootsuite have no concept of a Reddit community, a Goodreads star rating, a contrarian X hook, or a KDP rank movement. Author services agencies cost more than most titles will ever earn back. The default for most authors is a manual rotation of half-attempted posts written at midnight, with no memory of which angles converted and which were dead on arrival.</p>
+
+        <p>The problem is not volume. The problem is that recurring author marketing lives at the intersection of tight cadence, specific community norms, hard voice rules, a single human's bandwidth, and the need for genuine contribution rather than promotional noise.</p>
+
+        <div class="subhead">Two common failure modes</div>
+        <ol class="aiw">
+          <li>The author posts <strong>competent promotional copy</strong> that could belong to any book in the category, fails to convert, and quietly stops posting.</li>
+          <li>The author overcorrects into <strong>strategic mimicry</strong> of what worked for someone else, sounds slightly off, and trains the algorithm to deprioritize them.</li>
+        </ol>
+
+        <p>Booklite was built to solve both problems for one author at a time. The production system solves them for an imprint.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       02 · DESIGN PRINCIPLES
+       ============================================================ -->
+  <section id="s02">
+    <div class="sec-head">
+      <div class="num">02</div>
+      <h2>Marketing as a Production System <span class="label">Design Principles</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">Booklite treats book marketing not as a content calendar with a chatbot bolted on, but as a <strong>structured production system</strong> inside the author's own workflow. The system rests on six design principles.</p>
+
+        <div class="deck">
+          <div class="card">
+            <div class="n">// 01</div>
+            <h4>Brain context before generation</h4>
+            <p>The model works from a curated book brief, voice rules, target reader profile, competitor list, what is working, and what has been retired before it writes a single line.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 02</div>
+            <h4>Voice rules are operational data</h4>
+            <p>A voice is not a vibe. It is a list of forbidden phrases, structural rules, channel-specific registers, and concrete examples of what good looks like.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 03</div>
+            <h4>Authenticity is the ratio</h4>
+            <p>The majority of posts the system generates contain zero product mentions. They are genuine community contributions. The minority are product-adjacent. The default is seventy thirty.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 04</div>
+            <h4>Local first, key safe</h4>
+            <p>The browser never sees a credential. Every key lives in a .env file on the author's machine. Every third-party call is proxied server-side by a process the author owns.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 05</div>
+            <h4>Humans remain the publish gate</h4>
+            <p>The system drafts, scores, and routes. It does not publish. Every post passes through an approval queue. Human judgment stays explicit and mandatory.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 06</div>
+            <h4>Every approval improves the next cycle</h4>
+            <p>Approvals, rejections, edits, and conversion outcomes become operating memory. Dead angles retire. Live angles get more reps. The brief gets sharper.</p>
+          </div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <p><strong>Important distinction.</strong> No foundation-model weights are retrained at any point. The learning happens at the workflow and context level. Better source material, better voice rules, better attribution data, and better routing of operator decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       03 · ARCHITECTURE · SIX LAYER STACK
+       ============================================================ -->
+  <section id="s03">
+    <div class="sec-head">
+      <div class="num">03</div>
+      <h2>System Architecture <span class="label">Six-Layer Stack</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">Booklite uses a modular architecture that runs end to end on the author's local machine. Each layer has a defined responsibility, and the stack runs in one process serving one HTML file.</p>
+
+        <div style="max-width:920px">
+          <div class="layer">
+            <div class="layer-key"><span class="letter">A</span><span class="tag">Device</span></div>
+            <div>
+              <div class="layer-title">UI Runtime</div>
+              <p>A single HTML file served from localhost on port 3100. Vanilla JavaScript, no build step, no framework. The dashboard talks only to its own backend. Nothing about the browser layer assumes a deployment target.</p>
+              <ul>
+                <li>Single file</li><li>No build</li><li>No framework</li><li>Localhost only</li><li>Dashboard view</li><li>Setup form</li><li>Approval queue</li><li>Brain console</li><li>KDP view</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">B</span><span class="tag">Brain</span></div>
+            <div>
+              <div class="layer-title">Intelligence Engine</div>
+              <p>Claude Sonnet 4 carries the full brain context on every call. Voice rules, target reader, competitor list, channel platform rules, and what works are passed as the system prompt. The brain drafts, proposes angles, and reads attribution.</p>
+              <ul>
+                <li>Claude Sonnet 4</li><li>Brain context</li><li>Voice rules</li><li>Angle library</li><li>Channel adapter prompts</li><li>Attribution reads</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">C</span><span class="tag">Channels</span></div>
+            <div>
+              <div class="layer-title">Channel Adapter Layer</div>
+              <p>Six channels wired through official APIs. Authentication, signing, and rate-limit awareness live in this layer. Goodreads write is deprecated and the system reflects that. Instagram requires an image and the system enforces it.</p>
+              <ul>
+                <li>Reddit OAuth2</li><li>X OAuth 1.0a</li><li>Facebook Graph v19</li><li>Instagram Graph v19</li><li>Goodreads search</li><li>Rainforest KDP rank</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">D</span><span class="tag">Vault</span></div>
+            <div>
+              <div class="layer-title">Secret Management</div>
+              <p>Every credential lives in a single .env file on disk. The repository ships .env.example with empty values. The server boots, reads process.env, and never hands keys to the browser. Thirty-nine env references, zero hardcoded credentials.</p>
+              <ul>
+                <li>dotenv</li><li>.env on disk</li><li>process.env only</li><li>.gitignore default</li><li>Pre-push grep sweep</li><li>Rotation on incident</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">E</span><span class="tag">Gate</span></div>
+            <div>
+              <div class="layer-title">Approval Router</div>
+              <p>Drafted posts land in a queue. The operator can approve, reject with feedback, edit, or rewrite. Rejection reasons feed back into brain context for the next cycle. Nothing reaches a channel without a human action.</p>
+              <ul>
+                <li>Pending queue</li><li>Reject reason</li><li>Edit in place</li><li>Rewrite</li><li>Manual mode default</li><li>Audit metadata</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layer">
+            <div class="layer-key"><span class="letter">F</span><span class="tag">Learning</span></div>
+            <div>
+              <div class="layer-title">Attribution Loop</div>
+              <p>Engagement reads flow back into the brain context. Angles get scored. Dead patterns retire. Live ones get more reps. The brief becomes sharper over weeks of use without anyone editing a prompt by hand.</p>
+              <ul>
+                <li>Engagement read</li><li>KDP correlation</li><li>Angle scoring</li><li>Auto-retire</li><li>Brief refinement</li><li>Cycle memory</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       04 · ARCHITECTURE FLOW DIAGRAM
+       ============================================================ -->
+  <section id="s04">
+    <div class="sec-head">
+      <div class="num">04</div>
+      <h2>Architecture at a Glance <span class="label">System Flow</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">A draft enters from the left and reaches a channel only after passing every gate in the system. The attribution loop closes back into Brain Context, where the next draft begins with stronger signal than the last.</p>
+
+        <div class="diagram">
+          <svg viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Booklite system architecture flow">
+            <defs>
+              <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#161311"/>
+              </marker>
+              <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#1e4d8e"/>
+              </marker>
+            </defs>
+
+            <style>
+              .nbox{ fill:#f4ede0; stroke:#161311; stroke-width:1.2; }
+              .ntitle{ font: 600 13px "JetBrains Mono", monospace; fill:#161311; letter-spacing:.04em; }
+              .nsub{ font: 400 11px "JetBrains Mono", monospace; fill:#7a7166; letter-spacing:.06em; }
+              .ntag{ font: 500 10px "JetBrains Mono", monospace; fill:#1e4d8e; letter-spacing:.16em; }
+              .flowline{ stroke:#161311; stroke-width:1.4; fill:none; }
+              .loopline{ stroke:#1e4d8e; stroke-width:1.4; stroke-dasharray:4 4; fill:none; }
+              .gridtxt{ font: 500 10px "JetBrains Mono", monospace; fill:#a39989; letter-spacing:.18em;}
+            </style>
+
+            <!-- grid markers -->
+            <text x="20" y="22" class="gridtxt">// 04 · SYSTEM FLOW</text>
+            <text x="940" y="22" class="gridtxt" text-anchor="end">A689 / BOOKLITE</text>
+
+            <!-- Node 1 -->
+            <g>
+              <rect class="nbox" x="60" y="60" width="220" height="64"/>
+              <text class="ntag" x="74" y="82">01 · SETUP</text>
+              <text class="ntitle" x="74" y="102">BOOK BRIEF</text>
+              <text class="nsub" x="74" y="116">title · reader · voice rules</text>
+            </g>
+
+            <!-- Node 2 -->
+            <g>
+              <rect class="nbox" x="350" y="60" width="220" height="64"/>
+              <text class="ntag" x="364" y="82">02 · PLAN</text>
+              <text class="ntitle" x="364" y="102">CHANNEL + ANGLE</text>
+              <text class="nsub" x="364" y="116">brain selects target</text>
+            </g>
+
+            <!-- Node 3 -->
+            <g>
+              <rect class="nbox" x="640" y="60" width="240" height="64"/>
+              <text class="ntag" x="654" y="82">03 · CONTEXT</text>
+              <text class="ntitle" x="654" y="102">BRAIN_CTX RETRIEVAL</text>
+              <text class="nsub" x="654" y="116">rules · what works · what is dead</text>
+            </g>
+
+            <!-- Node 4 (centered, drafting) -->
+            <g>
+              <rect class="nbox" x="640" y="200" width="240" height="80" fill="#ece4d3"/>
+              <text class="ntag" x="654" y="222">04 · GENERATE</text>
+              <text class="ntitle" x="654" y="244">MULTI-CHANNEL DRAFTS</text>
+              <text class="nsub" x="654" y="260">reddit · x · fb · ig</text>
+              <text class="nsub" x="654" y="274">voice-specific per channel</text>
+            </g>
+
+            <!-- Node 5 (Standards) -->
+            <g>
+              <rect class="nbox" x="350" y="200" width="220" height="80" fill="#ece4d3"/>
+              <text class="ntag" x="364" y="222">05 · CRITIQUE</text>
+              <text class="ntitle" x="364" y="244">VOICE + AUTHENTICITY</text>
+              <text class="nsub" x="364" y="260">forbidden phrases · ratio</text>
+              <text class="nsub" x="364" y="274">may trigger rewrite</text>
+            </g>
+
+            <!-- Node 6 (Human Approval) -->
+            <g>
+              <rect class="nbox" x="60" y="200" width="220" height="80"/>
+              <text class="ntag" x="74" y="222">06 · APPROVAL</text>
+              <text class="ntitle" x="74" y="244">OPERATOR QUEUE</text>
+              <text class="nsub" x="74" y="260">approve · edit · reject</text>
+              <text class="nsub" x="74" y="274">publish gate</text>
+            </g>
+
+            <!-- Node 7 (Channel Post) -->
+            <g>
+              <rect class="nbox" x="60" y="360" width="220" height="64"/>
+              <text class="ntag" x="74" y="382">07 · POST</text>
+              <text class="ntitle" x="74" y="402">CHANNEL API CALL</text>
+              <text class="nsub" x="74" y="416">official endpoint · rate aware</text>
+            </g>
+
+            <!-- Node 8 (Attribution) -->
+            <g>
+              <rect class="nbox" x="350" y="360" width="530" height="64" fill="#f4ede0" stroke="#1e4d8e" stroke-width="1.4"/>
+              <text class="ntag" x="364" y="382">08 · ATTRIBUTE</text>
+              <text class="ntitle" x="364" y="402">ENGAGEMENT + RANK READBACK</text>
+              <text class="nsub" x="364" y="416">scores update BRAIN_CTX · retired angles fall away · live ones get more reps</text>
+            </g>
+
+            <!-- Flow arrows row 1 -->
+            <path class="flowline" d="M280 92 L350 92" marker-end="url(#arrA)"/>
+            <path class="flowline" d="M570 92 L640 92" marker-end="url(#arrA)"/>
+
+            <!-- 03 -> 04 (down) -->
+            <path class="flowline" d="M760 124 L760 200" marker-end="url(#arrA)"/>
+            <!-- 04 -> 05 (left) -->
+            <path class="flowline" d="M640 240 L570 240" marker-end="url(#arrA)"/>
+            <!-- revision loop 05 -> 04 (small) -->
+            <path class="flowline" d="M570 218 C 610 198, 610 198, 640 218" marker-end="url(#arrA)" stroke-dasharray="3 3"/>
+            <text class="nsub" x="605" y="195" text-anchor="middle" fill="#7a7166">rewrite</text>
+            <!-- 05 -> 06 -->
+            <path class="flowline" d="M350 240 L280 240" marker-end="url(#arrA)"/>
+            <!-- 06 -> 07 -->
+            <path class="flowline" d="M170 280 L170 360" marker-end="url(#arrA)"/>
+            <!-- 07 -> 08 -->
+            <path class="flowline" d="M280 392 L350 392" marker-end="url(#arrA)"/>
+
+            <!-- loop back 08 -> 03 -->
+            <path class="loopline" d="M880 392 L920 392 L920 92 L880 92" marker-end="url(#arrR)"/>
+            <text class="ntag" x="930" y="232" fill="#1e4d8e" transform="rotate(90 930 232)">ATTRIBUTION LOOP</text>
+
+            <!-- bottom rule + caption inside svg -->
+            <line x1="60" y1="490" x2="900" y2="490" stroke="#1a1612" stroke-width="1"/>
+            <text x="60" y="515" class="gridtxt">FORWARD FLOW · BLACK</text>
+            <text x="340" y="515" class="gridtxt" fill="#1e4d8e">ATTRIBUTION RETURN · ACCENT</text>
+            <text x="900" y="515" class="gridtxt" text-anchor="end">HUMAN GATE · STEP 06</text>
+
+            <!-- big subtitle inside svg -->
+            <text x="480" y="570" text-anchor="middle" style="font: 500 14px 'Fraunces', serif; fill:#161311; font-style:italic; letter-spacing:.01em">Eight stations. One loop. Nothing posts without a human.</text>
+          </svg>
+          <div class="dcap">Eight-Phase Flow <span class="dot">·</span> Voice Critique Closes Before Operator <span class="dot">·</span> Attribution Returns to Brain Context</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       05 · MULTI-CHANNEL
+       ============================================================ -->
+  <section id="s05">
+    <div class="sec-head">
+      <div class="num">05</div>
+      <h2>Six Channels, One Brain <span class="label">Channel Adaptation</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <h3 class="minor">5.1 Why One Brain, Six Voices</h3>
+        <p>Booklite treats every channel as a parallel publishing surface with its own voice rules, rate limits, and authenticity expectations. The brain holds a separate voice module per channel inside one unified context. A long-form Reddit post and a contrarian X line are generated by the same model, against the same book brief, but they read like they were written by two different people who happen to share an opinion about a book.</p>
+
+        <h3 class="minor">5.2 The Channels</h3>
+        <ol class="aiw">
+          <li><strong>Reddit</strong> through OAuth2. Long-form, personal, self-deprecating where it lands. Community-first. No links in posts. Links live in comments.</li>
+          <li><strong>X / Twitter</strong> through OAuth 1.0a. Short, contrarian, hook in line one. Free-tier ceiling of fifteen hundred posts per month, throttled to forty-five per day.</li>
+          <li><strong>Facebook Pages</strong> through Graph API v19. Warmer than X, two to four sentences, cover art attached. Links are fine here. Facebook surfaces them naturally.</li>
+          <li><strong>Instagram</strong> through Graph API v19. Caption-led, three to five lines before the cut, image mandatory. Link-in-bio only.</li>
+          <li><strong>Goodreads</strong> through the legacy search endpoint. The write API was deprecated in December 2020. The brain generates the review copy and the operator pastes it manually.</li>
+          <li><strong>KDP rank</strong> through Rainforest API for live BSR, or a CSV upload from the KDP sales dashboard. Both feed the same dashboard view.</li>
+        </ol>
+
+        <h3 class="minor">5.3 Inputs</h3>
+        <p>The system receives a configured book brief (title, subtitle, authors, target reader, differentiator, competitors, ASIN), an authenticity ratio, and a list of active platform targets. From that point on, every brain query carries the full context as a system prompt.</p>
+
+        <h3 class="minor">5.4 Voice Rules in Operation</h3>
+        <p>The voice layer is operational data, not a tone description. The brain is instructed to refuse direct pitch openers, ban a specific list of forbidden phrases (<em class="terra">life-changing</em>, <em class="terra">game-changer</em>, <em class="terra">must-read</em>, <em class="terra">highly recommend</em>), require one specific detail per post (week, chapter, what was hard), and limit title mentions to once per post maximum.</p>
+
+        <h3 class="minor">5.5 The Authenticity Ratio</h3>
+        <p>The defining design rule. The majority of posts contain zero product mentions. They are genuine community contributions on the book's topic, written in the author's voice, with no CTA and no buy link. The minority of posts are product-adjacent, and even those lead with experience or observation. The default ratio is seventy thirty, configurable to eighty twenty (conservative) or sixty forty (aggressive).</p>
+
+        <div class="pull">
+          This is the difference between an author who is part of a community and a marketer performing inside one. Reddit will detect the second within four posts.
+        </div>
+
+        <h3 class="minor">5.6 Operational Result</h3>
+        <p>One brief produces a multi-channel draft set in twenty to thirty seconds. Approval queue review is the human-time bottleneck, typically three to six minutes for an eight-post batch. Post execution is sub-second per channel once approved. The brain reads engagement on the next cycle and adjusts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       06 · THE BRAIN
+       ============================================================ -->
+  <section id="s06">
+    <div class="sec-head">
+      <div class="num">06</div>
+      <h2>The Brain as Strategic Operator <span class="label">Context, Not Prompt</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <h3 class="minor">6.1 The BRAIN_CTX String</h3>
+        <p>Every brain call carries a single system prompt that holds the full book context. This is not a prompt template the operator edits before each call. It is durable operating context that the system updates as the campaign runs. Approvals, rejections, conversion signals, and dead-angle observations all write back into it.</p>
+
+        <h3 class="minor">6.2 What the Brain Holds</h3>
+        <p>The active brain context covers the book's title and authors, the differentiator (what makes it different from every other book in the category), the target reader described in specific demographic and psychographic terms, named competitors the brain must avoid sounding like, active platforms and communities, the current approval mode, the live <strong>what works</strong> list with attribution evidence, the <strong>what is dead</strong> retirement list, the voice rules, the authenticity ratio, and the current campaign phase.</p>
+
+        <h3 class="minor">6.3 Why It Is Durable Context, Not Per-Request Prompting</h3>
+        <p>A prompt template is rewritten by the operator on every call. A brain context is read by the system on every call, and rewritten by the system itself between calls. The operator does not retype voice rules. The system does not forget what worked yesterday. This is the lightest possible version of an idea the production system extends much further.</p>
+
+        <h3 class="minor">6.4 Outputs</h3>
+        <p>A single brain query can produce platform-specific copy across all six channels, a strategy critique of the current angle mix, an attribution read of the last cycle's posts, a proposed new angle to test against retired ones, a forbidden-phrase audit of any draft the operator pasted in for review, and a community suggestion based on what the brief has not yet reached.</p>
+
+        <h3 class="minor">6.5 Why It Matters</h3>
+        <p>Most authors stop posting after four to six weeks because the cognitive overhead of remembering their own voice rules, tracking which angles have been used, and translating their book into platform-specific copy is more than the marginal sale is worth. The brain context absorbs that overhead. The author stays in the loop on decisions and out of the loop on translation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       07 · APPROVAL GATE
+       ============================================================ -->
+  <section id="s07">
+    <div class="sec-head">
+      <div class="num">07</div>
+      <h2>Why a Second Pass Has To Critique the First <span class="label">The Approval Gate</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">The most important architectural decision in Booklite is the separation of <strong>drafting</strong> from <strong>approval</strong>. The brain that writes the post is encouraged to explore. The gate that approves it is encouraged to interrogate. The operator sees only what survives the second pass.</p>
+
+        <div class="diagram">
+          <svg viewBox="0 0 920 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-stage tension between drafting and approval">
+            <defs>
+              <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#161311"/>
+              </marker>
+            </defs>
+            <style>
+              .stitle{ font: 500 22px "Fraunces", serif; fill:#161311;}
+              .stitle.italic{ font-style:italic; fill:#1e4d8e;}
+              .stag{ font: 500 10px "JetBrains Mono", monospace; fill:#1e4d8e; letter-spacing:.18em;}
+              .sbody{ font: 400 12px "JetBrains Mono", monospace; fill:#2b2723; letter-spacing:.02em;}
+              .ssub{ font: 400 11px "JetBrains Mono", monospace; fill:#7a7166; letter-spacing:.04em;}
+              .sline{ stroke:#161311; stroke-width:1.2; fill:none;}
+            </style>
+
+            <text x="20" y="22" class="stag">// 07 · TWO PASSES · ONE TENSION</text>
+            <text x="900" y="22" class="stag" text-anchor="end">A689 / BOOKLITE</text>
+
+            <!-- Left box -->
+            <rect x="40" y="60" width="340" height="200" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+            <text x="60" y="92" class="stag">01 · BRAIN</text>
+            <text x="60" y="124" class="stitle">Explores.</text>
+            <text x="60" y="158" class="sbody">Multi-channel angle set.</text>
+            <text x="60" y="178" class="sbody">Voice variation per platform.</text>
+            <text x="60" y="198" class="sbody">Contrarian hooks.</text>
+            <text x="60" y="218" class="sbody">Experience-led openings.</text>
+            <text x="60" y="244" class="ssub">Permission to take swings.</text>
+
+            <!-- Right box -->
+            <rect x="540" y="60" width="340" height="200" fill="#ece4d3" stroke="#1e4d8e" stroke-width="1.4"/>
+            <text x="560" y="92" class="stag" fill="#1e4d8e">02 · GATE</text>
+            <text x="560" y="124" class="stitle italic">Interrogates.</text>
+            <text x="560" y="158" class="sbody">Does it sound like marketing?</text>
+            <text x="560" y="178" class="sbody">Did it open with the title?</text>
+            <text x="560" y="198" class="sbody">Forbidden phrase present?</text>
+            <text x="560" y="218" class="sbody">Would the author actually send this?</text>
+            <text x="560" y="244" class="ssub">Permission to be ruthless.</text>
+
+            <!-- arrows meeting in middle -->
+            <path class="sline" d="M380 160 L428 160" marker-end="url(#arrS)"/>
+            <path class="sline" d="M540 160 L492 160" marker-end="url(#arrS)"/>
+
+            <!-- center node -->
+            <circle cx="460" cy="160" r="34" fill="#161311"/>
+            <text x="460" y="165" text-anchor="middle" style="font: 600 11px 'JetBrains Mono', monospace; fill:#f4ede0; letter-spacing:.14em">QUEUE</text>
+
+            <!-- caption -->
+            <text x="460" y="305" text-anchor="middle" style="font: italic 500 16px 'Fraunces', serif; fill:#161311">The first pass writes. The second pass judges. The operator ships.</text>
+            <text x="460" y="325" text-anchor="middle" class="ssub">By the time a post reaches the queue it has already been read twice.</text>
+          </svg>
+          <div class="dcap">Brain Encouraged To Explore <span class="dot">·</span> Gate Encouraged To Interrogate <span class="dot">·</span> Operator Sees Only What Survives</div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <div class="subhead">The gate asks</div>
+          <ul class="aiw">
+            <li>Does this open with the book title or author name?</li>
+            <li>Is the first product mention earlier than paragraph two on Reddit, or line three on X?</li>
+            <li>Is any forbidden phrase present?</li>
+            <li>Did the draft hit one specific detail (week, chapter, what was hard)?</li>
+            <li>Are there two title mentions where one is the maximum?</li>
+            <li>Is the platform voice correct, or did Reddit copy bleed into the X version?</li>
+            <li>Would a reasonable reader of this community recognize it as marketing?</li>
+            <li>Would the author actually attach their own name to this?</li>
+          </ul>
+          <p>The first pass expands. The second pass disciplines. The approval queue receives something closer to a real reviewable draft rather than raw model output. The operator's time is spent on judgment, not janitorial work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       08 · ATTRIBUTION LOOP
+       ============================================================ -->
+  <section id="s08">
+    <div class="sec-head">
+      <div class="num">08</div>
+      <h2>Attribution as Operating Memory <span class="label">Learning · Curation</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">The phrase recursive learning can sound grandiose. In Booklite it means something precise. The system keeps a record of which angles drove engagement, which drove unit sales correlated to KDP rank movement, and which produced silence. The brain reads that record on every subsequent draft.</p>
+
+        <div class="diagram">
+          <svg viewBox="0 -30 920 490" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Booklite attribution loop">
+            <defs>
+              <marker id="arrL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#1e4d8e"/>
+              </marker>
+            </defs>
+            <style>
+              .lnum{ font: 600 14px "JetBrains Mono", monospace; fill:#1e4d8e; letter-spacing:.06em;}
+              .ltitle{ font: 500 14px "Fraunces", serif; fill:#161311;}
+              .lsub{ font: 400 10.5px "JetBrains Mono", monospace; fill:#7a7166; letter-spacing:.04em;}
+              .ltop{ font: 500 10px "JetBrains Mono", monospace; fill:#a39989; letter-spacing:.18em;}
+              .ldash{ stroke:#1e4d8e; stroke-width:1.4; fill:none;}
+            </style>
+
+            <text x="20" y="-8" class="ltop">// 08 · ATTRIBUTION CYCLE</text>
+            <text x="900" y="-8" class="ltop" text-anchor="end">CURATED · NOT PASSIVE</text>
+
+            <!-- circle path -->
+            <circle cx="460" cy="240" r="170" fill="none" stroke="#1e4d8e" stroke-width="1.2" stroke-dasharray="3 4"/>
+
+            <!-- six stations placed around circle -->
+            <!-- station 01 - top -->
+            <g>
+              <circle cx="460" cy="70" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="460" y="68" text-anchor="middle" class="lnum">01</text>
+              <text x="460" y="84" text-anchor="middle" class="lsub">post</text>
+              <text x="460" y="18" text-anchor="middle" class="ltitle">Post goes live on channel</text>
+            </g>
+            <!-- station 02 - upper right -->
+            <g>
+              <circle cx="617" cy="155" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="617" y="153" text-anchor="middle" class="lnum">02</text>
+              <text x="617" y="169" text-anchor="middle" class="lsub">measure</text>
+              <text x="660" y="110" class="ltitle">Engagement reads back</text>
+            </g>
+            <!-- station 03 - lower right -->
+            <g>
+              <circle cx="617" cy="325" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="617" y="323" text-anchor="middle" class="lnum">03</text>
+              <text x="617" y="339" text-anchor="middle" class="lsub">attribute</text>
+              <text x="660" y="385" class="ltitle">KDP rank correlated to posts</text>
+            </g>
+            <!-- station 04 - bottom -->
+            <g>
+              <circle cx="460" cy="410" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="460" y="408" text-anchor="middle" class="lnum">04</text>
+              <text x="460" y="424" text-anchor="middle" class="lsub">score</text>
+              <text x="460" y="455" text-anchor="middle" class="ltitle">Angle scored. Dead / Live / Hot.</text>
+            </g>
+            <!-- station 05 - lower left -->
+            <g>
+              <circle cx="303" cy="325" r="32" fill="#f4ede0" stroke="#161311" stroke-width="1.4"/>
+              <text x="303" y="323" text-anchor="middle" class="lnum">05</text>
+              <text x="303" y="339" text-anchor="middle" class="lsub">update</text>
+              <text x="20" y="385" class="ltitle">BRAIN_CTX updated in place</text>
+            </g>
+            <!-- station 06 - upper left -->
+            <g>
+              <circle cx="303" cy="155" r="32" fill="#ece4d3" stroke="#1e4d8e" stroke-width="1.6"/>
+              <text x="303" y="153" text-anchor="middle" class="lnum">06</text>
+              <text x="303" y="169" text-anchor="middle" class="lsub">stronger</text>
+              <text x="20" y="110" class="ltitle">Next draft begins stronger</text>
+            </g>
+
+            <!-- center label -->
+            <g>
+              <text x="460" y="232" text-anchor="middle" style="font: italic 500 22px 'Fraunces', serif; fill:#161311">Attribution</text>
+              <text x="460" y="256" text-anchor="middle" style="font: italic 500 22px 'Fraunces', serif; fill:#1e4d8e">Loop</text>
+              <text x="460" y="278" text-anchor="middle" class="lsub">curated improvement</text>
+            </g>
+          </svg>
+          <div class="dcap">Six Stations <span class="dot">·</span> Closed Loop <span class="dot">·</span> Each Pass Sharpens The Operating Context</div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <p>This is not passive accumulation. It is <strong>curated improvement</strong>. The brain does not record everything. It records the signals that change future behavior.</p>
+
+          <div class="subhead">Examples of attribution signals</div>
+          <ul class="aiw">
+            <li>Hook patterns on X that beat linked posts by orders of magnitude.</li>
+            <li>Reddit communities that save and reply versus those that scroll past.</li>
+            <li>Goodreads review angles that drove a measurable bump in KDP rank.</li>
+            <li>Forbidden phrases the gate catches repeatedly (a signal that the brain prompt needs updating).</li>
+            <li>Operator rejection reasons that cluster around one bad habit.</li>
+            <li>Communities that have been overworked and are due a cooldown.</li>
+            <li>Angles that were live for three weeks and have lost their edge.</li>
+          </ul>
+
+          <p>Over time, the system becomes more useful because the author becomes more explicit about what they actually believe a good post looks like for their book.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       09 · WHAT MAKES THIS DIFFERENT (LITE vs PRODUCTION)
+       ============================================================ -->
+  <section id="s09">
+    <div class="sec-head">
+      <div class="num">09</div>
+      <h2>What Makes Booklite Different <span class="label">Lite vs Production</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <p style="max-width:var(--measure)">Booklite is the public Lite release of an internal Agentic689 production system. The Lite release is the reference implementation. The production system is what runs underneath it at scale. The table below documents the delta honestly.</p>
+
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>Booklite v1.0 · Lite (Public)</th>
+              <th>Agentic689 Production (Internal)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Authors / personas</td><td>One voice, one persona</td><td>Many personas, separate voice models</td></tr>
+            <tr><td>Books in flight</td><td>One title</td><td>Whole catalog, cross-book attribution</td></tr>
+            <tr><td>Creative assets</td><td>Text only, manual cover art</td><td>Image, audio, and video generation in-app via additional APIs</td></tr>
+            <tr><td>Cadence</td><td>Operator-driven, manual approval per post</td><td>Autonomous schedule with role-based approval gates</td></tr>
+            <tr><td>Approval queue</td><td>Single user, single inbox</td><td>Role permissions, audit trail, multi-reviewer routing</td></tr>
+            <tr><td>Attribution</td><td>Per-post, per-channel</td><td>Cross-book, cross-persona, cohort analytics</td></tr>
+            <tr><td>Voice library</td><td>One BRAIN_CTX string</td><td>Versioned, per-persona, A/B tested</td></tr>
+            <tr><td>Storage</td><td>Filesystem and CSV</td><td>Postgres with full history and replay</td></tr>
+            <tr><td>Deployment</td><td>Local Node process on the author's machine</td><td>Hosted multi-tenant with SSO and audit logs</td></tr>
+            <tr><td>License</td><td>MIT, open source</td><td>Proprietary, licensed access</td></tr>
+          </tbody>
+        </table>
+
+        <div style="max-width:var(--measure)">
+          <p>If you are a publisher, imprint, or author-services agency considering the production system, the right next step is a conversation, not a download. The Lite release is the proof of concept and the architecture sample. The production system is what scales it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       10 · WHAT REMAINS HUMAN
+       ============================================================ -->
+  <section id="s10">
+    <div class="sec-head">
+      <div class="num">10</div>
+      <h2>What Remains Human <span class="label">Authorship · Voice · Judgment</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p>Booklite is built around the conviction that the most valuable decisions in author marketing remain human. The system can draft, score, route, and remember. It cannot care about a book.</p>
+
+        <div class="subhead">Humans still own</div>
+        <ul class="aiw">
+          <li>The book itself.</li>
+          <li>The voice that defines it.</li>
+          <li>The choice of which communities are worth contributing to.</li>
+          <li>The final read on whether a draft actually sounds like the author.</li>
+          <li>The decision to retire an angle the brain is still pushing.</li>
+          <li>The decision to publish, edit, reject, or rewrite.</li>
+          <li>The strategic call about when the book has had enough campaign and the system should be turned off.</li>
+        </ul>
+
+        <div class="pull">
+          The system expands the author's reach and compresses repetitive translation. It does not replace authorship, voice, or judgment.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       11 · MEASURED RESULTS
+       ============================================================ -->
+  <section id="s11">
+    <div class="sec-head">
+      <div class="num">11</div>
+      <h2>System Snapshot <span class="label">Live Snapshot · 05.12.26</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <div class="stats">
+          <div class="stat">
+            <div class="big">6<span class="unit">ch</span></div>
+            <div class="lab">Channels Wired Through Official APIs</div>
+          </div>
+          <div class="stat">
+            <div class="big">2<span class="unit">files</span></div>
+            <div class="lab">Source Files. Server Plus Dashboard.</div>
+          </div>
+          <div class="stat">
+            <div class="big">39<span class="unit">env</span></div>
+            <div class="lab">Env-Backed Secrets, Zero Hardcoded</div>
+          </div>
+          <div class="stat">
+            <div class="big">v1.0<span class="unit"></span></div>
+            <div class="lab">Public MIT-Licensed Lite Release</div>
+          </div>
+        </div>
+
+        <div style="max-width:var(--measure)">
+          <p>Beyond the system numbers, Booklite produces a multi-channel draft set in twenty to thirty seconds, processes an eight-post approval queue in three to six minutes of operator time, and posts at sub-second latency per channel once approved. Brain context updates run between cycles, not during. The author opens the dashboard, reviews, approves, and closes the tab. The architecture stays out of the way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       12 · ROADMAP
+       ============================================================ -->
+  <section id="s12">
+    <div class="sec-head">
+      <div class="num">12</div>
+      <h2>Next-Phase Build Opportunities <span class="label">Roadmap</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col" style="max-width:none">
+        <div class="deck">
+          <div class="card">
+            <div class="n">// 12.1</div>
+            <h4>Persona Layer</h4>
+            <p>Move from one voice to many. Distinct author and reviewer personas, each with its own voice model, channel preferences, and authenticity ratio. The production system already runs this.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 12.2</div>
+            <h4>Catalog Mode</h4>
+            <p>Multiple books in flight simultaneously, with cross-book attribution and shared learning. A boost on one title teaches the system something about the others.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 12.3</div>
+            <h4>Creative Asset Generation</h4>
+            <p>Image, audio, and video APIs wired into the same approval queue. Cover variants, quote cards, short-form video scripts, and ad creative generated in-app rather than handed to a separate tool.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 12.4</div>
+            <h4>Autonomous Cadence</h4>
+            <p>Move from operator-driven to scheduled. Posts queued by the brain, gated by role-based approval rules, and shipped on a cadence the author tunes once and revisits monthly.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 12.5</div>
+            <h4>Attribution Confidence</h4>
+            <p>Stronger statistical separation between correlation and causation in the angle-scoring layer. Smaller sample sizes get weaker weight. Repeated wins get stronger.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 12.6</div>
+            <h4>Goodreads Workaround</h4>
+            <p>The Goodreads write API is unlikely to return. A browser extension that pastes brain-generated review copy into the active Goodreads tab is a viable bridge.</p>
+          </div>
+          <div class="card">
+            <div class="n">// 12.7</div>
+            <h4>Multi-Operator Mode</h4>
+            <p>Author and assistant inboxes, role permissions, audit trail, and the ability for the author to ship a brain-trained voice to a junior team member without giving away the keys to their reputation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       13 · CONCLUSION
+       ============================================================ -->
+  <section id="s13">
+    <div class="sec-head">
+      <div class="num">13</div>
+      <h2>Marketing Operations Design <span class="label">Conclusion</span></h2>
+    </div>
+    <div class="sec-body">
+      <div class="gutter"></div>
+      <div class="col">
+        <p>Booklite was not built to prove that AI can write a Reddit post. That proof is trivial and no longer interesting.</p>
+
+        <p>It was built to answer a harder question.</p>
+
+        <div class="pull">
+          Can a single author operate at the reach of a marketing team without becoming less themselves?
+        </div>
+
+        <p>The answer in the Lite release is conditional. Yes, when the system is grounded in real book context, voice rules treated as data, channel-specific drafting, a critique pass before human review, a human gate before publish, and an attribution loop that turns approved posts into operating memory.</p>
+
+        <p>The production system extends that conditional yes into something more useful. Many personas. Many books. Creative asset generation across image, audio, and video. Autonomous cadence with role-based approval. The same architecture, scaled.</p>
+
+        <p>This is not content automation. It is marketing operations design for people whose name is on the book.</p>
+
+        <p>And for publishers, imprints, and author-services agencies facing a permanent demand for quality at speed, that distinction matters.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="docfoot">
+    <span>Booklite · Agentic689 · v1.0 · Agentic Processing Layer · A689</span>
+    <span class="right">May 2026 · Adam R. Cagle</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

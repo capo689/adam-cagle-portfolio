@@ -72,10 +72,50 @@ function brain() {
   }
 }
 
+/* ---- fullscreen image lightbox (tap any [data-mfull]) ---- */
+function lightbox() {
+  let lb = null;
+  function build() {
+    lb = document.createElement("div");
+    lb.className = "m-lb";
+    lb.innerHTML = '<button class="m-lb__x" aria-label="Close">&times;</button><img alt="">';
+    document.body.appendChild(lb);
+    const close = () => { lb.classList.remove("open"); document.body.classList.remove("m-lock"); };
+    lb.addEventListener("click", (e) => { if (e.target !== lb.querySelector("img")) close(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  }
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest("[data-mfull]");
+    if (!t) return;
+    e.preventDefault();
+    if (!lb) build();
+    const src = t.getAttribute("data-mfull") || t.getAttribute("src");
+    lb.querySelector("img").src = src;
+    lb.classList.add("open"); document.body.classList.add("m-lock");
+    haptic(8);
+  });
+}
+
+/* ---- creative-direction gallery from the shared manifest ---- */
+function cdGallery() {
+  const host = document.querySelector("[data-cd-gallery]");
+  if (!host || !window.CD_TILES) return;
+  const frag = document.createDocumentFragment();
+  window.CD_TILES.forEach((tile) => {
+    const fig = document.createElement("button");
+    fig.className = "m-cd"; fig.type = "button"; fig.setAttribute("data-mfull", tile.s);
+    fig.innerHTML = '<img loading="lazy" decoding="async" alt="' + (tile.l || "") + '" src="' + tile.s + '"><span class="m-cd__l">' + (tile.l || "") + "</span>";
+    frag.appendChild(fig);
+  });
+  host.appendChild(frag);
+}
+
 function init() {
   menu();
   reveals();
   brain();
+  lightbox();
+  cdGallery();
 }
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
 else init();

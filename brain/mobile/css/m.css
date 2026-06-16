@@ -246,11 +246,17 @@ body.m-leaving .m-curtain { opacity: 1; transition: opacity .42s ease; }
 /* ── writing samples (Creative Writing) ───────────────────────────────── */
 .m-wlist { margin-top: 28px; display: flex; flex-direction: column; gap: 18px; }
 .m-wcard { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--panel); text-align: left; padding: 0; width: 100%; }
-.m-wcard__cover { aspect-ratio: 16/10; overflow: hidden; background: radial-gradient(120% 100% at 50% 0%, rgba(230,162,76,.14), #0c1016 72%); position: relative; }
-.m-wcard__cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-.m-wcard__cover .fb { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 18px; }
-.m-wcard__cover .fb .c { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
-.m-wcard__cover .fb .t { font-family: var(--serif); font-weight: 600; font-size: 30px; margin-top: 6px; }
+.m-wcard__cover { aspect-ratio: 3/4; overflow: hidden; position: relative; background: #0c1016; }
+.m-wcard__cover .fb { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 30px 24px; text-align: center; }
+.m-wcard__cover .fb::after { content: ""; position: absolute; inset: 12px; border: 1px solid rgba(255,255,255,.18); border-radius: 4px; pointer-events: none; }
+.m-wcard__cover .fb .c { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+.m-wcard__cover .fb .t { font-family: var(--serif); font-weight: 600; font-size: clamp(30px,9vw,40px); line-height: 1.06; color: #fff; margin: auto 0; padding: 0 6px; }
+.m-wcard__cover .fb .by { font-family: var(--mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+/* genre-tinted jackets */
+.m-wlist .m-wcard:nth-of-type(1) .m-wcard__cover { background: linear-gradient(155deg,#7a4d12,#13110c); }
+.m-wlist .m-wcard:nth-of-type(2) .m-wcard__cover { background: linear-gradient(155deg,#1f3a5c,#0c1016); }
+.m-wlist .m-wcard:nth-of-type(3) .m-wcard__cover { background: linear-gradient(155deg,#16413c,#0c1016); }
+.m-wlist .m-wcard:nth-of-type(4) .m-wcard__cover { background: linear-gradient(155deg,#5a1722,#100a0c); }
 .m-wcard__body { padding: 18px; }
 .m-wcard__cat { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
 .m-wcard__title { font-family: var(--serif); font-weight: 600; font-size: 26px; margin: 6px 0 0; }

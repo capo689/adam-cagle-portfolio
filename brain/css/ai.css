@@ -199,13 +199,14 @@ body.theme-tech .work .cta-row { flex-direction: row; flex-wrap: wrap; }
 
 /* ───────────── integration: left / tech section shell ───────────── */
 .interior--left .page { overflow: hidden; }
-.interior--left .page__content { height: 100%; overflow-y: auto; padding: 0; -webkit-overflow-scrolling: touch; }
+/* reserve the right edge for the docked brain, then content centres in the rest */
+.interior--left .page__content { height: 100%; overflow-y: auto; padding: 0 clamp(170px, 15vw, 260px) 0 0; -webkit-overflow-scrolling: touch; }
 
 body.theme-tech .work { max-width: none; margin: 0; padding: 0; background: transparent; }
-/* content sits on the LEFT, clear of the brain docked on the right */
+/* content centres in the space left clear of the brain docked on the right */
 body.theme-tech .work__scene {
-  max-width: 1140px;
-  margin: 0 clamp(220px, 19vw, 320px) 0 0;
+  max-width: 1280px;
+  margin: 0 auto;
   padding: 0 clamp(20px,2.6vw,44px) 110px;
 }
 

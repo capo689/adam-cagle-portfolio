@@ -120,6 +120,19 @@ body {
 body.stack-open .stage { opacity: 0; transform: scale(.94); pointer-events: none; }
 body.stack-open .bar  { opacity: .25; }
 
+/* home footer: Writer · Builder · Strategist · Director */
+.home-foot {
+  position: fixed; left: 0; right: 0; bottom: clamp(16px, 3vh, 34px);
+  display: flex; justify-content: center; align-items: center; gap: clamp(12px, 1.8vw, 26px);
+  font-family: var(--mono); font-size: clamp(10px, 0.95vw, 12.5px);
+  letter-spacing: .3em; text-transform: uppercase; color: var(--sepia);
+  z-index: 2; pointer-events: none; opacity: 1;
+}
+.home-foot .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--blue); opacity: .85; flex: none; }
+/* fades out with the rest of the home UI when a section opens */
+.app.section-mode .home-foot { opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity .32s ease, transform .32s ease; }
+@media (prefers-reduced-motion: reduce) { .home-foot { animation: none; } }
+
 .brain { position: relative; width: var(--bsize); height: var(--bsize); display: grid; place-items: center; }
 .brain__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity .6s ease; pointer-events: none; }
 .brain__canvas { position: relative; display: block; }

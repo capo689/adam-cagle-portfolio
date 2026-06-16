@@ -25,7 +25,7 @@ body.theme-tech .work {
 body.theme-tech .work ::selection { background: var(--accent); color: var(--bg); }
 body.theme-tech .work a { color: inherit; text-decoration: none; }
 body.theme-tech .work { max-width: 1480px; margin: 0 auto; padding: 0 32px; }
-body.theme-tech .work .hero { padding: 140px 0 72px; border-bottom: 1px solid var(--rule); }
+body.theme-tech .work .hero { padding: 14px 0 72px; border-bottom: 1px solid var(--rule); }
 body.theme-tech .work .hero-kicker {
     display: flex; align-items: center; gap: 16px;
     font-family: var(--mono); font-size: 12px;
@@ -184,7 +184,7 @@ body.theme-tech .work .support-card p { margin: 0; font-size: 14px; line-height:
 @media (max-width: 960px) {
 
 body.theme-tech .work { padding: 0 20px; }
-body.theme-tech .work .hero { padding: 96px 0 36px; }
+body.theme-tech .work .hero { padding: 24px 0 36px; }
 body.theme-tech .work .hero-sub { grid-template-columns: 1fr; gap: 32px; }
 body.theme-tech .work .hero-title { font-size: clamp(40px, 9vw, 80px); }
 body.theme-tech .work .section { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }

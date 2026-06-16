@@ -76,6 +76,8 @@ body.interior { overflow: hidden; }
   padding-left: clamp(24px, 5vw, 80px);
   padding-right: clamp(24px, 32vw, 460px);
 }
+/* tech pages: tighten the gap between the bar and the content */
+body.theme-tech .page__content { padding-top: clamp(6px, 1.2vh, 14px); }
 
 /* while a lightbox/book viewer is open, lift the content's stacking context
    above the bar (z-index:3) so the fullscreen overlay covers the header */

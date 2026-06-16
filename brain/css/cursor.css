@@ -1,0 +1,46 @@
+/* cursor.css — the NEURAL cursor (desktop, fine-pointer only).
+   A precise dot + a lerping ring that morphs to labeled states on interactives,
+   with an electric-blue synapse trail. On-brand blue so it reads on cream and slate. */
+
+@media (pointer: fine) {
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+}
+
+.cur-trail { position: fixed; inset: 0; z-index: 99997; pointer-events: none; }
+
+.cur-ring {
+  position: fixed; top: 0; left: 0; width: 36px; height: 36px; margin: -18px 0 0 -18px;
+  border: 1.5px solid var(--cur, #4D8BE8); border-radius: 50%;
+  display: grid; place-items: center; z-index: 99999; pointer-events: none;
+  box-shadow: 0 0 14px -2px rgba(77,139,232,.55);
+  transition: width .26s cubic-bezier(.2,.8,.2,1), height .26s cubic-bezier(.2,.8,.2,1),
+              margin .26s cubic-bezier(.2,.8,.2,1), background-color .26s ease, border-color .26s ease, opacity .25s ease;
+}
+.cur-dot {
+  position: fixed; top: 0; left: 0; width: 6px; height: 6px; margin: -3px 0 0 -3px;
+  background: var(--cur, #4D8BE8); border-radius: 50%; z-index: 100000; pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.cur-label {
+  font: 600 11px/1 "IBM Plex Mono", monospace; letter-spacing: .14em; text-transform: uppercase;
+  color: #fff; opacity: 0; transform: scale(.6); transition: opacity .2s ease, transform .2s ease;
+}
+
+/* hover an interactive: ring blooms + fills, dot hides */
+.cur-ring.on { width: 76px; height: 76px; margin: -38px 0 0 -38px; background: var(--cur, #4D8BE8); border-color: var(--cur, #4D8BE8); }
+.cur-ring.on .cur-label { opacity: 1; transform: none; }
+body.cur-dot-hide .cur-dot { opacity: 0; }
+/* a plain link/button: small grow, no fill */
+.cur-ring.on[data-state="link"] { width: 52px; height: 52px; margin: -26px 0 0 -26px; background: transparent; }
+.cur-ring.press { transform: scale(.82); }
+
+body.cur-hide .cur-ring, body.cur-hide .cur-dot { opacity: 0; }
+
+/* per-theme tint: warm on creative/cream surfaces */
+body.theme-tech { --cur: #4D8BE8; }
+body.interior--right, body.resume-open { --cur: #4D8BE8; }
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .cur-ring, .cur-dot, .cur-trail { display: none !important; }
+  html.has-cursor, html.has-cursor * { cursor: auto !important; }
+}

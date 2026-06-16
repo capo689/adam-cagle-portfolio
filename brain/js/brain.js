@@ -273,7 +273,7 @@ function wireResume() {
   let open = false, animating = false;
 
   const animEls = Array.from(resume.querySelectorAll(
-    ".rz-name, .rz-pos, .rz-sec > h2, .rz-body, .rz-card, .rz-group, .rz-item, .rz-cat, .rz-tcol, .rz-download"
+    ".rz-kicker, .rz-name, .rz-roles, .rz-head .rz-dl, .rz-sec > h2, .rz-body, .rz-card, .rz-group, .rz-item, .rz-cat, .rz-tcol, .rz-foot"
   ));
   if (!reduce) animEls.forEach((el) => el.classList.add("rz-reveal"));
 

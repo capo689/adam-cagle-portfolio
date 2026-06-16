@@ -5,14 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/brain/">
-  <title>Two Minds · One Brain · The Stack</title>
+  <title>Adam R. Cagle</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#f2efe9">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/brain.css?v=15">
+  <link rel="stylesheet" href="css/brain.css?v=16">
+  <link rel="stylesheet" href="css/cursor.css?v=1">
   <link rel="stylesheet" href="css/interior.css?v=28">
   <link rel="stylesheet" href="css/work.css?v=25">
   <link rel="stylesheet" href="css/ai.css?v=23">
@@ -145,8 +146,14 @@
   <!-- ════ RESUME (revealed by Open Resume) ════ -->
   <section class="resume" id="resume" aria-label="Resume" aria-hidden="true">
     <div class="resume__inner">
-      <p class="rz-name">Adam R. Cagle</p>
-      <p class="rz-pos">Senior Copywriter, Creative Director, AI, App &amp; Web Programmer</p>
+      <div class="rz-head">
+        <div class="rz-head__id">
+          <p class="rz-kicker">Résumé</p>
+          <p class="rz-name">Adam R. Cagle</p>
+          <p class="rz-roles"><span>Writer</span><i class="d"></i><span>Builder</span><i class="d"></i><span>Strategist</span><i class="d"></i><span>Director</span></p>
+        </div>
+        <a class="rz-dl" href="Adam-R-Cagle-Resume.pdf" download>Download PDF <span class="ar">&darr;</span></a>
+      </div>
 
       <div class="rz-sec">
         <h2>Summary</h2>
@@ -228,14 +235,14 @@
         <div class="rz-tcol"><h2>Board</h2><p class="rz-body">Autism Research Project. Board member.</p></div>
       </div>
 
-      <a class="rz-download" href="Adam-R-Cagle-Resume.pdf">Download PDF</a>
+      <div class="rz-foot"><a class="rz-dl rz-dl--big" href="Adam-R-Cagle-Resume.pdf" download>Download the full PDF <span class="ar">&darr;</span></a></div>
     </div>
   </section>
 
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
   </script>
-  <script type="module" src="js/brain.js?v=26"></script>
+  <script type="module" src="js/brain.js?v=27"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="js/work-lightbox.js?v=14" defer></script>
   <script src="js/work-flipbook.js?v=12" defer></script>
@@ -249,6 +256,7 @@
   <script src="js/tw-viewer.js?v=2" defer></script>
   <script src="js/skill-cloud.js?v=3" defer></script>
   <script src="js/ux.js?v=3" defer></script>
+  <script src="js/cursor.js?v=1" defer></script>
   <script src="js/contact.js?v=11" defer></script>
 </body>
 </html>

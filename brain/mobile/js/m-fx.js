@@ -22,7 +22,7 @@ export function initBgScene() {
   const col = art ? new THREE.Vector3(0.90, 0.64, 0.30)
             : rose ? new THREE.Vector3(0.91, 0.48, 0.42)
             : new THREE.Vector3(0.30, 0.55, 0.91);
-  const count = MFX.tier === "A" ? 90.0 : 46.0;
+  const count = MFX.tier === "A" ? 66.0 : 34.0;
 
   const u = { uTime:{value:0}, uRes:{value:new THREE.Vector2(1,1)}, uTilt:{value:new THREE.Vector2(0,0)}, uCol:{value:col}, uN:{value:count} };
   const mat = new THREE.ShaderMaterial({ uniforms:u, transparent:true,
@@ -37,7 +37,7 @@ export function initBgScene() {
         vec3 c=vec3(0.0);
         // faint flow
         float flow=noise(p*3.0+vec2(uTime*0.05,uTime*0.03));
-        c+=uCol*flow*0.05;
+        c+=uCol*flow*0.03;
         // drifting glints
         for(float i=0.0;i<90.0;i++){
           if(i>=uN) break;
@@ -46,7 +46,7 @@ export function initBgScene() {
           gp=(gp-0.5); gp.x*=asp;
           float d=length(p-gp);
           float tw=0.5+0.5*sin(uTime*(1.0+s*3.0)+i);
-          c+=uCol*(0.0009/(d*d+0.0008))*(0.4+0.6*tw)*0.5;
+          c+=uCol*(0.0009/(d*d+0.0008))*(0.4+0.6*tw)*0.34;
         }
         float a=clamp(max(max(c.r,c.g),c.b),0.0,1.0);
         gl_FragColor=vec4(c, a*0.9);

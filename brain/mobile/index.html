@@ -6,21 +6,20 @@
   <base href="/brain/">
   <title>Adam R. Cagle · Two Minds</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#0c0f14">
+  <meta name="theme-color" content="#0b0e13">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="mobile/css/m.css?v=3">
+  <link rel="stylesheet" href="mobile/css/m.css?v=4">
 </head>
-<body>
-
-  <div class="m-grid" aria-hidden="true"></div>
+<body class="t-tech">
+  <div class="m-stage" data-bgscene aria-hidden="true"></div>
+  <div class="m-curtain" aria-hidden="true"></div>
 
   <header class="m-bar">
     <a class="m-bar__name" href="mobile/index.html">Adam R<span class="d">.</span> <b>Cagle</b></a>
     <button class="m-burger" aria-label="Menu"><i></i><i></i></button>
   </header>
-
   <nav class="m-menu" aria-label="Menu">
     <button class="m-menu__close" aria-label="Close">&times;</button>
     <div class="m-menu__grp">The Technical Mind</div>
@@ -38,16 +37,11 @@
     </div>
   </nav>
 
-  <main class="m-app">
-
-    <!-- ─── HERO ─── -->
+  <main class="m-content">
     <section class="m-hero">
-      <div class="m-hero__glow" aria-hidden="true"></div>
-      <div class="m-hero__brain">
-        <canvas data-mbrain aria-hidden="true"></canvas>
-        <img class="fallimg" src="mobile/img/brain-off.png" alt="" style="display:none">
-      </div>
-      <span class="m-tap-hint">Tap the brain</span>
+      <div class="m-hero__brain"><canvas data-brain aria-hidden="true"></canvas><img class="fallimg" src="mobile/img/brain-off.png" alt=""></div>
+      <span class="m-taphint">Tap the brain</span>
+      <div class="m-hero__scrim" aria-hidden="true"></div>
       <div class="m-hero__copy">
         <span class="m-hero__kick">Two Minds · One Brain</span>
         <h1 class="m-hero__name">Adam R.<br><span class="it">Cagle.</span></h1>
@@ -56,12 +50,10 @@
       </div>
     </section>
 
-    <!-- ─── TWO MINDS ─── -->
     <section class="m-sec">
       <span class="m-eyebrow reveal">The Split</span>
       <h2 class="m-h2 reveal">Two minds. <span class="it">One brain.</span></h2>
       <p class="m-lead reveal">Twenty-five years of creative for product and brand launches, now wired to a technical mind that ships AI systems by hand. Pick a side.</p>
-
       <div class="m-minds">
         <article class="m-mind m-mind--tech reveal">
           <span class="m-mind__tag">Left Brain</span>
@@ -73,7 +65,6 @@
             <a href="mobile/technical-writing.html">Technical Writing <span class="ar">&rarr;</span></a>
           </div>
         </article>
-
         <article class="m-mind m-mind--art reveal">
           <span class="m-mind__tag">Right Brain</span>
           <h3 class="m-mind__title">The Creative Mind</h3>
@@ -87,15 +78,6 @@
       </div>
     </section>
 
-    <!-- ─── TAPE ─── -->
-    <div class="m-tape" aria-hidden="true">
-      <div class="m-tape__row">
-        <span>CLAUDE API</span><span class="d">·</span><span>BRAND VOICE</span><span class="d">·</span><span>AGENTS</span><span class="d">·</span><span>REACT</span><span class="d">·</span><span>THREE.JS</span><span class="d">·</span><span>CAMPAIGNS</span><span class="d">·</span><span>SEO + AIO</span><span class="d">·</span><span>WEBGL</span><span class="d">·</span><span>COPY SYSTEMS</span><span class="d">·</span>
-        <span>CLAUDE API</span><span class="d">·</span><span>BRAND VOICE</span><span class="d">·</span><span>AGENTS</span><span class="d">·</span><span>REACT</span><span class="d">·</span><span>THREE.JS</span><span class="d">·</span><span>CAMPAIGNS</span><span class="d">·</span><span>SEO + AIO</span><span class="d">·</span><span>WEBGL</span><span class="d">·</span><span>COPY SYSTEMS</span><span class="d">·</span>
-      </div>
-    </div>
-
-    <!-- ─── CONTACT ─── -->
     <footer class="m-foot">
       <span class="m-eyebrow reveal">Get in touch</span>
       <a class="m-foot__mail reveal" href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a>
@@ -103,16 +85,11 @@
         <a href="mailto:adamrcagle@gmail.com">Email</a>
         <a href="https://www.linkedin.com/in/adamcagle/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
-      <div class="m-roles reveal">
-        <span>Writer</span><i class="dot"></i><span>Builder</span><i class="dot"></i><span>Strategist</span><i class="dot"></i><span>Director</span>
-      </div>
+      <div class="m-roles reveal"><span>Writer</span><i class="dot"></i><span>Builder</span><i class="dot"></i><span>Strategist</span><i class="dot"></i><span>Director</span></div>
     </footer>
-
   </main>
 
-  <script type="importmap">
-    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
-  </script>
-  <script type="module" src="mobile/js/m.js?v=2"></script>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }</script>
+  <script type="module" src="mobile/js/m-core.js"></script>
 </body>
 </html>

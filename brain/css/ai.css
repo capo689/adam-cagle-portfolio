@@ -250,11 +250,13 @@ body.theme-tech .work .tw-thumb {
   display: block; overflow: hidden; aspect-ratio: 880 / 520;
   border-bottom: 1px solid var(--rule); background: #232a33;
 }
-body.theme-tech .work .tw-thumb img {
+body.theme-tech .work .tw-thumb img,
+body.theme-tech .work .tw-thumb canvas {
   width: 100%; height: 100%; object-fit: cover; display: block;
   transition: transform .5s cubic-bezier(.2,.7,.2,1);
 }
-body.theme-tech .work .tw-card:hover .tw-thumb img { transform: scale(1.05); }
+body.theme-tech .work .tw-card:hover .tw-thumb img,
+body.theme-tech .work .tw-card:hover .tw-thumb canvas { transform: scale(1.04); }
 body.theme-tech .work .tw-body { display: flex; flex-direction: column; flex: 1; padding: clamp(20px,1.6vw,26px) clamp(22px,1.8vw,28px) clamp(22px,1.8vw,28px); }
 body.theme-tech .work .tw-cat {
   font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
@@ -279,3 +281,46 @@ body.theme-tech .work .tw-cta {
 }
 body.theme-tech .work .tw-arr { transition: transform .25s ease; }
 body.theme-tech .work .tw-card:hover .tw-arr { transform: translateX(5px); }
+
+/* ── in-site paper viewer (floating box with the paper embedded) ──────── */
+html.twm-lock { overflow: hidden; }
+.tw-modal {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(16px, 3vh, 40px) clamp(16px, 3vw, 50px);
+  background: rgba(10, 13, 18, .82);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease;
+}
+.tw-modal.is-open { opacity: 1; visibility: visible; }
+.tw-modal-box {
+  display: flex; flex-direction: column;
+  width: min(1100px, 96vw); height: min(880px, 92vh);
+  background: #11151b; border: 1px solid rgba(120,150,200,.28); border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 50px 120px -30px rgba(0,0,0,.85), 0 0 0 1px rgba(77,139,232,.12), 0 0 60px -10px rgba(77,139,232,.25);
+  transform: translateY(16px) scale(.985); transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.tw-modal.is-open .tw-modal-box { transform: none; }
+.tw-modal-bar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 14px 12px 20px; border-bottom: 1px solid rgba(120,150,200,.2);
+  background: linear-gradient(180deg, #161b23, #11151b);
+}
+.tw-modal-title {
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .12em;
+  text-transform: uppercase; color: #cfe0f5;
+}
+.tw-modal-open, .tw-modal-close {
+  flex: 0 0 auto; display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: 8px; cursor: pointer;
+  border: 1px solid rgba(120,150,200,.28); background: transparent;
+  color: #cfe0f5; text-decoration: none; font-size: 18px; line-height: 1;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.tw-modal-open:hover, .tw-modal-close:hover { background: #4D8BE8; border-color: #4D8BE8; color: #fff; }
+.tw-modal-close { font-size: 22px; }
+.tw-modal-stage { flex: 1; min-height: 0; background: #fff; }
+.tw-modal-frame { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+@media (max-width: 600px) { .tw-modal { padding: 0; } .tw-modal-box { width: 100vw; height: 100vh; border-radius: 0; } }

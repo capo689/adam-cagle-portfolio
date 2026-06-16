@@ -162,6 +162,8 @@ function wireNav() {
     if (window.WritingReader) window.WritingReader.init();
     if (window.CWBears) window.CWBears.init();
     if (window.Anchors) window.Anchors.init();
+    if (window.TWCanvas) window.TWCanvas.init();
+    if (window.TWViewer) window.TWViewer.init();
   }
 
   async function enterSection(href, push) {

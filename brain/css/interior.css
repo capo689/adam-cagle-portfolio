@@ -96,6 +96,9 @@ body.theme-tech .xfade::after {
   background: #4D8BE8; box-shadow: 0 0 18px 1px rgba(77,139,232,.8);
 }
 @keyframes xfadeReveal { to { transform: translateY(-100%); } }
+/* backstop: JS pins the curtain open after the reveal (or after a timeout), so a
+   missed animation never leaves the page covered */
+body.theme-tech .xfade.x-open { animation: none; transform: translateY(-100%); }
 /* leave: cancel the reveal and slide the curtain back down over the brain */
 body.theme-tech.xfade-cover .xfade {
   animation: none; transform: translateY(0);

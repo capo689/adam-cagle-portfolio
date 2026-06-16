@@ -249,6 +249,24 @@ body.theme-tech::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%234D8BE8' stroke-width='1'%3E%3Cpath d='M0 40 H50 V96 H104 V24 H160'/%3E%3Cpath d='M40 0 V64 H96 V160'/%3E%3Cpath d='M0 120 H72 V140'/%3E%3Cpath d='M120 60 H160'/%3E%3C/g%3E%3Cg fill='%234D8BE8'%3E%3Ccircle cx='50' cy='40' r='2.6'/%3E%3Ccircle cx='104' cy='96' r='2.6'/%3E%3Ccircle cx='96' cy='64' r='2.6'/%3E%3Ccircle cx='72' cy='120' r='2.6'/%3E%3Ccircle cx='120' cy='60' r='2.6'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 320px 320px;
 }
+/* electricity: a brighter copy of the same circuit, revealed only under a
+   slow-moving diagonal band, so blue tracers and dots light up as it passes */
+body.theme-tech::after {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: .55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%237fb6ff' stroke-width='1.4'%3E%3Cpath d='M0 40 H50 V96 H104 V24 H160'/%3E%3Cpath d='M40 0 V64 H96 V160'/%3E%3Cpath d='M0 120 H72 V140'/%3E%3Cpath d='M120 60 H160'/%3E%3C/g%3E%3Cg fill='%23aed4ff'%3E%3Ccircle cx='50' cy='40' r='3.4'/%3E%3Ccircle cx='104' cy='96' r='3.4'/%3E%3Ccircle cx='96' cy='64' r='3.4'/%3E%3Ccircle cx='72' cy='120' r='3.4'/%3E%3Ccircle cx='120' cy='60' r='3.4'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 320px 320px;
+  -webkit-mask-image: linear-gradient(115deg, transparent 44%, #000 50%, transparent 56%);
+          mask-image: linear-gradient(115deg, transparent 44%, #000 50%, transparent 56%);
+  -webkit-mask-size: 280% 280%; mask-size: 280% 280%;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  animation: circuitSweep 11s linear infinite;
+}
+@keyframes circuitSweep {
+  from { -webkit-mask-position: 120% -20%; mask-position: 120% -20%; }
+  to   { -webkit-mask-position: -20% 120%; mask-position: -20% 120%; }
+}
+@media (prefers-reduced-motion: reduce) { body.theme-tech::after { display: none; } }
 
 /* ── Technical Writing: paper / field-note cards ─────────────────────── */
 body.theme-tech .work .tw-grid {

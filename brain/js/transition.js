@@ -7,6 +7,15 @@
   if (!body.classList.contains("interior")) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+  // arrival: pin the curtain open once the reveal finishes, with a timeout
+  // backstop so a missed CSS animation never leaves the page covered
+  const xf = document.querySelector(".xfade");
+  if (xf) {
+    const open = () => xf.classList.add("x-open");
+    xf.addEventListener("animationend", open, { once: true });
+    setTimeout(open, 1000);
+  }
+
   document.addEventListener("click", (e) => {
     const a = e.target.closest && e.target.closest("a[href]");
     if (!a) return;

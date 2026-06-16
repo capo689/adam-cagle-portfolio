@@ -1,13 +1,10 @@
-/* ux.js — UX / UI showcase behaviour.
+/* ux.js — UX / UI gallery behaviour.
    - scroll reveals (fail-safe: content shows even if IntersectionObserver never fires)
-   - pointer-driven 3D tilt on the browser-framed mockups
-   - a full-screen lightbox gallery with prev/next, dots, keyboard, per-page scroll
+   - a full-screen lightbox: prev/next, dots, keyboard, per-page scroll, optional live link
    Vanilla, no libraries. Idempotent for SPA re-init. */
 (function () {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const coarse = window.matchMedia("(pointer: coarse)").matches;
 
-  /* ---- lightbox (built once on body) ---- */
   function buildLightbox() {
     let lb = document.querySelector(".uxlb");
     if (lb) return lb;
@@ -18,6 +15,7 @@
       '<div class="uxlb__top">' +
         '<span class="uxlb__title"></span>' +
         '<span class="uxlb__role"></span>' +
+        '<a class="uxlb__visit" target="_blank" rel="noopener noreferrer" hidden>Visit Live Site &#8599;</a>' +
         '<span class="uxlb__count"></span>' +
         '<button class="uxlb__close" type="button" aria-label="Close">&times;</button>' +
       "</div>" +
@@ -33,6 +31,7 @@
     const vp = lb.querySelector(".uxlb__viewport");
     const titleEl = lb.querySelector(".uxlb__title");
     const roleEl = lb.querySelector(".uxlb__role");
+    const visitEl = lb.querySelector(".uxlb__visit");
     const countEl = lb.querySelector(".uxlb__count");
     const capEl = lb.querySelector(".uxlb__cap");
     const dotsEl = lb.querySelector(".uxlb__dots");
@@ -43,7 +42,7 @@
 
     function render() {
       const p = pages[idx];
-      img.src = p.src; img.alt = (titleEl.textContent + " — " + (p.cap || ""));
+      img.src = p.src; img.alt = titleEl.textContent + " — " + (p.cap || "");
       vp.scrollTop = 0;
       capEl.textContent = p.cap || "";
       countEl.textContent = (idx + 1).toString().padStart(2, "0") + " / " + pages.length.toString().padStart(2, "0");
@@ -59,6 +58,7 @@
       idx = 0;
       titleEl.textContent = proj.title || "";
       roleEl.textContent = proj.role || "";
+      if (proj.url) { visitEl.href = proj.url; visitEl.hidden = false; } else { visitEl.hidden = true; }
       dotsEl.innerHTML = "";
       pages.forEach((p, i) => {
         const b = document.createElement("button");
@@ -91,27 +91,12 @@
     return lb;
   }
 
-  /* ---- read the JSON manifest of project pages ---- */
   function manifest() {
     const el = document.getElementById("ux-data");
     if (!el) return {};
     try { return JSON.parse(el.textContent); } catch (e) { return {}; }
   }
 
-  /* ---- pointer tilt ---- */
-  function bindTilt(frame) {
-    if (reduced || coarse) return;
-    const wrap = frame.closest(".ux-framewrap") || frame;
-    wrap.addEventListener("pointermove", (e) => {
-      const r = frame.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      frame.style.transform = "rotateX(" + (-py * 6).toFixed(2) + "deg) rotateY(" + (px * 8).toFixed(2) + "deg) translateY(-4px)";
-    });
-    wrap.addEventListener("pointerleave", () => { frame.style.transform = ""; });
-  }
-
-  /* ---- reveals (fail-safe) ---- */
   function reveals(root) {
     const items = [...root.querySelectorAll(".reveal")];
     if (!items.length) return;
@@ -119,7 +104,7 @@
     root.classList.add("ux--anim");
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); } });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
     items.forEach((el) => io.observe(el));
     // safety: if IO never delivers (some embedded webviews), reveal everything
     setTimeout(() => items.forEach((el) => el.classList.add("is-in")), 1600);
@@ -133,16 +118,10 @@
     const data = manifest();
     const lb = buildLightbox();
 
-    root.querySelectorAll("[data-ux-key]").forEach((card) => {
-      const key = card.getAttribute("data-ux-key");
-      const proj = data[key];
-      const frame = card.querySelector(".ux-frame");
-      if (frame) bindTilt(frame);
+    root.querySelectorAll("[data-ux-key]").forEach((tile) => {
+      const proj = data[tile.getAttribute("data-ux-key")];
       if (!proj) return;
-      const triggers = card.querySelectorAll("[data-ux-open]");
-      (triggers.length ? triggers : [frame]).forEach((t) => {
-        if (t) t.addEventListener("click", (e) => { e.preventDefault(); lb.open(proj); });
-      });
+      tile.addEventListener("click", (e) => { e.preventDefault(); lb.open(proj); });
     });
 
     reveals(root);

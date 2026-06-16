@@ -4,120 +4,138 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sunset Marquis — Tone Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C97A;
-    --gold-dim: #8B6F2E;
-    --near-black: #0D0C0B;
-    --deep: #141210;
-    --surface: #1A1815;
-    --surface-2: #221F1B;
-    --surface-3: #2C2820;
-    --border: rgba(201,168,76,0.15);
-    --border-strong: rgba(201,168,76,0.35);
-    --text-primary: #F0EAD6;
-    --text-secondary: #A89B7A;
-    --text-muted: #6B5F44;
-    --red: #C0392B;
+    --gold: #9A8243;
+    --gold-light: #B89B54;
+    --gold-dim: #7C6835;
+    --near-black: #1C1A17;
+    --deep: #F2EDE4;
+    --surface: #FBF8F2;
+    --surface-2: #F5F0E6;
+    --surface-3: #ECE4D6;
+    --border: rgba(28,26,23,0.10);
+    --border-strong: rgba(154,130,67,0.40);
+    --text-primary: #22201C;
+    --text-secondary: #6B6457;
+    --text-muted: #9A9384;
+    --red: #B0442F;
     --green-sm: #4A7C59;
-    --serif: 'Playfair Display', Georgia, serif;
-    --sans: 'Inter', system-ui, sans-serif;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', system-ui, sans-serif;
+    --script: 'Pinyon Script', cursive;
+    --ivory: #FBF8F2;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--near-black);
+    background: var(--ivory);
     color: var(--text-primary);
     font-family: var(--sans);
     font-size: 15px;
-    line-height: 1.6;
+    font-weight: 300;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
 
   /* HEADER */
   .masthead {
-    background: var(--near-black);
-    border-bottom: 1px solid var(--border-strong);
-    padding: 80px 60px 64px;
+    background: var(--ivory);
+    border-bottom: 1px solid var(--border);
+    padding: 96px 60px 72px;
     position: relative;
     overflow: hidden;
+    text-align: center;
   }
   .masthead::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 2px;
+    height: 3px;
     background: var(--gold);
   }
   .masthead-eyebrow {
     font-family: var(--sans);
     font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-weight: 400;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 28px;
   }
   .masthead-wordmark {
     font-family: var(--serif);
-    font-size: clamp(52px, 8vw, 96px);
+    font-size: clamp(48px, 7.5vw, 92px);
     font-weight: 400;
-    color: var(--text-primary);
-    line-height: 1;
-    letter-spacing: -0.01em;
+    color: var(--near-black);
+    line-height: 1.02;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
   .masthead-wordmark em {
-    font-style: italic;
+    font-family: var(--script);
+    font-style: normal;
+    text-transform: none;
     color: var(--gold);
+    letter-spacing: 0;
+    font-size: 1.15em;
+    line-height: 0.9;
+    display: inline-block;
+    margin-top: 0.08em;
+    white-space: nowrap;
   }
   .masthead-sub {
-    font-family: var(--serif);
-    font-size: clamp(18px, 3vw, 28px);
+    font-family: var(--script);
+    font-size: clamp(26px, 4vw, 42px);
     font-weight: 400;
-    font-style: italic;
-    color: var(--text-secondary);
-    margin-top: 12px;
+    font-style: normal;
+    color: var(--gold);
+    margin-top: 18px;
+    line-height: 1;
   }
   .masthead-meta {
-    margin-top: 40px;
+    margin-top: 44px;
     display: flex;
-    gap: 40px;
+    gap: 48px;
     flex-wrap: wrap;
+    justify-content: center;
   }
   .masthead-meta-item {
     font-size: 12px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     letter-spacing: 0.05em;
   }
   .masthead-meta-item strong {
     display: block;
-    color: var(--text-secondary);
-    font-weight: 500;
-    font-size: 11px;
+    color: var(--gold);
+    font-weight: 400;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 4px;
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
   }
   .masthead-rule {
-    width: 60px;
+    width: 64px;
     height: 1px;
     background: var(--gold);
-    margin-top: 40px;
+    margin: 36px auto 0;
   }
 
   /* NAV */
   .nav-strip {
-    background: var(--surface);
+    background: var(--ivory);
     border-bottom: 1px solid var(--border);
     padding: 0 60px;
     display: flex;
     gap: 0;
+    justify-content: center;
     overflow-x: auto;
     scrollbar-width: none;
     position: sticky;
@@ -127,14 +145,14 @@
   .nav-strip::-webkit-scrollbar { display: none; }
   .nav-link {
     display: inline-block;
-    padding: 18px 24px;
+    padding: 18px 22px;
     font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-weight: 400;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-muted);
     text-decoration: none;
-    border-bottom: 2px solid transparent;
+    border-bottom: 1px solid transparent;
     white-space: nowrap;
     transition: color 0.2s, border-color 0.2s;
   }
@@ -145,56 +163,61 @@
 
   /* SECTIONS */
   .section {
-    padding: 80px 60px;
+    padding: 88px 60px;
     border-bottom: 1px solid var(--border);
+    max-width: 1280px;
+    margin: 0 auto;
   }
-  .section:nth-child(even) { background: var(--deep); }
+  .section:nth-child(even) { background: transparent; }
   .section-eyebrow {
     font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-weight: 400;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .section-title {
     font-family: var(--serif);
-    font-size: clamp(28px, 4vw, 42px);
+    font-size: clamp(30px, 4.5vw, 50px);
     font-weight: 400;
-    color: var(--text-primary);
-    line-height: 1.15;
-    margin-bottom: 8px;
+    color: var(--near-black);
+    line-height: 1.1;
+    letter-spacing: 0.005em;
+    margin-bottom: 10px;
   }
   .section-intro {
     font-size: 15px;
+    font-weight: 300;
     color: var(--text-secondary);
-    max-width: 600px;
-    margin-bottom: 48px;
-    line-height: 1.7;
+    max-width: 620px;
+    margin-bottom: 52px;
+    line-height: 1.75;
   }
 
   /* NORTH STAR */
   .north-star {
     background: var(--surface-2);
-    border: 1px solid var(--border-strong);
-    border-left: 4px solid var(--gold);
-    padding: 32px 40px;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 36px 44px;
     margin-bottom: 48px;
     max-width: 860px;
   }
   .north-star-label {
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
+    font-weight: 500;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .north-star-text {
     font-family: var(--serif);
-    font-size: clamp(18px, 2.5vw, 24px);
+    font-size: clamp(20px, 2.5vw, 27px);
     font-style: italic;
-    color: var(--text-primary);
+    font-weight: 400;
+    color: var(--near-black);
     line-height: 1.5;
   }
 
@@ -202,11 +225,12 @@
   .pillars-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
   .pillar-card {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 32px 24px;
     position: relative;
     overflow: hidden;
@@ -215,23 +239,23 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
+    height: 2px;
     background: var(--gold);
   }
   .pillar-number {
     font-family: var(--serif);
-    font-size: 52px;
+    font-size: 56px;
     font-weight: 400;
-    color: var(--gold-dim);
+    color: var(--gold);
     line-height: 1;
-    margin-bottom: 12px;
-    opacity: 0.5;
+    margin-bottom: 14px;
+    opacity: 0.85;
   }
   .pillar-name {
     font-family: var(--serif);
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 500;
-    color: var(--gold);
+    color: var(--near-black);
     margin-bottom: 10px;
   }
   .pillar-meaning {
@@ -242,15 +266,15 @@
   }
   .pillar-sound-label {
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--gold-dim);
     margin-bottom: 6px;
   }
   .pillar-sounds-like {
     font-family: var(--serif);
-    font-size: 13px;
+    font-size: 14px;
     font-style: italic;
     color: var(--text-primary);
     border-left: 2px solid var(--gold);
@@ -260,8 +284,8 @@
   }
   .pillar-not-label {
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-muted);
     margin-bottom: 6px;
@@ -270,7 +294,7 @@
     font-size: 12px;
     color: var(--text-muted);
     font-style: italic;
-    border-left: 2px solid #4A2020;
+    border-left: 2px solid rgba(176,68,47,0.4);
     padding-left: 12px;
     line-height: 1.5;
   }
@@ -279,11 +303,12 @@
   .dial-row {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
   .dial-cell {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 24px 16px;
     text-align: center;
   }
@@ -297,10 +322,10 @@
   }
   .dial-bar-container {
     width: 100%;
-    height: 6px;
+    height: 5px;
     background: var(--surface-3);
     border-radius: 3px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     overflow: hidden;
   }
   .dial-bar-fill {
@@ -311,9 +336,9 @@
   }
   .dial-value {
     font-family: var(--serif);
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--near-black);
   }
   .dial-descriptor {
     font-size: 11px;
@@ -325,24 +350,25 @@
   .audience-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
   .audience-card {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 28px;
   }
   .audience-icon {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     background: var(--surface-2);
     border: 1px solid var(--border-strong);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
-    font-size: 14px;
+    margin-bottom: 18px;
+    font-size: 15px;
     color: var(--gold);
   }
   .audience-name {
@@ -356,10 +382,10 @@
     display: inline-block;
     background: var(--surface-3);
     border: 1px solid var(--border);
-    color: var(--gold);
+    color: var(--gold-dim);
     font-size: 10px;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     padding: 4px 10px;
     margin-bottom: 16px;
@@ -404,11 +430,12 @@
   .word-zone {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
   .word-zone-panel {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 32px;
   }
   .word-zone-title {
@@ -475,31 +502,34 @@
   .channel-table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 2px;
+    border-spacing: 0;
     font-size: 13px;
   }
   .channel-table th {
-    background: var(--surface-2);
-    color: var(--gold);
+    background: var(--near-black);
+    color: var(--gold-light);
     font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 12px 16px;
+    padding: 14px 16px;
     text-align: left;
     white-space: nowrap;
   }
   .channel-table td {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 14px 16px;
     color: var(--text-secondary);
     vertical-align: top;
     line-height: 1.5;
   }
   .channel-table tr td:first-child {
-    color: var(--text-primary);
+    color: var(--near-black);
     font-weight: 500;
     white-space: nowrap;
+    font-family: var(--serif);
+    font-size: 15px;
   }
   .channel-tag {
     display: inline-block;
@@ -519,11 +549,12 @@
   .ba-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 32px;
   }
   .ba-panel {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 32px;
   }
   .ba-label {
@@ -558,11 +589,12 @@
   .vocab-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
   .vocab-panel {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 28px;
   }
   .vocab-category {
@@ -583,10 +615,10 @@
   }
   .vocab-word {
     font-family: var(--serif);
-    font-size: 14px;
-    color: var(--text-secondary);
+    font-size: 16px;
+    color: var(--text-primary);
     background: var(--surface-2);
-    padding: 4px 12px;
+    padding: 5px 14px;
     border: 1px solid var(--border);
   }
 
@@ -594,27 +626,28 @@
   .rules-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
   .rule-card {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 28px;
   }
   .rule-num {
     font-family: var(--serif);
-    font-size: 38px;
+    font-size: 42px;
     font-weight: 400;
-    color: var(--gold-dim);
-    opacity: 0.4;
+    color: var(--gold);
+    opacity: 0.7;
     line-height: 1;
     margin-bottom: 8px;
   }
   .rule-title {
     font-family: var(--serif);
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 500;
-    color: var(--gold);
+    color: var(--near-black);
     margin-bottom: 10px;
   }
   .rule-body {
@@ -685,7 +718,7 @@
   .hierarchy-stack {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 16px;
     max-width: 720px;
     margin-bottom: 48px;
   }
@@ -709,38 +742,40 @@
   .hierarchy-body {
     flex: 1;
     background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: none;
     padding: 16px 20px;
   }
   .hierarchy-title {
     font-weight: 500;
     font-size: 14px;
-    color: var(--text-primary);
+    color: var(--near-black);
     margin-bottom: 2px;
   }
   .hierarchy-desc {
     font-size: 12px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
   }
   .hierarchy-item:nth-child(n+3) .hierarchy-rank {
     background: var(--gold-dim);
-    opacity: 0.7;
   }
   .hierarchy-item:nth-child(n+5) .hierarchy-rank {
-    opacity: 0.45;
+    background: #A39466;
   }
   .hierarchy-item:nth-child(n+7) .hierarchy-rank {
-    opacity: 0.25;
+    background: #B7AC8C;
   }
 
   /* PUNCTUATION RULES */
   .punct-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
   .punct-card {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 24px;
     display: flex;
     align-items: flex-start;
@@ -776,8 +811,8 @@
   /* FOOTER */
   .footer {
     background: var(--near-black);
-    border-top: 1px solid var(--border-strong);
-    padding: 48px 60px;
+    border-top: 3px solid var(--gold);
+    padding: 56px 60px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -786,9 +821,10 @@
   }
   .footer-wordmark {
     font-family: var(--serif);
-    font-size: 20px;
-    font-style: italic;
-    color: var(--gold);
+    font-size: 26px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #F2EDE4;
   }
   .footer-meta {
     font-size: 11px;
@@ -798,30 +834,30 @@
   }
   .final-rule {
     font-family: var(--serif);
-    font-size: clamp(14px, 1.5vw, 18px);
+    font-size: clamp(16px, 1.6vw, 20px);
     font-style: italic;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     text-align: center;
     max-width: 600px;
     margin: 0 auto;
-    padding: 0 60px;
+    padding: 48px 60px 44px;
     border-top: 1px solid var(--border);
-    padding-top: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 0;
   }
   .final-test {
     text-align: center;
-    padding: 60px;
-    background: var(--surface);
+    padding: 72px 60px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
   }
   .final-test-q {
     font-family: var(--serif);
-    font-size: clamp(20px, 3vw, 32px);
+    font-size: clamp(22px, 3vw, 34px);
     font-style: italic;
-    color: var(--text-primary);
+    color: var(--near-black);
     line-height: 1.4;
-    margin-bottom: 24px;
-    max-width: 640px;
+    margin-bottom: 28px;
+    max-width: 660px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -830,25 +866,27 @@
     gap: 16px;
   }
   .final-btn {
-    background: transparent;
-    border: 1px solid var(--border-strong);
-    color: var(--gold);
+    background: var(--near-black);
+    border: 1px solid var(--near-black);
+    color: var(--gold-light);
     font-family: var(--sans);
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+    font-weight: 400;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 12px 28px;
+    padding: 14px 30px;
     cursor: default;
   }
   .final-btn.no {
+    background: transparent;
     color: var(--text-muted);
-    border-color: var(--border);
+    border-color: var(--border-strong);
   }
 
   /* CHART AREA */
   .chart-wrap {
     background: var(--surface);
+    border: 1px solid var(--border);
     padding: 32px;
     margin-bottom: 48px;
   }
@@ -863,7 +901,7 @@
   .radar-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px;
+    gap: 16px;
     margin-bottom: 48px;
   }
 
@@ -891,9 +929,9 @@
 
 <!-- MASTHEAD -->
 <header class="masthead">
-  <div class="masthead-eyebrow">Sunset Marquis Hotel &amp; Villas — Voice &amp; Tone Reference</div>
-  <div class="masthead-wordmark">The Voice of the <em>Marquis</em></div>
-  <div class="masthead-sub">A working guide for humans and AI systems</div>
+  <div class="masthead-eyebrow">Sunset Marquis Hotel &amp; Villas</div>
+  <div class="masthead-wordmark">The Voice of<br><em>Sunset Marquis</em></div>
+  <div class="masthead-sub">a working guide for humans and machines</div>
   <div class="masthead-rule"></div>
   <div class="masthead-meta">
     <div class="masthead-meta-item"><strong>Version</strong>Superpowered Merge, June 2026</div>
@@ -920,7 +958,7 @@
 <!-- BRAND IDENTITY -->
 <section class="section" id="brand">
   <div class="section-eyebrow">01 — Brand Identity</div>
-  <div class="section-title">What the Marquis is.</div>
+  <div class="section-title">What the Sunset Marquis is.</div>
   <p class="section-intro">One sentence defines every draft. If a piece of copy cannot trace back to this idea, it is probably drifting.</p>
 
   <div class="north-star">
@@ -928,8 +966,8 @@
     <div class="north-star-text">Sunset Marquis is a discreet West Hollywood retreat where music history, garden privacy, polished service, and creative energy live just off the Sunset Strip.</div>
   </div>
 
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 32px;">
-    <div style="background: var(--surface); padding: 28px;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;">
+    <div style="background: var(--surface); border: 1px solid var(--border); padding: 28px;">
       <div class="section-eyebrow" style="margin-bottom: 16px;">What it is</div>
       <ul class="speaker-list always" style="list-style: none;">
         <li>A private, creative, garden-set West Hollywood property</li>
@@ -939,7 +977,7 @@
         <li>Real. Historic. Difficult to fake.</li>
       </ul>
     </div>
-    <div style="background: var(--surface); padding: 28px;">
+    <div style="background: var(--surface); border: 1px solid var(--border); padding: 28px;">
       <div class="section-eyebrow" style="margin-bottom: 16px; color: #C0392B;">What it is not</div>
       <ul class="speaker-list never" style="list-style: none;">
         <li>A lifestyle concept hotel</li>
@@ -951,7 +989,7 @@
     </div>
   </div>
 
-  <div style="background: var(--surface); border-left: 4px solid var(--gold); padding: 28px; max-width: 760px;">
+  <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 3px solid var(--gold); padding: 32px; max-width: 760px;">
     <div class="section-eyebrow" style="margin-bottom: 12px;">The Core Pattern</div>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; font-size: 14px;">
       <div>
@@ -1025,7 +1063,7 @@
   </div>
 
   <!-- VOICE DIAL / INTENSITY VIZ -->
-  <div style="background: var(--surface-2); padding: 28px 32px; margin-bottom: 2px;">
+  <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 24px 32px; margin-bottom: 16px;">
     <div class="chart-title">Voice mix — relative intensity by quality</div>
   </div>
   <div class="dial-row">
@@ -1102,7 +1140,7 @@
     </div>
   </div>
 
-  <div style="background: var(--surface); padding: 32px; margin-bottom: 0;">
+  <div style="background: var(--surface); border: 1px solid var(--border); padding: 36px; margin-bottom: 0;">
     <div class="section-eyebrow" style="margin-bottom: 20px;">The speaker would never say</div>
     <div class="never-says-cloud">
       <span class="never-say-pill">We are the epitome of luxury.</span>
@@ -1458,7 +1496,7 @@
   </div>
 
   <!-- AI DEFAULT PATTERNS BANNED -->
-  <div style="background: var(--surface); padding: 32px; margin-top: 2px;">
+  <div style="background: var(--surface); border: 1px solid var(--border); padding: 36px; margin-top: 16px;">
     <div class="section-eyebrow" style="margin-bottom: 20px;">AI default phrasing — always remove</div>
     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">These phrases appear when AI generates generic hotel copy. Any of these in a draft is a signal to rewrite.</p>
     <div class="word-cloud">
@@ -1750,7 +1788,7 @@
   </div>
 
   <!-- FACT RULES -->
-  <div style="background: var(--surface); border: 1px solid rgba(192,57,43,0.3); padding: 32px; margin-top: 2px;">
+  <div style="background: #FBF5F2; border: 1px solid rgba(176,68,47,0.25); padding: 36px; margin-top: 16px;">
     <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #C0392B; margin-bottom: 16px;">Master Fact Rule — Established</div>
     <div style="font-family: var(--serif); font-size: 17px; color: var(--text-primary); margin-bottom: 20px; line-height: 1.5;">Never invent hotel details. Use only approved facts, uploaded source documents, current public property pages, or explicitly provided information. If a fact is missing, write around it or mark it as <em>Needs confirmation.</em></div>
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 12px; color: var(--text-muted);">
@@ -1773,7 +1811,7 @@
 <!-- FINAL TEST -->
 <div class="final-test">
   <div class="section-eyebrow" style="text-align: center; margin-bottom: 20px;">The Simplest Test</div>
-  <div class="final-test-q">Would this make someone who has stayed at the Marquis for twenty years feel like the place still knows itself?</div>
+  <div class="final-test-q">Would this make someone who has stayed at the Sunset Marquis for twenty years feel like the place still knows itself?</div>
   <div class="final-test-a">
     <div class="final-btn">Yes → Keep going</div>
     <div class="final-btn no">No → Rewrite</div>

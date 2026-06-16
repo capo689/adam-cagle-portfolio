@@ -416,12 +416,12 @@ html.wr-lock { overflow: hidden; }
   .cw .hero-bear { height: clamp(86px, 26vw, 130px); }
 }
 
-/* Vampire gummy at the foot of the page, under the samples */
-.cw .cw-vampbear-wrap { display: flex; justify-content: center; margin: clamp(28px, 5vw, 64px) 0 clamp(8px, 2vw, 24px); }
+/* Vampire gummy at the foot of the page, slammed right */
+.cw .cw-vampbear-wrap { display: flex; justify-content: flex-end; margin: clamp(28px, 5vw, 64px) 0 clamp(8px, 2vw, 24px); }
 .cw .cw-vampbear {
-  height: clamp(160px, 22vw, 280px); width: auto;
-  filter: drop-shadow(0 18px 30px rgba(0,0,0,.28));
+  height: clamp(80px, 11vw, 140px); width: auto;
+  filter: drop-shadow(0 12px 22px rgba(0,0,0,.26));
 }
 @media (max-width: 640px) {
-  .cw .cw-vampbear { height: clamp(120px, 34vw, 180px); }
+  .cw .cw-vampbear { height: clamp(60px, 17vw, 90px); }
 }

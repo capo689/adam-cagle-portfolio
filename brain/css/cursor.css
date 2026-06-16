@@ -1,46 +1,78 @@
-/* cursor.css — the NEURAL cursor (desktop, fine-pointer only).
-   A precise dot + a lerping ring that morphs to labeled states on interactives,
-   with an electric-blue synapse trail. On-brand blue so it reads on cream and slate. */
+/* cursor.css — precise reticle cursor (desktop, fine-pointer only).
+   A thin crosshair tracking the pointer exactly, snapping to a corner-bracket
+   target with a label over clickables. On-brand blue, legible on cream and slate. */
 
 @media (pointer: fine) {
   html.has-cursor, html.has-cursor * { cursor: none !important; }
 }
 
-.cur-trail { position: fixed; inset: 0; z-index: 99997; pointer-events: none; }
-
-.cur-ring {
-  position: fixed; top: 0; left: 0; width: 36px; height: 36px; margin: -18px 0 0 -18px;
-  border: 1.5px solid var(--cur, #4D8BE8); border-radius: 50%;
-  display: grid; place-items: center; z-index: 99999; pointer-events: none;
-  box-shadow: 0 0 14px -2px rgba(77,139,232,.55);
-  transition: width .26s cubic-bezier(.2,.8,.2,1), height .26s cubic-bezier(.2,.8,.2,1),
-              margin .26s cubic-bezier(.2,.8,.2,1), background-color .26s ease, border-color .26s ease, opacity .25s ease;
+.cur {
+  position: fixed; top: 0; left: 0; z-index: 100000; pointer-events: none;
+  will-change: transform; color: var(--cur, #4D8BE8);
+  filter: drop-shadow(0 0 1px rgba(0,0,0,.4));
 }
-.cur-dot {
-  position: fixed; top: 0; left: 0; width: 6px; height: 6px; margin: -3px 0 0 -3px;
-  background: var(--cur, #4D8BE8); border-radius: 50%; z-index: 100000; pointer-events: none;
-  transition: opacity .2s ease, transform .2s ease;
+.cur.hide { opacity: 0; }
+
+/* inner wrapper carries the morph (scale/press); position stays on .cur, so tracking is exact */
+.cur-in { position: absolute; top: 0; left: 0; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+
+/* crosshair ticks + center dot, with a clean center gap */
+.cur i { position: absolute; background: currentColor; }
+.cur-t, .cur-b { width: 1.5px; left: -.75px; height: 5px; }
+.cur-l, .cur-r { height: 1.5px; top: -.75px; width: 5px; }
+.cur-t { top: -11px; } .cur-b { top: 6px; }
+.cur-l { left: -11px; } .cur-r { left: 6px; }
+.cur-d { width: 2.5px; height: 2.5px; left: -1.25px; top: -1.25px; border-radius: 50%; }
+.cur-t, .cur-b, .cur-l, .cur-r, .cur-d {
+  transition: opacity .16s ease, transform .22s cubic-bezier(.2,.8,.2,1);
 }
-.cur-label {
-  font: 600 11px/1 "IBM Plex Mono", monospace; letter-spacing: .14em; text-transform: uppercase;
-  color: #fff; opacity: 0; transform: scale(.6); transition: opacity .2s ease, transform .2s ease;
+
+/* corner-bracket target, hidden until a "view" class of hover */
+.cur-fr {
+  position: absolute; left: 0; top: 0; opacity: 0; transform: scale(.55);
+  transition: opacity .22s ease, transform .26s cubic-bezier(.2,.8,.2,1);
+}
+.cur-fr i { width: 11px; height: 11px; background: none; border: 1.5px solid currentColor; }
+.cur-fr i:nth-child(1) { left: -26px; top: -26px; border-right: 0; border-bottom: 0; }
+.cur-fr i:nth-child(2) { left: 15px;  top: -26px; border-left: 0;  border-bottom: 0; }
+.cur-fr i:nth-child(3) { left: -26px; top: 15px;  border-right: 0; border-top: 0; }
+.cur-fr i:nth-child(4) { left: 15px;  top: 15px;  border-left: 0;  border-top: 0; }
+
+/* label */
+.cur-lb {
+  position: absolute; left: 0; top: 30px; transform: translateX(-50%); white-space: nowrap;
+  font: 600 10px/1 "IBM Plex Mono", monospace; letter-spacing: .16em; text-transform: uppercase;
+  color: currentColor; opacity: 0; transition: opacity .2s ease;
 }
 
-/* hover an interactive: ring blooms + fills, dot hides */
-.cur-ring.on { width: 76px; height: 76px; margin: -38px 0 0 -38px; background: var(--cur, #4D8BE8); border-color: var(--cur, #4D8BE8); }
-.cur-ring.on .cur-label { opacity: 1; transform: none; }
-body.cur-dot-hide .cur-dot { opacity: 0; }
-/* a plain link/button: small grow, no fill */
-.cur-ring.on[data-state="link"] { width: 52px; height: 52px; margin: -26px 0 0 -26px; background: transparent; }
-.cur-ring.press { transform: scale(.82); }
+/* plain link/button: reticle tightens a touch (focused, precise) */
+.cur.on[data-state="link"] .cur-in { transform: scale(1.4); }
 
-body.cur-hide .cur-ring, body.cur-hide .cur-dot { opacity: 0; }
+/* view / email / external: ticks fade, target brackets bloom in, label shows */
+.cur.on[data-state="view"]  .cur-t, .cur.on[data-state="view"]  .cur-b,
+.cur.on[data-state="view"]  .cur-l, .cur.on[data-state="view"]  .cur-r,
+.cur.on[data-state="email"] .cur-t, .cur.on[data-state="email"] .cur-b,
+.cur.on[data-state="email"] .cur-l, .cur.on[data-state="email"] .cur-r,
+.cur.on[data-state="ext"]   .cur-t, .cur.on[data-state="ext"]   .cur-b,
+.cur.on[data-state="ext"]   .cur-l, .cur.on[data-state="ext"]   .cur-r { opacity: 0; }
 
-/* per-theme tint: warm on creative/cream surfaces */
+.cur.on[data-state="view"]  .cur-fr,
+.cur.on[data-state="email"] .cur-fr,
+.cur.on[data-state="ext"]   .cur-fr { opacity: 1; transform: none; }
+
+.cur.on[data-state="view"]  .cur-lb,
+.cur.on[data-state="email"] .cur-lb,
+.cur.on[data-state="ext"]   .cur-lb { opacity: 1; }
+
+/* press feedback */
+.cur.press .cur-in { transform: scale(.78); }
+.cur.on[data-state="link"].press .cur-in { transform: scale(1.18); }
+
+/* per-theme tint */
 body.theme-tech { --cur: #4D8BE8; }
 body.interior--right, body.resume-open { --cur: #4D8BE8; }
 
 @media (prefers-reduced-motion: reduce), (pointer: coarse) {
-  .cur-ring, .cur-dot, .cur-trail { display: none !important; }
+  .cur { display: none !important; }
   html.has-cursor, html.has-cursor * { cursor: auto !important; }
 }

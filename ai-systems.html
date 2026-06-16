@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var p=new URLSearchParams(location.search);if(p.get("desktop"))sessionStorage.setItem("forceDesktop","1");if(sessionStorage.getItem("forceDesktop"))return;var coarse=window.matchMedia&&matchMedia("(pointer: coarse)").matches;var small=Math.min(screen.width||9999,window.innerWidth||9999)<=820;if(coarse&&small&&location.pathname.indexOf("/mobile/")===-1)location.replace("/mobile/");}catch(e){}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+  <title>AI Systems · Adam R. Cagle</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0a09">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/brain.css?v=17">
+  <link rel="stylesheet" href="css/cursor.css?v=2">
+  <link rel="stylesheet" href="css/interior.css?v=28">
+  <link rel="stylesheet" href="css/ai.css?v=23">
+</head>
+<body class="interior interior--left interior--work theme-tech">
+
+  <div class="xfade" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="bar">
+    <a class="bar__name" href="/">Adam R<span class="bar__name-dot">.</span> Cagle</a>
+    <nav class="bar__nav" aria-label="Left brain sections">
+      <a href="ai-systems.html" class="is-active" aria-current="page">AI Systems</a>
+      <a href="ux-ui.html">UX / UI Design</a>
+      <a href="technical-writing.html">Technical Writing</a>
+    </nav>
+    <details class="bar__contact">
+      <summary class="bar__contact-btn">Contact <span class="arrow">&#8594;</span></summary>
+      <div class="bar__contact-pop" role="menu">
+        <a href="mailto:adamrcagle@gmail.com" role="menuitem">
+          <span class="cp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <span class="cp-tt"><span class="cp-k">Email</span><span class="cp-v">adamrcagle@gmail.com</span></span>
+        </a>
+        <a href="https://www.linkedin.com/in/adamcagle/" target="_blank" rel="noopener noreferrer" role="menuitem">
+          <span class="cp-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9s-2.04 1.38-2.04 2.8V21h-4z"/></svg></span>
+          <span class="cp-tt"><span class="cp-k">LinkedIn</span><span class="cp-v">/in/adamcagle</span></span>
+        </a>
+      </div>
+    </details>
+  </header>
+
+  <main class="page">
+    <div class="brain brain--float" data-brain data-side="left">
+      <img class="brain__img" src="img/brain/brain-off.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+    </div>
+
+    <div class="page__content">
+      <div class="work">
+        <div class="work__scene">
+        
+          <!-- ─── HERO ─── -->
+          <div class="hero">
+            <div class="hero-kicker">
+              <span>Production AI Systems</span>
+            </div>
+            <h1 class="hero-title">AI<br>Systems.</h1>
+            <div class="hero-sub">
+              <p class="hero-intro">Production AI systems and workflows built across Claude Projects, GPT Projects, and Anthropic API deployments. Brand voice and campaign production. Market intelligence with kill-switch discipline. Autonomous multi-channel marketing. Satellite image analysis for mineral prospectivity. Every system keeps a human in control of the decisions that matter.</p>
+            </div>
+          </div>
+        
+          <!-- ─── SYSTEMS TAPE ─── -->
+          <div class="systems-tape">
+            <div class="tape-row tape-row--l" aria-hidden="true"><div class="tape-track"><span class="ti">CLAUDE OPUS</span><span class="dot">·</span><span class="ti">CLAUDE SONNET</span><span class="dot">·</span><span class="ti">CLAUDE HAIKU</span><span class="dot">·</span><span class="ti">CLAUDE API</span><span class="dot">·</span><span class="ti">CLAUDE VISION</span><span class="dot">·</span><span class="ti">GPT-5.5</span><span class="dot">·</span><span class="ti">GEMINI 3.1 PRO</span><span class="dot">·</span><span class="ti">GROK</span><span class="dot">·</span><span class="ti">DEEPSEEK</span><span class="dot">·</span><span class="ti">LLAMA</span><span class="dot">·</span><span class="ti">CLAUDE AGENT SDK</span><span class="dot">·</span><span class="ti">MCP / FASTMCP</span><span class="dot">·</span><span class="ti">LANGGRAPH</span><span class="dot">·</span><span class="ti">VERCEL AI SDK</span><span class="dot">·</span><span class="ti">OPENAI AGENTS SDK</span><span class="dot">·</span><span class="ti">CREWAI</span><span class="dot">·</span><span class="ti">CUSTOM GPTS</span><span class="dot">·</span><span class="ti">CHATGPT APPS</span><span class="dot">·</span><span class="ti">OLLAMA</span><span class="dot">·</span><span class="ti">LORA</span><span class="dot">·</span><span class="ti">RAG &amp; BRAND CONTEXT</span><span class="dot">·</span><span class="ti">QDRANT</span><span class="dot">·</span><span class="ti">PINECONE</span><span class="dot">·</span><span class="ti">COHERE RERANK</span><span class="dot">·</span><span class="ti">LLAMAINDEX</span><span class="dot">·</span><span class="ti">RAGAS</span><span class="dot">·</span><span class="ti">JAVASCRIPT</span><span class="dot">·</span><span class="ti">TYPESCRIPT</span><span class="dot">·</span><span class="ti">PYTHON 3</span><span class="dot">·</span><span class="ti">PHP</span><span class="dot">·</span><span class="ti">NODE.JS</span><span class="dot">·</span><span class="ti">BASH</span><span class="dot">·</span><span class="ti">HTML5</span><span class="dot">·</span><span class="ti">CLAUDE OPUS</span><span class="dot">·</span><span class="ti">CLAUDE SONNET</span><span class="dot">·</span><span class="ti">CLAUDE HAIKU</span><span class="dot">·</span><span class="ti">CLAUDE API</span><span class="dot">·</span><span class="ti">CLAUDE VISION</span><span class="dot">·</span><span class="ti">GPT-5.5</span><span class="dot">·</span><span class="ti">GEMINI 3.1 PRO</span><span class="dot">·</span><span class="ti">GROK</span><span class="dot">·</span><span class="ti">DEEPSEEK</span><span class="dot">·</span><span class="ti">LLAMA</span><span class="dot">·</span><span class="ti">CLAUDE AGENT SDK</span><span class="dot">·</span><span class="ti">MCP / FASTMCP</span><span class="dot">·</span><span class="ti">LANGGRAPH</span><span class="dot">·</span><span class="ti">VERCEL AI SDK</span><span class="dot">·</span><span class="ti">OPENAI AGENTS SDK</span><span class="dot">·</span><span class="ti">CREWAI</span><span class="dot">·</span><span class="ti">CUSTOM GPTS</span><span class="dot">·</span><span class="ti">CHATGPT APPS</span><span class="dot">·</span><span class="ti">OLLAMA</span><span class="dot">·</span><span class="ti">LORA</span><span class="dot">·</span><span class="ti">RAG &amp; BRAND CONTEXT</span><span class="dot">·</span><span class="ti">QDRANT</span><span class="dot">·</span><span class="ti">PINECONE</span><span class="dot">·</span><span class="ti">COHERE RERANK</span><span class="dot">·</span><span class="ti">LLAMAINDEX</span><span class="dot">·</span><span class="ti">RAGAS</span><span class="dot">·</span><span class="ti">JAVASCRIPT</span><span class="dot">·</span><span class="ti">TYPESCRIPT</span><span class="dot">·</span><span class="ti">PYTHON 3</span><span class="dot">·</span><span class="ti">PHP</span><span class="dot">·</span><span class="ti">NODE.JS</span><span class="dot">·</span><span class="ti">BASH</span><span class="dot">·</span><span class="ti">HTML5</span><span class="dot">·</span></div></div>
+            <div class="tape-row tape-row--r" aria-hidden="true"><div class="tape-track"><span class="ti">CSS3</span><span class="dot">·</span><span class="ti">MARKDOWN</span><span class="dot">·</span><span class="ti">JSON / JSONL</span><span class="dot">·</span><span class="ti">SQL</span><span class="dot">·</span><span class="ti">REACT</span><span class="dot">·</span><span class="ti">ASTRO</span><span class="dot">·</span><span class="ti">WORDPRESS</span><span class="dot">·</span><span class="ti">FASTAPI / STARLETTE</span><span class="dot">·</span><span class="ti">VANILLA JS</span><span class="dot">·</span><span class="ti">THREE.JS</span><span class="dot">·</span><span class="ti">WEBGL</span><span class="dot">·</span><span class="ti">OPENGL</span><span class="dot">·</span><span class="ti">CHART.JS</span><span class="dot">·</span><span class="ti">TAILWIND CSS</span><span class="dot">·</span><span class="ti">SUPABASE</span><span class="dot">·</span><span class="ti">POSTGRESQL</span><span class="dot">·</span><span class="ti">SQLITE</span><span class="dot">·</span><span class="ti">FINNHUB</span><span class="dot">·</span><span class="ti">EDGAR</span><span class="dot">·</span><span class="ti">RAINFOREST API</span><span class="dot">·</span><span class="ti">RENDER</span><span class="dot">·</span><span class="ti">CLOUDFLARE PAGES</span><span class="dot">·</span><span class="ti">CLOUDFLARE WORKERS</span><span class="dot">·</span><span class="ti">WRANGLER CLI</span><span class="dot">·</span><span class="ti">VERCEL</span><span class="dot">·</span><span class="ti">OPENCLAW</span><span class="dot">·</span><span class="ti">RESEND</span><span class="dot">·</span><span class="ti">TAILSCALE</span><span class="dot">·</span><span class="ti">NGROK</span><span class="dot">·</span><span class="ti">LAUNCHD</span><span class="dot">·</span><span class="ti">SSE</span><span class="dot">·</span><span class="ti">STRIPE</span><span class="dot">·</span><span class="ti">STRIPE CHECKOUT</span><span class="dot">·</span><span class="ti">CSS3</span><span class="dot">·</span><span class="ti">MARKDOWN</span><span class="dot">·</span><span class="ti">JSON / JSONL</span><span class="dot">·</span><span class="ti">SQL</span><span class="dot">·</span><span class="ti">REACT</span><span class="dot">·</span><span class="ti">ASTRO</span><span class="dot">·</span><span class="ti">WORDPRESS</span><span class="dot">·</span><span class="ti">FASTAPI / STARLETTE</span><span class="dot">·</span><span class="ti">VANILLA JS</span><span class="dot">·</span><span class="ti">THREE.JS</span><span class="dot">·</span><span class="ti">WEBGL</span><span class="dot">·</span><span class="ti">OPENGL</span><span class="dot">·</span><span class="ti">CHART.JS</span><span class="dot">·</span><span class="ti">TAILWIND CSS</span><span class="dot">·</span><span class="ti">SUPABASE</span><span class="dot">·</span><span class="ti">POSTGRESQL</span><span class="dot">·</span><span class="ti">SQLITE</span><span class="dot">·</span><span class="ti">FINNHUB</span><span class="dot">·</span><span class="ti">EDGAR</span><span class="dot">·</span><span class="ti">RAINFOREST API</span><span class="dot">·</span><span class="ti">RENDER</span><span class="dot">·</span><span class="ti">CLOUDFLARE PAGES</span><span class="dot">·</span><span class="ti">CLOUDFLARE WORKERS</span><span class="dot">·</span><span class="ti">WRANGLER CLI</span><span class="dot">·</span><span class="ti">VERCEL</span><span class="dot">·</span><span class="ti">OPENCLAW</span><span class="dot">·</span><span class="ti">RESEND</span><span class="dot">·</span><span class="ti">TAILSCALE</span><span class="dot">·</span><span class="ti">NGROK</span><span class="dot">·</span><span class="ti">LAUNCHD</span><span class="dot">·</span><span class="ti">SSE</span><span class="dot">·</span><span class="ti">STRIPE</span><span class="dot">·</span><span class="ti">STRIPE CHECKOUT</span><span class="dot">·</span></div></div>
+            <div class="tape-row tape-row--l" aria-hidden="true"><div class="tape-track"><span class="ti">STRIPE CUSTOMER PORTAL</span><span class="dot">·</span><span class="ti">AUTH0</span><span class="dot">·</span><span class="ti">OAUTH 2.0</span><span class="dot">·</span><span class="ti">OAUTH 1.0A</span><span class="dot">·</span><span class="ti">SCOPED ACCESS TOKENS</span><span class="dot">·</span><span class="ti">KILL-SWITCH DISCIPLINE</span><span class="dot">·</span><span class="ti">GITHUB</span><span class="dot">·</span><span class="ti">GITHUB ACTIONS</span><span class="dot">·</span><span class="ti">CODEX</span><span class="dot">·</span><span class="ti">ZAPIER</span><span class="dot">·</span><span class="ti">N8N</span><span class="dot">·</span><span class="ti">TELEGRAM</span><span class="dot">·</span><span class="ti">ANTHROPIC EVAL TOOLING</span><span class="dot">·</span><span class="ti">SKILL.MD GOVERNANCE</span><span class="dot">·</span><span class="ti">PERSONA MD GOVERNANCE</span><span class="dot">·</span><span class="ti">HUMAN REVIEW LOOPS</span><span class="dot">·</span><span class="ti">APPROVAL ROUTING</span><span class="dot">·</span><span class="ti">RECURSIVE LEARNING</span><span class="dot">·</span><span class="ti">SINGULARITY SEO</span><span class="dot">·</span><span class="ti">SEMRUSH</span><span class="dot">·</span><span class="ti">SERPAPI</span><span class="dot">·</span><span class="ti">GOOGLE SEARCH CONSOLE</span><span class="dot">·</span><span class="ti">GA4</span><span class="dot">·</span><span class="ti">SCHEMA / JSON-LD</span><span class="dot">·</span><span class="ti">LLMS.TXT</span><span class="dot">·</span><span class="ti">SEO + AIO</span><span class="dot">·</span><span class="ti">LIVE RANK TRACKING</span><span class="dot">·</span><span class="ti">HYPOTHESIS TESTING</span><span class="dot">·</span><span class="ti">MULTI-PASS DRAFTING</span><span class="dot">·</span><span class="ti">FIRST-PRINCIPLES RESEARCH</span><span class="dot">·</span><span class="ti">ASTRO STATIC BUILD</span><span class="dot">·</span><span class="ti">STRIPE CUSTOMER PORTAL</span><span class="dot">·</span><span class="ti">AUTH0</span><span class="dot">·</span><span class="ti">OAUTH 2.0</span><span class="dot">·</span><span class="ti">OAUTH 1.0A</span><span class="dot">·</span><span class="ti">SCOPED ACCESS TOKENS</span><span class="dot">·</span><span class="ti">KILL-SWITCH DISCIPLINE</span><span class="dot">·</span><span class="ti">GITHUB</span><span class="dot">·</span><span class="ti">GITHUB ACTIONS</span><span class="dot">·</span><span class="ti">CODEX</span><span class="dot">·</span><span class="ti">ZAPIER</span><span class="dot">·</span><span class="ti">N8N</span><span class="dot">·</span><span class="ti">TELEGRAM</span><span class="dot">·</span><span class="ti">ANTHROPIC EVAL TOOLING</span><span class="dot">·</span><span class="ti">SKILL.MD GOVERNANCE</span><span class="dot">·</span><span class="ti">PERSONA MD GOVERNANCE</span><span class="dot">·</span><span class="ti">HUMAN REVIEW LOOPS</span><span class="dot">·</span><span class="ti">APPROVAL ROUTING</span><span class="dot">·</span><span class="ti">RECURSIVE LEARNING</span><span class="dot">·</span><span class="ti">SINGULARITY SEO</span><span class="dot">·</span><span class="ti">SEMRUSH</span><span class="dot">·</span><span class="ti">SERPAPI</span><span class="dot">·</span><span class="ti">GOOGLE SEARCH CONSOLE</span><span class="dot">·</span><span class="ti">GA4</span><span class="dot">·</span><span class="ti">SCHEMA / JSON-LD</span><span class="dot">·</span><span class="ti">LLMS.TXT</span><span class="dot">·</span><span class="ti">SEO + AIO</span><span class="dot">·</span><span class="ti">LIVE RANK TRACKING</span><span class="dot">·</span><span class="ti">HYPOTHESIS TESTING</span><span class="dot">·</span><span class="ti">MULTI-PASS DRAFTING</span><span class="dot">·</span><span class="ti">FIRST-PRINCIPLES RESEARCH</span><span class="dot">·</span><span class="ti">ASTRO STATIC BUILD</span><span class="dot">·</span></div></div>
+          </div>
+        
+          <!-- ═══════════ I'VE GOT SKILLS ═══════════ -->
+          <div class="group-head" id="skills">
+            <span class="group-num">Skills &amp; Guardrails</span>
+            <h2 class="group-title">I&rsquo;ve Got <span class="it">Skills.</span></h2>
+            <p class="group-intro">Skill files and Markdown guardrails steer frontier models to produce reliable output and to automate work at scale, from copywriting to proposals. They hold a model to a process: rules, evidence standards, voice, and review gates. I&rsquo;ve created many skills, here are four I share the most.</p>
+          </div>
+
+          <div class="skills-grid">
+
+            <article class="skill-card">
+              <div class="skill-cloud-wrap"><canvas class="skill-cloud" data-word="TONE" data-font="600 120px 'EB Garamond', Georgia, serif"></canvas></div>
+              <div class="skill-body">
+                <div class="skill-kicker">Brand Voice · Copy System</div>
+                <h3 class="skill-name">Sunset Marquis Copy System</h3>
+                <p class="skill-desc">The operating voice for Sunset Marquis. Speaker, pillars, banned moves, fact rules, and channel guidance that keep AI-drafted copy on brand and accurate. The same system behind the hotel&rsquo;s campaigns.</p>
+                <div class="skill-actions">
+                  <button class="skill-view" type="button" data-skill-view data-url="skills/sm-tone.html" data-title="Sunset Marquis Copy System">View Skill <span class="ar">&rarr;</span></button>
+                  <a class="skill-dl" href="skills/SMTONE.md" download>Download .md</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-cloud-wrap"><canvas class="skill-cloud" data-word="AIC" data-font="600 120px 'IBM Plex Mono', monospace"></canvas></div>
+              <div class="skill-body">
+                <div class="skill-kicker">Operating System · Company Build</div>
+                <h3 class="skill-name">AIC · The AI Corporation</h3>
+                <p class="skill-desc">A playbook for building an AI-native company. MTP constitution, agent fleet, workflow interfaces, live dashboards, governance, and unit economics, from idea to operating model.</p>
+                <div class="skill-actions">
+                  <button class="skill-view" type="button" data-skill-view data-url="skills/aic.html" data-title="AIC · The AI Corporation">View Skill <span class="ar">&rarr;</span></button>
+                  <a class="skill-dl" href="skills/AI_Corporation_SKILL.md" download>Download .md</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-cloud-wrap"><canvas class="skill-cloud" data-word="GRANTS" data-font="800 120px 'Inter', sans-serif"></canvas></div>
+              <div class="skill-body">
+                <div class="skill-kicker">Proposals · Fundraising</div>
+                <h3 class="skill-name">The Grant Application Builder</h3>
+                <p class="skill-desc">A disciplined system for fundable proposals. Funder fit, evidence labels on every claim, reconciled budgets, portal-ready answers, and a human review gate. Never fabricate, never submit.</p>
+                <div class="skill-actions">
+                  <button class="skill-view" type="button" data-skill-view data-url="skills/grant-application-builder.html" data-title="The Grant Application Builder">View Skill <span class="ar">&rarr;</span></button>
+                  <a class="skill-dl" href="skills/grant-application-builder.skill" download>Download .skill</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-card">
+              <div class="skill-cloud-wrap"><canvas class="skill-cloud" data-word="FINISHER" data-font="700 120px 'IBM Plex Mono', monospace"></canvas></div>
+              <div class="skill-body">
+                <div class="skill-kicker">Production · Ship Discipline</div>
+                <h3 class="skill-name">FINISHER</h3>
+                <p class="skill-desc">Turns a working prototype into a launchable product. A 13-layer readiness scorecard, P0/P1/P2 triage, security gates, and a hard definition of done. A working demo is not a finished product.</p>
+                <div class="skill-actions">
+                  <button class="skill-view" type="button" data-skill-view data-url="skills/finisher.html" data-title="FINISHER · Production Finish">View Skill <span class="ar">&rarr;</span></button>
+                  <a class="skill-dl" href="skills/FINISHER.md" download>Download .md</a>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- ═══════════ SEO APPLICATION ═══════════ -->
+          <div class="group-head">
+            <span class="group-num">Application</span>
+            <h2 class="group-title">The SEO <span class="it">Application.</span></h2>
+            <p class="group-intro">My one shipped app at the moment. AI-managed SEO that runs as an operating loop, governed end to end.</p>
+          </div>
+
+          <!-- ─── 01 · SINGULARITY SEO ─── -->
+          <div class="section" id="sys-01">
+            <div class="s-head">
+              <span class="s-num">01 · PRODUCT SYSTEM</span>
+              <h2 class="s-title">Singularity<span class="it"> SEO</span></h2>
+              <p class="s-kicker">WordPress SEO · ChatGPT App<br>Competitive Review · AIO<br>GSC + Live Rank Tracking</p>
+              <div class="sys-tags">
+                <span class="sys-tag live">● Beta Live</span>
+                <span class="sys-tag">WordPress Plugin</span>
+                <span class="sys-tag">ChatGPT Control Room</span>
+              </div>
+              <div class="cta-row">
+                <a href="https://singularity-mauve-phi.vercel.app/" target="_blank" rel="noopener" class="btn-wp" data-cursor="hover">Visit Live System →</a>
+                <a href="wpaper/singularity-seo-white-paper-light.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+                <a href="https://singularity-mauve-phi.vercel.app/beta.html" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ Beta Access</a>
+              </div>
+            </div>
+            <div class="s-body">
+        
+              <div class="screens">
+                <img src="img/agents/singularity-dashboard.png" alt="Singularity SEO WordPress dashboard and ChatGPT connection workflow" loading="lazy">
+                <img src="img/agents/singularity-loop.png" alt="Singularity SEO operating loop: audit, competitive review, AI discovery, rank tracking" loading="lazy">
+              </div>
+        
+              <div class="proj-metrics">
+                <div class="pm-cell">
+                  <div class="pm-num">2</div>
+                  <div class="pm-lab">Control surfaces: WordPress dashboard and ChatGPT app</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">4</div>
+                  <div class="pm-lab">Operating stages: audit, field study, AIO build, progress tracking</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">GSC</div>
+                  <div class="pm-lab">Search Console visibility: clicks, impressions, CTR, position</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">Live</div>
+                  <div class="pm-lab">Rank feed with found, pending, and improvement states</div>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-3">
+                <div class="case-cell">
+                  <div class="cc-label">Problem</div>
+                  <p class="cc-body">Small teams need SEO that works for classic search and AI answer systems, but the work usually fragments across plugins, keyword tools, spreadsheets, analytics dashboards, competitor research, and someone guessing what to change next. WordPress can publish metadata. It rarely tells you what matters, what competitors are doing, what AI systems need to understand, or whether the work is actually moving.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">System</div>
+                  <p class="cc-body">Singularity SEO turns ChatGPT into the control room for a connected WordPress site. The plugin exposes managed pages, rendered metadata, technical health, setup state, reports, proposal queues, change history, Google Search Console visibility, and live search ranking checks. ChatGPT uses that context to audit the site, study the competitive field, build page-level SEO and AIO recommendations, and explain the next move in plain English.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Workflow</div>
+                  <p class="cc-body">Connect WordPress, verify the site, link the customer/site ID in the Singularity SEO ChatGPT app, then run a read-only baseline before any public change. From there the system can review competitors, choose focused keyword lanes, produce one governed full-site batch proposal, apply approved updates, track ranking and search visibility, and preserve rollback-ready change IDs.</p>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-2">
+                <div class="case-cell">
+                  <div class="cc-label">Architecture</div>
+                  <p class="cc-body">The WordPress plugin owns the site-side dashboard, verification state, metadata overrides, report surfaces, and restore points. The ChatGPT app owns analysis and orchestration. That split keeps public site changes governed: read-only work is fast, proposal generation is explicit, apply actions require approval, and protected operating logic, credentials, and proprietary SEO guidance stay out of public tools.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Outcome</div>
+                  <div class="cc-outcome">SEO becomes an operating loop instead of a plugin screen: audit, compete, optimize for search and AI answers, measure the result, then improve again.</div>
+                  <p class="cc-fine">The product sells the promise clients actually care about: a site that is easier for Google, AI answer engines, and real buyers to understand, with progress tracked through connected search data instead of guesswork.</p>
+                </div>
+              </div>
+        
+              <div class="notice">
+                <span class="notice-icon">ℹ</span>
+                <p>Singularity SEO is positioned as <strong>AI-managed SEO infrastructure</strong>, not a ranking guarantee. The important design choice is governance: public WordPress changes are proposed, reviewed, applied after approval, measured through search visibility, and kept rollback-ready.</p>
+              </div>
+        
+            </div>
+          </div>
+        
+          <!-- ═══════════ AGENTS ═══════════ -->
+          <div class="group-head" id="agents">
+            <span class="group-num">Agents</span>
+            <h2 class="group-title">The <span class="it">Agents.</span></h2>
+            <p class="group-intro">I build my production agents by hand, then wire them into the tools a business already runs on, like Zapier and Telegram, so the work shows up where the team already works. Narrow agents, bounded authority, and a human on the decisions that matter.</p>
+          </div>
+
+          <!-- ─── 03 · AGENCY689 AI WRITING SYSTEMS ─── -->
+          <div class="section" id="sys-03">
+            <div class="s-head">
+              <span class="s-num">03 · PRODUCTION</span>
+              <h2 class="s-title">Agency689<br><span class="it">Writing Systems</span></h2>
+              <p class="s-kicker">Brand Voice · RAG · Campaign AI<br>Sunset Marquis · Agency689<br>Traveler Guitar</p>
+              <div class="sys-tags">
+                <span class="sys-tag live">● Active Daily</span>
+                <span class="sys-tag">Proprietary</span>
+              </div>
+              <div class="cta-row">
+                <a href="wpaper/aiw-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+              </div>
+            </div>
+            <div class="s-body">
+        
+              <div class="proj-metrics">
+                <div class="pm-cell">
+                  <div class="pm-num">½<span class="u">×</span></div>
+                  <div class="pm-lab">Production time per campaign cycle</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">3<span class="u">+</span></div>
+                  <div class="pm-lab">Viable first drafts per run</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">3<span class="u">/wk</span></div>
+                  <div class="pm-lab">Sunset Marquis workflow runs during active cycles</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">3</div>
+                  <div class="pm-lab">Active client brands in production</div>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-3">
+                <div class="case-cell">
+                  <div class="cc-label">Problem</div>
+                  <p class="cc-body">Agency work creates constant demand for strong first drafts across email, banners, ad creative, landing pages, and social copy, with zero tolerance for voice drift. Generic AI output is the enemy. Volume without precision just produces more wrong work faster.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">System</div>
+                  <p class="cc-body">Brand context files, RAG-retrieved voice samples, SKILL.md governance, and persona specifications are assembled before any draft is generated. The system produces multiple first drafts, then routes them through a standards AI for quality and voice checks before anything reaches a human for approval.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Workflow</div>
+                  <p class="cc-body">Context ingestion → multi-draft generation → standards-AI critique loop → Telegram approval routing → human edit and publish. Outputs span email campaigns, banner copy, landing pages, ad creative, campaign concepts, and social posts. Nothing ships without human sign-off.</p>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-2">
+                <div class="case-cell">
+                  <div class="cc-label">Clients &amp; Scope</div>
+                  <p class="cc-body">Sunset Marquis: high-frequency promotional and email copy inside a brand voice that took years to build. Agency689: proposals generated from discovery notes and project requirements, structured against years of precedent. Traveler Guitar: systems thinking extended into visual ideation, creating campaign worlds where the product lives without losing the brand's sense of adventure.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Outcome</div>
+                  <div class="cc-outcome">Cuts production time by approximately half. Three or more usable first drafts in less time than one used to take.</div>
+                  <p class="cc-fine">Used daily across Agency689 client work. The practical version of AI-assisted creative: faster iteration, tighter review loops, and human approval before anything publishes.</p>
+                </div>
+              </div>
+        
+            </div>
+          </div>
+        
+          <!-- ─── 04 · VRT2 · CLAW STOCK INTELLIGENCE ─── -->
+          <div class="section" id="sys-04">
+            <div class="s-head">
+              <span class="s-num">04 · PRODUCTION</span>
+              <h2 class="s-title">VRT2<span class="it"> · CLAW</span></h2>
+              <p class="s-kicker">Stock Intelligence Agent<br>27 Streams · 23 Hypotheses<br>Kill-Switch Architecture</p>
+              <div class="sys-tags">
+                <span class="sys-tag live">● Live System</span>
+                <span class="sys-tag open">MIT Open Source</span>
+              </div>
+              <div class="cta-row">
+                <a href="wpaper/ssia-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+                <a href="https://github.com/capo689/VRT2" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ GitHub</a>
+              </div>
+            </div>
+            <div class="s-body">
+        
+              <div class="screens">
+                <img src="img/agents/ssia-vrt-dashboard.png" alt="VRT2 · CLAW intelligence dashboard" loading="lazy">
+                <img src="img/agents/ssia-vrt-graphs.png" alt="VRT2 signal performance graphs" loading="lazy">
+              </div>
+        
+              <div class="proj-metrics">
+                <div class="pm-cell">
+                  <div class="pm-num">27</div>
+                  <div class="pm-lab">Data streams ingested daily</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">23</div>
+                  <div class="pm-lab">Active hypotheses across 6 tiers</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">67<span class="u">%</span></div>
+                  <div class="pm-lab">S1_LAG signal pre-inclusion hit rate</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">5</div>
+                  <div class="pm-lab">Verification states per signal change</div>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-3">
+                <div class="case-cell">
+                  <div class="cc-label">Problem</div>
+                  <p class="cc-body">Markets generate data at a pace no individual analyst can track. EDGAR filings, earnings transcripts, analyst revisions, macroeconomic feeds, and price signals all move simultaneously. Manual synthesis lags. Bad signals with high weights cause outsized damage. A system without governance is worse than no system at all.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">System</div>
+                  <p class="cc-body">Node.js + SQLite backbone. Claude Haiku handles routine daily reviews; Claude Sonnet handles advanced analysis. Ingests Finnhub, EDGAR, earnings transcripts, analyst revisions, and macro feeds daily. Claude synthesizes everything into structured intelligence briefs. Signal weights are automatically adjusted based on observed hit rates over time.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Discipline</div>
+                  <p class="cc-body">Every signal change moves through five verification states: UNVERIFIED → SYNTAX_OK → SQL_VERIFIED → RUNTIME_VERIFIED → PRODUCTION_VERIFIED. New signals receive 0.50× weight until proven. Sub-55% hit rates (n=15) trigger automatic deactivation. A 20% drawdown fires a system-wide kill-switch. Nothing trades automatically.</p>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-2">
+                <div class="case-cell">
+                  <div class="cc-label">Architecture</div>
+                  <p class="cc-body">Launchd scheduling on macOS. Historical backfill from 2022-present (162,439+ price rows). Six hypothesis tiers: fundamentals, peer dynamics, AI infrastructure, VRT-specific factors, macroeconomics, and emerging research. COMPOSITE_BULL averages +3.65% return over 3-day holds. Everything is logged, versioned, and auditable. The changelog reads like a system's operating history.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Outcome</div>
+                  <div class="cc-outcome">A research and decision-support system, not a black box. Better-informed human judgment, not automated trading.</div>
+                  <p class="cc-fine">The transferable design pattern: ingestion, hypothesis testing, composite scoring, human review, audit trail, continuous improvement. The SSIA white paper documents the full architecture.</p>
+                </div>
+              </div>
+        
+              <div class="notice">
+                <span class="notice-icon">ℹ</span>
+                <p>VRT2 and the SSIA white paper are included as <strong>technical architecture and systems-design samples</strong>, not as investment advice. The S1_LAG hit rate and COMPOSITE_BULL returns are backtested figures, not guarantees of future performance.</p>
+              </div>
+        
+            </div>
+          </div>
+        
+          <!-- ─── 05 · BOOKLITE ─── -->
+          <div class="section" id="sys-05">
+            <div class="s-head">
+              <span class="s-num">05 · OPEN SOURCE</span>
+              <h2 class="s-title">BookLite<span class="it"> · Auto</span></h2>
+              <p class="s-kicker">Autonomous Book Marketing<br>6 Platforms · Claude Brain<br>Human Approval Queue</p>
+              <div class="sys-tags">
+                <span class="sys-tag open">MIT Open Source</span>
+                <span class="sys-tag">Node.js</span>
+              </div>
+              <div class="cta-row">
+                <a href="wpaper/booklite-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+                <a href="https://github.com/capo689/BookLite" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ GitHub</a>
+              </div>
+            </div>
+            <div class="s-body">
+        
+              <img src="img/agents/book-agent.png" alt="BookLite agent dashboard" class="screen-full" loading="lazy">
+        
+              <div class="proj-metrics">
+                <div class="pm-cell">
+                  <div class="pm-num">6</div>
+                  <div class="pm-lab">Channels: Reddit, X, FB, IG, Goodreads, KDP</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">1</div>
+                  <div class="pm-lab">Claude brain. Book, author voice, strategy unified</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">0</div>
+                  <div class="pm-lab">Auto-posts. Human approval required before every action</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">MIT</div>
+                  <div class="pm-lab">License. Fork it, adapt it, ship it</div>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-3">
+                <div class="case-cell">
+                  <div class="cc-label">Problem</div>
+                  <p class="cc-body">Indie authors need consistent multi-channel presence. Platform-native copy for Reddit, X, Instagram, Facebook, Goodreads, and KDP all have different voice expectations, character limits, and community norms. Maintaining all six manually is a second job. Generic AI copy, posted without human review, does more damage than nothing.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">System</div>
+                  <p class="cc-body">A single Claude brain reads book metadata (title, author, target audience, ASIN) and generates platform-specific copy for all six channels in one run. OAuth2 and OAuth 1.0a handle platform authentication server-side. No credentials hit the frontend. KDP ranking data feeds back in via Rainforest API or CSV upload for attribution learning.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Architecture</div>
+                  <p class="cc-body">Local Node.js server with a browser dashboard. Single HTML frontend, single server backend, no build step required. Server health checks show which channels are live. Attribution tracking identifies which content and which channels convert to sales, then feeds those learnings back into the next generation cycle.</p>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-2">
+                <div class="case-cell">
+                  <div class="cc-label">What It Is (and Isn't)</div>
+                  <p class="cc-body">BookLite is the open-source Lite release of the internal Agentic689 book and music marketing system. It runs one book, one author voice, one Claude brain, and posts to six platforms. The full production version handles multiple titles, multi-artist configurations, and cross-platform attribution at scale. The Lite release strips to the essentials so the architecture is readable.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Outcome</div>
+                  <div class="cc-outcome">Platform-native copy across six channels in one run, reviewed by a human before any post goes live.</div>
+                  <p class="cc-fine">Built on the Anthropic Claude Agent SDK. MIT licensed. The white paper covers the full internal architecture the Lite version was derived from, including the multi-title production system.</p>
+                </div>
+              </div>
+        
+            </div>
+          </div>
+        
+          <!-- ─── 06 · AUSCAN ─── -->
+          <div class="section" id="sys-06">
+            <div class="s-head">
+              <span class="s-num">06 · PROOF OF CONCEPT</span>
+              <h2 class="s-title">AuScan<span class="it"> · Satellite</span></h2>
+              <p class="s-kicker">AI Gold Prospectivity<br>Claude Vision · 5 Sensors<br>USGS MRDS Validated</p>
+              <div class="sys-tags">
+                <span class="sys-tag live">● 72% Validation Hit</span>
+                <span class="sys-tag open">MIT Open Source</span>
+              </div>
+              <div class="cta-row">
+                <a href="wpaper/auscan-whitepaper.html" class="btn-wp" data-cursor="hover">Read White Paper →</a>
+                <a href="https://github.com/capo689/auscan" target="_blank" rel="noopener" class="btn-gh" data-cursor="hover">↗ GitHub</a>
+              </div>
+            </div>
+            <div class="s-body">
+        
+              <div class="screens">
+                <img src="img/agents/auscan-dashboard.png" alt="AuScan satellite analysis dashboard" loading="lazy">
+                <img src="img/agents/auscan-report.png" alt="AuScan prospectivity analysis report" loading="lazy">
+              </div>
+        
+              <div class="proj-metrics">
+                <div class="pm-cell">
+                  <div class="pm-num">72<span class="u">%</span></div>
+                  <div class="pm-lab">HIGH-confidence prospectivity score validated against USGS MRDS</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">5</div>
+                  <div class="pm-lab">Sensor types: ESRI, EMIT, Landsat, ASTER, Sentinel-2</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">10</div>
+                  <div class="pm-lab">World-class gold deposits used as training fingerprints</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">5×5</div>
+                  <div class="pm-lab">Maximum search grid across 100-mile radius</div>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-3">
+                <div class="case-cell">
+                  <div class="cc-label">Problem</div>
+                  <p class="cc-body">Traditional mineral exploration is expensive, slow, and requires specialist teams in the field. Satellite imagery covering every inch of Earth's surface is freely accessible but opaque to non-specialists. The gap between available data and actionable prospectivity intelligence is a systems problem, not a data problem.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">System</div>
+                  <p class="cc-body">AuScan trains Claude Vision on the spectral and structural signatures of ten world-class gold deposits: Witwatersrand, Carlin Trend, Kalgoorlie, and others. Multi-sensor data (NASA EMIT hyperspectral, Landsat thermal, ASTER mineral mapping, Sentinel-2 vegetation indices, and ESRI RGB) is assembled into terrain fingerprints for each deposit.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Validation</div>
+                  <p class="cc-body">In testing, the system scored a HIGH-confidence hit at 42.609°N, −119.299°W, Oregon's Pueblo Mining District, a documented former gold producer. Cross-referenced against the USGS Mineral Resources Data System. Search grids are configurable from 2×2 to 5×5 across 10–100 mile radii. Patterns and results persist across sessions.</p>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-2">
+                <div class="case-cell">
+                  <div class="cc-label">Architecture</div>
+                  <p class="cc-body">React-based browser application running in a Claude.ai artifact environment. Single-endpoint design with no CORS and no separate auth layer. Browser-native storage for session persistence. USGS MRDS integration via Claude's knowledge base for cross-referenced validation. Configurable search parameters allow rapid iteration across different regions and deposit types.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Outcome</div>
+                  <div class="cc-outcome">From raw satellite data to prospectivity scores in a single session. Proof that Claude Vision can be applied to real-world image analysis at scale.</div>
+                  <p class="cc-fine">The transferable insight: domain expertise can be distilled into a vision system that scales to any geographic target. The white paper covers the full methodology, sensor pipeline, and validation results.</p>
+                </div>
+              </div>
+        
+            </div>
+          </div>
+        
+          <!-- ═══════════ AI LEARNING ═══════════ -->
+          <div class="group-head" id="learning">
+            <span class="group-num">AI Learning</span>
+            <h2 class="group-title">AI <span class="it">Learning.</span></h2>
+            <p class="group-intro">What happens when you point these models at something genuinely hard and learn by making them make it. Case in point:</p>
+          </div>
+
+          <!-- ─── 02 · DONKEY ON THE EDGE ─── -->
+          <div class="section" id="sys-02">
+            <div class="s-head">
+              <span class="s-num">02 · RESEARCH INSTRUMENT</span>
+              <h2 class="s-title">Donkey<span class="it"> on the Edge</span></h2>
+              <p class="s-kicker">F = ma → Quantum Gravity<br>18 Days · 38 References<br>One Unbroken Thread</p>
+              <div class="sys-tags">
+                <span class="sys-tag live">● Paper Bound for arXiv</span>
+                <span class="sys-tag">2026</span>
+              </div>
+              <div class="cta-row">
+                <a href="https://donkey-mauve.vercel.app/" target="_blank" rel="noopener" class="btn-wp" data-cursor="hover">Read the Journal →</a>
+              </div>
+            </div>
+            <div class="s-body">
+        
+              <div class="screens">
+                <img src="img/agents/donkey-equations-plate.png" alt="Donkey on the Edge · equations plate" loading="lazy">
+                <img src="img/agents/donkey-curriculum-map.png" alt="Donkey on the Edge · Victorian railway curriculum map" loading="lazy">
+              </div>
+        
+              <div class="proj-metrics">
+                <div class="pm-cell">
+                  <div class="pm-num">18</div>
+                  <div class="pm-lab">Days from Newtonian mechanics to the frontier</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">38</div>
+                  <div class="pm-lab">Reference documents written from scratch</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">5</div>
+                  <div class="pm-lab">New results across 3 theorems in Paper I</div>
+                </div>
+                <div class="pm-cell">
+                  <div class="pm-num">1</div>
+                  <div class="pm-lab">Integer-valued exponent gap nobody has yet explained</div>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-3">
+                <div class="case-cell">
+                  <div class="cc-label">Thesis</div>
+                  <p class="cc-body">The Agentic689 thesis says you learn what these models can actually make by making them make it, against a real objective, with a real outcome on the line. Donkey on the Edge took that to the largest objective available: go from F = ma to the open problems of quantum gravity and produce something the field has not seen.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Method</div>
+                  <p class="cc-body">On April 23, 2026, I asked Claude where to start with quantum mechanics. No physics degree behind the question. The conversation ran in a single unbroken thread from Newtonian mechanics to the frontier. Eighteen days. Thirty-eight reference documents written from scratch along the way. Wrong turns kept on the page next to the right ones.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Result</div>
+                  <p class="cc-body">By May 11 the work had produced a paper, "Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes." Five results, three theorems, thirty-eight references, and one integer-valued exponent gap that nobody has yet explained. The integer is exactly one. The paper is headed for the arXiv.</p>
+                </div>
+              </div>
+        
+              <div class="case-grid cg-2">
+                <div class="case-cell">
+                  <div class="cc-label">The Map</div>
+                  <p class="cc-body">The whole path of study is mapped. Thirty-eight reference documents from Physics 101 to quantum gravity, drawn as a Victorian railway chart. Thirty-eight stations on six lines. The Quantum Trunk is the spine, the Classical Branch runs alongside, the Gravitational Spur descends to the frontier, and every route terminates at Paper I. The entire physics curriculum compressed into one chart you read like a transit map. Click any station, read that document.</p>
+                </div>
+                <div class="case-cell">
+                  <div class="cc-label">Outcome</div>
+                  <div class="cc-outcome">A generalist setting out from first principles, arriving at a publishable result eighteen days later, with the full path of study still on the page.</div>
+                  <p class="cc-fine">The site is built as a Victorian scientific journal because that is the tradition the work belongs to. Static Astro build. No tracking, no analytics, no cookies. Claude of Anthropic credited as computational collaborator.</p>
+                </div>
+              </div>
+        
+            </div>
+          </div>
+        
+
+          <!-- ─── 07 · SUPPORTING SYSTEMS ─── -->
+          <div class="section" id="supporting">
+            <div class="s-head">
+              <span class="s-num">07</span>
+              <h2 class="s-title">Other<span class="it"> Systems</span></h2>
+              <p class="s-kicker">Additional workflows &amp; agents</p>
+            </div>
+            <div class="s-body">
+              <div class="screens">
+                <img src="img/agents/music-agent.png" alt="Music marketing agent dashboard" loading="lazy">
+                <img src="img/agents/ssia-crdo-dashboard.png" alt="SSIA · CRDO intelligence dashboard" loading="lazy">
+              </div>
+              <div class="support-grid">
+                <div class="support-card">
+                  <div class="sc-tag">Marketing Automation</div>
+                  <div class="sc-title">Book &amp; Music Marketing Systems</div>
+                  <p>The production-scale predecessor to BookLite. Multi-title, multi-artist, multi-channel closed loops for KDP titles and music releases. Platform-native copy for Reddit, Instagram, Facebook, X, and TikTok. Real sales and streams tracked through platform APIs. Attribution feedback, channel re-weighting every cycle, and human approval queues between every action.</p>
+                </div>
+                <div class="support-card">
+                  <div class="sc-tag">Identity Systems</div>
+                  <div class="sc-title">Persona Governance System</div>
+                  <p>Validated persona scaffolding with SKILL.md governance. Produces structured persona specifications with hard governance rules and voice constraints that define what the AI can say, how it can say it, and where it must defer to human judgment. Used for brand persona development, editorial governance, and AI-assisted copy systems across Agency689 client work.</p>
+                </div>
+                <div class="support-card">
+                  <div class="sc-tag">Correlation Engine</div>
+                  <div class="sc-title">COOK · Anomaly Correlation Engine</div>
+                  <p>Multi-asset anomaly correlation engine with dashboard UI. Takes complex cross-market signal data and presents it in a form that supports human decision-making. Proof of systems thinking applied to data-to-narrative design: the goal is a human making a better-informed call, not a system making a call on their behalf.</p>
+                </div>
+                <div class="support-card">
+                  <div class="sc-tag">Site · Shipped by Agent</div>
+                  <div class="sc-title">Agentic689 Site</div>
+                  <p>The studio's own website, designed, written, coded, and shipped by one of the agents. Single self-contained HTML file. Cloudflare Pages Function for the contact form. No framework, no build step. Deploys in five seconds from the terminal with one command. The storefront is itself an honest sample of the work these systems produce.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+  <script type="module" src="js/interior.js?v=7"></script>
+  <script src="js/skill-cloud.js?v=3" defer></script>
+  <script src="js/tw-viewer.js?v=2" defer></script>
+  <script src="js/transition.js?v=2" defer></script>
+  <script src="js/cursor.js?v=2" defer></script>
+  <script src="js/contact.js?v=11" defer></script>
+</body>
+</html>

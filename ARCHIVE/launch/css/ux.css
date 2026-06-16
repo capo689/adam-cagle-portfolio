@@ -1,0 +1,151 @@
+/* ux.css — UX / UI Design gallery (left brain, tech/slate theme).
+   Self-contained: defines its own tokens so it does not depend on ai.css.
+   A tight, fixed-size gallery of interface screenshots. Click any tile to
+   view it full size in the lightbox. No claims of live builds; these are shots. */
+
+body.theme-tech .ux {
+  --bg:      #323a45;
+  --bg-soft: #3c4450;
+  --panel:   #2c333d;
+  --fg:      #f4f6f8;
+  --fg-2:    rgba(244,246,248,0.72);
+  --fg-3:    rgba(244,246,248,0.46);
+  --rule:    rgba(244,246,248,0.16);
+  --rule-2:  rgba(244,246,248,0.09);
+  --accent:  #4D8BE8;
+  --accent-2:#2660cc;
+  --glow:    rgba(77,139,232,0.16);
+  --sans: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono","SF Mono",Menlo,monospace;
+  --italic: "EB Garamond", Georgia, serif;
+  color: var(--fg);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01","ss02";
+}
+body.theme-tech .ux * { box-sizing: border-box; }
+body.theme-tech .ux ::selection { background: var(--accent); color: #0e1320; }
+body.theme-tech .ux a { color: inherit; text-decoration: none; }
+body.theme-tech .ux { max-width: 1320px; margin: 0 auto; padding: 0 32px 40px; }
+
+/* ── hero ─────────────────────────────────────────────────────────────── */
+body.theme-tech .ux .ux-hero { padding: 14px 0 18px; }
+body.theme-tech .ux .ux-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+body.theme-tech .ux .ux-h1 {
+  font-family: var(--sans); font-weight: 800; letter-spacing: -.04em; line-height: .92;
+  font-size: clamp(44px, 8vw, 112px); margin: 16px 0 0;
+}
+body.theme-tech .ux .ux-h1 .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); letter-spacing: -.01em; }
+body.theme-tech .ux .ux-lead {
+  font-family: var(--italic); font-style: italic; color: var(--fg-2);
+  font-size: clamp(19px, 1.9vw, 25px); line-height: 1.5; max-width: 60ch; margin: 26px 0 0;
+}
+
+/* ── the stack ladder: interface → database ───────────────────────────── */
+body.theme-tech .ux .ux-ladder {
+  display: flex; align-items: stretch; gap: 0; flex-wrap: wrap;
+  margin: 40px 0 8px; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
+  background: linear-gradient(180deg, #2f3742, #262d37);
+}
+body.theme-tech .ux .ux-rung { flex: 1 1 0; min-width: 140px; padding: 18px 20px; position: relative; border-right: 1px solid var(--rule-2); }
+body.theme-tech .ux .ux-rung:last-child { border-right: 0; }
+body.theme-tech .ux .ux-rung .n { font-family: var(--mono); font-size: 10.5px; letter-spacing: .16em; color: var(--accent); }
+body.theme-tech .ux .ux-rung .l { display: block; margin-top: 8px; font-weight: 700; font-size: 16px; letter-spacing: -.01em; }
+body.theme-tech .ux .ux-rung .d { display: block; margin-top: 4px; font-size: 12px; color: var(--fg-3); }
+body.theme-tech .ux .ux-rung::after {
+  content: "→"; position: absolute; right: -8px; top: 50%; transform: translateY(-50%);
+  color: var(--accent); font-size: 13px; z-index: 2; background: var(--bg); padding: 2px 0;
+}
+body.theme-tech .ux .ux-rung:last-child::after { content: none; }
+
+/* ── section head ─────────────────────────────────────────────────────── */
+body.theme-tech .ux .ux-grouphead { border-top: 1px solid var(--rule); margin-top: clamp(52px,8vh,96px); padding-top: clamp(34px,5vh,56px); }
+body.theme-tech .ux .ux-grouphead .gn { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+body.theme-tech .ux .ux-grouphead .gt { font-family: var(--sans); font-weight: 800; font-size: clamp(28px,4vw,52px); letter-spacing: -.035em; line-height: 1; margin: 12px 0 0; }
+body.theme-tech .ux .ux-grouphead .gt .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+
+/* ── gallery grid (locked, uniform tiles) ─────────────────────────────── */
+body.theme-tech .ux .ux-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2vw, 26px);
+  margin-top: clamp(28px,4vh,48px);
+}
+body.theme-tech .ux .ux-grid--top { margin-top: clamp(40px,7vh,90px); padding-top: clamp(34px,5vh,56px); border-top: 1px solid var(--rule); }
+@media (max-width: 980px) { body.theme-tech .ux .ux-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { body.theme-tech .ux .ux-grid { grid-template-columns: 1fr; } }
+
+body.theme-tech .ux .ux-tile {
+  display: flex; flex-direction: column; text-align: left; cursor: pointer; padding: 0;
+  background: linear-gradient(180deg, #2f3742, #262d37);
+  border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
+  transition: border-color .3s ease, transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease;
+  box-shadow: 0 18px 40px -32px rgba(0,0,0,.8);
+}
+body.theme-tech .ux .ux-tile:hover { border-color: var(--glow); transform: translateY(-4px); box-shadow: 0 36px 70px -40px rgba(0,0,0,.85); }
+
+/* browser chrome */
+body.theme-tech .ux .ux-tile__bar { display: flex; align-items: center; gap: 7px; padding: 9px 12px; background: #20262f; border-bottom: 1px solid var(--rule-2); }
+body.theme-tech .ux .ux-tile__bar i { width: 9px; height: 9px; border-radius: 50%; background: #3a434e; }
+body.theme-tech .ux .ux-tile__bar i:nth-child(1) { background: #e06c5b; }
+body.theme-tech .ux .ux-tile__bar i:nth-child(2) { background: #e0b24f; }
+body.theme-tech .ux .ux-tile__bar i:nth-child(3) { background: #5bbf6a; }
+body.theme-tech .ux .ux-tile__bar .k { margin-left: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+
+/* the screenshot window: locked aspect, downscaled (never blown up) */
+body.theme-tech .ux .ux-tile__shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #11161d; }
+body.theme-tech .ux .ux-tile__shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+body.theme-tech .ux .ux-tile:hover .ux-tile__shot img { transform: scale(1.03); }
+body.theme-tech .ux .ux-tile__view { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: radial-gradient(circle at center, rgba(14,19,32,.5), rgba(14,19,32,.15)); transition: opacity .35s ease; }
+body.theme-tech .ux .ux-tile:hover .ux-tile__view { opacity: 1; }
+body.theme-tech .ux .ux-tile__view span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: #0e1320; background: #fff; padding: 10px 18px; border-radius: 999px; transform: translateY(8px); transition: transform .35s ease; }
+body.theme-tech .ux .ux-tile:hover .ux-tile__view span { transform: translateY(0); }
+body.theme-tech .ux .ux-badge { position: absolute; top: 10px; right: 10px; z-index: 2; font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg); background: rgba(14,19,32,.7); backdrop-filter: blur(6px); border: 1px solid var(--rule); border-radius: 999px; padding: 5px 10px; }
+
+/* caption */
+body.theme-tech .ux .ux-tile__cap { padding: 14px 16px 16px; }
+body.theme-tech .ux .ux-tile__cap .name { font-weight: 700; font-size: 16px; letter-spacing: -.01em; color: var(--fg); }
+body.theme-tech .ux .ux-tile__cap .tag { display: block; margin-top: 5px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+
+/* ── outro ────────────────────────────────────────────────────────────── */
+body.theme-tech .ux .ux-outro { border-top: 1px solid var(--rule); margin-top: clamp(56px,9vh,110px); padding: clamp(40px,6vh,72px) 0 clamp(56px,8vh,100px); }
+body.theme-tech .ux .ux-outro h2 { font-family: var(--sans); font-weight: 800; font-size: clamp(26px,4vw,50px); letter-spacing: -.035em; line-height: 1.04; max-width: 22ch; }
+body.theme-tech .ux .ux-outro h2 .it { font-family: var(--italic); font-style: italic; font-weight: 400; color: var(--accent); }
+body.theme-tech .ux .ux-outro p { margin-top: 18px; color: var(--fg-2); font-size: 16px; }
+body.theme-tech .ux .ux-outro a.mail { color: var(--accent); border-bottom: 1px solid var(--rule); padding-bottom: 1px; }
+
+/* ── reveal animation (armed only when JS + motion allowed) ────────────── */
+body.theme-tech .ux.ux--anim .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+body.theme-tech .ux.ux--anim .reveal.is-in { opacity: 1; transform: none; }
+
+/* ── lightbox gallery ─────────────────────────────────────────────────── */
+.uxlb { position: fixed; inset: 0; z-index: 1000; display: none; background: rgba(8,11,16,.88); backdrop-filter: blur(10px); }
+.uxlb.is-open { display: grid; grid-template-rows: auto 1fr auto; }
+html.uxlb-lock, html.uxlb-lock body { overflow: hidden; }
+.uxlb__top { display: flex; align-items: center; gap: 16px; padding: 16px clamp(16px,4vw,40px); color: #f4f6f8; }
+.uxlb__title { font-family: "Inter", sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -.01em; }
+.uxlb__role { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(244,246,248,.5); }
+.uxlb__visit { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #0e1320; background: #4D8BE8; border-radius: 999px; padding: 7px 14px; transition: background .2s; }
+.uxlb__visit:hover { background: #6ba2ee; }
+.uxlb__visit[hidden] { display: none; }
+.uxlb__count { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: rgba(244,246,248,.6); }
+.uxlb__close { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: #fff; width: 38px; height: 38px; border-radius: 999px; font-size: 18px; cursor: pointer; transition: background .2s; }
+.uxlb__close:hover { background: rgba(255,255,255,.18); }
+.uxlb__stage { position: relative; overflow: hidden; display: grid; place-items: stretch; padding: 0 clamp(8px,4vw,56px); }
+.uxlb__viewport { overflow: auto; border-radius: 12px; background: #11161d; border: 1px solid rgba(255,255,255,.1); box-shadow: 0 40px 90px -40px #000; justify-self: center; width: 100%; max-width: 1100px; scroll-behavior: smooth; }
+.uxlb__viewport img { display: block; width: 100%; height: auto; }
+.uxlb__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 999px; background: rgba(20,26,34,.8); border: 1px solid rgba(255,255,255,.18); color: #fff; font-size: 22px; cursor: pointer; display: grid; place-items: center; transition: background .2s, transform .2s; z-index: 2; }
+.uxlb__nav:hover { background: #4D8BE8; }
+.uxlb__nav--prev { left: clamp(10px,3vw,28px); }
+.uxlb__nav--next { right: clamp(10px,3vw,28px); }
+.uxlb__nav[hidden] { display: none; }
+.uxlb__foot { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 16px; flex-wrap: wrap; }
+.uxlb__cap { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(244,246,248,.55); }
+.uxlb__dots { display: flex; gap: 8px; }
+.uxlb__dots button { width: 9px; height: 9px; border-radius: 50%; border: 0; background: rgba(255,255,255,.25); cursor: pointer; padding: 0; transition: background .2s, transform .2s; }
+.uxlb__dots button.is-on { background: #4D8BE8; transform: scale(1.25); }
+
+/* ── reduced motion ───────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  body.theme-tech .ux .ux-tile, body.theme-tech .ux .ux-tile__shot img { transition: none; }
+  body.theme-tech .ux.ux--anim .reveal { opacity: 1; transform: none; transition: none; }
+  .uxlb__viewport { scroll-behavior: auto; }
+}

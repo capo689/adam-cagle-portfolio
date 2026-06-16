@@ -1,112 +1,78 @@
-/* cursor.css
-   Custom cursor for adamcagle.com ALPHA rebuild.
-   Hidden on touch devices and when reduced motion is requested. */
+/* cursor.css — precise reticle cursor (desktop, fine-pointer only).
+   A thin crosshair tracking the pointer exactly, snapping to a corner-bracket
+   target with a label over clickables. On-brand blue, legible on cream and slate. */
 
-@media (pointer: coarse) {
-  .cursor { display: none !important; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cursor { display: none !important; }
-}
-
-/* Hide the native cursor only when our custom one is active */
 @media (pointer: fine) {
-  body.has-custom-cursor,
-  body.has-custom-cursor a,
-  body.has-custom-cursor button,
-  body.has-custom-cursor [data-cursor] { cursor: none; }
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
 }
 
-.cursor {
-  position: fixed;
-  top: 0; left: 0;
-  width: 14px; height: 14px;
-  margin: -7px 0 0 -7px;
-  border-radius: 50%;
-  background: var(--accent);
-  pointer-events: none;
-  z-index: 9999;
-  will-change: transform;
-  transition:
-    width .35s cubic-bezier(.2,.7,.2,1),
-    height .35s cubic-bezier(.2,.7,.2,1),
-    margin .35s cubic-bezier(.2,.7,.2,1),
-    background .25s;
+.cur {
+  position: fixed; top: 0; left: 0; z-index: 100000; pointer-events: none;
+  will-change: transform; color: var(--cur, #4D8BE8);
+  filter: drop-shadow(0 0 1px rgba(0,0,0,.4));
+}
+.cur.hide { opacity: 0; }
+
+/* inner wrapper carries the morph (scale/press); position stays on .cur, so tracking is exact */
+.cur-in { position: absolute; top: 0; left: 0; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+
+/* crosshair ticks + center dot, with a clean center gap */
+.cur i { position: absolute; background: currentColor; }
+.cur-t, .cur-b { width: 1.5px; left: -.75px; height: 5px; }
+.cur-l, .cur-r { height: 1.5px; top: -.75px; width: 5px; }
+.cur-t { top: -11px; } .cur-b { top: 6px; }
+.cur-l { left: -11px; } .cur-r { left: 6px; }
+.cur-d { width: 2.5px; height: 2.5px; left: -1.25px; top: -1.25px; border-radius: 50%; }
+.cur-t, .cur-b, .cur-l, .cur-r, .cur-d {
+  transition: opacity .16s ease, transform .22s cubic-bezier(.2,.8,.2,1);
 }
 
-/* Separate orange ring, top-level sibling so it is NOT inside the
-   difference-blended cursor. Hidden by default. */
-.cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
-  width: 96px; height: 96px;
-  margin: -48px 0 0 -48px;
-  border: 1.5px solid var(--accent);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
-  transform: scale(0);
-  transition: opacity .25s, transform .35s cubic-bezier(.2,.7,.2,1), width .35s, height .35s, margin .35s;
+/* corner-bracket target, hidden until a "view" class of hover */
+.cur-fr {
+  position: absolute; left: 0; top: 0; opacity: 0; transform: scale(.55);
+  transition: opacity .22s ease, transform .26s cubic-bezier(.2,.8,.2,1);
+}
+.cur-fr i { width: 11px; height: 11px; background: none; border: 1.5px solid currentColor; }
+.cur-fr i:nth-child(1) { left: -26px; top: -26px; border-right: 0; border-bottom: 0; }
+.cur-fr i:nth-child(2) { left: 15px;  top: -26px; border-left: 0;  border-bottom: 0; }
+.cur-fr i:nth-child(3) { left: -26px; top: 15px;  border-right: 0; border-top: 0; }
+.cur-fr i:nth-child(4) { left: 15px;  top: 15px;  border-left: 0;  border-top: 0; }
+
+/* label */
+.cur-lb {
+  position: absolute; left: 0; top: 30px; transform: translateX(-50%); white-space: nowrap;
+  font: 600 10px/1 "IBM Plex Mono", monospace; letter-spacing: .16em; text-transform: uppercase;
+  color: currentColor; opacity: 0; transition: opacity .2s ease;
 }
 
-/* ─── EXPANDED STATES ─── */
+/* plain link/button: reticle tightens a touch (focused, precise) */
+.cur.on[data-state="link"] .cur-in { transform: scale(1.4); }
 
-.cursor.is-view,
-.cursor.is-drag {
-  width: 96px; height: 96px;
-  margin: -48px 0 0 -48px;
-  background: #fff;
-  mix-blend-mode: difference;
-}
+/* view / email / external: ticks fade, target brackets bloom in, label shows */
+.cur.on[data-state="view"]  .cur-t, .cur.on[data-state="view"]  .cur-b,
+.cur.on[data-state="view"]  .cur-l, .cur.on[data-state="view"]  .cur-r,
+.cur.on[data-state="email"] .cur-t, .cur.on[data-state="email"] .cur-b,
+.cur.on[data-state="email"] .cur-l, .cur.on[data-state="email"] .cur-r,
+.cur.on[data-state="ext"]   .cur-t, .cur.on[data-state="ext"]   .cur-b,
+.cur.on[data-state="ext"]   .cur-l, .cur.on[data-state="ext"]   .cur-r { opacity: 0; }
 
-.cursor.is-external,
-.cursor.is-email {
-  width: 84px; height: 84px;
-  margin: -42px 0 0 -42px;
-  background: #fff;
-  mix-blend-mode: difference;
-}
+.cur.on[data-state="view"]  .cur-fr,
+.cur.on[data-state="email"] .cur-fr,
+.cur.on[data-state="ext"]   .cur-fr { opacity: 1; transform: none; }
 
-.cursor.is-hover {
-  width: 36px; height: 36px;
-  margin: -18px 0 0 -18px;
-  background: #fff;
-  mix-blend-mode: difference;
-}
+.cur.on[data-state="view"]  .cur-lb,
+.cur.on[data-state="email"] .cur-lb,
+.cur.on[data-state="ext"]   .cur-lb { opacity: 1; }
 
-/* Ring sizes track the cursor sizes */
-.cursor-ring.is-view,
-.cursor-ring.is-drag {
-  width: 96px; height: 96px; margin: -48px 0 0 -48px;
-  opacity: 1; transform: scale(1);
-}
-.cursor-ring.is-external,
-.cursor-ring.is-email {
-  width: 84px; height: 84px; margin: -42px 0 0 -42px;
-  opacity: 1; transform: scale(1);
-}
-.cursor-ring.is-hover {
-  width: 36px; height: 36px; margin: -18px 0 0 -18px;
-  opacity: 1; transform: scale(1);
-}
+/* press feedback */
+.cur.press .cur-in { transform: scale(.78); }
+.cur.on[data-state="link"].press .cur-in { transform: scale(1.18); }
 
-/* ─── CANVAS PARTICLE TRAIL ─── */
+/* per-theme tint */
+body.theme-tech { --cur: #4D8BE8; }
+body.interior--right, body.resume-open { --cur: #4D8BE8; }
 
-.cursor-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: 9998;
-  mix-blend-mode: screen;
-}
-/* Light theme: screen on cream-coloured bg has nothing to brighten so the
-   particles disappear. Multiply darkens, which makes orange visible. */
-html[data-theme="light"] .cursor-canvas {
-  mix-blend-mode: multiply;
-}
-
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .cursor-canvas { display: none !important; }
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .cur { display: none !important; }
+  html.has-cursor, html.has-cursor * { cursor: auto !important; }
 }

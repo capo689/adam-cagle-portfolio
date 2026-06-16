@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var p=new URLSearchParams(location.search);if(p.get("desktop"))sessionStorage.setItem("forceDesktop","1");if(sessionStorage.getItem("forceDesktop"))return;var coarse=window.matchMedia&&matchMedia("(pointer: coarse)").matches;var small=Math.min(screen.width||9999,window.innerWidth||9999)<=820;if(coarse&&small&&location.pathname.indexOf("/mobile/")===-1)location.replace("/mobile/");}catch(e){}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+  <title>Technical Writing · Adam R. Cagle</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0a09">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/brain.css?v=17">
+  <link rel="stylesheet" href="css/cursor.css?v=2">
+  <link rel="stylesheet" href="css/interior.css?v=28">
+  <link rel="stylesheet" href="css/ai.css?v=23">
+</head>
+<body class="interior interior--left interior--work theme-tech">
+
+  <div class="xfade" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="bar">
+    <a class="bar__name" href="/">Adam R<span class="bar__name-dot">.</span> Cagle</a>
+    <nav class="bar__nav" aria-label="Left brain sections">
+      <a href="ai-systems.html">AI Systems</a>
+      <a href="ux-ui.html">UX / UI Design</a>
+      <a href="technical-writing.html" class="is-active" aria-current="page">Technical Writing</a>
+    </nav>
+    <details class="bar__contact">
+      <summary class="bar__contact-btn">Contact <span class="arrow">&#8594;</span></summary>
+      <div class="bar__contact-pop" role="menu">
+        <a href="mailto:adamrcagle@gmail.com" role="menuitem">
+          <span class="cp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <span class="cp-tt"><span class="cp-k">Email</span><span class="cp-v">adamrcagle@gmail.com</span></span>
+        </a>
+        <a href="https://www.linkedin.com/in/adamcagle/" target="_blank" rel="noopener noreferrer" role="menuitem">
+          <span class="cp-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9s-2.04 1.38-2.04 2.8V21h-4z"/></svg></span>
+          <span class="cp-tt"><span class="cp-k">LinkedIn</span><span class="cp-v">/in/adamcagle</span></span>
+        </a>
+      </div>
+    </details>
+  </header>
+
+  <main class="page">
+    <div class="brain brain--float" data-brain data-side="left">
+      <img class="brain__img" src="img/brain/brain-off.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+    </div>
+
+    <div class="page__content">
+      <div class="work">
+        <div class="work__scene">
+
+          <div class="hero">
+            <div class="hero-kicker">
+              <span class="dash"></span>
+              <span>Technical Writing</span>
+            </div>
+            <h1 class="hero-title">Technical<br><span class="ital">Writing.</span></h1>
+            <p class="hero-intro">White papers and field notes on the systems I build and the ideas I chase. Production AI agents, markets, geospatial intelligence, and a little theoretical physics, written so the work is legible to the people who fund it and the engineers who ship it.</p>
+          </div>
+
+          <div class="tw-grid">
+
+            <a class="tw-card" href="wpaper/singularity-seo-white-paper-light.html" data-url="wpaper/singularity-seo-white-paper-light.html" data-title="Singularity SEO · White Paper">
+              <span class="tw-thumb"><canvas data-shader="seo"></canvas></span>
+              <span class="tw-body">
+                <span class="tw-cat">White Paper <i>·</i> SEO</span>
+                <span class="tw-title">Singularity SEO</span>
+                <span class="tw-sub">Singularity WPSEO</span>
+                <span class="tw-abstract">Autonomous, agent-driven search optimization built for WordPress.</span>
+                <span class="tw-cta">Read paper <span class="tw-arr">&rarr;</span></span>
+              </span>
+            </a>
+
+            <a class="tw-card" href="wpaper/aiw-whitepaper.html" data-url="wpaper/aiw-whitepaper.html" data-title="AIW · Agency689 AI Writing Systems">
+              <span class="tw-thumb"><canvas data-shader="aiw"></canvas></span>
+              <span class="tw-body">
+                <span class="tw-cat">White Paper <i>·</i> AI Writing</span>
+                <span class="tw-title">AIW</span>
+                <span class="tw-sub">Agency689 AI Writing Systems</span>
+                <span class="tw-abstract">Brand-voice retrieval, multi-draft generation, and standards-AI critique with a human in the loop.</span>
+                <span class="tw-cta">Read paper <span class="tw-arr">&rarr;</span></span>
+              </span>
+            </a>
+
+            <a class="tw-card" href="wpaper/ssia-whitepaper.html" data-url="wpaper/ssia-whitepaper.html" data-title="SSIA · Single Stock Intelligence Agent">
+              <span class="tw-thumb"><canvas data-shader="ssia"></canvas></span>
+              <span class="tw-body">
+                <span class="tw-cat">White Paper <i>·</i> Markets</span>
+                <span class="tw-title">SSIA</span>
+                <span class="tw-sub">Single Stock Intelligence Agent</span>
+                <span class="tw-abstract">An adaptive, self-auditing framework for equity signal generation. An eighteen-hypothesis stack with regime detection.</span>
+                <span class="tw-cta">Read paper <span class="tw-arr">&rarr;</span></span>
+              </span>
+            </a>
+
+            <a class="tw-card" href="wpaper/auscan-whitepaper.html" data-url="wpaper/auscan-whitepaper.html" data-title="AuScan · Gold Prospectivity Intelligence">
+              <span class="tw-thumb"><canvas data-shader="auscan"></canvas></span>
+              <span class="tw-body">
+                <span class="tw-cat">White Paper <i>·</i> Geospatial AI</span>
+                <span class="tw-title">AuScan</span>
+                <span class="tw-sub">Gold Prospectivity Intelligence</span>
+                <span class="tw-abstract">A multi-sensor AI satellite terrain-analysis system for gold prospectivity intelligence.</span>
+                <span class="tw-cta">Read paper <span class="tw-arr">&rarr;</span></span>
+              </span>
+            </a>
+
+            <a class="tw-card" href="wpaper/booklite-whitepaper.html" data-url="wpaper/booklite-whitepaper.html" data-title="Booklite · Autonomous Book Marketing">
+              <span class="tw-thumb"><canvas data-shader="booklite"></canvas></span>
+              <span class="tw-body">
+                <span class="tw-cat">White Paper <i>·</i> Agents</span>
+                <span class="tw-title">Booklite</span>
+                <span class="tw-sub">Autonomous Book Marketing</span>
+                <span class="tw-abstract">The open-source Lite release of the Agentic689 internal book-marketing system.</span>
+                <span class="tw-cta">Read paper <span class="tw-arr">&rarr;</span></span>
+              </span>
+            </a>
+
+            <a class="tw-card" href="https://donkey-mauve.vercel.app/field-notes/a-little-help-for-my-friends" data-url="https://donkey-mauve.vercel.app/field-notes/a-little-help-for-my-friends" data-title="A Little Help for My Friends · Field Note">
+              <span class="tw-thumb"><canvas data-shader="horizon"></canvas></span>
+              <span class="tw-body">
+                <span class="tw-cat">Field Note <i>·</i> Quantum Gravity</span>
+                <span class="tw-title">A Little Help for My Friends</span>
+                <span class="tw-abstract">A plain-English explainer of observer complementarity in quantum gravity, written for non-physicists.</span>
+                <span class="tw-cta">Read field note <span class="tw-arr">&rarr;</span></span>
+              </span>
+            </a>
+
+            <a class="tw-card" href="https://donkey-mauve.vercel.app/field-notes/alice-and-bob" data-url="https://donkey-mauve.vercel.app/field-notes/alice-and-bob" data-title="Alice and Bob · Field Note">
+              <span class="tw-thumb"><canvas data-shader="entangle"></canvas></span>
+              <span class="tw-body">
+                <span class="tw-cat">Field Note <i>·</i> Quantum Information</span>
+                <span class="tw-title">Alice and Bob</span>
+                <span class="tw-abstract">Paper III, told through two visitors to a very strange museum.</span>
+                <span class="tw-cta">Read field note <span class="tw-arr">&rarr;</span></span>
+              </span>
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+  <script type="module" src="js/interior.js?v=7"></script>
+  <script type="module" src="js/tw-canvas.js?v=1"></script>
+  <script src="js/tw-viewer.js?v=2" defer></script>
+  <script src="js/transition.js?v=2" defer></script>
+  <script src="js/cursor.js?v=2" defer></script>
+  <script src="js/contact.js?v=11" defer></script>
+</body>
+</html>

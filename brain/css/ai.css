@@ -40,12 +40,12 @@ body.theme-tech .work .hero-title {
     line-height: 0.86; letter-spacing: -0.05em; margin: 0 0 36px;
   }
 body.theme-tech .work .hero-sub {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;
+    display: block;
   }
 body.theme-tech .work .hero-intro {
     font-family: var(--italic); font-style: italic;
     font-size: clamp(19px, 1.8vw, 24px); line-height: 1.5;
-    color: var(--fg-2); margin: 0;
+    color: var(--fg-2); margin: 0; max-width: 78ch;
   }
 body.theme-tech .work .hero-meta { display: flex; flex-direction: column; gap: 0; }
 body.theme-tech .work .hero-stat {

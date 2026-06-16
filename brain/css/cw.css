@@ -415,3 +415,11 @@ html.wr-lock { overflow: hidden; }
   .cw .hero-titlerow { gap: 14px; }
   .cw .hero-bear { height: clamp(86px, 26vw, 130px); }
 }
+
+/* Vampire card: a wee vampire gummy tucked into the room made by the Shows break */
+.cw .sample-card--vamp .sample-card-body { position: relative; }
+.cw .sample-card--vamp .sc-shows { padding-right: 84px; }
+.cw .sample-card--vamp .sc-teaser { padding-right: 76px; }
+.cw .sc-vbear { position: absolute; right: 8px; bottom: 70px; width: 64px; height: auto; pointer-events: none;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.45)); transform: rotate(4deg); transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+.cw .sample-card--vamp:hover .sc-vbear { transform: rotate(-2deg) translateY(-3px) scale(1.05); }

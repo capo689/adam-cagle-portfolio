@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "fable",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd /tmp/fable-preview && exec python3 -m http.server 8731"],
+      "port": 8731,
+      "autoPort": false
+    }
+  ]
+}

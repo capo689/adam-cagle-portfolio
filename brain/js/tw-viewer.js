@@ -43,20 +43,36 @@
 
   function init() {
     const grid = document.querySelector(".tw-grid");
-    if (!grid) return;
+    const hasSkill = document.querySelector("[data-skill-view]");
+    if (!grid && !hasSkill) return;
     const m = build();
-    if (grid.__twvBound) return;
-    grid.__twvBound = true;
-    grid.addEventListener("click", (e) => {
-      const card = e.target.closest(".tw-card");
-      if (!card) return;
-      const url = card.getAttribute("data-url") || card.getAttribute("href");
-      if (!url) return;
-      e.preventDefault();
-      m.open(url, card.getAttribute("data-title") || "");
-    });
+
+    if (grid && !grid.__twvBound) {
+      grid.__twvBound = true;
+      grid.addEventListener("click", (e) => {
+        const card = e.target.closest(".tw-card");
+        if (!card) return;
+        const url = card.getAttribute("data-url") || card.getAttribute("href");
+        if (!url) return;
+        e.preventDefault();
+        m.open(url, card.getAttribute("data-title") || "");
+      });
+    }
+
+    // generic: any [data-skill-view] (or [data-tw-view]) element with data-url
+    if (!document.__twvSkillBound) {
+      document.__twvSkillBound = true;
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-skill-view],[data-tw-view]");
+        if (!btn) return;
+        const url = btn.getAttribute("data-url") || btn.getAttribute("href");
+        if (!url) return;
+        e.preventDefault();
+        build().open(url, btn.getAttribute("data-title") || "");
+      });
+    }
   }
 
   window.TWViewer = { init };
-  if (document.querySelector(".tw-grid")) init();
+  if (document.querySelector(".tw-grid") || document.querySelector("[data-skill-view]")) init();
 })();

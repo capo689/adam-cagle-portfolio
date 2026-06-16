@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><body><script>
+const f = document.createElement('iframe');
+f.src = "http://localhost:8731/FABLE/index2.html";
+f.style.cssText = "width:390px;height:844px;border:0";
+f.onload = () => setTimeout(() => {
+  const d = f.contentDocument;
+  const de = d.documentElement;
+  let out = "SW=" + Math.max(d.body.scrollWidth, de.scrollWidth) + " CW=" + de.clientWidth;
+  // find overflowing elements
+  const bad = [];
+  d.querySelectorAll("*").forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.right > 391) bad.push(el.tagName + "." + (el.className && el.className.baseVal === undefined ? String(el.className).split(" ")[0] : "") + " right=" + Math.round(r.right));
+  });
+  out += " | OVERFLOW: " + (bad.slice(0,8).join(" ; ") || "none");
+  document.title = out;
+  const div = document.createElement("div");
+  div.textContent = "RESULT " + out;
+  document.body.appendChild(div);
+}, 2500);
+document.body.appendChild(f);
+</script></body></html>

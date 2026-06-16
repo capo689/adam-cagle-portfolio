@@ -164,6 +164,7 @@ function wireNav() {
     if (window.Anchors) window.Anchors.init();
     if (window.TWCanvas) window.TWCanvas.init();
     if (window.TWViewer) window.TWViewer.init();
+    if (window.SkillCloud) window.SkillCloud.init();
   }
 
   async function enterSection(href, push) {

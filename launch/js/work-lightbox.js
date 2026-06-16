@@ -22,9 +22,9 @@
       { src: 'img/ads/SMBrochure.jpg',                 hl: 'Unique. Even by Hollywood standards.',                 meta: 'GDS One-Sheet' }
     ],
     killer: [
-      { src: 'img/ads/killer-sniper.webp?v=2026',  hl: 'Warrior.', meta: 'Killer NIC K1' },
-      { src: 'img/ads/killer-mage.webp?v=2026',    hl: 'Mage.',    meta: 'Killer NIC K1' },
-      { src: 'img/ads/killer-warrior.webp?v=2026', hl: 'Sniper.',  meta: 'Killer NIC K1' }
+      { src: 'img/ads/killer-warrior.webp', hl: 'Warrior.', meta: 'Killer NIC K1' },
+      { src: 'img/ads/killer-mage.webp',    hl: 'Mage.',    meta: 'Killer NIC K1' },
+      { src: 'img/ads/killer-sniper.webp',  hl: 'Sniper.',  meta: 'Killer NIC K1' }
     ],
     filekeepers: [
       { src: 'img/ads/FileKeepers_SPACE1.jpg',  hl: 'Space.', meta: 'FileKeepers · Room 1' },

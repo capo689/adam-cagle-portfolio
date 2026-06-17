@@ -20,18 +20,15 @@
     width:min(100vw, calc(100vh * 1448 / 1086));
     height:min(100vh, calc(100vw * 1086 / 1448));
   }
-  /* fullscreen: keep the 1448:1086 aspect, letterbox instead of stretch */
-  #stage:fullscreen{
-    width:min(100vw, calc(100vh * 1448 / 1086)) !important;
-    height:min(100vh, calc(100vw * 1086 / 1448)) !important;
-    margin:auto !important;
-  }
-  #stage:-webkit-full-screen{
-    width:min(100vw, calc(100vh * 1448 / 1086)) !important;
-    height:min(100vh, calc(100vw * 1086 / 1448)) !important;
-    margin:auto !important;
-  }
-  :fullscreen::backdrop, :-webkit-full-screen::backdrop{ background:#000; }
+  /* fullscreen the WRAPPER (it fills the screen, black) and center the
+     aspect-locked stage inside it -> letterbox, never stretch. Done on a
+     wrapper because the UA gives the fullscreen element width:100% !important,
+     which an author rule cannot override. */
+  #fswrap{ display:flex; align-items:center; justify-content:center; background:#000; }
+  #fswrap:fullscreen{ width:100%; height:100%; }
+  #fswrap:-webkit-full-screen{ width:100%; height:100%; }
+  :fullscreen::backdrop{ background:#000; }
+  :-webkit-full-screen::backdrop{ background:#000; }
   #bg{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; }
 
   /* the monitor screen rectangle (measured from the art) */
@@ -64,6 +61,7 @@
 </style>
 </head>
 <body>
+  <div id="fswrap">
   <div id="stage">
     <img id="bg" src="suluoutline.png?v=2" alt="">
     <div id="screen">
@@ -75,6 +73,7 @@
       <button id="btn-mute">Sound: On</button>
       <button id="btn-restart">Restart</button>
     </div>
+  </div>
   </div>
 
 <script>
@@ -612,9 +611,9 @@ function drawNameEntry(){
 function blink(){ return Math.floor(performance.now()/450)%2===0; }
 
 /* ---------- fullscreen + buttons ---------- */
-const stage=document.getElementById("stage");
+const fswrap=document.getElementById("fswrap");
 const btnFull=document.getElementById("btn-full");
-btnFull.addEventListener("click",()=>{ if(document.fullscreenElement) document.exitFullscreen(); else (stage.requestFullscreen||stage.webkitRequestFullscreen).call(stage); });
+btnFull.addEventListener("click",()=>{ if(document.fullscreenElement) document.exitFullscreen(); else (fswrap.requestFullscreen||fswrap.webkitRequestFullscreen).call(fswrap); });
 document.addEventListener("fullscreenchange",()=>{ btnFull.textContent=document.fullscreenElement?"Leave Full Screen":"Go Full Screen"; });
 document.getElementById("btn-mute").addEventListener("click",function(){ muted=!muted; this.textContent="Sound: "+(muted?"Off":"On"); });
 document.getElementById("btn-restart").addEventListener("click",()=>{ state="menu"; });

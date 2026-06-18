@@ -140,10 +140,12 @@
   .fighter.blocking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 15px rgba(67,182,255,.85)); }
   .fighter.hit img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 18px rgba(255,52,95,.95)) brightness(1.28); }
   .fighter.attacking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 14px rgba(255,228,95,.7)) saturate(1.28); }
+  .fighter.striking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 20px rgba(255,228,95,.9)) saturate(1.42) contrast(1.08); }
   .fighter.special img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 24px rgba(255,79,184,.9)) saturate(1.45) brightness(1.08); }
   .fighter.jump img { filter: drop-shadow(0 28px 10px rgba(0,0,0,.22)) saturate(1.2); }
+  .fighter.recovering img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) saturate(1.18) contrast(1.04) brightness(.96); }
 
-  .fx, .projectile, .float-word, .weapon-hit, .swish, .dust, .gummy-drop { position: absolute; pointer-events: none; z-index: 12; }
+  .fx, .projectile, .float-word, .weapon-hit, .swish, .dust, .gummy-drop, .motion-ghost { position: absolute; pointer-events: none; z-index: 12; }
   .projectile {
     width: 44px; height: 44px; border-radius: 50%;
     background: radial-gradient(circle at 30% 28%, #fff, var(--yellow) 35%, var(--pink) 72%);
@@ -190,6 +192,17 @@
   }
   @keyframes gummyPop {
     to { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.35); }
+  }
+  .motion-ghost {
+    width: var(--ghost-w, 90px); height: var(--ghost-h, 150px); opacity: .34;
+    background: var(--ghost-src) center bottom / contain no-repeat;
+    filter: brightness(1.8) saturate(1.35) drop-shadow(0 0 14px currentColor);
+    transform: translate(-50%, -100%) scaleX(var(--ghost-dir, 1)) rotate(var(--ghost-rot, 0deg));
+    animation: ghostFade .18s ease-out forwards;
+    z-index: 6;
+  }
+  @keyframes ghostFade {
+    to { opacity: 0; transform: translate(calc(-50% + var(--ghost-dx, 0px)), -100%) scaleX(var(--ghost-dir, 1)) rotate(var(--ghost-rot, 0deg)); }
   }
   .float-word {
     font-family: var(--mono); font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
@@ -391,6 +404,9 @@
       facing: side === "left" ? 1 : -1,
       action: "idle",
       actionT: 0,
+      actionTotal: 0,
+      attackKind: "",
+      hitResolved: true,
       hitT: 0,
       block: false,
       grounded: true,
@@ -405,6 +421,7 @@
       landT: 0,
       dustCd: 0,
       recoilT: 0,
+      ghostCd: 0,
       moving: false,
       prevGrounded: true
     };
@@ -506,26 +523,22 @@
     if (isHeavy && attacker.heavyCd > 0) return;
     if (!isHeavy && attacker.jabCd > 0) return;
     attacker.action = isHeavy ? "attacking heavy" : "attacking";
-    attacker.actionT = isHeavy ? .32 : .18;
-    attacker.vx += attacker.facing * (isHeavy ? 2.2 : 1.2);
+    attacker.actionTotal = isHeavy ? .42 : .24;
+    attacker.actionT = attacker.actionTotal;
+    attacker.attackKind = isHeavy ? "heavy" : "jab";
+    attacker.hitResolved = false;
+    attacker.vx += attacker.facing * (isHeavy ? 1.5 : .8);
     if (isHeavy) attacker.heavyCd = .58; else attacker.jabCd = .28;
-    swish(attacker, isHeavy);
-    const range = isHeavy ? 118 : 82;
-    const damage = (isHeavy ? 13 : 7) * attacker.def.power;
-    const dx = Math.abs(attacker.x - defender.x);
-    if (dx < range && Math.abs(attacker.y - defender.y) < 80) {
-      applyHit(defender, attacker, damage, isHeavy ? "WHACK" : "POW", isHeavy ? attacker.def.color : "#fff");
-    } else {
-      floatWord(attacker.x + attacker.facing * 54, groundY() - 145 - attacker.y, "MISS", "rgba(255,255,255,.76)");
-    }
   }
 
   function special(attacker, defender) {
     if (attacker.hitT > 0 || attacker.actionT > 0 || attacker.specialCd > 0) return;
     attacker.action = "special";
-    attacker.actionT = .44;
+    attacker.actionTotal = .56;
+    attacker.actionT = attacker.actionTotal;
+    attacker.attackKind = "special";
     attacker.specialCd = 2.8;
-    attacker.vx += attacker.facing * 1.8;
+    attacker.vx += attacker.facing * 1.1;
     swish(attacker, true, true);
     const s = attacker.def.special;
     if (/Shard|Burst|stars|Snap/.test(s) || attacker.def.id === 1 || attacker.def.id === 2 || attacker.def.id === 6 || attacker.def.id === 9) {
@@ -568,6 +581,7 @@
     target.health = Math.max(0, target.health - damage);
     target.hitT = blocked ? .12 : .28;
     target.recoilT = blocked ? .16 : .3;
+    target.attackKind = blocked ? "block-hit" : "hit";
     target.vx += source.facing * (blocked ? 2.2 : 5.8);
     arenaShake = Math.max(arenaShake, blocked ? .08 : .18);
     ring(target.x, groundY() - 120 - target.y, color);
@@ -639,6 +653,22 @@
     particles.push({ el, life: specialMove ? .42 : .28 });
   }
 
+  function motionGhost(f, rot = 0, dx = 0) {
+    const el = document.createElement("div");
+    el.className = "motion-ghost";
+    el.style.left = `${f.x - f.facing * 18}px`;
+    el.style.top = `${groundY() + 4 - f.y}px`;
+    el.style.color = f.def.color;
+    el.style.setProperty("--ghost-src", `url("${bearSrc(f.def.img)}")`);
+    el.style.setProperty("--ghost-dir", f.facing);
+    el.style.setProperty("--ghost-rot", `${rot}deg`);
+    el.style.setProperty("--ghost-dx", `${dx}px`);
+    el.style.setProperty("--ghost-w", `${f.side === "left" ? 118 : 118}px`);
+    el.style.setProperty("--ghost-h", `${f.grounded ? 184 : 204}px`);
+    arena.appendChild(el);
+    particles.push({ el, life: .2 });
+  }
+
   function dust(x, y, color = "rgba(255,245,218,.9)", dx = 0) {
     const el = document.createElement("div");
     el.className = "dust";
@@ -687,6 +717,8 @@
       updateCpu(dt);
       physics(player, dt);
       physics(cpu, dt);
+      resolveActiveStrike(player, cpu);
+      resolveActiveStrike(cpu, player);
       updateProjectiles(dt);
       faceEachOther();
       clampDistance();
@@ -707,6 +739,8 @@
     if (keys.has("w") && player.grounded) {
       player.vy = 13.6;
       player.grounded = false;
+      player.landT = 0;
+      dust(player.x - player.facing * 22, groundY() + 4, "rgba(255,245,218,.82)", -player.facing * 18);
     }
     if (keys.has("j")) attack(player, cpu, "jab");
     if (keys.has("k")) attack(player, cpu, "heavy");
@@ -722,10 +756,31 @@
       cpu.aiBlock = Math.random() < .16 ? .38 : Math.max(0, cpu.aiBlock);
       if (abs < 105 && Math.random() < .52) attack(cpu, player, Math.random() < .42 ? "heavy" : "jab");
       if (abs < 220 && Math.random() < .24) special(cpu, player);
-      if (Math.random() < .08 && cpu.grounded) { cpu.vy = 12; cpu.grounded = false; }
+      if (Math.random() < .08 && cpu.grounded) {
+        cpu.vy = 12;
+        cpu.grounded = false;
+        cpu.landT = 0;
+        dust(cpu.x - cpu.facing * 22, groundY() + 4, "rgba(255,245,218,.74)", -cpu.facing * 18);
+      }
       cpu.aiThink = .22 + Math.random() * .28;
     }
     if (cpu.hitT <= 0 && cpu.aiBlock <= 0) cpu.vx += cpu.aiMove * 1.45 * cpu.def.speed;
+  }
+
+  function resolveActiveStrike(attacker, defender) {
+    if (attacker.hitResolved || !attacker.action.includes("attacking") || !isStrikeActive(attacker)) return;
+    attacker.hitResolved = true;
+    const isHeavy = attacker.action.includes("heavy");
+    attacker.vx += attacker.facing * (isHeavy ? 4.8 : 3.2);
+    swish(attacker, isHeavy);
+    const range = isHeavy ? 126 : 88;
+    const damage = (isHeavy ? 13 : 7) * attacker.def.power;
+    const dx = Math.abs(attacker.x - defender.x);
+    if (dx < range && Math.abs(attacker.y - defender.y) < 82) {
+      applyHit(defender, attacker, damage, isHeavy ? "WHACK" : "POW", isHeavy ? attacker.def.color : "#fff");
+    } else {
+      floatWord(attacker.x + attacker.facing * 58, groundY() - 145 - attacker.y, "MISS", "rgba(255,255,255,.76)");
+    }
   }
 
   function physics(f, dt) {
@@ -766,7 +821,17 @@
     f.landT = Math.max(0, f.landT - dt);
     f.dustCd = Math.max(0, f.dustCd - dt);
     f.recoilT = Math.max(0, f.recoilT - dt);
-    if (f.actionT <= 0 && f.action !== "idle") f.action = "idle";
+    f.ghostCd = Math.max(0, f.ghostCd - dt);
+    if (isStrikeActive(f) && f.ghostCd <= 0) {
+      motionGhost(f, f.action === "special" ? 10 : f.action.includes("heavy") ? -8 : -4, -f.facing * 24);
+      f.ghostCd = f.action === "special" ? .075 : .095;
+    }
+    if (f.actionT <= 0 && f.action !== "idle") {
+      f.action = "idle";
+      f.actionTotal = 0;
+      f.attackKind = "";
+      f.hitResolved = true;
+    }
   }
 
   function updateProjectiles(dt) {
@@ -828,6 +893,32 @@
     return arena.clientHeight - 114;
   }
 
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function actionProgress(f) {
+    if (!f.actionTotal) return 0;
+    return clamp(1 - f.actionT / f.actionTotal, 0, 1);
+  }
+
+  function isStrikeActive(f) {
+    if (f.action === "special") {
+      const t = actionProgress(f);
+      return t > .32 && t < .68;
+    }
+    if (!f.action.includes("attacking")) return false;
+    const t = actionProgress(f);
+    return f.action.includes("heavy") ? t > .34 && t < .62 : t > .22 && t < .5;
+  }
+
+  function isRecovering(f) {
+    if (f.action === "special") return actionProgress(f) >= .68;
+    if (!f.action.includes("attacking")) return false;
+    const t = actionProgress(f);
+    return f.action.includes("heavy") ? t >= .62 : t >= .5;
+  }
+
   function updateTransforms() {
     const pScale = player.facing === 1 ? 1 : -1;
     const cScale = cpu.facing === 1 ? 1 : -1;
@@ -840,62 +931,137 @@
   }
 
   function applyPose(el, f) {
-    const idle = Math.sin(f.poseT * 4.4);
-    const walk = Math.sin(f.walkT * 6.4);
-    let y = idle * -2.8;
-    let rot = idle * .9;
-    let sx = 1 + idle * .018;
-    let sy = 1 - idle * .012;
+    const idle = Math.sin(f.poseT * 4.2);
+    const breath = Math.sin(f.poseT * 2.1);
+    const walk = Math.sin(f.walkT * 7.4);
+    const walkPlant = Math.abs(walk);
+    const forwardV = clamp((f.vx * f.facing) / 7.5, -1, 1);
+    let y = idle * -1.8;
+    let rot = idle * .45 - forwardV * 2.2;
+    let sx = 1 + breath * .012;
+    let sy = 1 - breath * .01;
     let shove = 0;
 
     if (f.moving) {
-      y += Math.abs(walk) * -8;
-      rot += walk * 4.5;
-      sx += Math.abs(walk) * .035;
-      sy -= Math.abs(walk) * .03;
+      y += walkPlant * -5.5;
+      rot += walk * 3.6 - forwardV * 3.4;
+      shove += walk * 3.8;
+      sx += walkPlant * .028;
+      sy -= walkPlant * .024;
     }
     if (!f.grounded) {
-      y += -8;
-      rot += f.vy > 0 ? -5 : 5;
-      sx += .04;
-      sy += .06;
+      const rise = clamp(f.vy / 13.6, 0, 1);
+      const fall = clamp(-f.vy / 15, 0, 1);
+      y += -8 - rise * 6;
+      rot += rise * -7 + fall * 8;
+      sx += rise * .035 - fall * .02;
+      sy += rise * .075 + fall * .02;
+      shove += forwardV * 8;
     }
     if (f.landT > 0) {
       const t = f.landT / .18;
-      sx += .18 * t;
-      sy -= .16 * t;
-      y += 6 * t;
+      const squash = Math.sin(t * Math.PI * .85);
+      sx += .2 * squash;
+      sy -= .18 * squash;
+      y += 7 * squash;
+      rot += forwardV * -4 * squash;
     }
     if (f.block || f.aiBlock > 0) {
-      sx += .06;
-      sy -= .05;
-      rot -= 7;
-      shove -= 8;
+      const brace = .85 + Math.sin(f.poseT * 18) * .04;
+      sx += .08 * brace;
+      sy -= .07 * brace;
+      y += 5 * brace;
+      rot -= 9 * brace;
+      shove -= 13 * brace;
     }
     if (f.recoilT > 0 || f.hitT > 0) {
       const t = Math.max(f.recoilT / .3, f.hitT / .28);
-      rot += 10 * t;
-      shove -= 20 * t;
-      sx += .08 * t;
-      sy -= .05 * t;
+      const wobble = Math.sin(f.poseT * 34) * t;
+      rot += 13 * t + wobble * 5;
+      shove -= 25 * t;
+      y += 5 * t;
+      sx += .1 * t;
+      sy -= .06 * t;
     }
     if (f.action.includes("attacking")) {
-      const total = f.action.includes("heavy") ? .32 : .18;
-      const t = 1 - Math.min(1, f.actionT / total);
-      const snap = Math.sin(t * Math.PI);
-      shove += (f.action.includes("heavy") ? 28 : 18) * snap;
-      rot -= (f.action.includes("heavy") ? 9 : 5) * snap;
-      sx += .1 * snap;
-      sy -= .07 * snap;
+      const t = actionProgress(f);
+      const heavy = f.action.includes("heavy");
+      if (heavy) {
+        if (t < .34) {
+          const k = t / .34;
+          shove -= 18 * k;
+          rot += 12 * k;
+          y += 6 * k;
+          sx += .05 * k;
+          sy -= .08 * k;
+        } else if (t < .62) {
+          const k = (t - .34) / .28;
+          const hit = Math.sin(k * Math.PI);
+          shove += -12 + 52 * k;
+          rot += 10 - 27 * k;
+          y += 4 - 8 * hit;
+          sx += .11 + .1 * hit;
+          sy -= .09 + .05 * hit;
+        } else {
+          const k = (t - .62) / .38;
+          const settle = 1 - k;
+          shove += 20 * settle;
+          rot -= 10 * settle;
+          y += 4 * settle;
+          sx += .05 * settle;
+          sy -= .04 * settle;
+        }
+      } else {
+        if (t < .22) {
+          const k = t / .22;
+          shove -= 9 * k;
+          rot += 7 * k;
+          y += 2 * k;
+          sx -= .025 * k;
+          sy += .035 * k;
+        } else if (t < .5) {
+          const k = (t - .22) / .28;
+          const snap = Math.sin(k * Math.PI);
+          shove += -6 + 34 * k;
+          rot += 5 - 17 * k;
+          y -= 4 * snap;
+          sx += .11 * snap;
+          sy -= .075 * snap;
+        } else {
+          const k = (t - .5) / .5;
+          const settle = 1 - k;
+          shove += 14 * settle;
+          rot -= 5 * settle;
+          sx += .035 * settle;
+          sy -= .025 * settle;
+        }
+      }
     }
     if (f.action === "special") {
-      const t = 1 - Math.min(1, f.actionT / .44);
-      const pulse = Math.sin(t * Math.PI);
-      y -= 10 * pulse;
-      rot += 12 * pulse;
-      sx += .16 * pulse;
-      sy += .08 * pulse;
-      shove += 18 * pulse;
+      const t = actionProgress(f);
+      if (t < .28) {
+        const coil = t / .28;
+        y += 8 * coil;
+        rot -= 12 * coil;
+        shove -= 16 * coil;
+        sx += .1 * coil;
+        sy -= .12 * coil;
+      } else if (t < .68) {
+        const k = (t - .28) / .4;
+        const burst = Math.sin(k * Math.PI);
+        y -= 17 * burst;
+        rot += -10 + 28 * k;
+        shove += -10 + 44 * k;
+        sx += .18 * burst;
+        sy += .1 * burst;
+      } else {
+        const settle = 1 - (t - .68) / .32;
+        y -= 5 * settle;
+        rot += 8 * settle;
+        shove += 18 * settle;
+        sx += .06 * settle;
+        sy += .035 * settle;
+      }
     }
 
     el.style.setProperty("--img-y", `${y.toFixed(2)}px`);
@@ -910,6 +1076,8 @@
     if (f.block || f.aiBlock > 0) el.classList.add("blocking");
     if (f.hitT > 0) el.classList.add("hit");
     if (f.action.includes("attacking")) el.classList.add("attacking");
+    if (isStrikeActive(f)) el.classList.add("striking");
+    if (isRecovering(f)) el.classList.add("recovering");
     if (f.action === "special") el.classList.add("special");
     if (!f.grounded) el.classList.add("jump");
     if (f.moving) el.classList.add("walking");

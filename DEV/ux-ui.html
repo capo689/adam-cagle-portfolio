@@ -3,6 +3,7 @@
 <head>
   <script>(function(){try{var p=new URLSearchParams(location.search);if(p.get("desktop"))sessionStorage.setItem("forceDesktop","1");if(sessionStorage.getItem("forceDesktop"))return;var coarse=window.matchMedia&&matchMedia("(pointer: coarse)").matches;var small=Math.min(screen.width||9999,window.innerWidth||9999)<=820;if(coarse&&small&&location.pathname.indexOf("/mobile/")===-1)location.replace("/DEV/mobile/");}catch(e){}})();</script>
   <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/DEV/">
   <title>UX / UI Design Portfolio | Adam R. Cagle</title>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Page not found | Adam R. Cagle</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f2efe9; --ink:#211d18; --muted:#6b6354; --accent:#4D8BE8; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--bg); color: var(--ink);
+      font-family: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: grid; place-items: center; text-align: center;
+      padding: 32px;
+    }
+    .wrap { max-width: 540px; }
+    .code {
+      font-family: "IBM Plex Mono", monospace; font-size: 13px;
+      letter-spacing: .22em; text-transform: uppercase; color: var(--accent);
+      margin: 0 0 18px;
+    }
+    h1 {
+      font-family: "EB Garamond", Georgia, serif; font-weight: 500;
+      font-size: clamp(34px, 6vw, 56px); line-height: 1.05; margin: 0 0 16px;
+    }
+    h1 .it { font-style: italic; color: var(--accent); }
+    p { color: var(--muted); font-size: 17px; line-height: 1.5; margin: 0 0 30px; }
+    .home {
+      display: inline-block; font-size: 14px; font-weight: 600; letter-spacing: .02em;
+      color: #fff; background: var(--accent); text-decoration: none;
+      padding: 13px 22px; border-radius: 999px; transition: background .2s;
+    }
+    .home:hover { background: #2660cc; }
+    .home:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    .name {
+      position: fixed; top: 28px; left: 32px;
+      font-family: "EB Garamond", Georgia, serif; font-size: 20px;
+    }
+    .name b { font-weight: 600; }
+    .name .d { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <a class="name" href="/DEV/">Adam R<span class="d">.</span> <b>Cagle</b></a>
+  <main class="wrap">
+    <p class="code">Error 404</p>
+    <h1>That page wandered <span class="it">off the map.</span></h1>
+    <p>The link is broken or the page has moved. Everything else is right where you left it.</p>
+    <a class="home" href="/DEV/">Back to home <span aria-hidden="true">&rarr;</span></a>
+  </main>
+</body>
+</html>

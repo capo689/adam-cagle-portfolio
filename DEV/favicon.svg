@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0b0e13"/>
+  <text x="29" y="47" text-anchor="middle" font-family="Palatino,'Palatino Linotype','Book Antiqua',Georgia,serif" font-weight="500" font-size="46" fill="#f5f2ea">A</text>
+  <circle cx="50" cy="44" r="5" fill="#4D8BE8"/>
+</svg>

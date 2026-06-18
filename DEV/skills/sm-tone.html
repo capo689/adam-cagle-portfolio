@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunset Marquis — Tone Guide</title>
+<link rel="canonical" href="https://adamcagle.com/skills/sm-tone.html">
+<meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #9A8243;
+    --gold-light: #B89B54;
+    --gold-dim: #7C6835;
+    --near-black: #1C1A17;
+    --deep: #F2EDE4;
+    --surface: #FBF8F2;
+    --surface-2: #F5F0E6;
+    --surface-3: #ECE4D6;
+    --border: rgba(28,26,23,0.10);
+    --border-strong: rgba(154,130,67,0.40);
+    --text-primary: #22201C;
+    --text-secondary: #6B6457;
+    --text-muted: #9A9384;
+    --red: #B0442F;
+    --green-sm: #4A7C59;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', system-ui, sans-serif;
+    --script: 'Pinyon Script', cursive;
+    --ivory: #FBF8F2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ivory);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .masthead {
+    background: var(--ivory);
+    border-bottom: 1px solid var(--border);
+    padding: 96px 60px 72px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .masthead-eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .masthead-wordmark {
+    font-family: var(--serif);
+    font-size: clamp(48px, 7.5vw, 92px);
+    font-weight: 400;
+    color: var(--near-black);
+    line-height: 1.02;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .masthead-wordmark em {
+    font-family: var(--script);
+    font-style: normal;
+    text-transform: none;
+    color: var(--gold);
+    letter-spacing: 0;
+    font-size: 1.15em;
+    line-height: 0.9;
+    display: inline-block;
+    margin-top: 0.08em;
+    white-space: nowrap;
+  }
+  .masthead-sub {
+    font-family: var(--script);
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 400;
+    font-style: normal;
+    color: var(--gold);
+    margin-top: 18px;
+    line-height: 1;
+  }
+  .masthead-meta {
+    margin-top: 44px;
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .masthead-meta-item {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+  .masthead-meta-item strong {
+    display: block;
+    color: var(--gold);
+    font-weight: 400;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+  }
+  .masthead-rule {
+    width: 64px;
+    height: 1px;
+    background: var(--gold);
+    margin: 36px auto 0;
+  }
+
+  /* NAV */
+  .nav-strip {
+    background: var(--ivory);
+    border-bottom: 1px solid var(--border);
+    padding: 0 60px;
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-strip::-webkit-scrollbar { display: none; }
+  .nav-link {
+    display: inline-block;
+    padding: 18px 22px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-link:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 88px 60px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .section:nth-child(even) { background: transparent; }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4.5vw, 50px);
+    font-weight: 400;
+    color: var(--near-black);
+    line-height: 1.1;
+    letter-spacing: 0.005em;
+    margin-bottom: 10px;
+  }
+  .section-intro {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    max-width: 620px;
+    margin-bottom: 52px;
+    line-height: 1.75;
+  }
+
+  /* NORTH STAR */
+  .north-star {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 36px 44px;
+    margin-bottom: 48px;
+    max-width: 860px;
+  }
+  .north-star-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .north-star-text {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.5vw, 27px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--near-black);
+    line-height: 1.5;
+  }
+
+  /* VOICE PILLARS */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .pillar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+  }
+  .pillar-number {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 14px;
+    opacity: 0.85;
+  }
+  .pillar-name {
+    font-family: var(--serif);
+    font-size: 23px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 10px;
+  }
+  .pillar-meaning {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .pillar-sound-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 6px;
+  }
+  .pillar-sounds-like {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-primary);
+    border-left: 2px solid var(--gold);
+    padding-left: 12px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .pillar-not-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .pillar-not-like {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    border-left: 2px solid rgba(176,68,47,0.4);
+    padding-left: 12px;
+    line-height: 1.5;
+  }
+
+  /* VOICE DIAL VIZ */
+  .dial-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .dial-cell {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px 16px;
+    text-align: center;
+  }
+  .dial-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .dial-bar-container {
+    width: 100%;
+    height: 5px;
+    background: var(--surface-3);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .dial-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--gold);
+    transition: width 1s ease;
+  }
+  .dial-value {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--near-black);
+  }
+  .dial-descriptor {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* AUDIENCE SECTION */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .audience-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+  }
+  .audience-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    font-size: 15px;
+    color: var(--gold);
+  }
+  .audience-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .audience-tag {
+    display: inline-block;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    color: var(--gold-dim);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 16px;
+  }
+  .audience-care-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+  .audience-items {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+  .audience-items li {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    padding: 3px 0;
+    border-bottom: 1px solid var(--border);
+    padding-left: 12px;
+    position: relative;
+  }
+  .audience-items li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold-dim);
+    font-size: 10px;
+  }
+  .audience-tone-tag {
+    background: var(--surface-2);
+    border-left: 2px solid var(--gold);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  /* BANNED WORDS */
+  .word-zone {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .word-zone-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+  .word-zone-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .word-zone-title.banned { color: #C0392B; }
+  .word-zone-title.approved { color: #4A7C59; }
+  .word-zone-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .banned .word-zone-icon { background: #C0392B; color: #fff; }
+  .approved .word-zone-icon { background: #4A7C59; color: #fff; }
+  .word-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .word-pill {
+    font-family: var(--serif);
+    font-style: italic;
+    padding: 5px 14px;
+    border-radius: 2px;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+  .word-pill.banned-pill {
+    background: rgba(192,57,43,0.12);
+    color: #E57373;
+    border: 1px solid rgba(192,57,43,0.3);
+    text-decoration: line-through;
+    text-decoration-color: rgba(192,57,43,0.5);
+  }
+  .word-pill.banned-pill.lg { font-size: 18px; }
+  .word-pill.banned-pill.xl { font-size: 22px; }
+  .word-pill.approved-pill {
+    background: rgba(74,124,89,0.12);
+    color: #81C784;
+    border: 1px solid rgba(74,124,89,0.3);
+  }
+  .word-pill.approved-pill.lg { font-size: 18px; }
+  .word-pill.approved-pill.xl { font-size: 22px; }
+
+  /* CHANNEL MATRIX */
+  .channel-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 48px;
+  }
+  .channel-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+  }
+  .channel-table th {
+    background: var(--near-black);
+    color: var(--gold-light);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .channel-table td {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .channel-table tr td:first-child {
+    color: var(--near-black);
+    font-weight: 500;
+    white-space: nowrap;
+    font-family: var(--serif);
+    font-size: 15px;
+  }
+  .channel-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .tag-green { background: rgba(74,124,89,0.2); color: #81C784; border: 1px solid rgba(74,124,89,0.3); }
+  .tag-red { background: rgba(192,57,43,0.15); color: #E57373; border: 1px solid rgba(192,57,43,0.25); }
+
+  /* BEFORE AFTER */
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .ba-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+  .ba-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ba-label.before { color: #C0392B; }
+  .ba-label.after { color: var(--gold); }
+  .ba-copy {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .ba-copy.before-copy { color: var(--text-muted); font-style: italic; }
+  .ba-why {
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+
+  /* VOCAB SECTION */
+  .vocab-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .vocab-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+  }
+  .vocab-category {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .vocab-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .vocab-word {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--text-primary);
+    background: var(--surface-2);
+    padding: 5px 14px;
+    border: 1px solid var(--border);
+  }
+
+  /* RULES GRID */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .rule-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+  }
+  .rule-num {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 400;
+    color: var(--gold);
+    opacity: 0.7;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .rule-title {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--near-black);
+    margin-bottom: 10px;
+  }
+  .rule-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* SPEAKER SECTION */
+  .speaker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .speaker-block h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .speaker-list {
+    list-style: none;
+  }
+  .speaker-list li {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    padding-left: 18px;
+    position: relative;
+  }
+  .speaker-list.never li::before {
+    content: '✕';
+    position: absolute;
+    left: 0;
+    color: #C0392B;
+    font-size: 11px;
+    top: 12px;
+  }
+  .speaker-list.always li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 11px;
+    top: 12px;
+  }
+  .never-says-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .never-say-pill {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    padding: 6px 14px;
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.2);
+    color: #E57373;
+    text-decoration: line-through;
+    text-decoration-color: rgba(192,57,43,0.4);
+  }
+
+  /* INSTRUCTION HIERARCHY */
+  .hierarchy-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 720px;
+    margin-bottom: 48px;
+  }
+  .hierarchy-item {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .hierarchy-rank {
+    width: 48px;
+    flex-shrink: 0;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--near-black);
+  }
+  .hierarchy-body {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: none;
+    padding: 16px 20px;
+  }
+  .hierarchy-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--near-black);
+    margin-bottom: 2px;
+  }
+  .hierarchy-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .hierarchy-item:nth-child(n+3) .hierarchy-rank {
+    background: var(--gold-dim);
+  }
+  .hierarchy-item:nth-child(n+5) .hierarchy-rank {
+    background: #A39466;
+  }
+  .hierarchy-item:nth-child(n+7) .hierarchy-rank {
+    background: #B7AC8C;
+  }
+
+  /* PUNCTUATION RULES */
+  .punct-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .punct-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .punct-symbol {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: center;
+  }
+  .punct-symbol.banned-sym { color: rgba(192,57,43,0.6); text-decoration: line-through; }
+  .punct-symbol.ok-sym { color: var(--gold); }
+  .punct-body { flex: 1; }
+  .punct-verdict {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .punct-verdict.banned-v { color: #C0392B; }
+  .punct-verdict.ok-v { color: var(--gold); }
+  .punct-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--near-black);
+    border-top: 3px solid var(--gold);
+    padding: 56px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-wordmark {
+    font-family: var(--serif);
+    font-size: 26px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #F2EDE4;
+  }
+  .footer-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .final-rule {
+    font-family: var(--serif);
+    font-size: clamp(16px, 1.6vw, 20px);
+    font-style: italic;
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 48px 60px 44px;
+    border-top: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .final-test {
+    text-align: center;
+    padding: 72px 60px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+  }
+  .final-test-q {
+    font-family: var(--serif);
+    font-size: clamp(22px, 3vw, 34px);
+    font-style: italic;
+    color: var(--near-black);
+    line-height: 1.4;
+    margin-bottom: 28px;
+    max-width: 660px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .final-test-a {
+    display: inline-flex;
+    gap: 16px;
+  }
+  .final-btn {
+    background: var(--near-black);
+    border: 1px solid var(--near-black);
+    color: var(--gold-light);
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 14px 30px;
+    cursor: default;
+  }
+  .final-btn.no {
+    background: transparent;
+    color: var(--text-muted);
+    border-color: var(--border-strong);
+  }
+
+  /* CHART AREA */
+  .chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .chart-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .radar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .masthead { padding: 48px 24px 40px; }
+    .section { padding: 48px 24px; }
+    .nav-strip { padding: 0 24px; }
+    .pillars-grid { grid-template-columns: 1fr 1fr; }
+    .dial-row { grid-template-columns: repeat(3, 1fr); }
+    .audience-grid { grid-template-columns: 1fr; }
+    .word-zone { grid-template-columns: 1fr; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .vocab-row { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .speaker-grid { grid-template-columns: 1fr; gap: 32px; }
+    .radar-grid { grid-template-columns: 1fr; }
+    .punct-grid { grid-template-columns: 1fr; }
+    .footer { padding: 32px 24px; }
+    .footer-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-eyebrow">Sunset Marquis Hotel &amp; Villas</div>
+  <div class="masthead-wordmark">The Voice of<br><em>Sunset Marquis</em></div>
+  <div class="masthead-sub">a working guide for humans and machines</div>
+  <div class="masthead-rule"></div>
+  <div class="masthead-meta">
+    <div class="masthead-meta-item"><strong>Version</strong>Superpowered Merge, June 2026</div>
+    <div class="masthead-meta-item"><strong>Status</strong>Active Production Document</div>
+    <div class="masthead-meta-item"><strong>Built by</strong>Agency689</div>
+    <div class="masthead-meta-item"><strong>Primary Rule</strong>Never invent property details</div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <a href="#brand" class="nav-link">Brand Identity</a>
+  <a href="#pillars" class="nav-link">Voice Pillars</a>
+  <a href="#speaker" class="nav-link">The Speaker</a>
+  <a href="#audience" class="nav-link">Audiences</a>
+  <a href="#channels" class="nav-link">Channels</a>
+  <a href="#words" class="nav-link">Vocabulary</a>
+  <a href="#banned" class="nav-link">Banned Moves</a>
+  <a href="#examples" class="nav-link">Copy Examples</a>
+  <a href="#rules" class="nav-link">Voice Rules</a>
+  <a href="#hierarchy" class="nav-link">Instruction Order</a>
+</nav>
+
+<!-- BRAND IDENTITY -->
+<section class="section" id="brand">
+  <div class="section-eyebrow">01 — Brand Identity</div>
+  <div class="section-title">What the Sunset Marquis is.</div>
+  <p class="section-intro">One sentence defines every draft. If a piece of copy cannot trace back to this idea, it is probably drifting.</p>
+
+  <div class="north-star">
+    <div class="north-star-label">North Star — Established</div>
+    <div class="north-star-text">Sunset Marquis is a discreet West Hollywood retreat where music history, garden privacy, polished service, and creative energy live just off the Sunset Strip.</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;">
+    <div style="background: var(--surface); border: 1px solid var(--border); padding: 28px;">
+      <div class="section-eyebrow" style="margin-bottom: 16px;">What it is</div>
+      <ul class="speaker-list always" style="list-style: none;">
+        <li>A private, creative, garden-set West Hollywood property</li>
+        <li>A place with a long relationship to music, entertainment, and returning guests</li>
+        <li>Lived in, cared for, and self-possessed</li>
+        <li>A place where the city is close, but the guest has room to disappear</li>
+        <li>Real. Historic. Difficult to fake.</li>
+      </ul>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); padding: 28px;">
+      <div class="section-eyebrow" style="margin-bottom: 16px; color: #C0392B;">What it is not</div>
+      <ul class="speaker-list never" style="list-style: none;">
+        <li>A lifestyle concept hotel</li>
+        <li>A wellness philosophy dressed as a hotel</li>
+        <li>A celebrity theme park or Instagram set</li>
+        <li>A chain hotel with better lighting</li>
+        <li>A place that needs to shout about who has been there</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 3px solid var(--gold); padding: 32px; max-width: 760px;">
+    <div class="section-eyebrow" style="margin-bottom: 12px;">The Core Pattern</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; font-size: 14px;">
+      <div>
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #4A7C59; margin-bottom: 8px;">Best pattern</div>
+        <div style="font-family: var(--serif); font-style: italic; color: var(--text-primary);">Real fact + restrained feeling</div>
+      </div>
+      <div>
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #C0392B; margin-bottom: 8px;">Worst pattern</div>
+        <div style="font-family: var(--serif); font-style: italic; color: var(--text-muted);">High-end adjective + vague promise</div>
+      </div>
+    </div>
+    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+      <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px;">The Core Move</div>
+      <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Show the thing that signals quality instead of saying the quality word. The beds. The gardens. The studio downstairs. The bridge over the koi pond. The pool after lunch. The staff who knows the guest before the system does.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE PILLARS -->
+<section class="section" id="pillars">
+  <div class="section-eyebrow">02 — Voice Pillars</div>
+  <div class="section-title">Five ways every draft gets evaluated.</div>
+  <p class="section-intro">Every public draft should score well against all five pillars. These are not preferences. They are the evaluation system.</p>
+
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <div class="pillar-number">1</div>
+      <div class="pillar-name">Discreet</div>
+      <div class="pillar-meaning">Sunset Marquis has history, access, and privacy. It should not shout about any of them.</div>
+      <div class="pillar-sound-label">Sounds like</div>
+      <div class="pillar-sounds-like">A West Hollywood address with enough history to keep its voice down.</div>
+      <div class="pillar-not-label">Never like</div>
+      <div class="pillar-not-like">The ultimate celebrity hideaway where Hollywood legends come to play.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-number">2</div>
+      <div class="pillar-name">Specific</div>
+      <div class="pillar-meaning">Real details carry the emotion. Use gardens, pools, Cavatina, the bridge over the koi pond. Names and confirmed amenities do the heavy lifting.</div>
+      <div class="pillar-sound-label">Sounds like</div>
+      <div class="pillar-sounds-like">The pools are heated. The gardens are awake. Spring knows where to check in.</div>
+      <div class="pillar-not-label">Never like</div>
+      <div class="pillar-not-like">An unforgettable escape surrounded by beauty and elegance.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-number">3</div>
+      <div class="pillar-name">Culturally Aware</div>
+      <div class="pillar-meaning">The brand understands music, film, and LA creative life without acting like a tourist or a fan.</div>
+      <div class="pillar-sound-label">Sounds like</div>
+      <div class="pillar-sounds-like">Some hotels play music in the lobby. This one has a studio downstairs.</div>
+      <div class="pillar-not-label">Never like</div>
+      <div class="pillar-not-like">Experience the rock star lifestyle in the heart of Hollywood.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-number">4</div>
+      <div class="pillar-name">Polished But Alive</div>
+      <div class="pillar-meaning">Copy should feel refined, not sterilized. The property has personality. Keep the edge without getting sloppy.</div>
+      <div class="pillar-sound-label">Sounds like</div>
+      <div class="pillar-sounds-like">BAR 1200 knows what to do after dinner.</div>
+      <div class="pillar-not-label">Never like</div>
+      <div class="pillar-not-like">Our bar offers a refined beverage experience in an elegant setting.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-number">5</div>
+      <div class="pillar-name">Guest First</div>
+      <div class="pillar-meaning">The voice can have style, but the guest still needs useful information. Dates, times, prices, service changes, and booking paths must be clear.</div>
+      <div class="pillar-sound-label">Sounds like</div>
+      <div class="pillar-sounds-like">Improvements are underway. Some areas may see intermittent daytime noise, and our team will work to keep your stay comfortable.</div>
+      <div class="pillar-not-label">Never like</div>
+      <div class="pillar-not-like">Our exciting transformation will elevate every moment of your journey.</div>
+    </div>
+  </div>
+
+  <!-- VOICE DIAL / INTENSITY VIZ -->
+  <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 24px 32px; margin-bottom: 16px;">
+    <div class="chart-title">Voice mix — relative intensity by quality</div>
+  </div>
+  <div class="dial-row">
+    <div class="dial-cell">
+      <div class="dial-label">Mystery</div>
+      <div class="dial-bar-container"><div class="dial-bar-fill" style="width: 55%;"></div></div>
+      <div class="dial-value">Moderate</div>
+      <div class="dial-descriptor">Present, not manufactured</div>
+    </div>
+    <div class="dial-cell">
+      <div class="dial-label">Confidence</div>
+      <div class="dial-bar-container"><div class="dial-bar-fill" style="width: 92%;"></div></div>
+      <div class="dial-value">High</div>
+      <div class="dial-descriptor">The place is real. No convincing needed.</div>
+    </div>
+    <div class="dial-cell">
+      <div class="dial-label">Wit</div>
+      <div class="dial-bar-container"><div class="dial-bar-fill" style="width: 25%;"></div></div>
+      <div class="dial-value">Light</div>
+      <div class="dial-descriptor">Dry. Occasional. Never forced.</div>
+    </div>
+    <div class="dial-cell">
+      <div class="dial-label">Restraint</div>
+      <div class="dial-bar-container"><div class="dial-bar-fill" style="width: 88%;"></div></div>
+      <div class="dial-value">High</div>
+      <div class="dial-descriptor">Primary mode. One good detail beats five adjectives.</div>
+    </div>
+    <div class="dial-cell">
+      <div class="dial-label">Warmth</div>
+      <div class="dial-bar-container"><div class="dial-bar-fill" style="width: 65%;"></div></div>
+      <div class="dial-value">Genuine</div>
+      <div class="dial-descriptor">Never sugary. Never performed.</div>
+    </div>
+    <div class="dial-cell">
+      <div class="dial-label">Music Energy</div>
+      <div class="dial-bar-container"><div class="dial-bar-fill" style="width: 70%;"></div></div>
+      <div class="dial-value">Felt</div>
+      <div class="dial-descriptor">In the rhythm. Not stated out loud.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE SPEAKER -->
+<section class="section" id="speaker">
+  <div class="section-eyebrow">03 — The Speaker</div>
+  <div class="section-title">Who is writing.</div>
+  <p class="section-intro">The Sunset Marquis narrator is someone who has been here a long time. Not the owner. Not the concierge. A trusted insider who knows every corner of the property and does not need to prove any of it.</p>
+
+  <div class="speaker-grid">
+    <div class="speaker-block">
+      <h3>The speaker believes</h3>
+      <ul class="speaker-list always">
+        <li>Real cool is quiet</li>
+        <li>History should be carried, not shouted</li>
+        <li>Privacy is part of hospitality</li>
+        <li>Specifics beat adjectives</li>
+        <li>Offers can be elegant when they are clear</li>
+        <li>The guest is intelligent</li>
+        <li>The property has earned its mystique</li>
+        <li>The best line is often the one that removes the extra sentence</li>
+      </ul>
+    </div>
+    <div class="speaker-block">
+      <h3>The speaker notices</h3>
+      <ul class="speaker-list always">
+        <li>The bridge over the koi pond</li>
+        <li>A table outside at Cavatina</li>
+        <li>The difference between a pool visit and a pool day</li>
+        <li>A song in the room, not a slogan about music</li>
+        <li>The guest who returns without needing the full tour</li>
+        <li>The practical detail that makes a stay easier</li>
+        <li>Garden pathways. A villa door. A drink that turns dinner into a night.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background: var(--surface); border: 1px solid var(--border); padding: 36px; margin-bottom: 0;">
+    <div class="section-eyebrow" style="margin-bottom: 20px;">The speaker would never say</div>
+    <div class="never-says-cloud">
+      <span class="never-say-pill">We are the epitome of luxury.</span>
+      <span class="never-say-pill">Discover our hidden oasis.</span>
+      <span class="never-say-pill">An unmissable reimagining of West Hollywood glamour.</span>
+      <span class="never-say-pill">Treat yourself to a staycation like no other.</span>
+      <span class="never-say-pill">Rock and roll vibes await.</span>
+      <span class="never-say-pill">Where legends come alive.</span>
+      <span class="never-say-pill">We are redefining hospitality.</span>
+      <span class="never-say-pill">Experience the ultimate celebrity hideaway.</span>
+      <span class="never-say-pill">We cannot wait to welcome you.</span>
+      <span class="never-say-pill">Immerse yourself.</span>
+      <span class="never-say-pill">A culinary journey awaits.</span>
+      <span class="never-say-pill">Thoughtfully curated.</span>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCES -->
+<section class="section" id="audience">
+  <div class="section-eyebrow">04 — Audiences</div>
+  <div class="section-title">Who the copy is talking to.</div>
+  <p class="section-intro">Voice stays consistent. Tone shifts by reader state. Each audience segment has a distinct relationship with the property and expects the brand to understand them without being told.</p>
+
+  <div class="audience-grid">
+    <div class="audience-card">
+      <div class="audience-icon">↩</div>
+      <div class="audience-name">Returning Guests</div>
+      <div class="audience-tag">Warm · Confident · Unhurried</div>
+      <div class="audience-care-title">What they care about</div>
+      <ul class="audience-items">
+        <li>The place still feels like itself</li>
+        <li>Familiar rituals: rooms, pools, staff, gardens, Cavatina, BAR 1200</li>
+        <li>Offers that feel personal, not desperate</li>
+        <li>Operational clarity during renovation</li>
+      </ul>
+      <div class="audience-tone-tag">The tone of a staff member who has been there fifteen years.</div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">♩</div>
+      <div class="audience-name">Music &amp; Film Industry</div>
+      <div class="audience-tag">Dry · Grounded · No fan energy</div>
+      <div class="audience-care-title">What they care about</div>
+      <ul class="audience-items">
+        <li>Privacy. Ease. Serious creative infrastructure.</li>
+        <li>Nightbird access and villa entrances</li>
+        <li>Working without being watched</li>
+        <li>Proximity to studios and venues</li>
+      </ul>
+      <div class="audience-tone-tag">Copy that understands the rhythm of creative work without performing it.</div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">→</div>
+      <div class="audience-name">Leisure Travelers</div>
+      <div class="audience-tag">Inviting · Warm · Not precious</div>
+      <div class="audience-care-title">What they care about</div>
+      <ul class="audience-items">
+        <li>What makes this different from other West Hollywood options</li>
+        <li>The gardens, pools, food, and beds</li>
+        <li>A stay that feels specific to Los Angeles</li>
+        <li>Ease of planning</li>
+      </ul>
+      <div class="audience-tone-tag">A strong opening line and a real detail. Give them a reason to picture themselves here.</div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">◎</div>
+      <div class="audience-name">High-Profile Guests</div>
+      <div class="audience-tag">Clean · Brief · Assured</div>
+      <div class="audience-care-title">What they care about</div>
+      <ul class="audience-items">
+        <li>Discretion. Scale of accommodation.</li>
+        <li>Outdoor villa entrances and private patios</li>
+        <li>Control over their own experience</li>
+        <li>Staff competence and ease of arrival</li>
+      </ul>
+      <div class="audience-tone-tag">Simply knowing the property understands privacy without having to say the word.</div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">⊕</div>
+      <div class="audience-name">Locals — Dining, Bar, Spa</div>
+      <div class="audience-tag">Casual · Specific · Food-forward</div>
+      <div class="audience-care-title">What they care about</div>
+      <ul class="audience-items">
+        <li>A reason to come that is not about the hotel</li>
+        <li>Cavatina as a real West Hollywood dining option</li>
+        <li>BAR 1200 as a late-night room with personality</li>
+        <li>Hours, menus, reservations, and parking</li>
+      </ul>
+      <div class="audience-tone-tag">Skip the hotel framing. They are a regular, not a guest.</div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">≡</div>
+      <div class="audience-name">Travel Advisors &amp; Planners</div>
+      <div class="audience-tag">Direct · Factual · Professional</div>
+      <div class="audience-care-title">What they care about</div>
+      <ul class="audience-items">
+        <li>Capacity, room blocks, and event spaces</li>
+        <li>What makes it differentiating to recommend</li>
+        <li>Renovation timelines and operational clarity</li>
+        <li>Facts, not consumer-facing poetry</li>
+      </ul>
+      <div class="audience-tone-tag">Save the soul for guest copy. Facts, capacity, uniqueness, reliability.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section class="section" id="channels">
+  <div class="section-eyebrow">05 — Channels</div>
+  <div class="section-title">How tone shifts by surface.</div>
+  <p class="section-intro">Voice is consistent. Tone is not. Each channel has its own register, rhythm, and rules. The table below shows what works and what to avoid at each touchpoint.</p>
+
+  <div class="channel-table-wrap">
+    <table class="channel-table">
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Tone</th>
+          <th>DO</th>
+          <th>AVOID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Website hero</td>
+          <td>Confident, visual, specific</td>
+          <td><span class="channel-tag tag-green">Strong opening</span><span class="channel-tag tag-green">Real detail</span><span class="channel-tag tag-green">Place + feeling</span></td>
+          <td><span class="channel-tag tag-red">Generic prestige</span><span class="channel-tag tag-red">Vague hype</span></td>
+        </tr>
+        <tr>
+          <td>Villa pages</td>
+          <td>Residential, private, unhurried</td>
+          <td><span class="channel-tag tag-green">Spatial language</span><span class="channel-tag tag-green">Category differences</span><span class="channel-tag tag-green">Garden pathways</span></td>
+          <td><span class="channel-tag tag-red">Generic room copy</span><span class="channel-tag tag-red">Empty indulgence</span></td>
+        </tr>
+        <tr>
+          <td>Email campaigns</td>
+          <td>Short, timely, lightly persuasive</td>
+          <td><span class="channel-tag tag-green">No greeting</span><span class="channel-tag tag-green">No closing</span><span class="channel-tag tag-green">One CTA</span><span class="channel-tag tag-green">Seasonal hook</span></td>
+          <td><span class="channel-tag tag-red">Long intros</span><span class="channel-tag tag-red">Fake intimacy</span><span class="channel-tag tag-red">Links in body</span></td>
+        </tr>
+        <tr>
+          <td>Social captions</td>
+          <td>Human, visual, relaxed</td>
+          <td><span class="channel-tag tag-green">Strong first line</span><span class="channel-tag tag-green">One useful detail</span><span class="channel-tag tag-green">Minimal hashtags</span></td>
+          <td><span class="channel-tag tag-red">Forced cool</span><span class="channel-tag tag-red">Hashtag clutter</span><span class="channel-tag tag-red">Youth language</span></td>
+        </tr>
+        <tr>
+          <td>Paid ads</td>
+          <td>Sharp, direct, claim-safe</td>
+          <td><span class="channel-tag tag-green">Short headlines</span><span class="channel-tag tag-green">Verified claims only</span><span class="channel-tag tag-green">No invented urgency</span></td>
+          <td><span class="channel-tag tag-red">False scarcity</span><span class="channel-tag tag-red">Vague superlatives</span></td>
+        </tr>
+        <tr>
+          <td>Booking path</td>
+          <td>Clear, concise, reassuring</td>
+          <td><span class="channel-tag tag-green">Clarity over atmosphere</span><span class="channel-tag tag-green">State inclusions</span><span class="channel-tag tag-green">Readable policies</span></td>
+          <td><span class="channel-tag tag-red">Jokes</span><span class="channel-tag tag-red">Vague experiential language</span><span class="channel-tag tag-red">New unverified amenities</span></td>
+        </tr>
+        <tr>
+          <td>Cavatina</td>
+          <td>Appetite-driven, garden-aware, seasonal</td>
+          <td><span class="channel-tag tag-green">Chef name when confirmed</span><span class="channel-tag tag-green">Menu specifics</span><span class="channel-tag tag-green">Open air setting</span></td>
+          <td><span class="channel-tag tag-red">Culinary journey</span><span class="channel-tag tag-red">Embark on</span><span class="channel-tag tag-red">Indulge</span></td>
+        </tr>
+        <tr>
+          <td>BAR 1200</td>
+          <td>Late night, sharper, social</td>
+          <td><span class="channel-tag tag-green">Darker edge</span><span class="channel-tag tag-green">Attitude without trying</span><span class="channel-tag tag-green">Music-aware rhythm</span></td>
+          <td><span class="channel-tag tag-red">Rock star costume language</span><span class="channel-tag tag-red">Curated cocktails</span></td>
+        </tr>
+        <tr>
+          <td>Spa &amp; Wellness</td>
+          <td>Quiet, grounded, specific</td>
+          <td><span class="channel-tag tag-green">Fewer words</span><span class="channel-tag tag-green">Specific services (confirmed)</span><span class="channel-tag tag-green">Restoration</span></td>
+          <td><span class="channel-tag tag-red">Medical claims</span><span class="channel-tag tag-red">Mystical wellness</span><span class="channel-tag tag-red">Rejuvenate</span></td>
+        </tr>
+        <tr>
+          <td>Renovation notices</td>
+          <td>Direct, transparent, steady</td>
+          <td><span class="channel-tag tag-green">Clear dates</span><span class="channel-tag tag-green">Honest impact</span><span class="channel-tag tag-green">Specific next steps</span></td>
+          <td><span class="channel-tag tag-red">Spin</span><span class="channel-tag tag-red">Thrilled to announce</span><span class="channel-tag tag-red">Elevate your experience</span></td>
+        </tr>
+        <tr>
+          <td>Guest communications</td>
+          <td>Warm, calm, practical</td>
+          <td><span class="channel-tag tag-green">Give the next step</span><span class="channel-tag tag-green">Human and direct</span><span class="channel-tag tag-green">Current operational facts</span></td>
+          <td><span class="channel-tag tag-red">Over-apology</span><span class="channel-tag tag-red">Evasive language</span><span class="channel-tag tag-red">Fake intimacy</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- VOCABULARY -->
+<section class="section" id="words">
+  <div class="section-eyebrow">06 — Vocabulary</div>
+  <div class="section-title">The words the brand reaches for.</div>
+  <p class="section-intro">Preferred words are not mandatory. They become tools when the copy calls for them. Use sparingly and only when a real image supports them.</p>
+
+  <div class="vocab-row">
+    <div class="vocab-panel">
+      <div class="vocab-category">Preferred place words</div>
+      <ul class="vocab-list">
+        <li class="vocab-word">Garden</li>
+        <li class="vocab-word">Courtyard</li>
+        <li class="vocab-word">Pool</li>
+        <li class="vocab-word">Terrace</li>
+        <li class="vocab-word">Suite</li>
+        <li class="vocab-word">Villa</li>
+        <li class="vocab-word">Path</li>
+        <li class="vocab-word">Bridge</li>
+        <li class="vocab-word">Koi pond</li>
+        <li class="vocab-word">Studio</li>
+        <li class="vocab-word">Bar</li>
+        <li class="vocab-word">Table</li>
+        <li class="vocab-word">Gallery</li>
+        <li class="vocab-word">Night</li>
+        <li class="vocab-word">Morning</li>
+        <li class="vocab-word">Arrival</li>
+        <li class="vocab-word">Return</li>
+      </ul>
+    </div>
+    <div class="vocab-panel">
+      <div class="vocab-category">Preferred feeling words</div>
+      <ul class="vocab-list">
+        <li class="vocab-word">Private</li>
+        <li class="vocab-word">Easy</li>
+        <li class="vocab-word">Warm</li>
+        <li class="vocab-word">Calm</li>
+        <li class="vocab-word">Polished</li>
+        <li class="vocab-word">Relaxed</li>
+        <li class="vocab-word">Lived in</li>
+        <li class="vocab-word">Restorative</li>
+        <li class="vocab-word">Social</li>
+        <li class="vocab-word">Unhurried</li>
+        <li class="vocab-word">Discreet</li>
+        <li class="vocab-word">Familiar</li>
+        <li class="vocab-word">Cinematic</li>
+        <li class="vocab-word">Low key</li>
+        <li class="vocab-word">Self-possessed</li>
+      </ul>
+    </div>
+    <div class="vocab-panel">
+      <div class="vocab-category">Preferred action words</div>
+      <ul class="vocab-list">
+        <li class="vocab-word">Arrive</li>
+        <li class="vocab-word">Settle in</li>
+        <li class="vocab-word">Step outside</li>
+        <li class="vocab-word">Cross</li>
+        <li class="vocab-word">Wander</li>
+        <li class="vocab-word">Order</li>
+        <li class="vocab-word">Gather</li>
+        <li class="vocab-word">Rest</li>
+        <li class="vocab-word">Return</li>
+        <li class="vocab-word">Slip away</li>
+        <li class="vocab-word">Stay close</li>
+        <li class="vocab-word">Wake up</li>
+        <li class="vocab-word">Head out</li>
+        <li class="vocab-word">Come back</li>
+        <li class="vocab-word">Let the night move</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BANNED MOVES -->
+<section class="section" id="banned">
+  <div class="section-eyebrow">07 — Banned Moves</div>
+  <div class="section-title">What never makes it into production.</div>
+  <p class="section-intro">These words and patterns are confirmed banned for new Sunset Marquis copy. They may appear only when quoting existing source material, writing internal critique, or meeting a confirmed legal or SEO requirement.</p>
+
+  <div class="word-zone">
+    <div class="word-zone-panel">
+      <div class="word-zone-title banned">
+        <span class="word-zone-icon">✕</span>
+        Confirmed banned words
+      </div>
+      <div class="word-cloud">
+        <span class="word-pill banned-pill xl">luxury</span>
+        <span class="word-pill banned-pill lg">nestled</span>
+        <span class="word-pill banned-pill">oasis</span>
+        <span class="word-pill banned-pill lg">reimagined</span>
+        <span class="word-pill banned-pill">unmissable</span>
+        <span class="word-pill banned-pill">world-class</span>
+        <span class="word-pill banned-pill xl">unparalleled</span>
+        <span class="word-pill banned-pill">exceptional</span>
+        <span class="word-pill banned-pill">premier</span>
+        <span class="word-pill banned-pill">exclusive</span>
+        <span class="word-pill banned-pill lg">elite</span>
+        <span class="word-pill banned-pill">prestigious</span>
+        <span class="word-pill banned-pill">curated</span>
+        <span class="word-pill banned-pill">immersive</span>
+        <span class="word-pill banned-pill">staycation</span>
+        <span class="word-pill banned-pill lg">impeccable</span>
+        <span class="word-pill banned-pill">unsurpassed</span>
+        <span class="word-pill banned-pill">finest</span>
+        <span class="word-pill banned-pill xl">ultimate</span>
+        <span class="word-pill banned-pill">celebrated guests</span>
+        <span class="word-pill banned-pill">distinguished</span>
+        <span class="word-pill banned-pill">treasured</span>
+        <span class="word-pill banned-pill">WeHo</span>
+        <span class="word-pill banned-pill">the Strip</span>
+      </div>
+    </div>
+    <div class="word-zone-panel">
+      <div class="word-zone-title approved">
+        <span class="word-zone-icon">✓</span>
+        What to use instead
+      </div>
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;">Instead of luxury</div>
+        <div class="word-cloud">
+          <span class="word-pill approved-pill">private</span>
+          <span class="word-pill approved-pill">polished</span>
+          <span class="word-pill approved-pill">well-appointed</span>
+          <span class="word-pill approved-pill">spacious</span>
+          <span class="word-pill approved-pill">residential</span>
+          <span class="word-pill approved-pill">quietly elegant</span>
+          <span class="word-pill approved-pill">worth staying in for</span>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;">Instead of oasis / nestled</div>
+        <div class="word-cloud">
+          <span class="word-pill approved-pill">set within</span>
+          <span class="word-pill approved-pill">tucked behind</span>
+          <span class="word-pill approved-pill">just off</span>
+          <span class="word-pill approved-pill">along</span>
+          <span class="word-pill approved-pill">inside</span>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;">Instead of unforgettable</div>
+        <div class="word-cloud">
+          <span class="word-pill approved-pill">memorable</span>
+          <span class="word-pill approved-pill">worth returning to</span>
+          <span class="word-pill approved-pill">hard to fake</span>
+          <span class="word-pill approved-pill">built to stay with you</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;">Instead of elevated</div>
+        <div class="word-cloud">
+          <span class="word-pill approved-pill">more polished</span>
+          <span class="word-pill approved-pill">more private</span>
+          <span class="word-pill approved-pill">sharper</span>
+          <span class="word-pill approved-pill">easier</span>
+          <span class="word-pill approved-pill">better considered</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI DEFAULT PATTERNS BANNED -->
+  <div style="background: var(--surface); border: 1px solid var(--border); padding: 36px; margin-top: 16px;">
+    <div class="section-eyebrow" style="margin-bottom: 20px;">AI default phrasing — always remove</div>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">These phrases appear when AI generates generic hotel copy. Any of these in a draft is a signal to rewrite.</p>
+    <div class="word-cloud">
+      <span class="word-pill banned-pill">designed to elevate</span>
+      <span class="word-pill banned-pill">unforgettable experience</span>
+      <span class="word-pill banned-pill">perfect blend of</span>
+      <span class="word-pill banned-pill">hidden gem</span>
+      <span class="word-pill banned-pill">immerse yourself</span>
+      <span class="word-pill banned-pill">escape the ordinary</span>
+      <span class="word-pill banned-pill">something for everyone</span>
+      <span class="word-pill banned-pill">create memories</span>
+      <span class="word-pill banned-pill">from the moment you arrive</span>
+      <span class="word-pill banned-pill">your ultimate destination</span>
+      <span class="word-pill banned-pill">we cannot wait to welcome you</span>
+      <span class="word-pill banned-pill">discover a world of</span>
+      <span class="word-pill banned-pill">where comfort meets style</span>
+      <span class="word-pill banned-pill">seamless</span>
+      <span class="word-pill banned-pill">thoughtfully curated</span>
+      <span class="word-pill banned-pill">culinary journey</span>
+    </div>
+  </div>
+</section>
+
+<!-- COPY EXAMPLES -->
+<section class="section" id="examples">
+  <div class="section-eyebrow">08 — Copy Examples</div>
+  <div class="section-title">Weak version vs. Sunset Marquis version.</div>
+  <p class="section-intro">Every example shows the failure mode on the left and the correct pattern on the right. The left is wrong because it could belong to any hotel. The right works because it could only belong to this one.</p>
+
+  <div class="ba-grid">
+    <div class="ba-panel">
+      <div class="ba-label before"><span class="word-zone-icon" style="background: #C0392B; color: #fff;">✕</span>Weak version</div>
+      <div class="ba-copy before-copy">Experience unparalleled comfort and luxury in the heart of West Hollywood.</div>
+      <div class="ba-why">Banned words. Could describe any hotel. No real information. No specifics.</div>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-label after"><span class="word-zone-icon" style="background: var(--gold); color: var(--near-black);">✓</span>Sunset Marquis version</div>
+      <div class="ba-copy">Stay close to the Strip without giving the city your whole day.</div>
+      <div class="ba-why">Gives the guest a real reason to care. Specific to location, privacy, and control.</div>
+    </div>
+  </div>
+
+  <div class="ba-grid">
+    <div class="ba-panel">
+      <div class="ba-label before"><span class="word-zone-icon" style="background: #C0392B; color: #fff;">✕</span>Weak version</div>
+      <div class="ba-copy before-copy">Live like a rock star at the legendary home of music icons.</div>
+      <div class="ba-why">Costume language. Fan behavior. Over-explains the legend. Could be a theme park.</div>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-label after"><span class="word-zone-icon" style="background: var(--gold); color: var(--near-black);">✓</span>Sunset Marquis version</div>
+      <div class="ba-copy">Some hotels play music in the lobby. This one has a studio downstairs.</div>
+      <div class="ba-why">Uses a confirmed property feature. The contrast carries the attitude. No performance.</div>
+    </div>
+  </div>
+
+  <div class="ba-grid">
+    <div class="ba-panel">
+      <div class="ba-label before"><span class="word-zone-icon" style="background: #C0392B; color: #fff;">✕</span>Weak version</div>
+      <div class="ba-copy before-copy">We are thrilled to announce an exciting transformation that will elevate every part of your guest journey.</div>
+      <div class="ba-why">Spin. Uses banned words. Hides the fact that there will be disruption.</div>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-label after"><span class="word-zone-icon" style="background: var(--gold); color: var(--near-black);">✓</span>Sunset Marquis version</div>
+      <div class="ba-copy">Improvements are underway. Some areas may experience intermittent daytime noise, and our team will work to keep your stay comfortable.</div>
+      <div class="ba-why">Honest. Calm. Guest-centered. States the impact. Gives assurance without spin.</div>
+    </div>
+  </div>
+
+  <div class="ba-grid">
+    <div class="ba-panel">
+      <div class="ba-label before"><span class="word-zone-icon" style="background: #C0392B; color: #fff;">✕</span>Weak version</div>
+      <div class="ba-copy before-copy">We have missed you and cannot wait to welcome you back to your favorite luxury oasis.</div>
+      <div class="ba-why">Fake intimacy. Three banned words. Mass email pretending to be personal. No real information.</div>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-label after"><span class="word-zone-icon" style="background: var(--gold); color: var(--near-black);">✓</span>Sunset Marquis version</div>
+      <div class="ba-copy">The gardens are ready when you are.</div>
+      <div class="ba-why">Feels familiar without fake intimacy. Warm. Brief. Specific to a real property feature.</div>
+    </div>
+  </div>
+
+  <div class="ba-grid">
+    <div class="ba-panel">
+      <div class="ba-label before"><span class="word-zone-icon" style="background: #C0392B; color: #fff;">✕</span>Weak version</div>
+      <div class="ba-copy before-copy">Unlock an exclusive limited-time package designed to elevate your stay.</div>
+      <div class="ba-why">AI default phrasing. Three banned words in one sentence. No actual inclusions named.</div>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-label after"><span class="word-zone-icon" style="background: var(--gold); color: var(--near-black);">✓</span>Sunset Marquis version</div>
+      <div class="ba-copy">Breakfast for two. Valet for one car. Drinks at arrival. The rest of West Hollywood is yours to decide.</div>
+      <div class="ba-why">Names the inclusions clearly. The last line adds personality without adding noise.</div>
+    </div>
+  </div>
+
+  <div class="ba-grid">
+    <div class="ba-panel">
+      <div class="ba-label before"><span class="word-zone-icon" style="background: #C0392B; color: #fff;">✕</span>Weak version</div>
+      <div class="ba-copy before-copy">Unwind with curated cocktails at our exclusive Bar 1200.</div>
+      <div class="ba-why">Two banned words. No attitude. No specifics. Generic bar copy.</div>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-label after"><span class="word-zone-icon" style="background: var(--gold); color: var(--near-black);">✓</span>Sunset Marquis version</div>
+      <div class="ba-copy">BAR 1200 knows what to do after dinner.</div>
+      <div class="ba-why">Has attitude without trying. Brief. Confident. Earns its personality from restraint.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE RULES -->
+<section class="section" id="rules">
+  <div class="section-eyebrow">09 — Voice Rules</div>
+  <div class="section-title">The twelve standing rules.</div>
+  <p class="section-intro">These rules apply to every draft, every channel, every asset type. They are not preferences. They are the standard against which copy is critiqued.</p>
+
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-num">01</div>
+      <div class="rule-title">Lead with a real idea</div>
+      <div class="rule-body">Not a prestige claim. Not a welcome. A line that gives the guest a reason to care. Specific to the property, the location, or the offer.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">02</div>
+      <div class="rule-title">Keep sentences varied, but never fussy</div>
+      <div class="rule-body">Short sentences carry weight. Three words can land harder than thirty. Never let long sentences become the default. Read it out loud. If it sounds like a brochure, it reads like one.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">03</div>
+      <div class="rule-title">Specificity beats decoration</div>
+      <div class="rule-body">Generic claims do nothing. A confirmed property detail does everything. The bridge over the koi pond. The pool. The studio. The Sunset Strip just outside.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">04</div>
+      <div class="rule-title">Write with confidence, not hype</div>
+      <div class="rule-body">Never apologize for who the property is. Never over-explain. The brand does not need to persuade. It needs to show. Calm and invitational beats urgent and loud.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">05</div>
+      <div class="rule-title">Use restraint around history</div>
+      <div class="rule-body">History speaks for itself when named specifically. Mystery is in restraint, not manufactured vagueness. A short, confident line often carries more weight than a paragraph of name-dropping.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">06</div>
+      <div class="rule-title">Let music inform the rhythm</div>
+      <div class="rule-body">Music references are earned assets, not decoration. Use them when factually grounded and when they serve the copy. Do not use them as filler signals for cool. Let the line feel like music instead of announcing it.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">07</div>
+      <div class="rule-title">Use cultural references only when they serve</div>
+      <div class="rule-body">A reference to the Sunset Strip or Whisky a Go Go can work. A random celebrity mention usually weakens the copy. Status is suggested, never chased.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">08</div>
+      <div class="rule-title">Be direct when details matter</div>
+      <div class="rule-body">For menus, events, renovation notices, hours, pricing, booking rules, and package terms, clarity comes first. Spin is never the right move. Neither is vague assurance.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">09</div>
+      <div class="rule-title">Be atmospheric when selling the feeling</div>
+      <div class="rule-body">Atmosphere belongs in campaign lines, hero copy, email intros, and seasonal banners. It must be grounded in actual property details. Write what the guest will see, hear, feel, or do.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">10</div>
+      <div class="rule-title">Make offers feel elevated by making them clean</div>
+      <div class="rule-body">Lead with the experience. Then reveal the mechanics. Do not lead with the package name or the discount. The inclusions feel valuable when they are named clearly.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">11</div>
+      <div class="rule-title">Write about quality without saying luxury</div>
+      <div class="rule-body">The word luxury is banned for new brand copy. Use private, polished, spacious, residential, well-appointed, or quietly elegant depending on what is actually true about the space.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">12</div>
+      <div class="rule-title">Do not sell against alternatives</div>
+      <div class="rule-body">Sunset Marquis does not need the contrast structure that insults the alternative. Simply state the advantage. The city is close. The gardens are closer.</div>
+    </div>
+  </div>
+
+  <!-- PUNCTUATION RULES -->
+  <div class="section-eyebrow" style="margin-top: 48px; margin-bottom: 24px;">Punctuation rules — hard limits for guest-facing copy</div>
+  <div class="punct-grid">
+    <div class="punct-card">
+      <div class="punct-symbol banned-sym">—</div>
+      <div class="punct-body">
+        <div class="punct-verdict banned-v">Never use em dashes</div>
+        <div class="punct-desc">Rewrite the sentence instead. Em dashes in brand copy read as AI-assembled or brochure-formatted. Use a sentence break.</div>
+      </div>
+    </div>
+    <div class="punct-card">
+      <div class="punct-symbol banned-sym">;</div>
+      <div class="punct-body">
+        <div class="punct-verdict banned-v">Never use semicolons</div>
+        <div class="punct-desc">Semicolons belong in formal writing, not brand copy. Split into two sentences. The rhythm will improve.</div>
+      </div>
+    </div>
+    <div class="punct-card">
+      <div class="punct-symbol banned-sym">!</div>
+      <div class="punct-body">
+        <div class="punct-verdict banned-v">Avoid exclamation points</div>
+        <div class="punct-desc">Only in rare intentionally casual social captions. Never in web, email, or paid copy. The brand does not need to exclaim.</div>
+      </div>
+    </div>
+    <div class="punct-card">
+      <div class="punct-symbol ok-sym">.</div>
+      <div class="punct-body">
+        <div class="punct-verdict ok-v">Sentence breaks are the tool</div>
+        <div class="punct-desc">Short declarative sentences create rhythm. The pool is heated. The gardens are awake. Spring knows where to check in.</div>
+      </div>
+    </div>
+    <div class="punct-card">
+      <div class="punct-symbol ok-sym">:</div>
+      <div class="punct-body">
+        <div class="punct-verdict ok-v">Colons only when functional</div>
+        <div class="punct-desc">Event details, times, menus, labels, technical formatting. Not as a decorative transition in campaign lines or headlines.</div>
+      </div>
+    </div>
+    <div class="punct-card">
+      <div class="punct-symbol banned-sym">…</div>
+      <div class="punct-body">
+        <div class="punct-verdict banned-v">Avoid ellipses</div>
+        <div class="punct-desc">Ellipses create a trailing-off effect that conflicts with the brand's confident, declarative voice. Use only when quoting or matching an existing approved campaign.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTION HIERARCHY -->
+<section class="section" id="hierarchy">
+  <div class="section-eyebrow">10 — Instruction Order</div>
+  <div class="section-title">What wins when instructions conflict.</div>
+  <p class="section-intro">When requirements pull in different directions, follow this hierarchy. Never sacrifice accuracy, clarity, or trust for a better-sounding line.</p>
+
+  <div class="hierarchy-stack">
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">1</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">Legal, compliance, accessibility, pricing, safety, factual accuracy</div>
+        <div class="hierarchy-desc">These are absolute. No override. No exception.</div>
+      </div>
+    </div>
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">2</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">Current internal operations brief or client-supplied document</div>
+        <div class="hierarchy-desc">If the client has supplied a brief, it overrides general guidance from this document.</div>
+      </div>
+    </div>
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">3</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">Current approved offer, menu, event, or renovation brief</div>
+        <div class="hierarchy-desc">Specific operational facts from a confirmed source always beat general tone guidance.</div>
+      </div>
+    </div>
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">4</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">Recently approved final project copy</div>
+        <div class="hierarchy-desc">Already-approved copy from the same engagement is a reliable voice reference.</div>
+      </div>
+    </div>
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">5</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">Current public SunsetMarquis.com page for factual detail</div>
+        <div class="hierarchy-desc">The live site is a factual reference. Treat it as such. Do not copy old phrasing from it into new brand work.</div>
+      </div>
+    </div>
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">6</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">This tone guide for voice, channel behavior, and revision standards</div>
+        <div class="hierarchy-desc">The authoritative style and voice reference. Use it before drafting and again during critique.</div>
+      </div>
+    </div>
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">7</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">SEO and metadata requirements</div>
+        <div class="hierarchy-desc">SEO should support the voice, not override it. If a keyword conflicts with brand standards, raise the issue. Do not stuff.</div>
+      </div>
+    </div>
+    <div class="hierarchy-item">
+      <div class="hierarchy-rank">8</div>
+      <div class="hierarchy-body">
+        <div class="hierarchy-title">Cleverness, atmosphere, and line craft</div>
+        <div class="hierarchy-desc">These are the reward for getting everything above right. They are last, not least.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FACT RULES -->
+  <div style="background: #FBF5F2; border: 1px solid rgba(176,68,47,0.25); padding: 36px; margin-top: 16px;">
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #C0392B; margin-bottom: 16px;">Master Fact Rule — Established</div>
+    <div style="font-family: var(--serif); font-size: 17px; color: var(--text-primary); margin-bottom: 20px; line-height: 1.5;">Never invent hotel details. Use only approved facts, uploaded source documents, current public property pages, or explicitly provided information. If a fact is missing, write around it or mark it as <em>Needs confirmation.</em></div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 12px; color: var(--text-muted);">
+      <div>
+        <div style="color: var(--text-secondary); font-weight: 500; margin-bottom: 8px;">Never invent</div>
+        <div style="line-height: 1.8;">Amenities · Room features · Square footage · Views · Distances · Restaurant hours · Spa services · Pool status · Pet policies · Resort fees</div>
+      </div>
+      <div>
+        <div style="color: var(--text-secondary); font-weight: 500; margin-bottom: 8px;">Never invent</div>
+        <div style="line-height: 1.8;">Awards · Historical claims · Celebrity associations · Renovation timelines · Transportation times · Walking distances · Family-friendly specifics</div>
+      </div>
+      <div>
+        <div style="color: var(--text-secondary); font-weight: 500; margin-bottom: 8px;">Always confirm before publishing</div>
+        <div style="line-height: 1.8;">Renovation status and dates · BAR 1200 hours and music schedule · Restaurant menus and prices · Current spa operating format · Package inclusions and terms</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL TEST -->
+<div class="final-test">
+  <div class="section-eyebrow" style="text-align: center; margin-bottom: 20px;">The Simplest Test</div>
+  <div class="final-test-q">Would this make someone who has stayed at the Sunset Marquis for twenty years feel like the place still knows itself?</div>
+  <div class="final-test-a">
+    <div class="final-btn">Yes → Keep going</div>
+    <div class="final-btn no">No → Rewrite</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="final-rule">
+  AI may draft, organize, critique, and revise.<br>Humans approve.
+</div>
+<footer class="footer">
+  <div>
+    <div class="footer-wordmark">Sunset Marquis</div>
+    <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">1200 Alta Loma Road, West Hollywood, California</div>
+  </div>
+  <div class="footer-meta">
+    Voice &amp; Tone Reference · Superpowered Merge<br>
+    Version June 8, 2026 · Built by Agency689<br>
+    Produced from SMTONE.md
+  </div>
+</footer>
+
+</body>
+</html>

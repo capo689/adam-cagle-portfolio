@@ -272,7 +272,8 @@ html.cdwlb-lock { overflow: hidden; }
 .cdwlb__next { right: clamp(6px, 1.6vw, 26px); }
 
 /* ── SPA: clear the brain docked on the left ──────────────────────────── */
-.app.side-right .page__content .cdw { margin-left: clamp(180px, 25vw, 340px); }
+.app.side-right .page__content .cdw,
+.app.side-right .page__content .cd-manifesto { margin-left: clamp(180px, 25vw, 340px); }
 
 /* ── motion off ───────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -290,7 +291,8 @@ html.cdwlb-lock { overflow: hidden; }
   .cdw__tile { scroll-snap-align: center; }
   .cdw:hover .cdw__tile { opacity: 1; }
   .cdw__name { opacity: 1; transform: none; }   /* names always visible when tapping is the only input */
-  .app.side-right .page__content .cdw { margin-left: 0; }
+  .app.side-right .page__content .cdw,
+  .app.side-right .page__content .cd-manifesto { margin-left: 0; }
 }
 
 /* ── logo cards woven into the reel (decorative brand punctuation) ─────── */

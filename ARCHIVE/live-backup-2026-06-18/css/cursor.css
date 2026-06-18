@@ -1,0 +1,78 @@
+/* cursor.css — precise reticle cursor (desktop, fine-pointer only).
+   A thin crosshair tracking the pointer exactly, snapping to a corner-bracket
+   target with a label over clickables. On-brand blue, legible on cream and slate. */
+
+@media (pointer: fine) {
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+}
+
+.cur {
+  position: fixed; top: 0; left: 0; z-index: 100000; pointer-events: none;
+  will-change: transform; color: var(--cur, #4D8BE8);
+  filter: drop-shadow(0 0 1px rgba(0,0,0,.4));
+}
+.cur.hide { opacity: 0; }
+
+/* inner wrapper carries the morph (scale/press); position stays on .cur, so tracking is exact */
+.cur-in { position: absolute; top: 0; left: 0; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+
+/* crosshair ticks + center dot, with a clean center gap */
+.cur i { position: absolute; background: currentColor; }
+.cur-t, .cur-b { width: 1.5px; left: -.75px; height: 5px; }
+.cur-l, .cur-r { height: 1.5px; top: -.75px; width: 5px; }
+.cur-t { top: -11px; } .cur-b { top: 6px; }
+.cur-l { left: -11px; } .cur-r { left: 6px; }
+.cur-d { width: 2.5px; height: 2.5px; left: -1.25px; top: -1.25px; border-radius: 50%; }
+.cur-t, .cur-b, .cur-l, .cur-r, .cur-d {
+  transition: opacity .16s ease, transform .22s cubic-bezier(.2,.8,.2,1);
+}
+
+/* corner-bracket target, hidden until a "view" class of hover */
+.cur-fr {
+  position: absolute; left: 0; top: 0; opacity: 0; transform: scale(.55);
+  transition: opacity .22s ease, transform .26s cubic-bezier(.2,.8,.2,1);
+}
+.cur-fr i { width: 11px; height: 11px; background: none; border: 1.5px solid currentColor; }
+.cur-fr i:nth-child(1) { left: -26px; top: -26px; border-right: 0; border-bottom: 0; }
+.cur-fr i:nth-child(2) { left: 15px;  top: -26px; border-left: 0;  border-bottom: 0; }
+.cur-fr i:nth-child(3) { left: -26px; top: 15px;  border-right: 0; border-top: 0; }
+.cur-fr i:nth-child(4) { left: 15px;  top: 15px;  border-left: 0;  border-top: 0; }
+
+/* label */
+.cur-lb {
+  position: absolute; left: 0; top: 30px; transform: translateX(-50%); white-space: nowrap;
+  font: 600 10px/1 "IBM Plex Mono", monospace; letter-spacing: .16em; text-transform: uppercase;
+  color: currentColor; opacity: 0; transition: opacity .2s ease;
+}
+
+/* plain link/button: reticle tightens a touch (focused, precise) */
+.cur.on[data-state="link"] .cur-in { transform: scale(1.4); }
+
+/* view / email / external: ticks fade, target brackets bloom in, label shows */
+.cur.on[data-state="view"]  .cur-t, .cur.on[data-state="view"]  .cur-b,
+.cur.on[data-state="view"]  .cur-l, .cur.on[data-state="view"]  .cur-r,
+.cur.on[data-state="email"] .cur-t, .cur.on[data-state="email"] .cur-b,
+.cur.on[data-state="email"] .cur-l, .cur.on[data-state="email"] .cur-r,
+.cur.on[data-state="ext"]   .cur-t, .cur.on[data-state="ext"]   .cur-b,
+.cur.on[data-state="ext"]   .cur-l, .cur.on[data-state="ext"]   .cur-r { opacity: 0; }
+
+.cur.on[data-state="view"]  .cur-fr,
+.cur.on[data-state="email"] .cur-fr,
+.cur.on[data-state="ext"]   .cur-fr { opacity: 1; transform: none; }
+
+.cur.on[data-state="view"]  .cur-lb,
+.cur.on[data-state="email"] .cur-lb,
+.cur.on[data-state="ext"]   .cur-lb { opacity: 1; }
+
+/* press feedback */
+.cur.press .cur-in { transform: scale(.78); }
+.cur.on[data-state="link"].press .cur-in { transform: scale(1.18); }
+
+/* per-theme tint */
+body.theme-tech { --cur: #4D8BE8; }
+body.interior--right, body.resume-open { --cur: #4D8BE8; }
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .cur { display: none !important; }
+  html.has-cursor, html.has-cursor * { cursor: auto !important; }
+}

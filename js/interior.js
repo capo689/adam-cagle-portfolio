@@ -35,8 +35,8 @@ function initBrain(wrap) {
   const loader = new THREE.TextureLoader();
   let n = 0;
   const ready = () => { if (++n === 2) { wrap.classList.add("is-ready"); if (fallback) fallback.style.opacity = "0"; } };
-  const offTex = loader.load("img/brain/brain-off.png", ready);
-  const onTex  = loader.load("img/brain/brain-on.png", ready);
+  const offTex = loader.load("img/brain/brain-off.webp", ready);
+  const onTex  = loader.load("img/brain/brain-on.webp", ready);
   [offTex, onTex].forEach((t) => { t.colorSpace = THREE.SRGBColorSpace; t.minFilter = THREE.LinearFilter; });
 
   // locked, ALREADY lit (no bloom): one hemisphere painted from frame 1

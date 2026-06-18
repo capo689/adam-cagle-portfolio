@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gummy Fighter</title>
+<meta name="description" content="Gummy Fighter is a keyboard-playable one-on-one gummy bear fighting game by Adam Cagle.">
+<link rel="icon" type="image/png" href="/img/cross.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800;900&family=Geist+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #241624;
+    --cream: #fff5da;
+    --pink: #ff4fb8;
+    --red: #ff345f;
+    --orange: #ff9b2f;
+    --yellow: #ffe45f;
+    --green: #34e489;
+    --blue: #43b6ff;
+    --purple: #8758ff;
+    --rule: rgba(36,22,36,.16);
+    --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+    --sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: #160f24; color: var(--cream); font-family: var(--sans); overflow-x: hidden; }
+  body {
+    background:
+      radial-gradient(circle at 15% 12%, rgba(255,79,184,.35), transparent 24vw),
+      radial-gradient(circle at 84% 18%, rgba(67,182,255,.34), transparent 28vw),
+      radial-gradient(circle at 48% 88%, rgba(52,228,137,.22), transparent 34vw),
+      linear-gradient(135deg, #170c24 0%, #2b1642 48%, #130e25 100%);
+  }
+
+  button { font-family: inherit; color: inherit; cursor: pointer; }
+  .game-shell { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; padding: 18px; gap: 14px; }
+
+  .topbar {
+    display: grid; grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
+    align-items: center; gap: 14px; max-width: 1440px; width: 100%; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+  .brand h1 {
+    margin: 0; font-size: clamp(26px, 4.4vw, 58px); line-height: .85; letter-spacing: 0;
+    font-weight: 900; text-transform: uppercase; text-shadow: 0 5px 0 rgba(0,0,0,.24);
+  }
+  .brand span { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,245,218,.7); white-space: nowrap; }
+  .ladder { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+  .ladder-dot {
+    width: 24px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.18); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+  }
+  .ladder-dot.done { background: var(--green); border-color: rgba(52,228,137,.8); box-shadow: 0 0 16px rgba(52,228,137,.5); }
+  .ladder-dot.current { background: var(--yellow); border-color: var(--yellow); box-shadow: 0 0 18px rgba(255,228,95,.55); }
+  .match-readout {
+    text-align: right; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,245,218,.78); min-width: 0;
+  }
+  .match-readout strong { color: var(--yellow); }
+
+  .arena-wrap { width: min(1440px, 100%); margin: 0 auto; display: grid; grid-template-columns: 1fr 280px; gap: 14px; min-height: 0; }
+  .arena {
+    position: relative; min-height: 580px; height: min(68vh, 720px); overflow: hidden;
+    border: 3px solid rgba(255,245,218,.84); border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.18) 0 1px, transparent 1px 100%),
+      radial-gradient(circle at 20% 28%, rgba(255,255,255,.28), transparent 22%),
+      radial-gradient(circle at 78% 24%, rgba(255,228,95,.24), transparent 23%),
+      linear-gradient(180deg, #ff7cc7 0%, #8b65ff 47%, #39276f 48%, #21163f 100%);
+    box-shadow: 0 24px 80px rgba(0,0,0,.38), inset 0 0 0 1px rgba(255,255,255,.22);
+    isolation: isolate;
+  }
+  .arena::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(90deg, rgba(255,255,255,.11) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,.09) 1px, transparent 1px);
+    background-size: 54px 54px; opacity: .45; transform: perspective(500px) rotateX(55deg) translateY(120px) scale(1.5);
+    transform-origin: bottom;
+  }
+  .arena::after {
+    content: ""; position: absolute; left: -5%; right: -5%; bottom: -2px; height: 31%;
+    background:
+      radial-gradient(ellipse at center top, rgba(255,255,255,.28), transparent 46%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 2px, transparent 2px 78px),
+      linear-gradient(180deg, #57e7a5, #22a46c 56%, #14764e);
+    border-top: 3px solid rgba(255,245,218,.72);
+  }
+
+  .hud {
+    position: absolute; inset: 14px 16px auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 14px;
+    z-index: 20; pointer-events: none;
+  }
+  .fighter-hud { display: grid; gap: 6px; }
+  .fighter-hud.right { text-align: right; }
+  .hud-name { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.24); }
+  .hp-frame { height: 24px; background: rgba(29,15,40,.86); border: 2px solid rgba(255,245,218,.9); padding: 3px; border-radius: 999px; overflow: hidden; }
+  .hp-bar { height: 100%; width: 100%; border-radius: 999px; background: linear-gradient(90deg, #46f28d, #ffe45f 60%, #ff345f); transition: width .15s linear; }
+  .fighter-hud.right .hp-bar { margin-left: auto; }
+  .round-pips { display: flex; gap: 5px; }
+  .fighter-hud.right .round-pips { justify-content: flex-end; }
+  .pip { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,245,218,.82); background: rgba(255,255,255,.1); }
+  .pip.on { background: var(--yellow); box-shadow: 0 0 14px rgba(255,228,95,.75); }
+  .clock {
+    min-width: 78px; padding: 8px 12px 9px; text-align: center; border: 2px solid rgba(255,245,218,.92); border-radius: 6px;
+    background: rgba(29,15,40,.88); font-family: var(--mono); font-weight: 700; font-size: 24px; line-height: 1; color: var(--yellow);
+  }
+
+  .fighter {
+    position: absolute; bottom: 114px; width: 148px; height: 208px; z-index: 8;
+    transform-origin: 50% 100%; will-change: transform, filter;
+    --img-y: 0px;
+    --img-rot: 0deg;
+    --img-sx: 1;
+    --img-sy: 1;
+    --img-shove: 0px;
+  }
+  .fighter img {
+    position: absolute; left: 50%; bottom: 0; width: auto; height: 208px;
+    transform:
+      translateX(calc(-50% + var(--img-shove)))
+      translateY(var(--img-y))
+      rotate(var(--img-rot))
+      scale(var(--img-sx), var(--img-sy));
+    transform-origin: 50% 92%;
+    filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) saturate(1.18) contrast(1.04);
+    user-select: none; -webkit-user-drag: none; pointer-events: none;
+    transition: filter .08s linear;
+  }
+  .fighter::after {
+    content: ""; position: absolute; left: 50%; bottom: -10px; width: 130px; height: 24px; transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(0,0,0,.34), transparent 65%); z-index: -1;
+    transition: width .08s, opacity .08s;
+  }
+  .fighter.walking::after { width: 150px; opacity: .82; }
+  .fighter.landing::after { width: 168px; opacity: .9; }
+  .fighter.blocking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 15px rgba(67,182,255,.85)); }
+  .fighter.hit img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 18px rgba(255,52,95,.95)) brightness(1.28); }
+  .fighter.attacking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 14px rgba(255,228,95,.7)) saturate(1.28); }
+  .fighter.striking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 20px rgba(255,228,95,.9)) saturate(1.42) contrast(1.08); }
+  .fighter.special img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 24px rgba(255,79,184,.9)) saturate(1.45) brightness(1.08); }
+  .fighter.jump img { filter: drop-shadow(0 28px 10px rgba(0,0,0,.22)) saturate(1.2); }
+  .fighter.recovering img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) saturate(1.18) contrast(1.04) brightness(.96); }
+
+  .fx, .projectile, .float-word, .weapon-hit, .swish, .dust, .gummy-drop, .motion-ghost { position: absolute; pointer-events: none; z-index: 12; }
+  .projectile {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 28%, #fff, var(--yellow) 35%, var(--pink) 72%);
+    box-shadow: 0 0 20px rgba(255,79,184,.8), inset 0 -5px 0 rgba(0,0,0,.12);
+    animation: projectileSpin .32s linear infinite, projectileWobble .48s ease-in-out infinite alternate;
+  }
+  @keyframes projectileSpin { to { rotate: 360deg; } }
+  @keyframes projectileWobble { from { scale: .9 1.08; } to { scale: 1.1 .92; } }
+  .weapon-hit {
+    width: 90px; height: 90px; border-radius: 50%;
+    border: 5px solid currentColor; color: var(--yellow); opacity: .8; transform: translate(-50%, -50%) scale(.2);
+    animation: hitRing .26s ease-out forwards;
+  }
+  @keyframes hitRing { to { opacity: 0; transform: translate(-50%, -50%) scale(1.25); } }
+  .swish {
+    width: 138px; height: 86px; border-radius: 50%;
+    border-top: 9px solid currentColor; border-right: 5px solid currentColor;
+    border-left: 8px solid transparent; border-bottom: 8px solid transparent;
+    opacity: .9; filter: drop-shadow(0 0 14px currentColor);
+    transform: translate(-50%, -50%) rotate(var(--swish-rot, 0deg)) scaleX(var(--swish-dir, 1));
+    animation: swishArc .24s cubic-bezier(.2,.9,.2,1) forwards;
+  }
+  @keyframes swishArc {
+    from { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--swish-rot, 0deg) - 30deg)) scale(.45) scaleX(var(--swish-dir, 1)); }
+    45% { opacity: 1; }
+    to { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--swish-rot, 0deg) + 22deg)) scale(1.18) scaleX(var(--swish-dir, 1)); }
+  }
+  .dust {
+    width: 34px; height: 14px; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255,245,218,.9), rgba(255,245,218,0) 70%);
+    transform: translate(-50%, -50%) scale(.25);
+    animation: dustPuff .5s ease-out forwards;
+    z-index: 7;
+  }
+  @keyframes dustPuff {
+    to { opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), -50%) scale(1.7 .8); }
+  }
+  .gummy-drop {
+    width: 12px; height: 12px; border-radius: 50% 50% 45% 55%;
+    background: radial-gradient(circle at 32% 24%, #fff, currentColor 38%, rgba(0,0,0,.16));
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.12);
+    transform: translate(-50%, -50%);
+    animation: gummyPop .48s ease-out forwards;
+  }
+  @keyframes gummyPop {
+    to { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.35); }
+  }
+  .motion-ghost {
+    width: var(--ghost-w, 90px); height: var(--ghost-h, 150px); opacity: .34;
+    background: var(--ghost-src) center bottom / contain no-repeat;
+    filter: brightness(1.8) saturate(1.35) drop-shadow(0 0 14px currentColor);
+    transform: translate(-50%, -100%) scaleX(var(--ghost-dir, 1)) rotate(var(--ghost-rot, 0deg));
+    animation: ghostFade .18s ease-out forwards;
+    z-index: 6;
+  }
+  @keyframes ghostFade {
+    to { opacity: 0; transform: translate(calc(-50% + var(--ghost-dx, 0px)), -100%) scaleX(var(--ghost-dir, 1)) rotate(var(--ghost-rot, 0deg)); }
+  }
+  .float-word {
+    font-family: var(--mono); font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35); animation: floatWord .85s ease-out forwards;
+  }
+  @keyframes floatWord { to { opacity: 0; transform: translateY(-44px); } }
+
+  .banner {
+    position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%);
+    z-index: 30; min-width: min(540px, 84%); text-align: center; padding: 20px 22px;
+    border: 3px solid rgba(255,245,218,.95); border-radius: 8px; background: rgba(36,22,36,.88);
+    box-shadow: 0 20px 60px rgba(0,0,0,.45); display: none;
+  }
+  .banner.show { display: block; }
+  .banner .big { font-weight: 900; font-size: clamp(38px, 7vw, 84px); line-height: .85; text-transform: uppercase; text-shadow: 0 6px 0 rgba(0,0,0,.28); }
+  .banner .small { margin-top: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,245,218,.78); }
+
+  .panel {
+    border: 3px solid rgba(255,245,218,.84); border-radius: 8px; background: rgba(255,245,218,.96); color: var(--ink);
+    min-height: 580px; height: min(68vh, 720px); overflow: hidden; display: grid; grid-template-rows: auto 1fr auto;
+  }
+  .panel-head { padding: 16px 16px 14px; border-bottom: 2px solid var(--rule); }
+  .panel-kicker { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgba(36,22,36,.58); }
+  .panel-title { margin: 4px 0 0; font-size: 25px; line-height: .95; font-weight: 900; text-transform: uppercase; letter-spacing: 0; }
+  .roster {
+    overflow: auto; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: start;
+  }
+  .bear-card {
+    min-height: 124px; border: 2px solid rgba(36,22,36,.15); border-radius: 7px; background: #fff;
+    padding: 8px; display: grid; grid-template-rows: 78px auto; gap: 5px; align-items: center; transition: transform .15s, border-color .15s, box-shadow .15s;
+  }
+  .bear-card:hover, .bear-card.selected {
+    transform: translateY(-2px); border-color: var(--pink); box-shadow: 0 8px 20px rgba(255,79,184,.22);
+  }
+  .bear-card img { max-height: 78px; max-width: 92px; justify-self: center; filter: drop-shadow(0 5px 4px rgba(0,0,0,.16)); }
+  .bear-card span { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: .08em; line-height: 1.2; text-transform: uppercase; color: rgba(36,22,36,.72); }
+  .bear-card strong { display: block; font-size: 12px; line-height: 1.05; text-transform: uppercase; }
+  .panel-foot { border-top: 2px solid var(--rule); padding: 12px; display: grid; gap: 8px; }
+  .start-btn, .utility-btn {
+    border: 0; border-radius: 6px; padding: 13px 12px; font-weight: 900; font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+    background: var(--pink); color: #fff; box-shadow: 0 5px 0 #b51a72; transition: transform .15s;
+  }
+  .start-btn:hover, .utility-btn:hover { transform: translateY(-1px); }
+  .utility-btn { background: #241624; box-shadow: 0 5px 0 #070407; }
+  .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .key {
+    border: 1px solid rgba(36,22,36,.18); border-radius: 5px; padding: 7px 5px; text-align: center;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: rgba(36,22,36,.72); background: rgba(36,22,36,.05);
+  }
+  .key b { display: block; font-size: 13px; color: var(--ink); }
+
+  .mobile-note { display: none; width: min(1440px, 100%); margin: 0 auto; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,245,218,.68); }
+
+  @media (max-width: 1040px) {
+    .game-shell { padding: 12px; }
+    .topbar { grid-template-columns: 1fr; gap: 10px; }
+    .match-readout { text-align: left; }
+    .arena-wrap { grid-template-columns: 1fr; }
+    .panel { height: auto; min-height: 0; }
+    .roster { grid-template-columns: repeat(4, 1fr); max-height: 300px; }
+    .mobile-note { display: block; }
+  }
+  @media (max-width: 680px) {
+    .arena { min-height: 500px; }
+    .fighter { width: 110px; height: 160px; bottom: 98px; }
+    .fighter img { height: 160px; }
+    .hud { grid-template-columns: 1fr 62px 1fr; gap: 6px; inset: 10px; }
+    .clock { min-width: 62px; font-size: 18px; padding: 8px; }
+    .hp-frame { height: 19px; }
+    .hud-name { font-size: 9px; }
+    .roster { grid-template-columns: 1fr 1fr; }
+    .brand { align-items: flex-start; flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<main class="game-shell">
+  <header class="topbar">
+    <div class="brand">
+      <h1>Gummy Fighter</h1>
+      <span>Best of 3 · Beat every bear</span>
+    </div>
+    <div class="ladder" id="ladder"></div>
+    <div class="match-readout" id="matchReadout">Choose your <strong>fighter</strong></div>
+  </header>
+
+  <section class="arena-wrap">
+    <div class="arena" id="arena" aria-label="Gummy Fighter arena">
+      <div class="hud">
+        <div class="fighter-hud">
+          <div class="hud-name" id="pName">Player</div>
+          <div class="hp-frame"><div class="hp-bar" id="pHp"></div></div>
+          <div class="round-pips"><span class="pip" id="pPip1"></span><span class="pip" id="pPip2"></span></div>
+        </div>
+        <div class="clock" id="clock">75</div>
+        <div class="fighter-hud right">
+          <div class="hud-name" id="cName">CPU</div>
+          <div class="hp-frame"><div class="hp-bar" id="cHp"></div></div>
+          <div class="round-pips"><span class="pip" id="cPip1"></span><span class="pip" id="cPip2"></span></div>
+        </div>
+      </div>
+      <div class="fighter" id="player"><img alt=""></div>
+      <div class="fighter" id="cpu"><img alt=""></div>
+      <div class="banner show" id="banner">
+        <div class="big" id="bannerBig">Choose Bear</div>
+        <div class="small" id="bannerSmall">Gummy supremacy awaits</div>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <div class="panel-head">
+        <div class="panel-kicker">Roster</div>
+        <h2 class="panel-title" id="panelTitle">Pick Your Bear</h2>
+      </div>
+      <div class="roster" id="roster"></div>
+      <div class="panel-foot">
+        <button class="start-btn" id="startBtn">Start Fight</button>
+        <button class="utility-btn" id="resetBtn">Reset Ladder</button>
+        <div class="keys" aria-label="Keyboard controls">
+          <div class="key"><b>A/D</b>Move</div>
+          <div class="key"><b>W</b>Jump</div>
+          <div class="key"><b>S</b>Block</div>
+          <div class="key"><b>J</b>Jab</div>
+          <div class="key"><b>K</b>Weapon</div>
+          <div class="key"><b>L</b>Special</div>
+        </div>
+      </div>
+    </aside>
+  </section>
+  <div class="mobile-note">Keyboard required. Desktop or hardware keyboard recommended.</div>
+</main>
+
+<script>
+(() => {
+  const roster = [
+    { id: 1, name: "Cherry Striker", weapon: "Licorice whip", img: "/img/cd/bears/bear1.png", color: "#ff345f", speed: 1.08, power: .94, special: "Gummy Snap" },
+    { id: 2, name: "Blue Razz", weapon: "Rock candy blade", img: "/img/cd/bears/bear2.png", color: "#43b6ff", speed: .98, power: 1.05, special: "Sugar Shard" },
+    { id: 3, name: "Lime Bruiser", weapon: "Sour baton", img: "/img/cd/bears/bear3.png", color: "#34e489", speed: 1.0, power: 1.02, special: "Acid Pop" },
+    { id: 4, name: "Mango Mauler", weapon: "Taffy hammer", img: "/img/cd/bears/bear4.png", color: "#ff9b2f", speed: .86, power: 1.2, special: "Molten Bonk" },
+    { id: 5, name: "Grape Grappler", weapon: "Jelly nunchaku", img: "/img/cd/bears/bear5.png", color: "#8758ff", speed: .92, power: 1.13, special: "Grape Crush" },
+    { id: 6, name: "Cola Crusher", weapon: "Fizz cannon", img: "/img/cd/bears/bear6.png", color: "#d86437", speed: .9, power: 1.16, special: "Soda Burst" },
+    { id: 7, name: "Pineapple Punk", weapon: "Candy cane hook", img: "/img/cd/bears/bear7.png", color: "#ffe45f", speed: 1.14, power: .88, special: "Tang Rush" },
+    { id: 8, name: "Bubblegum Ghost", weapon: "Bubble shield", img: "/img/cd/bears/bear8.png", color: "#ff8fd8", speed: 1.05, power: .96, special: "Pop Guard" },
+    { id: 9, name: "Mint Ninja", weapon: "Sugar stars", img: "/img/cd/bears/bear9.png", color: "#98ffe0", speed: 1.2, power: .84, special: "Mint Mirage" },
+    { id: 10, name: "Peach Tank", weapon: "Jumbo lollipop", img: "/img/cd/bears/bear10.png", color: "#ffb36c", speed: .8, power: 1.28, special: "Lolliquake" },
+    { id: 11, name: "Black Cherry Boss", weapon: "Gummy glaive", img: "/img/cd/bears/bear11.png", color: "#c72cff", speed: .95, power: 1.22, special: "Royal Gel" }
+  ];
+  const artVersion = "gf1";
+  const bearSrc = path => `${path}?v=${artVersion}`;
+
+  const arena = document.getElementById("arena");
+  const playerEl = document.getElementById("player");
+  const cpuEl = document.getElementById("cpu");
+  const pImg = playerEl.querySelector("img");
+  const cImg = cpuEl.querySelector("img");
+  const rosterEl = document.getElementById("roster");
+  const startBtn = document.getElementById("startBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const banner = document.getElementById("banner");
+  const bannerBig = document.getElementById("bannerBig");
+  const bannerSmall = document.getElementById("bannerSmall");
+  const ladderEl = document.getElementById("ladder");
+  const panelTitle = document.getElementById("panelTitle");
+  const matchReadout = document.getElementById("matchReadout");
+  const pName = document.getElementById("pName");
+  const cName = document.getElementById("cName");
+  const pHp = document.getElementById("pHp");
+  const cHp = document.getElementById("cHp");
+  const clock = document.getElementById("clock");
+  const pPips = [document.getElementById("pPip1"), document.getElementById("pPip2")];
+  const cPips = [document.getElementById("cPip1"), document.getElementById("cPip2")];
+
+  const keys = new Set();
+  const particles = [];
+  const projectiles = [];
+  let selected = 0;
+  let phase = "select";
+  let player;
+  let cpu;
+  let opponentOrder = [];
+  let opponentSlot = 0;
+  let pRounds = 0;
+  let cRounds = 0;
+  let timer = 75;
+  let last = performance.now();
+  let lastSecond = 0;
+  let roundPause = 0;
+  let arenaShake = 0;
+
+  function makeFighter(fighter, side) {
+    return {
+      def: fighter,
+      side,
+      x: side === "left" ? 210 : arena.clientWidth - 210,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      health: 100,
+      facing: side === "left" ? 1 : -1,
+      action: "idle",
+      actionT: 0,
+      actionTotal: 0,
+      attackKind: "",
+      hitResolved: true,
+      hitT: 0,
+      block: false,
+      grounded: true,
+      jabCd: 0,
+      heavyCd: 0,
+      specialCd: 0,
+      aiThink: 0,
+      aiMove: 0,
+      aiBlock: 0,
+      walkT: Math.random() * 10,
+      poseT: Math.random() * 10,
+      landT: 0,
+      dustCd: 0,
+      recoilT: 0,
+      ghostCd: 0,
+      moving: false,
+      prevGrounded: true
+    };
+  }
+
+  function showBanner(big, small, visible = true) {
+    bannerBig.textContent = big;
+    bannerSmall.textContent = small;
+    banner.classList.toggle("show", visible);
+  }
+
+  function renderRoster() {
+    rosterEl.innerHTML = "";
+    roster.forEach((bear, index) => {
+      const btn = document.createElement("button");
+      btn.className = "bear-card" + (index === selected ? " selected" : "");
+      btn.innerHTML = `<img src="${bearSrc(bear.img)}" alt="${bear.name}"><span>${bear.weapon}</span><strong>${bear.name}</strong>`;
+      btn.style.setProperty("--bear", bear.color);
+      btn.addEventListener("click", () => {
+        if (phase !== "fight" && phase !== "roundOver") {
+          selected = index;
+          renderRoster();
+          setPreview();
+        }
+      });
+      rosterEl.appendChild(btn);
+    });
+  }
+
+  function setPreview() {
+    const chosen = roster[selected];
+    const next = roster[(selected + 1) % roster.length];
+    pImg.src = bearSrc(chosen.img);
+    pImg.alt = chosen.name;
+    cImg.src = bearSrc(next.img);
+    cImg.alt = next.name;
+    pName.textContent = chosen.name;
+    cName.textContent = next.name;
+    player = makeFighter(chosen, "left");
+    cpu = makeFighter(next, "right");
+    updateTransforms();
+    showBanner("Choose Bear", `${chosen.name} fights with ${chosen.weapon}`, true);
+  }
+
+  function buildLadder() {
+    ladderEl.innerHTML = "";
+    opponentOrder.forEach((_, i) => {
+      const dot = document.createElement("span");
+      dot.className = "ladder-dot" + (i < opponentSlot ? " done" : i === opponentSlot ? " current" : "");
+      ladderEl.appendChild(dot);
+    });
+  }
+
+  function startTournament() {
+    phase = "intro";
+    opponentOrder = roster.map((_, i) => i).filter(i => i !== selected);
+    opponentSlot = 0;
+    buildLadder();
+    startMatch();
+  }
+
+  function startMatch() {
+    pRounds = 0;
+    cRounds = 0;
+    timer = 75;
+    startRound();
+  }
+
+  function startRound() {
+    const pDef = roster[selected];
+    const cDef = roster[opponentOrder[opponentSlot]];
+    player = makeFighter(pDef, "left");
+    cpu = makeFighter(cDef, "right");
+    pImg.src = bearSrc(pDef.img);
+    cImg.src = bearSrc(cDef.img);
+    pName.textContent = pDef.name;
+    cName.textContent = cDef.name;
+    timer = 75;
+    lastSecond = 0;
+    clearEffects();
+    phase = "fight";
+    roundPause = 0;
+    showBanner("Fight", `${pDef.weapon} vs ${cDef.weapon}`, true);
+    setTimeout(() => { if (phase === "fight") showBanner("", "", false); }, 850);
+    panelTitle.textContent = `${pDef.name}`;
+    matchReadout.innerHTML = `Opponent ${opponentSlot + 1}/${opponentOrder.length}: <strong>${cDef.name}</strong>`;
+    updateHud();
+    updateTransforms();
+  }
+
+  function clearEffects() {
+    projectiles.splice(0).forEach(p => p.el.remove());
+    particles.splice(0).forEach(p => p.el.remove());
+  }
+
+  function attack(attacker, defender, type) {
+    if (attacker.hitT > 0 || attacker.actionT > 0) return;
+    const isHeavy = type === "heavy";
+    if (isHeavy && attacker.heavyCd > 0) return;
+    if (!isHeavy && attacker.jabCd > 0) return;
+    attacker.action = isHeavy ? "attacking heavy" : "attacking";
+    attacker.actionTotal = isHeavy ? .42 : .24;
+    attacker.actionT = attacker.actionTotal;
+    attacker.attackKind = isHeavy ? "heavy" : "jab";
+    attacker.hitResolved = false;
+    attacker.vx += attacker.facing * (isHeavy ? 1.5 : .8);
+    if (isHeavy) attacker.heavyCd = .58; else attacker.jabCd = .28;
+  }
+
+  function special(attacker, defender) {
+    if (attacker.hitT > 0 || attacker.actionT > 0 || attacker.specialCd > 0) return;
+    attacker.action = "special";
+    attacker.actionTotal = .56;
+    attacker.actionT = attacker.actionTotal;
+    attacker.attackKind = "special";
+    attacker.specialCd = 2.8;
+    attacker.vx += attacker.facing * 1.1;
+    swish(attacker, true, true);
+    const s = attacker.def.special;
+    if (/Shard|Burst|stars|Snap/.test(s) || attacker.def.id === 1 || attacker.def.id === 2 || attacker.def.id === 6 || attacker.def.id === 9) {
+      spawnProjectile(attacker, 12 * attacker.def.power);
+    } else if (/Guard|Royal/.test(s)) {
+      attacker.health = Math.min(100, attacker.health + 9);
+      attacker.aiBlock = .45;
+      floatWord(attacker.x, groundY() - 160 - attacker.y, "GEL UP", attacker.def.color);
+      gummyDrops(attacker.x, groundY() - 130 - attacker.y, attacker.def.color, 7);
+    } else {
+      const dx = Math.abs(attacker.x - defender.x);
+      if (dx < 150) applyHit(defender, attacker, 17 * attacker.def.power, s.toUpperCase(), attacker.def.color);
+      else {
+        attacker.vx += attacker.facing * 8.5;
+        floatWord(attacker.x, groundY() - 170 - attacker.y, s.toUpperCase(), attacker.def.color);
+      }
+      ring(attacker.x + attacker.facing * 80, groundY() - 100 - attacker.y, attacker.def.color);
+    }
+  }
+
+  function spawnProjectile(attacker, damage) {
+    const el = document.createElement("div");
+    el.className = "projectile";
+    el.style.background = `radial-gradient(circle at 30% 28%, #fff, ${attacker.def.color} 38%, #ff4fb8 72%)`;
+    arena.appendChild(el);
+    projectiles.push({
+      el,
+      owner: attacker,
+      x: attacker.x + attacker.facing * 70,
+      y: groundY() - 132 - attacker.y,
+      vx: attacker.facing * 7.6,
+      damage,
+      life: 1.8
+    });
+  }
+
+  function applyHit(target, source, rawDamage, word, color) {
+    const blocked = target.block || target.aiBlock > 0;
+    const damage = blocked ? rawDamage * .28 : rawDamage;
+    target.health = Math.max(0, target.health - damage);
+    target.hitT = blocked ? .12 : .28;
+    target.recoilT = blocked ? .16 : .3;
+    target.attackKind = blocked ? "block-hit" : "hit";
+    target.vx += source.facing * (blocked ? 2.2 : 5.8);
+    arenaShake = Math.max(arenaShake, blocked ? .08 : .18);
+    ring(target.x, groundY() - 120 - target.y, color);
+    gummyDrops(target.x, groundY() - 112 - target.y, color, blocked ? 3 : 7);
+    floatWord(target.x, groundY() - 185 - target.y, blocked ? "BLOCK" : word, blocked ? "#43b6ff" : color);
+    if (target.health <= 0) endRound(source === player ? "player" : "cpu");
+  }
+
+  function endRound(winner) {
+    if (phase !== "fight") return;
+    phase = "roundOver";
+    if (winner === "player") pRounds++; else cRounds++;
+    updateHud();
+    const matchDone = pRounds >= 2 || cRounds >= 2;
+    if (matchDone) {
+      const playerWon = pRounds > cRounds;
+      showBanner(playerWon ? "Bear Down" : "Sticky Loss", playerWon ? `${cpu.def.name} defeated` : `${cpu.def.name} owns the jar`, true);
+      roundPause = 1.4;
+      setTimeout(() => finishMatch(playerWon), 1400);
+    } else {
+      showBanner(winner === "player" ? "Round Won" : "Round Lost", "Next round", true);
+      roundPause = 1.2;
+      setTimeout(startRound, 1200);
+    }
+  }
+
+  function finishMatch(playerWon) {
+    if (!playerWon) {
+      phase = "select";
+      showBanner("Game Over", "Choose a bear and run it back", true);
+      matchReadout.innerHTML = `Stopped by <strong>${cpu.def.name}</strong>`;
+      return;
+    }
+    opponentSlot++;
+    buildLadder();
+    if (opponentSlot >= opponentOrder.length) {
+      phase = "victory";
+      showBanner("Champion", `${player.def.name} rules the candy aisle`, true);
+      matchReadout.innerHTML = `<strong>Gummy Fighter champion</strong>`;
+      return;
+    }
+    startMatch();
+  }
+
+  function ring(x, y, color) {
+    const el = document.createElement("div");
+    el.className = "weapon-hit";
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.style.color = color;
+    arena.appendChild(el);
+    particles.push({ el, life: .3 });
+  }
+
+  function swish(f, heavy = false, specialMove = false) {
+    const el = document.createElement("div");
+    el.className = "swish";
+    el.style.left = `${f.x + f.facing * (heavy ? 70 : 54)}px`;
+    el.style.top = `${groundY() - (heavy ? 130 : 112) - f.y}px`;
+    el.style.color = f.def.color;
+    el.style.setProperty("--swish-dir", f.facing);
+    el.style.setProperty("--swish-rot", specialMove ? "-8deg" : heavy ? "8deg" : "18deg");
+    if (specialMove) {
+      el.style.width = "170px";
+      el.style.height = "104px";
+      el.style.borderTopWidth = "12px";
+    }
+    arena.appendChild(el);
+    particles.push({ el, life: specialMove ? .42 : .28 });
+  }
+
+  function motionGhost(f, rot = 0, dx = 0) {
+    const el = document.createElement("div");
+    el.className = "motion-ghost";
+    el.style.left = `${f.x - f.facing * 18}px`;
+    el.style.top = `${groundY() + 4 - f.y}px`;
+    el.style.color = f.def.color;
+    el.style.setProperty("--ghost-src", `url("${bearSrc(f.def.img)}")`);
+    el.style.setProperty("--ghost-dir", f.facing);
+    el.style.setProperty("--ghost-rot", `${rot}deg`);
+    el.style.setProperty("--ghost-dx", `${dx}px`);
+    el.style.setProperty("--ghost-w", `${f.side === "left" ? 118 : 118}px`);
+    el.style.setProperty("--ghost-h", `${f.grounded ? 184 : 204}px`);
+    arena.appendChild(el);
+    particles.push({ el, life: .2 });
+  }
+
+  function dust(x, y, color = "rgba(255,245,218,.9)", dx = 0) {
+    const el = document.createElement("div");
+    el.className = "dust";
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.style.background = `radial-gradient(ellipse, ${color}, rgba(255,245,218,0) 70%)`;
+    el.style.setProperty("--dx", `${dx}px`);
+    arena.appendChild(el);
+    particles.push({ el, life: .52 });
+  }
+
+  function gummyDrops(x, y, color, count) {
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement("div");
+      el.className = "gummy-drop";
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.style.color = color;
+      el.style.setProperty("--dx", `${(Math.random() - .5) * 120}px`);
+      el.style.setProperty("--dy", `${-20 - Math.random() * 80}px`);
+      arena.appendChild(el);
+      particles.push({ el, life: .52 });
+    }
+  }
+
+  function floatWord(x, y, text, color) {
+    const el = document.createElement("div");
+    el.className = "float-word";
+    el.textContent = text;
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.style.color = color;
+    arena.appendChild(el);
+    particles.push({ el, life: .9 });
+  }
+
+  function update(dt) {
+    if (phase === "fight") {
+      lastSecond += dt;
+      while (lastSecond >= 1) {
+        lastSecond -= 1;
+        timer = Math.max(0, timer - 1);
+        if (timer <= 0) endRound(player.health >= cpu.health ? "player" : "cpu");
+      }
+      updatePlayer(dt);
+      updateCpu(dt);
+      physics(player, dt);
+      physics(cpu, dt);
+      resolveActiveStrike(player, cpu);
+      resolveActiveStrike(cpu, player);
+      updateProjectiles(dt);
+      faceEachOther();
+      clampDistance();
+    }
+    updateArenaShake(dt);
+    updateTimers(player, dt);
+    updateTimers(cpu, dt);
+    updateParticles(dt);
+    updateHud();
+    updateTransforms();
+  }
+
+  function updatePlayer(dt) {
+    player.block = keys.has("s") && player.grounded && player.actionT <= 0;
+    if (player.hitT > 0 || player.block) return;
+    const move = (keys.has("d") ? 1 : 0) - (keys.has("a") ? 1 : 0);
+    player.vx += move * 1.85 * player.def.speed;
+    if (keys.has("w") && player.grounded) {
+      player.vy = 13.6;
+      player.grounded = false;
+      player.landT = 0;
+      dust(player.x - player.facing * 22, groundY() + 4, "rgba(255,245,218,.82)", -player.facing * 18);
+    }
+    if (keys.has("j")) attack(player, cpu, "jab");
+    if (keys.has("k")) attack(player, cpu, "heavy");
+    if (keys.has("l")) special(player, cpu);
+  }
+
+  function updateCpu(dt) {
+    cpu.aiThink -= dt;
+    if (cpu.aiThink <= 0) {
+      const dx = player.x - cpu.x;
+      const abs = Math.abs(dx);
+      cpu.aiMove = abs > 145 ? Math.sign(dx) : abs < 86 ? -Math.sign(dx) : 0;
+      cpu.aiBlock = Math.random() < .16 ? .38 : Math.max(0, cpu.aiBlock);
+      if (abs < 105 && Math.random() < .52) attack(cpu, player, Math.random() < .42 ? "heavy" : "jab");
+      if (abs < 220 && Math.random() < .24) special(cpu, player);
+      if (Math.random() < .08 && cpu.grounded) {
+        cpu.vy = 12;
+        cpu.grounded = false;
+        cpu.landT = 0;
+        dust(cpu.x - cpu.facing * 22, groundY() + 4, "rgba(255,245,218,.74)", -cpu.facing * 18);
+      }
+      cpu.aiThink = .22 + Math.random() * .28;
+    }
+    if (cpu.hitT <= 0 && cpu.aiBlock <= 0) cpu.vx += cpu.aiMove * 1.45 * cpu.def.speed;
+  }
+
+  function resolveActiveStrike(attacker, defender) {
+    if (attacker.hitResolved || !attacker.action.includes("attacking") || !isStrikeActive(attacker)) return;
+    attacker.hitResolved = true;
+    const isHeavy = attacker.action.includes("heavy");
+    attacker.vx += attacker.facing * (isHeavy ? 4.8 : 3.2);
+    swish(attacker, isHeavy);
+    const range = isHeavy ? 126 : 88;
+    const damage = (isHeavy ? 13 : 7) * attacker.def.power;
+    const dx = Math.abs(attacker.x - defender.x);
+    if (dx < range && Math.abs(attacker.y - defender.y) < 82) {
+      applyHit(defender, attacker, damage, isHeavy ? "WHACK" : "POW", isHeavy ? attacker.def.color : "#fff");
+    } else {
+      floatWord(attacker.x + attacker.facing * 58, groundY() - 145 - attacker.y, "MISS", "rgba(255,255,255,.76)");
+    }
+  }
+
+  function physics(f, dt) {
+    const wasGrounded = f.grounded;
+    f.vy -= 33 * dt;
+    f.y += f.vy;
+    if (f.y <= 0) {
+      f.y = 0;
+      if (!wasGrounded) {
+        f.landT = .18;
+        dust(f.x, groundY() + 4, "rgba(255,245,218,.95)", -f.facing * 26);
+      }
+      f.vy = 0;
+      f.grounded = true;
+    } else {
+      f.grounded = false;
+    }
+    f.x += f.vx;
+    f.moving = Math.abs(f.vx) > .7 && f.grounded && f.hitT <= 0 && f.actionT <= 0;
+    if (f.moving && f.dustCd <= 0) {
+      dust(f.x - f.facing * 48, groundY() + 4, "rgba(255,245,218,.72)", -f.facing * 36);
+      f.dustCd = .16;
+    }
+    f.vx *= .82;
+    const pad = 70;
+    f.x = Math.max(pad, Math.min(arena.clientWidth - pad, f.x));
+  }
+
+  function updateTimers(f, dt) {
+    f.poseT += dt;
+    f.walkT += Math.abs(f.vx) * dt * .18 + dt * 2.1;
+    f.jabCd = Math.max(0, f.jabCd - dt);
+    f.heavyCd = Math.max(0, f.heavyCd - dt);
+    f.specialCd = Math.max(0, f.specialCd - dt);
+    f.actionT = Math.max(0, f.actionT - dt);
+    f.hitT = Math.max(0, f.hitT - dt);
+    f.aiBlock = Math.max(0, f.aiBlock - dt);
+    f.landT = Math.max(0, f.landT - dt);
+    f.dustCd = Math.max(0, f.dustCd - dt);
+    f.recoilT = Math.max(0, f.recoilT - dt);
+    f.ghostCd = Math.max(0, f.ghostCd - dt);
+    if (isStrikeActive(f) && f.ghostCd <= 0) {
+      motionGhost(f, f.action === "special" ? 10 : f.action.includes("heavy") ? -8 : -4, -f.facing * 24);
+      f.ghostCd = f.action === "special" ? .075 : .095;
+    }
+    if (f.actionT <= 0 && f.action !== "idle") {
+      f.action = "idle";
+      f.actionTotal = 0;
+      f.attackKind = "";
+      f.hitResolved = true;
+    }
+  }
+
+  function updateProjectiles(dt) {
+    for (let i = projectiles.length - 1; i >= 0; i--) {
+      const p = projectiles[i];
+      p.x += p.vx;
+      p.life -= dt;
+      const target = p.owner === player ? cpu : player;
+      p.el.style.left = `${p.x - 22}px`;
+      p.el.style.top = `${p.y - 22}px`;
+      if (Math.abs(p.x - target.x) < 58 && Math.abs(p.y - (groundY() - 125 - target.y)) < 90) {
+        applyHit(target, p.owner, p.damage, "SPLAT", p.owner.def.color);
+        p.el.remove();
+        projectiles.splice(i, 1);
+      } else if (p.life <= 0 || p.x < -80 || p.x > arena.clientWidth + 80) {
+        p.el.remove();
+        projectiles.splice(i, 1);
+      }
+    }
+  }
+
+  function updateParticles(dt) {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      particles[i].life -= dt;
+      if (particles[i].life <= 0) {
+        particles[i].el.remove();
+        particles.splice(i, 1);
+      }
+    }
+  }
+
+  function updateArenaShake(dt) {
+    if (arenaShake <= 0) {
+      arena.style.transform = "";
+      return;
+    }
+    arenaShake = Math.max(0, arenaShake - dt);
+    const power = arenaShake * 28;
+    const x = (Math.random() - .5) * power;
+    const y = (Math.random() - .5) * power;
+    arena.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  function faceEachOther() {
+    player.facing = player.x <= cpu.x ? 1 : -1;
+    cpu.facing = cpu.x <= player.x ? 1 : -1;
+  }
+
+  function clampDistance() {
+    const dx = cpu.x - player.x;
+    if (Math.abs(dx) < 74) {
+      const push = (74 - Math.abs(dx)) / 2;
+      player.x -= Math.sign(dx || 1) * push;
+      cpu.x += Math.sign(dx || 1) * push;
+    }
+  }
+
+  function groundY() {
+    return arena.clientHeight - 114;
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function actionProgress(f) {
+    if (!f.actionTotal) return 0;
+    return clamp(1 - f.actionT / f.actionTotal, 0, 1);
+  }
+
+  function isStrikeActive(f) {
+    if (f.action === "special") {
+      const t = actionProgress(f);
+      return t > .32 && t < .68;
+    }
+    if (!f.action.includes("attacking")) return false;
+    const t = actionProgress(f);
+    return f.action.includes("heavy") ? t > .34 && t < .62 : t > .22 && t < .5;
+  }
+
+  function isRecovering(f) {
+    if (f.action === "special") return actionProgress(f) >= .68;
+    if (!f.action.includes("attacking")) return false;
+    const t = actionProgress(f);
+    return f.action.includes("heavy") ? t >= .62 : t >= .5;
+  }
+
+  function updateTransforms() {
+    const pScale = player.facing === 1 ? 1 : -1;
+    const cScale = cpu.facing === 1 ? 1 : -1;
+    playerEl.style.transform = `translate(${player.x - 74}px, ${-player.y}px) scaleX(${pScale})`;
+    cpuEl.style.transform = `translate(${cpu.x - 74}px, ${-cpu.y}px) scaleX(${cScale})`;
+    applyPose(playerEl, player);
+    applyPose(cpuEl, cpu);
+    setClasses(playerEl, player);
+    setClasses(cpuEl, cpu);
+  }
+
+  function applyPose(el, f) {
+    const idle = Math.sin(f.poseT * 4.2);
+    const breath = Math.sin(f.poseT * 2.1);
+    const walk = Math.sin(f.walkT * 7.4);
+    const walkPlant = Math.abs(walk);
+    const forwardV = clamp((f.vx * f.facing) / 7.5, -1, 1);
+    let y = idle * -1.8;
+    let rot = idle * .45 - forwardV * 2.2;
+    let sx = 1 + breath * .012;
+    let sy = 1 - breath * .01;
+    let shove = 0;
+
+    if (f.moving) {
+      y += walkPlant * -5.5;
+      rot += walk * 3.6 - forwardV * 3.4;
+      shove += walk * 3.8;
+      sx += walkPlant * .028;
+      sy -= walkPlant * .024;
+    }
+    if (!f.grounded) {
+      const rise = clamp(f.vy / 13.6, 0, 1);
+      const fall = clamp(-f.vy / 15, 0, 1);
+      y += -8 - rise * 6;
+      rot += rise * -7 + fall * 8;
+      sx += rise * .035 - fall * .02;
+      sy += rise * .075 + fall * .02;
+      shove += forwardV * 8;
+    }
+    if (f.landT > 0) {
+      const t = f.landT / .18;
+      const squash = Math.sin(t * Math.PI * .85);
+      sx += .2 * squash;
+      sy -= .18 * squash;
+      y += 7 * squash;
+      rot += forwardV * -4 * squash;
+    }
+    if (f.block || f.aiBlock > 0) {
+      const brace = .85 + Math.sin(f.poseT * 18) * .04;
+      sx += .08 * brace;
+      sy -= .07 * brace;
+      y += 5 * brace;
+      rot -= 9 * brace;
+      shove -= 13 * brace;
+    }
+    if (f.recoilT > 0 || f.hitT > 0) {
+      const t = Math.max(f.recoilT / .3, f.hitT / .28);
+      const wobble = Math.sin(f.poseT * 34) * t;
+      rot += 13 * t + wobble * 5;
+      shove -= 25 * t;
+      y += 5 * t;
+      sx += .1 * t;
+      sy -= .06 * t;
+    }
+    if (f.action.includes("attacking")) {
+      const t = actionProgress(f);
+      const heavy = f.action.includes("heavy");
+      if (heavy) {
+        if (t < .34) {
+          const k = t / .34;
+          shove -= 18 * k;
+          rot += 12 * k;
+          y += 6 * k;
+          sx += .05 * k;
+          sy -= .08 * k;
+        } else if (t < .62) {
+          const k = (t - .34) / .28;
+          const hit = Math.sin(k * Math.PI);
+          shove += -12 + 52 * k;
+          rot += 10 - 27 * k;
+          y += 4 - 8 * hit;
+          sx += .11 + .1 * hit;
+          sy -= .09 + .05 * hit;
+        } else {
+          const k = (t - .62) / .38;
+          const settle = 1 - k;
+          shove += 20 * settle;
+          rot -= 10 * settle;
+          y += 4 * settle;
+          sx += .05 * settle;
+          sy -= .04 * settle;
+        }
+      } else {
+        if (t < .22) {
+          const k = t / .22;
+          shove -= 9 * k;
+          rot += 7 * k;
+          y += 2 * k;
+          sx -= .025 * k;
+          sy += .035 * k;
+        } else if (t < .5) {
+          const k = (t - .22) / .28;
+          const snap = Math.sin(k * Math.PI);
+          shove += -6 + 34 * k;
+          rot += 5 - 17 * k;
+          y -= 4 * snap;
+          sx += .11 * snap;
+          sy -= .075 * snap;
+        } else {
+          const k = (t - .5) / .5;
+          const settle = 1 - k;
+          shove += 14 * settle;
+          rot -= 5 * settle;
+          sx += .035 * settle;
+          sy -= .025 * settle;
+        }
+      }
+    }
+    if (f.action === "special") {
+      const t = actionProgress(f);
+      if (t < .28) {
+        const coil = t / .28;
+        y += 8 * coil;
+        rot -= 12 * coil;
+        shove -= 16 * coil;
+        sx += .1 * coil;
+        sy -= .12 * coil;
+      } else if (t < .68) {
+        const k = (t - .28) / .4;
+        const burst = Math.sin(k * Math.PI);
+        y -= 17 * burst;
+        rot += -10 + 28 * k;
+        shove += -10 + 44 * k;
+        sx += .18 * burst;
+        sy += .1 * burst;
+      } else {
+        const settle = 1 - (t - .68) / .32;
+        y -= 5 * settle;
+        rot += 8 * settle;
+        shove += 18 * settle;
+        sx += .06 * settle;
+        sy += .035 * settle;
+      }
+    }
+
+    el.style.setProperty("--img-y", `${y.toFixed(2)}px`);
+    el.style.setProperty("--img-rot", `${rot.toFixed(2)}deg`);
+    el.style.setProperty("--img-sx", sx.toFixed(3));
+    el.style.setProperty("--img-sy", sy.toFixed(3));
+    el.style.setProperty("--img-shove", `${shove.toFixed(2)}px`);
+  }
+
+  function setClasses(el, f) {
+    el.className = "fighter";
+    if (f.block || f.aiBlock > 0) el.classList.add("blocking");
+    if (f.hitT > 0) el.classList.add("hit");
+    if (f.action.includes("attacking")) el.classList.add("attacking");
+    if (isStrikeActive(f)) el.classList.add("striking");
+    if (isRecovering(f)) el.classList.add("recovering");
+    if (f.action === "special") el.classList.add("special");
+    if (!f.grounded) el.classList.add("jump");
+    if (f.moving) el.classList.add("walking");
+    if (f.landT > 0) el.classList.add("landing");
+  }
+
+  function updateHud() {
+    pHp.style.width = `${Math.max(0, player.health)}%`;
+    cHp.style.width = `${Math.max(0, cpu.health)}%`;
+    clock.textContent = String(timer).padStart(2, "0");
+    pPips.forEach((pip, i) => pip.classList.toggle("on", i < pRounds));
+    cPips.forEach((pip, i) => pip.classList.toggle("on", i < cRounds));
+  }
+
+  function loop(now) {
+    const dt = Math.min(.033, (now - last) / 1000);
+    last = now;
+    update(dt);
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener("keydown", e => {
+    const k = e.key.toLowerCase();
+    if (["a","d","w","s","j","k","l"," "].includes(k)) e.preventDefault();
+    keys.add(k);
+    if (k === " " && phase !== "fight") startTournament();
+  }, { passive: false });
+  window.addEventListener("keyup", e => keys.delete(e.key.toLowerCase()));
+  window.addEventListener("resize", () => {
+    if (player && cpu) {
+      player.x = Math.min(player.x, arena.clientWidth - 70);
+      cpu.x = Math.min(cpu.x, arena.clientWidth - 70);
+      updateTransforms();
+    }
+  });
+
+  startBtn.addEventListener("click", startTournament);
+  resetBtn.addEventListener("click", () => {
+    phase = "select";
+    opponentOrder = [];
+    opponentSlot = 0;
+    buildLadder();
+    setPreview();
+    matchReadout.innerHTML = `Choose your <strong>fighter</strong>`;
+  });
+
+  renderRoster();
+  setPreview();
+  buildLadder();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

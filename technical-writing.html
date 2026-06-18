@@ -3,6 +3,7 @@
 <head>
   <script>(function(){try{var p=new URLSearchParams(location.search);if(p.get("desktop"))sessionStorage.setItem("forceDesktop","1");if(sessionStorage.getItem("forceDesktop"))return;var coarse=window.matchMedia&&matchMedia("(pointer: coarse)").matches;var small=Math.min(screen.width||9999,window.innerWidth||9999)<=820;if(coarse&&small&&location.pathname.indexOf("/mobile/")===-1)location.replace("/mobile/");}catch(e){}})();</script>
   <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/">
   <title>Technical Writing &amp; White Papers | Adam R. Cagle</title>
@@ -68,7 +69,7 @@
 
   <main class="page">
     <div class="brain brain--float" data-brain data-side="left">
-      <img class="brain__img" src="img/brain/brain-off.png" alt="Anatomical engraving of a human brain, top view" decoding="async">
+      <img class="brain__img" src="img/brain/brain-off.webp" alt="Anatomical engraving of a human brain, top view" decoding="async">
     </div>
 
     <div class="page__content">
@@ -171,7 +172,7 @@
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
   </script>
-  <script type="module" src="js/interior.js?v=7"></script>
+  <script type="module" src="js/interior.js?v=10"></script>
   <script type="module" src="js/tw-canvas.js?v=1"></script>
   <script src="js/tw-viewer.js?v=2" defer></script>
   <script src="js/transition.js?v=2" defer></script>

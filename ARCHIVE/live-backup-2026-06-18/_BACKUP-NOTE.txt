@@ -1,0 +1,5 @@
+Snapshot of the LIVE adamcagle.com site taken 2026-06-18, immediately before the
+DEV->root cutover. Contains all HTML/CSS/JS + small assets of the pre-cutover live site.
+img/ and mobile/img/ were excluded to avoid ~100MB duplication: the cutover only ADDS
+files (WebP) to img/, never removes, so every original image remains in the live tree.
+Full history is also in git. To restore the old site: copy these files back to root.

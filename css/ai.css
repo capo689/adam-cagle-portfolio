@@ -423,3 +423,13 @@ body.page-aisys.theme-tech .work .btn-wp,
 body.page-aisys.theme-tech .work .skill-view { color: #ffffff; font-weight: 700; background: #185FA5; }
 body.page-aisys.theme-tech .work .btn-wp:hover,
 body.page-aisys.theme-tech .work .skill-view:hover { background: #114277; }
+/* small uppercase labels/tags/captions were too small + dim — enlarge + brighten */
+body.page-aisys.theme-tech .work { --fg-3: rgba(244,246,248,.82); }
+body.page-aisys.theme-tech .work .pm-lab { font-size: 11.5px; letter-spacing: .09em; line-height: 1.5; }
+body.page-aisys.theme-tech .work .stat-label { font-size: 12px; letter-spacing: .11em; }
+body.page-aisys.theme-tech .work .s-kicker { font-size: 12px; letter-spacing: .09em; }
+body.page-aisys.theme-tech .work .s-num { font-size: 12.5px; }
+body.page-aisys.theme-tech .work .sys-tag { font-size: 11px; letter-spacing: .09em; padding: 4px 9px; }
+body.page-aisys.theme-tech .work .cc-label { font-size: 11.5px; letter-spacing: .14em; }
+body.page-aisys.theme-tech .work .skill-kicker { font-size: 12px; }
+body.page-aisys.theme-tech .work .group-num { font-size: 13px; }

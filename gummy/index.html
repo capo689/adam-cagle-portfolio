@@ -112,36 +112,85 @@
   .fighter {
     position: absolute; bottom: 114px; width: 148px; height: 208px; z-index: 8;
     transform-origin: 50% 100%; will-change: transform, filter;
+    --img-y: 0px;
+    --img-rot: 0deg;
+    --img-sx: 1;
+    --img-sy: 1;
+    --img-shove: 0px;
   }
   .fighter img {
-    position: absolute; left: 50%; bottom: 0; width: auto; height: 208px; transform: translateX(-50%);
+    position: absolute; left: 50%; bottom: 0; width: auto; height: 208px;
+    transform:
+      translateX(calc(-50% + var(--img-shove)))
+      translateY(var(--img-y))
+      rotate(var(--img-rot))
+      scale(var(--img-sx), var(--img-sy));
+    transform-origin: 50% 92%;
     filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) saturate(1.18) contrast(1.04);
     user-select: none; -webkit-user-drag: none; pointer-events: none;
+    transition: filter .08s linear;
   }
   .fighter::after {
     content: ""; position: absolute; left: 50%; bottom: -10px; width: 130px; height: 24px; transform: translateX(-50%);
     background: radial-gradient(ellipse, rgba(0,0,0,.34), transparent 65%); z-index: -1;
+    transition: width .08s, opacity .08s;
   }
+  .fighter.walking::after { width: 150px; opacity: .82; }
+  .fighter.landing::after { width: 168px; opacity: .9; }
   .fighter.blocking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 15px rgba(67,182,255,.85)); }
   .fighter.hit img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 18px rgba(255,52,95,.95)) brightness(1.28); }
-  .fighter.attacking img { animation: punch .16s ease-out; }
-  .fighter.special img { animation: specialPulse .35s ease-out; }
+  .fighter.attacking img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 14px rgba(255,228,95,.7)) saturate(1.28); }
+  .fighter.special img { filter: drop-shadow(0 17px 8px rgba(0,0,0,.32)) drop-shadow(0 0 24px rgba(255,79,184,.9)) saturate(1.45) brightness(1.08); }
   .fighter.jump img { filter: drop-shadow(0 28px 10px rgba(0,0,0,.22)) saturate(1.2); }
-  @keyframes punch { 50% { transform: translateX(-50%) skewX(-7deg) scale(1.07); } }
-  @keyframes specialPulse { 50% { transform: translateX(-50%) scale(1.13); } }
 
-  .fx, .projectile, .float-word, .weapon-hit { position: absolute; pointer-events: none; z-index: 12; }
+  .fx, .projectile, .float-word, .weapon-hit, .swish, .dust, .gummy-drop { position: absolute; pointer-events: none; z-index: 12; }
   .projectile {
     width: 44px; height: 44px; border-radius: 50%;
     background: radial-gradient(circle at 30% 28%, #fff, var(--yellow) 35%, var(--pink) 72%);
     box-shadow: 0 0 20px rgba(255,79,184,.8), inset 0 -5px 0 rgba(0,0,0,.12);
+    animation: projectileSpin .32s linear infinite, projectileWobble .48s ease-in-out infinite alternate;
   }
+  @keyframes projectileSpin { to { rotate: 360deg; } }
+  @keyframes projectileWobble { from { scale: .9 1.08; } to { scale: 1.1 .92; } }
   .weapon-hit {
     width: 90px; height: 90px; border-radius: 50%;
     border: 5px solid currentColor; color: var(--yellow); opacity: .8; transform: translate(-50%, -50%) scale(.2);
     animation: hitRing .26s ease-out forwards;
   }
   @keyframes hitRing { to { opacity: 0; transform: translate(-50%, -50%) scale(1.25); } }
+  .swish {
+    width: 138px; height: 86px; border-radius: 50%;
+    border-top: 9px solid currentColor; border-right: 5px solid currentColor;
+    border-left: 8px solid transparent; border-bottom: 8px solid transparent;
+    opacity: .9; filter: drop-shadow(0 0 14px currentColor);
+    transform: translate(-50%, -50%) rotate(var(--swish-rot, 0deg)) scaleX(var(--swish-dir, 1));
+    animation: swishArc .24s cubic-bezier(.2,.9,.2,1) forwards;
+  }
+  @keyframes swishArc {
+    from { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--swish-rot, 0deg) - 30deg)) scale(.45) scaleX(var(--swish-dir, 1)); }
+    45% { opacity: 1; }
+    to { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--swish-rot, 0deg) + 22deg)) scale(1.18) scaleX(var(--swish-dir, 1)); }
+  }
+  .dust {
+    width: 34px; height: 14px; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255,245,218,.9), rgba(255,245,218,0) 70%);
+    transform: translate(-50%, -50%) scale(.25);
+    animation: dustPuff .5s ease-out forwards;
+    z-index: 7;
+  }
+  @keyframes dustPuff {
+    to { opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), -50%) scale(1.7 .8); }
+  }
+  .gummy-drop {
+    width: 12px; height: 12px; border-radius: 50% 50% 45% 55%;
+    background: radial-gradient(circle at 32% 24%, #fff, currentColor 38%, rgba(0,0,0,.16));
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.12);
+    transform: translate(-50%, -50%);
+    animation: gummyPop .48s ease-out forwards;
+  }
+  @keyframes gummyPop {
+    to { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.35); }
+  }
   .float-word {
     font-family: var(--mono); font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
     color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35); animation: floatWord .85s ease-out forwards;
@@ -328,6 +377,7 @@
   let last = performance.now();
   let lastSecond = 0;
   let roundPause = 0;
+  let arenaShake = 0;
 
   function makeFighter(fighter, side) {
     return {
@@ -349,7 +399,14 @@
       specialCd: 0,
       aiThink: 0,
       aiMove: 0,
-      aiBlock: 0
+      aiBlock: 0,
+      walkT: Math.random() * 10,
+      poseT: Math.random() * 10,
+      landT: 0,
+      dustCd: 0,
+      recoilT: 0,
+      moving: false,
+      prevGrounded: true
     };
   }
 
@@ -450,7 +507,9 @@
     if (!isHeavy && attacker.jabCd > 0) return;
     attacker.action = isHeavy ? "attacking heavy" : "attacking";
     attacker.actionT = isHeavy ? .32 : .18;
+    attacker.vx += attacker.facing * (isHeavy ? 2.2 : 1.2);
     if (isHeavy) attacker.heavyCd = .58; else attacker.jabCd = .28;
+    swish(attacker, isHeavy);
     const range = isHeavy ? 118 : 82;
     const damage = (isHeavy ? 13 : 7) * attacker.def.power;
     const dx = Math.abs(attacker.x - defender.x);
@@ -466,6 +525,8 @@
     attacker.action = "special";
     attacker.actionT = .44;
     attacker.specialCd = 2.8;
+    attacker.vx += attacker.facing * 1.8;
+    swish(attacker, true, true);
     const s = attacker.def.special;
     if (/Shard|Burst|stars|Snap/.test(s) || attacker.def.id === 1 || attacker.def.id === 2 || attacker.def.id === 6 || attacker.def.id === 9) {
       spawnProjectile(attacker, 12 * attacker.def.power);
@@ -473,6 +534,7 @@
       attacker.health = Math.min(100, attacker.health + 9);
       attacker.aiBlock = .45;
       floatWord(attacker.x, groundY() - 160 - attacker.y, "GEL UP", attacker.def.color);
+      gummyDrops(attacker.x, groundY() - 130 - attacker.y, attacker.def.color, 7);
     } else {
       const dx = Math.abs(attacker.x - defender.x);
       if (dx < 150) applyHit(defender, attacker, 17 * attacker.def.power, s.toUpperCase(), attacker.def.color);
@@ -505,8 +567,11 @@
     const damage = blocked ? rawDamage * .28 : rawDamage;
     target.health = Math.max(0, target.health - damage);
     target.hitT = blocked ? .12 : .28;
+    target.recoilT = blocked ? .16 : .3;
     target.vx += source.facing * (blocked ? 2.2 : 5.8);
+    arenaShake = Math.max(arenaShake, blocked ? .08 : .18);
     ring(target.x, groundY() - 120 - target.y, color);
+    gummyDrops(target.x, groundY() - 112 - target.y, color, blocked ? 3 : 7);
     floatWord(target.x, groundY() - 185 - target.y, blocked ? "BLOCK" : word, blocked ? "#43b6ff" : color);
     if (target.health <= 0) endRound(source === player ? "player" : "cpu");
   }
@@ -557,6 +622,48 @@
     particles.push({ el, life: .3 });
   }
 
+  function swish(f, heavy = false, specialMove = false) {
+    const el = document.createElement("div");
+    el.className = "swish";
+    el.style.left = `${f.x + f.facing * (heavy ? 70 : 54)}px`;
+    el.style.top = `${groundY() - (heavy ? 130 : 112) - f.y}px`;
+    el.style.color = f.def.color;
+    el.style.setProperty("--swish-dir", f.facing);
+    el.style.setProperty("--swish-rot", specialMove ? "-8deg" : heavy ? "8deg" : "18deg");
+    if (specialMove) {
+      el.style.width = "170px";
+      el.style.height = "104px";
+      el.style.borderTopWidth = "12px";
+    }
+    arena.appendChild(el);
+    particles.push({ el, life: specialMove ? .42 : .28 });
+  }
+
+  function dust(x, y, color = "rgba(255,245,218,.9)", dx = 0) {
+    const el = document.createElement("div");
+    el.className = "dust";
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.style.background = `radial-gradient(ellipse, ${color}, rgba(255,245,218,0) 70%)`;
+    el.style.setProperty("--dx", `${dx}px`);
+    arena.appendChild(el);
+    particles.push({ el, life: .52 });
+  }
+
+  function gummyDrops(x, y, color, count) {
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement("div");
+      el.className = "gummy-drop";
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.style.color = color;
+      el.style.setProperty("--dx", `${(Math.random() - .5) * 120}px`);
+      el.style.setProperty("--dy", `${-20 - Math.random() * 80}px`);
+      arena.appendChild(el);
+      particles.push({ el, life: .52 });
+    }
+  }
+
   function floatWord(x, y, text, color) {
     const el = document.createElement("div");
     el.className = "float-word";
@@ -584,6 +691,7 @@
       faceEachOther();
       clampDistance();
     }
+    updateArenaShake(dt);
     updateTimers(player, dt);
     updateTimers(cpu, dt);
     updateParticles(dt);
@@ -621,22 +729,43 @@
   }
 
   function physics(f, dt) {
+    const wasGrounded = f.grounded;
     f.vy -= 33 * dt;
     f.y += f.vy;
-    if (f.y <= 0) { f.y = 0; f.vy = 0; f.grounded = true; }
+    if (f.y <= 0) {
+      f.y = 0;
+      if (!wasGrounded) {
+        f.landT = .18;
+        dust(f.x, groundY() + 4, "rgba(255,245,218,.95)", -f.facing * 26);
+      }
+      f.vy = 0;
+      f.grounded = true;
+    } else {
+      f.grounded = false;
+    }
     f.x += f.vx;
+    f.moving = Math.abs(f.vx) > .7 && f.grounded && f.hitT <= 0 && f.actionT <= 0;
+    if (f.moving && f.dustCd <= 0) {
+      dust(f.x - f.facing * 48, groundY() + 4, "rgba(255,245,218,.72)", -f.facing * 36);
+      f.dustCd = .16;
+    }
     f.vx *= .82;
     const pad = 70;
     f.x = Math.max(pad, Math.min(arena.clientWidth - pad, f.x));
   }
 
   function updateTimers(f, dt) {
+    f.poseT += dt;
+    f.walkT += Math.abs(f.vx) * dt * .18 + dt * 2.1;
     f.jabCd = Math.max(0, f.jabCd - dt);
     f.heavyCd = Math.max(0, f.heavyCd - dt);
     f.specialCd = Math.max(0, f.specialCd - dt);
     f.actionT = Math.max(0, f.actionT - dt);
     f.hitT = Math.max(0, f.hitT - dt);
     f.aiBlock = Math.max(0, f.aiBlock - dt);
+    f.landT = Math.max(0, f.landT - dt);
+    f.dustCd = Math.max(0, f.dustCd - dt);
+    f.recoilT = Math.max(0, f.recoilT - dt);
     if (f.actionT <= 0 && f.action !== "idle") f.action = "idle";
   }
 
@@ -669,6 +798,18 @@
     }
   }
 
+  function updateArenaShake(dt) {
+    if (arenaShake <= 0) {
+      arena.style.transform = "";
+      return;
+    }
+    arenaShake = Math.max(0, arenaShake - dt);
+    const power = arenaShake * 28;
+    const x = (Math.random() - .5) * power;
+    const y = (Math.random() - .5) * power;
+    arena.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
   function faceEachOther() {
     player.facing = player.x <= cpu.x ? 1 : -1;
     cpu.facing = cpu.x <= player.x ? 1 : -1;
@@ -692,8 +833,76 @@
     const cScale = cpu.facing === 1 ? 1 : -1;
     playerEl.style.transform = `translate(${player.x - 74}px, ${-player.y}px) scaleX(${pScale})`;
     cpuEl.style.transform = `translate(${cpu.x - 74}px, ${-cpu.y}px) scaleX(${cScale})`;
+    applyPose(playerEl, player);
+    applyPose(cpuEl, cpu);
     setClasses(playerEl, player);
     setClasses(cpuEl, cpu);
+  }
+
+  function applyPose(el, f) {
+    const idle = Math.sin(f.poseT * 4.4);
+    const walk = Math.sin(f.walkT * 6.4);
+    let y = idle * -2.8;
+    let rot = idle * .9;
+    let sx = 1 + idle * .018;
+    let sy = 1 - idle * .012;
+    let shove = 0;
+
+    if (f.moving) {
+      y += Math.abs(walk) * -8;
+      rot += walk * 4.5;
+      sx += Math.abs(walk) * .035;
+      sy -= Math.abs(walk) * .03;
+    }
+    if (!f.grounded) {
+      y += -8;
+      rot += f.vy > 0 ? -5 : 5;
+      sx += .04;
+      sy += .06;
+    }
+    if (f.landT > 0) {
+      const t = f.landT / .18;
+      sx += .18 * t;
+      sy -= .16 * t;
+      y += 6 * t;
+    }
+    if (f.block || f.aiBlock > 0) {
+      sx += .06;
+      sy -= .05;
+      rot -= 7;
+      shove -= 8;
+    }
+    if (f.recoilT > 0 || f.hitT > 0) {
+      const t = Math.max(f.recoilT / .3, f.hitT / .28);
+      rot += 10 * t;
+      shove -= 20 * t;
+      sx += .08 * t;
+      sy -= .05 * t;
+    }
+    if (f.action.includes("attacking")) {
+      const total = f.action.includes("heavy") ? .32 : .18;
+      const t = 1 - Math.min(1, f.actionT / total);
+      const snap = Math.sin(t * Math.PI);
+      shove += (f.action.includes("heavy") ? 28 : 18) * snap;
+      rot -= (f.action.includes("heavy") ? 9 : 5) * snap;
+      sx += .1 * snap;
+      sy -= .07 * snap;
+    }
+    if (f.action === "special") {
+      const t = 1 - Math.min(1, f.actionT / .44);
+      const pulse = Math.sin(t * Math.PI);
+      y -= 10 * pulse;
+      rot += 12 * pulse;
+      sx += .16 * pulse;
+      sy += .08 * pulse;
+      shove += 18 * pulse;
+    }
+
+    el.style.setProperty("--img-y", `${y.toFixed(2)}px`);
+    el.style.setProperty("--img-rot", `${rot.toFixed(2)}deg`);
+    el.style.setProperty("--img-sx", sx.toFixed(3));
+    el.style.setProperty("--img-sy", sy.toFixed(3));
+    el.style.setProperty("--img-shove", `${shove.toFixed(2)}px`);
   }
 
   function setClasses(el, f) {
@@ -703,6 +912,8 @@
     if (f.action.includes("attacking")) el.classList.add("attacking");
     if (f.action === "special") el.classList.add("special");
     if (!f.grounded) el.classList.add("jump");
+    if (f.moving) el.classList.add("walking");
+    if (f.landT > 0) el.classList.add("landing");
   }
 
   function updateHud() {

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gummy Fighter</title>
 <meta name="description" content="Gummy Fighter is a keyboard-playable one-on-one gummy bear fighting game by Adam Cagle.">
-<link rel="icon" type="image/png" href="/img/cross.png">
+<link rel="icon" type="image/png" href="/DEV/img/cross.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800;900&family=Geist+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -338,17 +338,17 @@
 <script>
 (() => {
   const roster = [
-    { id: 1, name: "Cherry Striker", weapon: "Licorice whip", img: "/img/cd/bears/bear1.png", color: "#ff345f", speed: 1.08, power: .94, special: "Gummy Snap" },
-    { id: 2, name: "Blue Razz", weapon: "Rock candy blade", img: "/img/cd/bears/bear2.png", color: "#43b6ff", speed: .98, power: 1.05, special: "Sugar Shard" },
-    { id: 3, name: "Lime Bruiser", weapon: "Sour baton", img: "/img/cd/bears/bear3.png", color: "#34e489", speed: 1.0, power: 1.02, special: "Acid Pop" },
-    { id: 4, name: "Mango Mauler", weapon: "Taffy hammer", img: "/img/cd/bears/bear4.png", color: "#ff9b2f", speed: .86, power: 1.2, special: "Molten Bonk" },
-    { id: 5, name: "Grape Grappler", weapon: "Jelly nunchaku", img: "/img/cd/bears/bear5.png", color: "#8758ff", speed: .92, power: 1.13, special: "Grape Crush" },
-    { id: 6, name: "Cola Crusher", weapon: "Fizz cannon", img: "/img/cd/bears/bear6.png", color: "#d86437", speed: .9, power: 1.16, special: "Soda Burst" },
-    { id: 7, name: "Pineapple Punk", weapon: "Candy cane hook", img: "/img/cd/bears/bear7.png", color: "#ffe45f", speed: 1.14, power: .88, special: "Tang Rush" },
-    { id: 8, name: "Bubblegum Ghost", weapon: "Bubble shield", img: "/img/cd/bears/bear8.png", color: "#ff8fd8", speed: 1.05, power: .96, special: "Pop Guard" },
-    { id: 9, name: "Mint Ninja", weapon: "Sugar stars", img: "/img/cd/bears/bear9.png", color: "#98ffe0", speed: 1.2, power: .84, special: "Mint Mirage" },
-    { id: 10, name: "Peach Tank", weapon: "Jumbo lollipop", img: "/img/cd/bears/bear10.png", color: "#ffb36c", speed: .8, power: 1.28, special: "Lolliquake" },
-    { id: 11, name: "Black Cherry Boss", weapon: "Gummy glaive", img: "/img/cd/bears/bear11.png", color: "#c72cff", speed: .95, power: 1.22, special: "Royal Gel" }
+    { id: 1, name: "Cherry Striker", weapon: "Licorice whip", img: "/DEV/img/cd/bears/bear1.png", color: "#ff345f", speed: 1.08, power: .94, special: "Gummy Snap" },
+    { id: 2, name: "Blue Razz", weapon: "Rock candy blade", img: "/DEV/img/cd/bears/bear2.png", color: "#43b6ff", speed: .98, power: 1.05, special: "Sugar Shard" },
+    { id: 3, name: "Lime Bruiser", weapon: "Sour baton", img: "/DEV/img/cd/bears/bear3.png", color: "#34e489", speed: 1.0, power: 1.02, special: "Acid Pop" },
+    { id: 4, name: "Mango Mauler", weapon: "Taffy hammer", img: "/DEV/img/cd/bears/bear4.png", color: "#ff9b2f", speed: .86, power: 1.2, special: "Molten Bonk" },
+    { id: 5, name: "Grape Grappler", weapon: "Jelly nunchaku", img: "/DEV/img/cd/bears/bear5.png", color: "#8758ff", speed: .92, power: 1.13, special: "Grape Crush" },
+    { id: 6, name: "Cola Crusher", weapon: "Fizz cannon", img: "/DEV/img/cd/bears/bear6.png", color: "#d86437", speed: .9, power: 1.16, special: "Soda Burst" },
+    { id: 7, name: "Pineapple Punk", weapon: "Candy cane hook", img: "/DEV/img/cd/bears/bear7.png", color: "#ffe45f", speed: 1.14, power: .88, special: "Tang Rush" },
+    { id: 8, name: "Bubblegum Ghost", weapon: "Bubble shield", img: "/DEV/img/cd/bears/bear8.png", color: "#ff8fd8", speed: 1.05, power: .96, special: "Pop Guard" },
+    { id: 9, name: "Mint Ninja", weapon: "Sugar stars", img: "/DEV/img/cd/bears/bear9.png", color: "#98ffe0", speed: 1.2, power: .84, special: "Mint Mirage" },
+    { id: 10, name: "Peach Tank", weapon: "Jumbo lollipop", img: "/DEV/img/cd/bears/bear10.png", color: "#ffb36c", speed: .8, power: 1.28, special: "Lolliquake" },
+    { id: 11, name: "Black Cherry Boss", weapon: "Gummy glaive", img: "/DEV/img/cd/bears/bear11.png", color: "#c72cff", speed: .95, power: 1.22, special: "Royal Gel" }
   ];
   const artVersion = "gf1";
   const bearSrc = path => `${path}?v=${artVersion}`;

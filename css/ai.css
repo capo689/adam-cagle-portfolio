@@ -408,3 +408,6 @@ body.theme-tech .work #sys-01 {
 }
 body.theme-tech .work #sys-01 .screens img { border: 1px solid rgba(77,139,232,0.30); border-radius: 10px; box-shadow: 0 18px 40px -26px rgba(0,0,0,.8); }
 body.theme-tech .work #sys-01 .case-cell { background: rgba(20,26,34,.5); border-radius: 8px; }
+
+/* AI Systems page only: white body copy for legibility (was 72% grey) */
+body.page-aisys.theme-tech .work { --fg-2: #f4f6f8; }

@@ -36,7 +36,7 @@
 /* (paint washes removed — gummy bears now provide the colour punctuation) */
 
 /* ── editorial manifesto: defines the role before the reel ──────────────── */
-.cd-manifesto { max-width: 680px; padding: clamp(20px,3.5vh,48px) 0 clamp(34px,6vh,68px); color: #211d18; }
+.cd-manifesto { max-width: 920px; padding: clamp(12px,2vh,28px) 0 clamp(18px,3vh,38px); color: #211d18; }
 .cd-manifesto .cdm-kicker {
   display: flex; align-items: center; gap: 12px; margin: 0 0 18px;
   font-family: var(--mono,"IBM Plex Mono",monospace);
@@ -47,7 +47,7 @@
   font-family: var(--garamond,"EB Garamond",Georgia,serif);
   font-style: italic; font-weight: 500;
   font-size: clamp(27px,3.3vw,44px); line-height: 1.05; letter-spacing: -.01em;
-  color: #211d18; margin: 0 0 22px; max-width: 19ch;
+  color: #211d18; margin: 0 0 14px; max-width: 28ch;
 }
 .cd-manifesto .cdm-def {
   font-family: var(--garamond,"EB Garamond",Georgia,serif);
@@ -57,18 +57,18 @@
   font-family: var(--garamond,"EB Garamond",Georgia,serif);
   font-style: italic; font-weight: 600;
   font-size: clamp(24px,2.7vw,38px); line-height: 1.08; letter-spacing: -.01em;
-  color: #4D8BE8; margin: 0 0 26px;
+  color: #4D8BE8; margin: 0 0 16px;
 }
 .cd-manifesto .cdm-p {
   font-family: var(--garamond,"EB Garamond",Georgia,serif);
-  font-size: clamp(16px,1.25vw,20px); line-height: 1.52; color: #4a4339;
-  margin: 0 0 15px; max-width: 60ch;
+  font-size: clamp(16px,1.25vw,20px); line-height: 1.46; color: #4a4339;
+  margin: 0 0 11px; max-width: 90ch;
 }
 .cd-manifesto .cdm-p em { font-style: italic; color: #211d18; }
 .cd-manifesto .cdm-pull {
   font-family: var(--garamond,"EB Garamond",Georgia,serif); font-style: italic;
   font-size: clamp(21px,2.2vw,32px); line-height: 1.18; color: #4D8BE8;
-  margin: 24px 0; max-width: 22ch;
+  margin: 14px 0; max-width: 30ch;
 }
 .cd-manifesto .cdm-outro {
   font-family: var(--garamond,"EB Garamond",Georgia,serif); font-style: italic;

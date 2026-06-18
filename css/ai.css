@@ -418,3 +418,8 @@ body.page-aisys.theme-tech .work .tw-sub,
 body.page-aisys.theme-tech .work .tw-abstract,
 body.page-aisys.theme-tech .work .notice p,
 body.page-aisys.theme-tech .work .s-body p { color: #f4f6f8; }
+/* blue buttons: white bold text on a deeper, higher-contrast blue */
+body.page-aisys.theme-tech .work .btn-wp,
+body.page-aisys.theme-tech .work .skill-view { color: #ffffff; font-weight: 700; background: #185FA5; }
+body.page-aisys.theme-tech .work .btn-wp:hover,
+body.page-aisys.theme-tech .work .skill-view:hover { background: #114277; }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OG card generator — adamcagle.com</title>
+<!--
+  Regenerates the social link-preview card (og-card.jpg), 1200x630.
+  HOW TO USE:
+    1. Serve the repo ROOT over http (the brain art must load same-origin so the
+       canvas isn't tainted). E.g. from the repo root:  python3 -m http.server 8000
+    2. Open  http://localhost:8000/tools/og-card-generator.html
+    3. The card auto-draws. Click "Download PNG".
+    4. Optimize to JPEG (keeps it small + sharp):
+         sips -s format jpeg -s formatOptions 92 ~/Downloads/adamcagle-og-card.png --out og-card.jpg
+       then copy og-card.jpg to the repo root (and DEV/) and redeploy.
+  This file lives under tools/ and is excluded from the Vercel deploy.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#0e1116;color:#cfd6df;font-family:Inter,Arial,sans-serif;text-align:center;}
+  #card{display:block;margin:24px auto 16px;max-width:96vw;height:auto;box-shadow:0 8px 40px rgba(0,0,0,.5);}
+  button{font:600 14px Inter,sans-serif;letter-spacing:.04em;color:#0e1116;background:#1FA2FF;border:0;border-radius:8px;padding:11px 22px;cursor:pointer;}
+  p{font-size:13px;color:#7c8694;margin:10px 0 30px;}
+</style>
+</head>
+<body>
+<canvas id="card" width="1200" height="630"></canvas>
+<div><button id="dl">Download PNG</button></div>
+<p>1200&times;630 &middot; then: sips -s format jpeg -s formatOptions 92 in.png --out og-card.jpg</p>
+<script>
+const cv = document.getElementById('card');
+const ctx = cv.getContext('2d');
+const W = 1200, H = 630;
+
+function draw(brain){
+  ctx.fillStyle = '#0e1116'; ctx.fillRect(0,0,W,H);
+  const g = ctx.createRadialGradient(360,300,80, 360,300,820);
+  g.addColorStop(0,'#2b333f'); g.addColorStop(0.55,'#1a1f27'); g.addColorStop(1,'#0c0f14');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  ctx.save();
+  ctx.strokeStyle = 'rgba(77,139,232,0.16)'; ctx.fillStyle = 'rgba(127,182,255,0.18)'; ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(700,120); ctx.lineTo(820,120); ctx.lineTo(820,300); ctx.lineTo(1010,300);
+  ctx.moveTo(860,60); ctx.lineTo(860,260); ctx.lineTo(1000,260);
+  ctx.moveTo(760,470); ctx.lineTo(1080,470);
+  ctx.moveTo(940,360); ctx.lineTo(940,560);
+  ctx.moveTo(1120,200); ctx.lineTo(1120,420);
+  ctx.stroke();
+  [[820,120],[820,300],[1010,300],[860,260],[1000,260],[940,470],[1120,420]].forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],3.2,0,7);ctx.fill();});
+  ctx.restore();
+
+  if (brain) { const s = 700; ctx.drawImage(brain, -150, (H - s)/2 + 8, s, s); }
+
+  const x = 575;
+  ctx.textBaseline = 'alphabetic';
+  ctx.font = "600 82px 'EB Garamond', Georgia, serif";
+  let cx = x;
+  ctx.fillStyle = '#f5f2ea'; ctx.fillText('Adam R', cx, 286); cx += ctx.measureText('Adam R').width;
+  ctx.fillStyle = '#1FA2FF'; ctx.fillText('.', cx, 286); cx += ctx.measureText('.').width;
+  ctx.fillStyle = '#f5f2ea'; ctx.fillText(' Cagle', cx, 286);
+
+  ctx.strokeStyle = 'rgba(245,242,234,0.22)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(x, 316); ctx.lineTo(x + 505, 316); ctx.stroke();
+
+  const titles = 'Writer  ·  Builder  ·  Strategist  ·  Director';
+  ctx.fillStyle = '#aeb7c2';
+  if ('letterSpacing' in ctx) ctx.letterSpacing = '2px';
+  let ts = 25;
+  do { ctx.font = "600 " + ts + "px 'Inter', Arial, sans-serif"; if (ctx.measureText(titles).width <= 545) break; ts -= 1; } while (ts > 13);
+  ctx.fillText(titles, x, 360);
+  if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+
+  ctx.fillStyle = '#1FA2FF';
+  ctx.font = "500 31px 'IBM Plex Mono', monospace";
+  ctx.fillText('adamcagle.com', x, 446);
+  window.__cardReady = true;
+}
+
+const img = new Image();
+img.onload = () => { document.fonts.ready.then(() => setTimeout(()=>draw(img), 60)); };
+img.onerror = () => { document.fonts.ready.then(()=>draw(null)); };
+img.src = '/img/brain/brain-on.webp';
+
+document.getElementById('dl').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = cv.toDataURL('image/png'); a.download = 'adamcagle-og-card.png';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+</script>
+</body>
+</html>

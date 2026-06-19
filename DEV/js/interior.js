@@ -39,12 +39,14 @@ function initBrain(wrap) {
   const onTex  = loader.load("img/brain/brain-on.webp", ready);
   [offTex, onTex].forEach((t) => { t.colorSpace = THREE.SRGBColorSpace; t.minFilter = THREE.LinearFilter; });
 
-  // locked, ALREADY lit (no bloom): one hemisphere painted from frame 1
-  const tL = side === "left" ? 1 : 0;
-  const tR = side === "right" ? 1 : 0;
+  // one hemisphere painted; targets are mutable so the cross controller can
+  // drain the colour to the plain brain and flood it back on the other side
+  let TL = side === "left" ? 1 : 0;
+  let TR = side === "right" ? 1 : 0;
+  let colorK = 0.09;
   const u = {
     uOff: { value: offTex }, uOn: { value: onTex },
-    uTime: { value: 0 }, uLeft: { value: tL }, uRight: { value: tR }, uReduced: { value: reduced ? 1 : 0 },
+    uTime: { value: 0 }, uLeft: { value: TL }, uRight: { value: TR }, uReduced: { value: reduced ? 1 : 0 },
   };
 
   const mat = new THREE.ShaderMaterial({
@@ -89,9 +91,18 @@ function initBrain(wrap) {
   function tick() {
     raf = requestAnimationFrame(tick);
     u.uTime.value += Math.min(clock.getDelta(), 0.05);
+    u.uLeft.value  += (TL - u.uLeft.value)  * colorK;
+    u.uRight.value += (TR - u.uRight.value) * colorK;
     renderer.render(scene, camera);
   }
   tick();
+
+  // control surface for the hemisphere-cross controller (brain-cross.js)
+  window.__ibrain = {
+    sides(l, r) { TL = l; TR = r; },
+    colorSpeed(k) { colorK = k; },
+    drained() { return u.uLeft.value < 0.06 && u.uRight.value < 0.06; },
+  };
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
     else if (!raf) { clock.getDelta(); tick(); }

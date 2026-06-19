@@ -85,31 +85,17 @@ body.interior.theme-tech .page__content { padding-top: clamp(6px, 1.2vh, 14px); 
    above the bar (z-index:3) so the fullscreen overlay covers the header */
 body.lb-open .page__content { z-index: 50; }
 
-/* ── tech-side page transition curtain ───────────────────────────────────
-   The brain stays put across navigations; a blue tech overlay wipes down to
-   cover (on leave) and wipes up to reveal (on arrive), so there is no blink.
-   Arrival reveal is pure CSS so it is robust even if the script never runs. */
-body.theme-tech .xfade {
-  position: fixed; inset: 0; z-index: 200; pointer-events: none;
-  background: linear-gradient(140deg, #232b36 0%, #243349 46%, #2b4f86 100%);
-  transform: translateY(0);
-  animation: xfadeReveal .85s .04s cubic-bezier(.66,0,.2,1) forwards;
-}
-body.theme-tech .xfade::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-  background: #4D8BE8; box-shadow: 0 0 18px 1px rgba(77,139,232,.8);
-}
-@keyframes xfadeReveal { to { transform: translateY(-100%); } }
-/* backstop: JS pins the curtain open after the reveal (or after a timeout), so a
-   missed animation never leaves the page covered */
-body.theme-tech .xfade.x-open { animation: none; transform: translateY(-100%); }
-/* leave: cancel the reveal and slide the curtain back down over the brain */
-body.theme-tech.xfade-cover .xfade {
-  animation: none; transform: translateY(0);
-  transition: transform .46s cubic-bezier(.66,0,.2,1);
-}
+/* ── interior arrival transition ─────────────────────────────────────────
+   One consistent fade-in on EVERY interior page load (incl. hard refresh),
+   identical on the tech (left) and creative (right) sides. Replaces the old
+   blue xfade curtain (the "top-down") on the left and the dead veil/blink on
+   the right, so navigation is smooth and the same everywhere. The brain morph
+   still runs in the home SPA where there is no page reload. */
+body.theme-tech .xfade { display: none !important; }
+@keyframes interiorIn { from { opacity: 0; } to { opacity: 1; } }
+.interior .page { animation: interiorIn .42s ease both; }
 @media (prefers-reduced-motion: reduce) {
-  body.theme-tech .xfade { display: none; }
+  .interior .page { animation: none; opacity: 1; }
 }
 
 /* ── reduced motion: no glide ────────────────────────────────────────── */

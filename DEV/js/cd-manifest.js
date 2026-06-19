@@ -1,6 +1,5 @@
 /* auto-generated: every Creative Direction piece from PILE */
 window.CD_TILES = [
-  {s:'/DEV/img/cd/work/689-hats.jpg',l:'Agency689',t:'work',w:1100,h:715},
   {s:'/DEV/img/cd/work/agency689-work-panels-hotel-figueroa-collateral.jpg',l:'Hotel Figueroa',t:'work',w:1100,h:677},
   {s:'/DEV/img/cd/work/bloom-after.jpg',l:'Traveler Guitar',t:'work',w:1100,h:481},
   {s:'/DEV/img/cd/work/cca-brandbook2.jpg',l:'Coastal Corridor Alliance',t:'work',w:1100,h:619},

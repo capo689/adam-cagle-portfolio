@@ -153,19 +153,18 @@ function wireNav() {
     const nv = doc.querySelector(".bar__nav");
     return { content: pc ? pc.innerHTML : "", nav: nv ? nv.innerHTML : "", title: doc.title };
   }
+  // Run every content initialiser, each guarded on its own. A single failing
+  // init (e.g. a WebGL canvas that can't get a context after lots of section
+  // hops) must never stop the others or, crucially, abort arrive() before it
+  // reveals the page — otherwise the content stays transparent and the circuit
+  // background shows through. Worst case a widget stays blank; the page is fine.
   function initContentScripts() {
-    if (window.WorkLightbox) window.WorkLightbox.init();
-    if (window.WorkFlipbook) window.WorkFlipbook.init();
-    if (window.CDGallery) window.CDGallery.init();
-    if (window.CDWall) window.CDWall.init();
-    if (window.Flipbook) window.Flipbook.init();
-    if (window.WritingReader) window.WritingReader.init();
-    if (window.CWBears) window.CWBears.init();
-    if (window.Anchors) window.Anchors.init();
-    if (window.TWCanvas) window.TWCanvas.init();
-    if (window.TWViewer) window.TWViewer.init();
-    if (window.SkillCloud) window.SkillCloud.init();
-    if (window.UX) window.UX.init();
+    ["WorkLightbox", "WorkFlipbook", "CDGallery", "CDWall", "Flipbook",
+     "WritingReader", "CWBears", "Anchors", "TWCanvas", "TWViewer",
+     "SkillCloud", "UX"].forEach((k) => {
+      try { if (window[k] && typeof window[k].init === "function") window[k].init(); }
+      catch (e) { /* keep going: one widget failing can't block the reveal */ }
+    });
   }
 
   async function enterSection(href, push) {

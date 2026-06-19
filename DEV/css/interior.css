@@ -85,20 +85,17 @@ body.interior.theme-tech .page__content { padding-top: clamp(6px, 1.2vh, 14px); 
    above the bar (z-index:3) so the fullscreen overlay covers the header */
 body.lb-open .page__content { z-index: 50; }
 
-/* ── cross-document brain morph (View Transitions) ───────────────────────
-   On every full-page navigation the browser morphs the shared-named brain from
-   one page to the next and crossfades the rest. This gives the SAME brain
-   transition on a hard refresh + standalone navigation as the home SPA — no
-   blue curtain on the left, no blink on the right. Falls back to an instant
-   load on browsers without View Transitions (Firefox). */
-@view-transition { navigation: auto; }
-[data-brain] { view-transition-name: brain; }
-::view-transition-group(brain) { animation-duration: .55s; }
-::view-transition-old(root), ::view-transition-new(root) { animation-duration: .4s; }
-/* retire the old tech curtain + dormant veil — superseded by the brain morph */
+/* ── interior arrival transition ─────────────────────────────────────────
+   One consistent fade-in on EVERY interior page load (incl. hard refresh),
+   identical on the tech (left) and creative (right) sides. Replaces the old
+   blue xfade curtain (the "top-down") on the left and the dead veil/blink on
+   the right, so navigation is smooth and the same everywhere. The brain morph
+   still runs in the home SPA where there is no page reload. */
 body.theme-tech .xfade { display: none !important; }
+@keyframes interiorIn { from { opacity: 0; } to { opacity: 1; } }
+.interior .page { animation: interiorIn .42s ease both; }
 @media (prefers-reduced-motion: reduce) {
-  @view-transition { navigation: none; }
+  .interior .page { animation: none; opacity: 1; }
 }
 
 /* ── reduced motion: no glide ────────────────────────────────────────── */

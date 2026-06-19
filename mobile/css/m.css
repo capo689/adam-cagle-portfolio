@@ -143,6 +143,16 @@ body.m-leaving .m-curtain { opacity: 1; transition: opacity .42s ease; }
 .m-page__title { font-family: var(--serif); font-weight: 600; font-size: clamp(40px,13vw,66px); line-height: .98; letter-spacing: -.02em; margin: 12px 0 0; }
 .m-page__title .it { font-style: italic; color: var(--accent2); }
 .m-page__intro { margin-top: 18px; font-size: 17.5px; line-height: 1.65; color: var(--fg2); }
+/* creative-direction manifesto (mobile) — full copy block, scroll to the reel below */
+.m-cdm { margin-top: 22px; }
+.m-cdm__lead { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(27px,7.6vw,36px); line-height: 1.12; letter-spacing: -.01em; color: var(--fg); margin: 0 0 18px; }
+.m-cdm__def { font-family: var(--serif); font-size: 20px; line-height: 1.4; color: var(--fg2); margin: 0; }
+.m-cdm__three { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: clamp(23px,6.2vw,30px); line-height: 1.08; color: var(--accent2); margin: 3px 0 18px; }
+.m-cdm__p { font-family: var(--serif); font-size: 20px; line-height: 1.6; color: var(--fg2); margin: 0 0 15px; }
+.m-cdm__p em { font-style: italic; color: var(--fg); }
+.m-cdm__pull { font-family: var(--serif); font-style: italic; font-size: clamp(21px,5.6vw,26px); line-height: 1.24; color: var(--accent2); margin: 20px 0; }
+.m-cdm__outro { font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.5; color: var(--fg3); margin: 0; }
+.m-cdm__cue { display: inline-block; color: var(--accent2); }
 
 /* group head inside a page */
 .m-grp { margin-top: clamp(46px,8vh,80px); padding-top: 26px; border-top: 1px solid var(--line); }

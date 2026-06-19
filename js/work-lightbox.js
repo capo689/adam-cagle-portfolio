@@ -66,68 +66,51 @@
     return new Promise((resolve) => { const d = () => { img.onload = null; img.onerror = null; resolve(); }; img.onload = d; img.onerror = d; });
   }
   function findTile(gal, idx) { return document.querySelector('.ad[data-gallery="' + gal + '"][data-index="' + idx + '"]'); }
-  function makeFlyingClone(srcImg, rect, z) {
-    const clone = document.createElement('img');
-    clone.src = srcImg.src; clone.alt = srcImg.alt || '';
-    Object.assign(clone.style, {
-      position: 'fixed', top: rect.top + 'px', left: rect.left + 'px',
-      width: rect.width + 'px', height: rect.height + 'px', objectFit: 'cover',
-      margin: 0, pointerEvents: 'none', zIndex: String(z || 9995),
-      willChange: 'transform, filter, width, height, top, left',
-      borderRadius: getComputedStyle(srcImg).borderRadius || '0', boxShadow: '0 0 0 rgba(0,0,0,0)'
-    });
-    document.body.appendChild(clone); return clone;
+  function revealChrome() {
+    gsap.fromTo([lbCapL, lbCapR], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.06, delay: 0.18 });
+    gsap.to([btnClose, btnPrev, btnNext], { opacity: 1, duration: 0.3, ease: 'power2.out', delay: 0.22 });
   }
 
+  // FLIP open: fly the REAL <img> from the thumbnail box to its final box. One
+  // element start to finish — it lands on itself, so there is no clone and no
+  // end-of-zoom handoff to pop. Backdrop fades via GSAP on #lightbox.
   function open(gal, idx, sourceEl) {
     if (state.animating) return;
     state.animating = true; state.gal = gal; state.idx = idx; setText(idx);
     const item = galleries[gal][idx];
     const srcImg = sourceEl ? (sourceEl.querySelector('img') || sourceEl) : null;
-    if (!srcImg || typeof srcImg.getBoundingClientRect !== 'function') { simpleOpen(item.src); return; }
-    const startRect = srcImg.getBoundingClientRect();
     const pageEl = document.querySelector('.work__scene');
     lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.classList.add('lb-open');
-    gsap.set(lb, { opacity: 0 }); gsap.set(lbImg, { opacity: 0 });
+    gsap.set(lb, { opacity: 0 });
     gsap.set([lbCapL, lbCapR, btnClose, btnPrev, btnNext], { opacity: 0 });
+    gsap.set(lbImg, { opacity: 0 });
     lbImg.src = item.src; lbImg.alt = item.hl;
-    srcImg.style.opacity = '0'; state.hiddenImg = srcImg;
-    const clone = makeFlyingClone(srcImg, { top: startRect.top, left: startRect.left, width: startRect.width, height: startRect.height }, 9995);
     if (pageEl) gsap.to(pageEl, { scale: 0.93, filter: 'blur(10px)', duration: 0.7, ease: 'power2.out' });
-    gsap.to(lb, { opacity: 1, duration: 0.45, ease: 'power2.out' });
+    gsap.to(lb, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+    const first = (srcImg && typeof srcImg.getBoundingClientRect === 'function') ? srcImg.getBoundingClientRect() : null;
+    if (srcImg) { srcImg.style.opacity = '0'; state.hiddenImg = srcImg; }
     imageReady(lbImg).then(() => {
-      const tgt = lbImg.getBoundingClientRect();
-      const tgtRect = (tgt && tgt.width > 0) ? { top: tgt.top, left: tgt.left, width: tgt.width, height: tgt.height }
-        : { top: 100, left: 60, width: window.innerWidth - 120, height: window.innerHeight - 200 };
-      runFold(clone, tgtRect, pageEl);
+      const last = lbImg.getBoundingClientRect();
+      if (!first || !first.width || !last.width) {
+        gsap.fromTo(lbImg, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out', onComplete: () => { gsap.set(lbImg, { clearProps: 'transform' }); state.animating = false; } });
+        revealChrome(); return;
+      }
+      const s = first.width / last.width;
+      const dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+      const dy = (first.top + first.height / 2) - (last.top + last.height / 2);
+      gsap.set(lbImg, { opacity: 1, x: dx, y: dy, scale: s, transformOrigin: '50% 50%' });
+      gsap.to(lbImg, { x: 0, y: 0, scale: 1, duration: 0.62, ease: 'power3.inOut', onComplete: () => { gsap.set(lbImg, { clearProps: 'transform' }); state.animating = false; } });
+      revealChrome();
     });
   }
-  function runFold(clone, tgt, pageEl) {
-    const tl = gsap.timeline({ onComplete: () => {
-      gsap.set(lbImg, { opacity: 0, x: 0, y: 0, scale: 1, filter: 'none', rotationX: 0, z: 0 });
-      gsap.to(lbImg, { opacity: 1, duration: 0.22, ease: 'sine.out' });
-      gsap.to(clone, { opacity: 0, duration: 0.22, ease: 'sine.out', onComplete: () => { clone.remove(); state.animating = false; } });
-    }});
-    gsap.set(clone, { transformPerspective: 1300, transformStyle: 'preserve-3d', transformOrigin: '50% 100%' });
-    tl.to(clone, { rotationX: -5, scale: 1.02, duration: 0.28, ease: 'sine.in' });
-    tl.to(clone, { top: tgt.top, left: tgt.left, width: tgt.width, height: tgt.height, rotationX: 22, z: 220, scale: 1, duration: 0.78, ease: 'power3.inOut', boxShadow: '0 40px 90px rgba(0,0,0,0.55)' }, '<+0.24');
-    tl.to(clone, { rotationX: 0, z: 0, duration: 0.7, ease: 'expo.out' }, '>-0.32');
-    tl.to(clone, { filter: 'blur(2.2px)', duration: 0.32, ease: 'sine.inOut' }, '<-0.78');
-    tl.to(clone, { filter: 'blur(0px)', duration: 0.55, ease: 'sine.out' }, '>-0.15');
-    tl.fromTo([lbCapL, lbCapR], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.06 }, '-=0.4');
-    tl.to([btnClose, btnPrev, btnNext], { opacity: 1, duration: 0.3, ease: 'power2.out' }, '<+0.05');
-  }
-  function simpleOpen(src) {
-    lbImg.src = src; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.classList.add('lb-open');
-    gsap.fromTo(lb, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
-    gsap.fromTo(lbImg, { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out', onComplete: () => { state.animating = false; } });
-  }
+  // FLIP close: shrink the real <img> back to the thumbnail as the backdrop fades.
   function close() {
     if (state.animating) return; state.animating = true;
     const pageEl = document.querySelector('.work__scene');
     const tile = findTile(state.gal, state.idx);
     const tileImg = tile ? tile.querySelector('img') : null;
     gsap.to([btnClose, btnPrev, btnNext, lbCapL, lbCapR], { opacity: 0, y: 8, duration: 0.22, ease: 'power2.in' });
+    if (pageEl) gsap.to(pageEl, { scale: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' });
     function finish() {
       lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.classList.remove('lb-open');
       gsap.set([lb, lbImg, lbCapL, lbCapR, btnClose, btnPrev, btnNext], { clearProps: 'all' });
@@ -135,16 +118,15 @@
       document.querySelectorAll('.ad img[style*="opacity: 0"]').forEach((img) => { img.style.opacity = ''; });
       state.animating = false;
     }
-    if (pageEl) gsap.to(pageEl, { scale: 1, filter: 'blur(0px)', duration: 0.55, ease: 'power2.out' });
-    if (tileImg) {
-      const lbRect = lbImg.getBoundingClientRect(); const tgtRect = tileImg.getBoundingClientRect();
-      const clone = makeFlyingClone(lbImg, { top: lbRect.top, left: lbRect.left, width: lbRect.width, height: lbRect.height }, 9996);
-      gsap.set(lbImg, { opacity: 0 }); tileImg.style.opacity = '0';
-      const tl = gsap.timeline({ onComplete: () => { tileImg.style.opacity = ''; clone.remove(); finish(); } });
-      tl.to(clone, { filter: 'blur(2.5px)', duration: 0.18, ease: 'power2.in' });
-      tl.to(clone, { top: tgtRect.top, left: tgtRect.left, width: tgtRect.width, height: tgtRect.height, boxShadow: '0 0 0 rgba(0,0,0,0)', duration: 0.65, ease: 'power3.inOut' }, '<');
-      tl.to(clone, { filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' }, '>-0.2');
-      gsap.to(lb, { opacity: 0, duration: 0.55, delay: 0.1, ease: 'power2.in' });
+    const last = tileImg ? lbImg.getBoundingClientRect() : null;
+    const first = tileImg ? tileImg.getBoundingClientRect() : null;
+    if (tileImg && last.width && first.width) {
+      tileImg.style.opacity = '0';
+      const s = first.width / last.width;
+      const dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+      const dy = (first.top + first.height / 2) - (last.top + last.height / 2);
+      gsap.to(lbImg, { x: dx, y: dy, scale: s, duration: 0.5, ease: 'power3.inOut', transformOrigin: '50% 50%' });
+      gsap.to(lb, { opacity: 0, duration: 0.5, delay: 0.06, ease: 'power2.in', onComplete: finish });
     } else {
       gsap.to(lbImg, { opacity: 0, scale: 0.94, duration: 0.35, ease: 'power2.in' });
       gsap.to(lb, { opacity: 0, duration: 0.45, ease: 'power2.in', onComplete: finish });

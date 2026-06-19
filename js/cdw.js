@@ -74,47 +74,51 @@
       if (lb.__wall) lb.__wall.classList.add("cdw--frozen");
       document.documentElement.classList.add("cdwlb-lock");
       paint(idx < 0 ? 0 : idx);
-      const r = srcImg.getBoundingClientRect();
       const g = GS();
+      const first = srcImg.getBoundingClientRect();
       lb.classList.add("is-open"); lb.setAttribute("aria-hidden", "false");
       if (!g) { imgEl.style.opacity = 1; return; }
+      // FLIP: fly the REAL <img> from the thumbnail box to its final box. One
+      // element start to finish, so it lands on itself — no clone, no end-of-zoom
+      // handoff to pop. The backdrop fades via CSS (.cdwlb.is-open).
       lb.__animating = true;
-      imgEl.style.opacity = 0;
-      const clone = document.createElement("img");
-      clone.src = srcImg.currentSrc || srcImg.src;
-      Object.assign(clone.style, { position: "fixed", top: r.top + "px", left: r.left + "px", width: r.width + "px", height: r.height + "px", objectFit: "cover", borderRadius: "3px", zIndex: 10001, margin: 0, pointerEvents: "none", boxShadow: "0 40px 80px -30px rgba(0,0,0,.6)" });
-      document.body.appendChild(clone);
-      // Fly to the image's TRUE final box (the contain-fit lightbox <img>'s rect),
-      // then crossfade the real image in as the clone fades out — kills the
-      // end-of-zoom pop from a tile-aspect → natural-aspect snap. Mirrors the
-      // Copywriting lightbox fix.
+      g.set(imgEl, { opacity: 0 });
+      srcImg.style.opacity = "0"; lb.__hiddenTile = srcImg;
       imageReady(imgEl).then(() => {
-        const tr = imgEl.getBoundingClientRect();
-        const t = (tr && tr.width > 0) ? { x: tr.left, y: tr.top, w: tr.width, h: tr.height }
-          : targetRect((imgEl.naturalWidth / imgEl.naturalHeight) || (r.width / r.height) || 1);
-        g.to(clone, { top: t.y, left: t.x, width: t.w, height: t.h, duration: .55, ease: "power3.inOut", onComplete: () => {
-          g.set(imgEl, { opacity: 0 });
-          g.to(imgEl, { opacity: 1, duration: .2, ease: "sine.out" });
-          g.to(clone, { opacity: 0, duration: .2, ease: "sine.out", onComplete: () => { if (clone.parentNode) clone.remove(); lb.__animating = false; } });
-        } });
+        const last = imgEl.getBoundingClientRect();
+        if (!last.width || !first.width) { g.set(imgEl, { opacity: 1, clearProps: "transform" }); lb.__animating = false; return; }
+        const s = first.width / last.width;
+        const dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+        const dy = (first.top + first.height / 2) - (last.top + last.height / 2);
+        g.set(imgEl, { opacity: 1, x: dx, y: dy, scale: s, transformOrigin: "50% 50%" });
+        g.to(imgEl, { x: 0, y: 0, scale: 1, duration: .58, ease: "power3.inOut",
+          onComplete: () => { g.set(imgEl, { clearProps: "transform" }); lb.__animating = false; } });
       });
     };
     lb.close = function () {
       if (lb.__animating) return;
       const g = GS();
       const tile = lb.__tile;
-      const finish = () => { lb.classList.remove("is-open"); lb.setAttribute("aria-hidden", "true"); if (lb.__wall) lb.__wall.classList.remove("cdw--frozen"); document.documentElement.classList.remove("cdwlb-lock"); imgEl.style.opacity = ""; };
-      if (!g || !tile || !document.body.contains(tile)) { finish(); return; }
-      const ir = imgEl.getBoundingClientRect();
-      const tr = tile.querySelector("img").getBoundingClientRect();
+      const cleanup = () => {
+        lb.classList.remove("is-open"); lb.setAttribute("aria-hidden", "true");
+        if (lb.__wall) lb.__wall.classList.remove("cdw--frozen");
+        document.documentElement.classList.remove("cdwlb-lock");
+        if (g) g.set(imgEl, { clearProps: "transform" });
+        imgEl.style.opacity = "";
+        if (lb.__hiddenTile) { lb.__hiddenTile.style.opacity = ""; lb.__hiddenTile = null; }
+        lb.__animating = false;
+      };
+      const tileImg = tile && document.body.contains(tile) ? tile.querySelector("img") : null;
+      const last = g ? imgEl.getBoundingClientRect() : null;
+      const first = tileImg ? tileImg.getBoundingClientRect() : null;
+      if (!g || !tileImg || !last.width || !first.width) { cleanup(); return; }
+      // FLIP back: shrink the real <img> to the thumbnail as the backdrop fades.
       lb.__animating = true;
-      imgEl.style.opacity = 0;
-      const clone = document.createElement("img");
-      clone.src = imgEl.src;
-      Object.assign(clone.style, { position: "fixed", top: ir.top + "px", left: ir.left + "px", width: ir.width + "px", height: ir.height + "px", objectFit: "cover", borderRadius: "3px", zIndex: 10001, margin: 0, pointerEvents: "none" });
-      document.body.appendChild(clone);
-      lb.classList.add("is-closing");
-      g.to(clone, { top: tr.top + "px", left: tr.left + "px", width: tr.width + "px", height: tr.height + "px", duration: .45, ease: "power3.inOut", onComplete: () => { if (clone.parentNode) clone.remove(); lb.classList.remove("is-closing"); finish(); lb.__animating = false; } });
+      const s = first.width / last.width;
+      const dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+      const dy = (first.top + first.height / 2) - (last.top + last.height / 2);
+      lb.classList.remove("is-open");   // CSS fades the backdrop (and the img with it) out
+      g.to(imgEl, { x: dx, y: dy, scale: s, duration: .42, ease: "power2.inOut", transformOrigin: "50% 50%", onComplete: cleanup });
     };
     lb.querySelector(".cdwlb__close").addEventListener("click", lb.close);
     lb.querySelector(".cdwlb__prev").addEventListener("click", (e) => { e.stopPropagation(); lb.show(lb.__i - 1); });

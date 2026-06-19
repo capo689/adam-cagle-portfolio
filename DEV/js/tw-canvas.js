@@ -136,11 +136,22 @@ function makeInstance(canvas) {
   return inst;
 }
 
+function disposeInstance(inst) {            // release a thumbnail's WebGL context
+  try { inst.io && inst.io.disconnect(); } catch (e) {}
+  try { inst.renderer.dispose(); } catch (e) {}
+  try { inst.renderer.forceContextLoss(); } catch (e) {}
+}
+
 function loop(t) {
+  // free any instance whose canvas left the DOM on a section swap
+  for (let i = instances.length - 1; i >= 0; i--) {
+    if (!instances[i].canvas.isConnected) { disposeInstance(instances[i]); instances.splice(i, 1); }
+  }
+  if (!instances.length) { raf = 0; last = 0; return; }   // nothing left to draw → idle the loop
   raf = requestAnimationFrame(loop);
   const dt = Math.min((t - last) / 1000 || 0, 0.05); last = t;
   for (const inst of instances) {
-    if (!inst.visible || !inst.canvas.isConnected) continue;
+    if (!inst.visible) continue;
     inst.resize();
     inst.uniforms.uTime.value += dt;
     inst.renderer.render(inst.scene, inst.cam);
@@ -150,7 +161,7 @@ function loop(t) {
 function init() {
   // drop instances whose canvas left the DOM (SPA swaps)
   for (let i = instances.length - 1; i >= 0; i--) {
-    if (!instances[i].canvas.isConnected) { try { instances[i].renderer.dispose(); } catch (e) {} instances.splice(i, 1); }
+    if (!instances[i].canvas.isConnected) { disposeInstance(instances[i]); instances.splice(i, 1); }
   }
   document.querySelectorAll("canvas[data-shader]").forEach((c) => {
     if (c.__twInit) return;
@@ -161,6 +172,7 @@ function init() {
     if (reduced) { inst.visible = true; inst.resize(); inst.uniforms.uTime.value = 8.0; inst.renderer.render(inst.scene, inst.cam); inst.visible = false; return; }
     const io = new IntersectionObserver((es) => { es.forEach((e) => { inst.visible = e.isIntersecting; }); }, { rootMargin: "120px" });
     io.observe(c);
+    inst.io = io;
   });
   if (!reduced && !raf) raf = requestAnimationFrame(loop);
 }

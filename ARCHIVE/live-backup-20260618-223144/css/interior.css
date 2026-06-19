@@ -1,0 +1,125 @@
+/* interior.css — right / left brain section pages.
+   Layers on top of brain.css. The brain glides in from center to half off
+   one edge (left + up, one smooth move) with only its painted side showing.
+   The section nav lives in the main bar, centered where Resume sat on home.
+   The open side is left clear for page content (filled later). */
+
+:root { --bint: clamp(420px, 64vh, 760px); }
+
+/* keep the column flex shell from brain.css */
+body.interior { overflow: hidden; }
+
+/* ── section nav: sits in the main bar, where Resume was on home ──────── */
+.bar__nav {
+  justify-self: center;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: clamp(16px,2.4vw,42px);
+  opacity: 0; transform: translateY(9px);
+  animation: barnavIn .7s .28s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes barnavIn { to { opacity: 1; transform: none; } }
+
+.bar__nav a {
+  position: relative; text-decoration: none;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: clamp(11px,1vw,13px); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 600; line-height: 1;
+  color: #3d352a; padding-bottom: 7px; white-space: nowrap;
+  transition: color .25s ease;
+}
+
+/* hover + active: the blue-family shimmer the right-brain menu uses */
+.bar__nav a:hover,
+.bar__nav a.is-active {
+  background: linear-gradient(92deg, #8fc0f7 0%, #4D8BE8 30%, #3a78d8 55%, #7fb2f2 80%, #8fc0f7 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: navBlueShift 3.2s linear infinite;
+}
+.bar__nav a.is-active::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: #4D8BE8; box-shadow: 0 0 8px rgba(77,139,232,.75);
+}
+
+/* ── page body: floated brain on the left, content on the right ───────── */
+.page { position: relative; flex: 1; min-height: 0; }
+
+/* docked resting state (half off the left edge, painted side showing) */
+.brain--float {
+  position: fixed; top: 50%; left: 0;
+  width: var(--bint); height: var(--bint);
+  transform: translate(-50%,-50%);
+  z-index: 1; pointer-events: none;
+}
+/* start spot when arriving from home: near viewport centre, a touch lower */
+.brain--float.enter { transform: translate(calc(48vw - 50%), -42%) scale(1.04); }
+/* the single, gentle glide center -> dock (added by JS just before it moves) */
+.brain--float.sliding { transition: transform 1.35s cubic-bezier(.5,0,.22,1); }
+
+/* LEFT / tech side: brain docks at the RIGHT edge (left hemisphere visible) */
+.interior--left .brain--float { transform: translate(calc(100vw - 50%), -50%); }
+.interior--left .brain--float.enter { transform: translate(calc(52vw - 50%), -42%) scale(1.04); }
+
+/* a calmer brain footprint on content-heavy pages so the editorial breathes */
+.interior--work { --bint: clamp(300px, 46vh, 500px); }
+
+/* content sits clear of the visible brain half (view transitions fade it in) */
+.page__content {
+  position: relative; z-index: 2; height: 100%;
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  padding: clamp(20px,4vh,60px) clamp(24px,5vw,80px);
+  padding-left: clamp(24px, 32vw, 460px);
+}
+/* left / tech pages dock the brain on the RIGHT, so clear that side instead */
+.interior--left .page__content {
+  padding-left: clamp(24px, 5vw, 80px);
+  padding-right: clamp(24px, 32vw, 460px);
+}
+/* tech STANDALONE pages: tighten the gap between the bar and the content.
+   Scoped to .interior so it never clobbers the home SPA's .app .page__content,
+   which needs its larger top padding to clear the floating bar. */
+body.interior.theme-tech .page__content { padding-top: clamp(6px, 1.2vh, 14px); }
+
+/* while a lightbox/book viewer is open, lift the content's stacking context
+   above the bar (z-index:3) so the fullscreen overlay covers the header */
+body.lb-open .page__content { z-index: 50; }
+
+/* ── interior arrival transition ─────────────────────────────────────────
+   One consistent fade-in on EVERY interior page load (incl. hard refresh),
+   identical on the tech (left) and creative (right) sides. Replaces the old
+   blue xfade curtain (the "top-down") on the left and the dead veil/blink on
+   the right, so navigation is smooth and the same everywhere. The brain morph
+   still runs in the home SPA where there is no page reload. */
+body.theme-tech .xfade { display: none !important; }
+@keyframes interiorIn { from { opacity: 0; } to { opacity: 1; } }
+.interior .page { animation: interiorIn .42s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .interior .page { animation: none; opacity: 1; }
+}
+
+/* ── reduced motion: no glide ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .bar__nav { animation: none; opacity: 1; transform: none; }
+  .brain--float { transform: translate(-50%,-50%); }
+  .brain--float.sliding { transition: none; }
+  .page__content { opacity: 1; transition: none; }
+  .bar__nav a.is-active, .bar__nav a:hover { animation: none; }
+}
+
+/* ── small screens: nav wraps to its own row, brain steps aside ──────── */
+@media (max-width: 600px) {
+  body.interior .bar { grid-template-columns: 1fr auto; row-gap: 12px; }
+  body.interior .bar__nav { grid-column: 1 / -1; order: 3; gap: 18px; }
+}
+@media (max-width: 720px) {
+  body.interior { overflow-y: auto; }
+  .brain--float,
+  .brain--float.enter,
+  .brain--float.sliding {
+    position: relative; top: auto; left: auto; transform: none; transition: none;
+    width: min(72vw,360px); height: min(72vw,360px);
+    margin: 8px auto -6vw; opacity: 1;
+  }
+  .page__content { padding-left: clamp(24px,5vw,80px); opacity: 1; }
+}

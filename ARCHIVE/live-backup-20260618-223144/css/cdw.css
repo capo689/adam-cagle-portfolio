@@ -1,0 +1,361 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Creative Direction — the kinetic studio wall.
+   Three rows of work scroll past at different speeds and directions, paint
+   blotches punctuate the reel. Hover anywhere pauses everything; the piece
+   under the cursor lifts out and names its client. Minimal data, lots of work.
+   Pure CSS: no JS init needed, so it works the moment it is injected by the SPA.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.cdw {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  height: calc(100dvh - clamp(112px, 14vh, 156px));
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(14px, 2.4vh, 30px);
+}
+
+/* whisper-quiet header, top-left of the wall */
+.cdw__intro {
+  position: absolute;
+  top: clamp(8px, 1.6vh, 22px);
+  left: clamp(2px, 1vw, 14px);
+  z-index: 5;
+  pointer-events: none;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: #6b6354;
+}
+.cdw__intro b { color: var(--blue, #4D8BE8); font-weight: 500; }
+
+/* (paint washes removed — gummy bears now provide the colour punctuation) */
+
+/* ── editorial manifesto: defines the role before the reel ──────────────── */
+.cd-manifesto { max-width: 920px; padding: clamp(12px,2vh,28px) 0 clamp(18px,3vh,38px); color: #211d18; }
+.cd-manifesto .cdm-kicker {
+  display: flex; align-items: center; gap: 12px; margin: 0 0 18px;
+  font-family: var(--mono,"IBM Plex Mono",monospace);
+  font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: #8a8170;
+}
+.cd-manifesto .cdm-dash { width: 36px; height: 1px; background: #c2b9a7; }
+.cd-manifesto .cdm-lead {
+  font-family: var(--garamond,"EB Garamond",Georgia,serif);
+  font-style: italic; font-weight: 500;
+  font-size: clamp(27px,3.3vw,44px); line-height: 1.05; letter-spacing: -.01em;
+  color: #211d18; margin: 0 0 14px; max-width: 28ch;
+}
+.cd-manifesto .cdm-def {
+  font-family: var(--garamond,"EB Garamond",Georgia,serif);
+  font-size: clamp(18px,1.5vw,23px); line-height: 1.4; color: #3a342b; margin: 0 0 2px;
+}
+.cd-manifesto .cdm-three {
+  font-family: var(--garamond,"EB Garamond",Georgia,serif);
+  font-style: italic; font-weight: 600;
+  font-size: clamp(24px,2.7vw,38px); line-height: 1.08; letter-spacing: -.01em;
+  color: #4D8BE8; margin: 0 0 16px;
+}
+.cd-manifesto .cdm-p {
+  font-family: var(--garamond,"EB Garamond",Georgia,serif);
+  font-size: clamp(16px,1.25vw,20px); line-height: 1.46; color: #4a4339;
+  margin: 0 0 11px; max-width: 90ch;
+}
+.cd-manifesto .cdm-p em { font-style: italic; color: #211d18; }
+.cd-manifesto .cdm-pull {
+  font-family: var(--garamond,"EB Garamond",Georgia,serif); font-style: italic;
+  font-size: clamp(21px,2.2vw,32px); line-height: 1.18; color: #4D8BE8;
+  margin: 14px 0; max-width: 30ch;
+}
+.cd-manifesto .cdm-outro {
+  font-family: var(--garamond,"EB Garamond",Georgia,serif); font-style: italic;
+  font-size: clamp(16px,1.3vw,20px); line-height: 1.45; color: #6b6354; margin: 0;
+}
+.cd-manifesto .cdm-cue { display: inline-block; margin-left: 4px; color: #4D8BE8; animation: cdmbob 1.8s ease-in-out infinite; }
+@keyframes cdmbob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .cd-manifesto .cdm-cue { animation: none; } }
+@media (max-width: 820px) { .cd-manifesto { padding: 18px 0 32px; max-width: none; } }
+
+/* ── rows ──────────────────────────────────────────────────────────────
+   .cdw clips horizontally; rows stay overflow:visible so a lifted tile can
+   scale into the gap without being sliced. */
+.cdw__row { position: relative; z-index: 1; overflow: visible; display: flex; }
+.cdw__track {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: max-content;
+  will-change: transform;
+}
+.cdw__row--a .cdw__track { animation: cdwL 240s linear infinite; }
+.cdw__row--b .cdw__track { animation: cdwR 290s linear infinite; }
+.cdw__row--c .cdw__track { animation: cdwL 265s linear infinite; }
+
+@keyframes cdwL { from { transform: translate3d(0, 0, 0); }    to { transform: translate3d(-50%, 0, 0); } }
+@keyframes cdwR { from { transform: translate3d(-50%, 0, 0); } to { transform: translate3d(0, 0, 0); } }
+
+/* hover the wall: everything halts so you can study the work */
+.cdw:hover .cdw__track { animation-play-state: paused; }
+
+/* ── work tiles ────────────────────────────────────────────────────────
+   margin-right (not flex gap) so each tile owns its trailing space and the
+   doubled track loops seamlessly at exactly -50%. */
+.cdw__tile {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(140px, 20vh, 230px);
+  margin-right: clamp(14px, 1.7vw, 28px);
+  border: 0; padding: 0; background: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transform-origin: center;
+  transition: transform .42s cubic-bezier(.2, .7, .2, 1), opacity .42s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.cdw__tile img {
+  height: 100%; width: auto; display: block;
+  border-radius: 3px;
+  box-shadow: 0 12px 34px -20px rgba(40, 35, 28, .6), 0 2px 6px -3px rgba(40, 35, 28, .35);
+  transition: box-shadow .42s ease, filter .42s ease;
+  backface-visibility: hidden;
+}
+
+/* dim the field while one piece is in focus, lift the one under the cursor.
+   :not(:hover) keeps the rolled-over piece fully unscreened, the rest screened */
+.cdw:hover .cdw__tile:not(:hover) { opacity: .34; filter: saturate(.82); }
+.cdw__tile:hover,
+.cdw__tile:focus-visible {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.16) translateY(-2%);
+  z-index: 6;
+}
+.cdw__tile:hover img,
+.cdw__tile:focus-visible img {
+  box-shadow: 0 40px 70px -26px rgba(40, 35, 28, .72), 0 8px 20px -6px rgba(40, 35, 28, .45);
+  filter: saturate(1.06);
+}
+.cdw__tile:focus-visible { outline: 2px solid var(--blue, #4D8BE8); outline-offset: 5px; }
+
+/* expand hint, top-right of the focused piece */
+.cdw__tile::after {
+  content: "";
+  position: absolute;
+  top: 9px; right: 9px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(20, 17, 13, .62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3H3v6M21 9V3h-6M3 15v6h6M15 21h6v-6'/%3E%3C/svg%3E") center / 14px no-repeat;
+  opacity: 0;
+  transform: scale(.6);
+  transition: opacity .26s ease, transform .26s cubic-bezier(.2, .7, .2, 1);
+  pointer-events: none;
+}
+.cdw__tile:hover::after,
+.cdw__tile:focus-visible::after { opacity: 1; transform: none; }
+
+/* client name, revealed on the focused piece only */
+.cdw__name {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 26px 12px 11px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(to top, rgba(22, 18, 13, .82), rgba(22, 18, 13, .34) 55%, transparent);
+  color: #fff;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, .82vw, 13px);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+.cdw__name::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px; margin-right: 8px;
+  border-radius: 50%;
+  background: var(--blue, #4D8BE8);
+  vertical-align: middle;
+}
+.cdw__tile:hover .cdw__name,
+.cdw__tile:focus-visible .cdw__name { opacity: 1; transform: none; }
+
+/* ── gummy bears woven into the reel (decorative, not interactive) ─────── */
+.cdw__bear {
+  flex: 0 0 auto;
+  margin-right: clamp(14px, 1.7vw, 28px);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  user-select: none;
+}
+.cdw__bear img {
+  height: clamp(118px, 17vh, 196px);
+  width: auto; display: block;
+  filter: drop-shadow(0 14px 20px rgba(40, 35, 28, .20));
+}
+/* bears are never screened — they stay full colour even while the wall dims */
+
+/* hold the reel still while a piece is zoomed */
+.cdw--frozen .cdw__track { animation-play-state: paused !important; }
+
+/* ── click-to-zoom lightbox ───────────────────────────────────────────── */
+html.cdwlb-lock { overflow: hidden; }
+
+.cdwlb {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(46px, 8vh, 96px) clamp(54px, 8vw, 130px);
+  background: rgba(20, 17, 13, .93);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  opacity: 0; visibility: hidden;
+  transition: opacity .32s ease, visibility .32s ease;
+}
+.cdwlb.is-open { opacity: 1; visibility: visible; }
+
+.cdwlb__fig {
+  margin: 0; max-width: 100%; max-height: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(12px, 1.8vh, 22px);
+}
+.cdwlb__img {
+  max-width: min(92vw, 1500px);
+  max-height: 80vh;
+  width: auto; height: auto; object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 44px 100px -30px rgba(0, 0, 0, .75);
+  transform: scale(.95);
+  transition: transform .38s cubic-bezier(.2, .7, .2, 1);
+}
+.cdwlb.is-open .cdwlb__img { transform: none; }
+.cdwlb__cap {
+  color: #f2efe9;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 600; font-size: 12px;
+  letter-spacing: .18em; text-transform: uppercase;
+}
+.cdwlb__cap::before {
+  content: ""; display: inline-block;
+  width: 6px; height: 6px; margin-right: 9px;
+  border-radius: 50%; background: var(--blue, #4D8BE8);
+  vertical-align: middle;
+}
+
+.cdwlb__close,
+.cdwlb__arrow {
+  position: absolute;
+  border: 0; background: none; cursor: pointer;
+  color: #cfc9bd;
+  transition: color .2s ease, transform .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.cdwlb__close:hover,
+.cdwlb__arrow:hover { color: #fff; }
+.cdwlb__close {
+  top: clamp(14px, 2.4vh, 30px); right: clamp(16px, 2.4vw, 32px);
+  width: 46px; height: 46px;
+  font-size: 32px; line-height: 1;
+}
+.cdwlb__arrow {
+  top: 50%; transform: translateY(-50%);
+  width: clamp(40px, 5vw, 64px); height: clamp(60px, 12vh, 110px);
+  font-size: clamp(38px, 5vw, 60px); line-height: 1;
+}
+.cdwlb__arrow:hover { transform: translateY(-50%) scale(1.12); }
+.cdwlb__prev { left: clamp(6px, 1.6vw, 26px); }
+.cdwlb__next { right: clamp(6px, 1.6vw, 26px); }
+
+/* ── SPA: clear the brain docked on the left ──────────────────────────── */
+.app.side-right .page__content .cdw,
+.app.side-right .page__content .cd-manifesto { margin-left: clamp(180px, 25vw, 340px); }
+
+/* ── motion off ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cdw__track { animation: none !important; }
+  .cdw { height: auto; overflow: visible; }
+  .cdw__row { overflow-x: auto; }
+}
+
+/* ── touch / small screens: calmer, no auto-scroll, simple scroll-snap ─── */
+@media (max-width: 760px), (pointer: coarse) {
+  .cdw { height: auto; min-height: 0; overflow: visible; gap: 14px; padding-top: 34px; }
+  .cdw__track { animation: none !important; transform: none !important; }
+  .cdw__row { overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .cdw__row::-webkit-scrollbar { display: none; }
+  .cdw__tile { scroll-snap-align: center; }
+  .cdw:hover .cdw__tile { opacity: 1; }
+  .cdw__name { opacity: 1; transform: none; }   /* names always visible when tapping is the only input */
+  .app.side-right .page__content .cdw,
+  .app.side-right .page__content .cd-manifesto { margin-left: 0; }
+}
+
+/* ── logo cards woven into the reel (decorative brand punctuation) ─────── */
+.cdw__logo {
+  flex: 0 0 auto;
+  margin-right: clamp(14px, 1.7vw, 28px);
+  height: clamp(140px, 20vh, 230px);
+  pointer-events: none; user-select: none;
+}
+.cdw__logo img {
+  height: 100%; width: auto; display: block; border-radius: 3px;
+  box-shadow: 0 12px 30px -20px rgba(40, 35, 28, .5);
+}
+.cdw:hover .cdw__logo { opacity: .5; transition: opacity .42s ease; }
+
+/* ── book tile cue (AMD comic opens the flipbook) ─────────────────────── */
+.cdw__tile--book::before {
+  content: "Flip Book";
+  position: absolute; top: 9px; left: 9px; z-index: 2;
+  font-family: "Inter", Arial, sans-serif; font-weight: 600;
+  font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: #fff; background: rgba(20,17,13,.62);
+  padding: 5px 9px; border-radius: 999px;
+  opacity: 0; transform: translateY(-4px); transition: opacity .26s ease, transform .26s ease;
+  pointer-events: none;
+}
+.cdw__tile--book:hover::before { opacity: 1; transform: none; }
+
+/* ════ generic 3D page-turn flipbook viewer (AMD comic, any book) ════ */
+html.fb-lock { overflow: hidden; }
+.fb {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(8,8,7,.985);
+  display: none; align-items: center; justify-content: center; flex-direction: column;
+  padding: 56px 80px; opacity: 0; transition: opacity .22s ease;
+}
+.fb.open { display: flex; }
+.fb.visible { opacity: 1; }
+.fb-stage { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; perspective: 2800px; perspective-origin: 50% 45%; }
+.fb-book { position: relative; transform-style: preserve-3d; --pw: 300px; --ph: 420px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.7); }
+.fb-side { position: absolute; top: 0; width: var(--pw); height: var(--ph); background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0d0d0c; }
+.fb-side.fb-left { left: 0; } .fb-side.fb-right { right: 0; }
+.fb-side.blank { background-color: transparent; }
+.fb-book::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 96px; transform: translateX(-50%); z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.20) 47%, rgba(0,0,0,.32) 50%, rgba(0,0,0,.20) 53%, rgba(0,0,0,0) 100%); }
+.fb-leaf { position: absolute; top: 0; width: var(--pw); height: var(--ph); transform-style: preserve-3d; will-change: transform; z-index: 5; }
+.fb-leaf.fwd { left: var(--pw); transform-origin: left center; }
+.fb-leaf.bwd { left: 0; transform-origin: right center; }
+.fb-leaf.turning { transition: transform .9s cubic-bezier(.45,.05,.25,1); }
+.fb-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #0d0d0c; }
+.fb-front { transform: rotateY(0deg); } .fb-back { transform: rotateY(180deg); }
+.fb-shade { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(90deg, rgba(0,0,0,.5), rgba(0,0,0,0) 60%); }
+.fb-leaf.bwd .fb-shade { background: linear-gradient(270deg, rgba(0,0,0,.5), rgba(0,0,0,0) 60%); }
+.fb-leaf.turning .fb-shade { animation: fbShade .9s ease both; }
+@keyframes fbShade { 0% { opacity: 0; } 45% { opacity: .5; } 100% { opacity: 0; } }
+.fb-counter { font-family: var(--mono, monospace); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--blue, #4D8BE8); margin-top: 14px; }
+.fb-btn { position: absolute; background: rgba(18,17,16,.9); border: 1px solid rgba(246,243,236,.3); color: #f3efe6;
+  width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; cursor: pointer; transition: background .2s, border-color .2s, color .2s, transform .2s; z-index: 2; }
+.fb-btn:hover { background: var(--blue, #4D8BE8); border-color: var(--blue, #4D8BE8); color: #fff; }
+.fb-close { top: 20px; right: 20px; font-size: 26px; }
+.fb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+.fb-next { right: 20px; top: 50%; transform: translateY(-50%); }
+.fb-prev:hover { transform: translateY(-50%) scale(1.1); }
+.fb-next:hover { transform: translateY(-50%) scale(1.1); }
+@media (max-width: 760px) { .fb { padding: 56px 12px 48px; } }

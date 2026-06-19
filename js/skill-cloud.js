@@ -53,8 +53,14 @@
       return true;
     }
 
-    let raf = 0, visible = true, settled = false;
+    let raf = 0, visible = true, settled = false, io = null;
     function frame() {
+      if (!canvas.isConnected) {                 // canvas removed on a section swap: stop & release
+        raf = 0;
+        if (io) { io.disconnect(); io = null; }
+        window.removeEventListener("resize", onResize);
+        return;
+      }
       raf = requestAnimationFrame(frame);
       if (!visible) return;
       ctx.clearRect(0, 0, W, H);
@@ -98,8 +104,11 @@
     canvas.addEventListener("pointerleave", () => { mouse.on = false; mouse.x = -9999; mouse.y = -9999; });
 
     if (!sample()) {
-      // not laid out yet; retry shortly
-      const t = setInterval(() => { if (sample()) { clearInterval(t); start(); } }, 200);
+      // not laid out yet; retry shortly (give up if the canvas leaves the DOM)
+      const t = setInterval(() => {
+        if (!canvas.isConnected) { clearInterval(t); return; }
+        if (sample()) { clearInterval(t); start(); }
+      }, 200);
       return;
     }
     start();
@@ -109,13 +118,17 @@
       if (reduced) { visible = true; return; }
       // visible defaults true so it animates even if IO never delivers; IO only pauses offscreen
       try {
-        const io = new IntersectionObserver((es) => { es.forEach((e) => { visible = e.isIntersecting; }); }, { rootMargin: "200px" });
+        io = new IntersectionObserver((es) => { es.forEach((e) => { visible = e.isIntersecting; }); }, { rootMargin: "200px" });
         io.observe(canvas);
       } catch (e) { /* keep animating */ }
       if (!raf) raf = requestAnimationFrame(frame);
     }
     let rt;
-    window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { DPR = Math.min(window.devicePixelRatio || 1, 2); sample(); }, 200); });
+    function onResize() {
+      if (!canvas.isConnected) { window.removeEventListener("resize", onResize); return; }
+      clearTimeout(rt); rt = setTimeout(() => { DPR = Math.min(window.devicePixelRatio || 1, 2); sample(); }, 200);
+    }
+    window.addEventListener("resize", onResize);
   }
 
   function init() {

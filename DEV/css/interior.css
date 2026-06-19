@@ -92,31 +92,6 @@ body.lb-open .page__content { z-index: 50; }
    the right, so navigation is smooth and the same everywhere. The brain morph
    still runs in the home SPA where there is no page reload. */
 body.theme-tech .xfade { display: none !important; }
-
-/* ── hemisphere cross: click the brain to switch sides ───────────────────── */
-.brain--float.brain-cross__hot { pointer-events: auto; cursor: pointer; z-index: 5; }
-.brain-cross__label {
-  position: absolute; top: 50%; transform: translate(-50%, -50%);
-  font-family: var(--mono, "IBM Plex Mono", monospace); font-size: 12px;
-  letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
-  padding: 9px 16px; border-radius: 999px; background: rgba(18,22,30,.74);
-  color: #fff; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
-  opacity: 0; transition: opacity .25s ease; pointer-events: none; z-index: 2;
-}
-.interior--right .brain--float.brain-cross__hot .brain-cross__label { left: 72%; }
-.interior--left  .brain--float.brain-cross__hot .brain-cross__label { left: 28%; }
-.brain--float.brain-cross__hot:hover .brain-cross__label { opacity: 1; }
-@media (prefers-reduced-motion: reduce), (pointer: coarse) { .brain-cross__label { display: none; } }
-
-/* the cross itself: content fades, brain rides above a bg-crossfade veil */
-.interior .page__content { transition: opacity .42s ease; }
-.brain-crossing .page__content { opacity: 0; }
-.brain-crossing .brain--float { z-index: 300; }
-.brain-cross__veil {
-  position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none;
-  transition: opacity .5s ease;
-}
-.brain-cross__veil.in { opacity: 1; }
 @keyframes interiorIn { from { opacity: 0; } to { opacity: 1; } }
 .interior .page { animation: interiorIn .42s ease both; }
 @media (prefers-reduced-motion: reduce) {

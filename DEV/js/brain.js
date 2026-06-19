@@ -219,6 +219,38 @@ function wireNav() {
     }, reduced ? 0 : 850);                                  // let the colour fully drain first
   }
 
+  // crossSection: switch to the OTHER hemisphere without leaving section-mode.
+  // The brain drains to the plain engraving, GLIDES across (the .app .brain
+  // transform transition), then the new side's colour floods on as it lands and
+  // that side's first page flows in. One continuous brain, no reload.
+  async function crossSection(href, push) {
+    const name = baseName(href), side = sideOf(name);            // destination side
+    if (!side || busyNav || mode !== "section") return;
+    busyNav = true;
+
+    body.classList.remove("content-in");                         // outgoing content fades
+    if (window.__brain) { window.__brain.colorSpeed(0.06); window.__brain.sides(0, 0); } // drain to plain
+
+    let data;
+    try { data = await fetchSection(href); }
+    catch (e) { window.location.href = href; return; }
+
+    setTimeout(() => {
+      body.classList.toggle("theme-tech", side === "left");
+      body.classList.toggle("side-left",  side === "left");
+      body.classList.toggle("side-right", side === "right");     // brain GLIDES to the far dock
+      pageContent.innerHTML = data.content; pageContent.scrollTop = 0;   // swap under the travelling brain
+      if (barNav) barNav.innerHTML = data.nav;
+      if (data.title) document.title = data.title;
+      initContentScripts();
+      if (push) history.pushState({ section: name }, "", href);
+      // colour floods the new hemisphere as the brain nears its dock
+      setTimeout(() => { if (window.__brain) window.__brain.lock(side === "left" ? 1 : 0, side === "right" ? 1 : 0); }, reduced ? 0 : 470);
+      // content flows in once the brain has landed and recoloured
+      setTimeout(() => { body.classList.add("content-in"); busyNav = false; }, reduced ? 0 : 980);
+    }, reduced ? 0 : 460);                                       // sit plain a beat, then set off
+  }
+
   function goHome(push) {
     if (busyNav || mode === "home") return;
     busyNav = true; mode = "home";
@@ -256,10 +288,27 @@ function wireNav() {
     }
   });
 
+  // click the brain (while a section is open) to cross to the other hemisphere
+  const xHit = document.createElement("div");
+  xHit.className = "brain-cross-hit";
+  xHit.innerHTML = '<span class="brain-cross-label"></span>';
+  const xLabel = xHit.querySelector(".brain-cross-label");
+  wrap.appendChild(xHit);
+  xHit.addEventListener("mouseenter", () => {
+    if (mode === "section") xLabel.textContent = body.classList.contains("side-left") ? "Go Right Brain" : "Go Left Brain";
+  });
+  xHit.addEventListener("click", () => {
+    if (mode !== "section" || busyNav) return;
+    crossSection(body.classList.contains("side-left") ? "copywriting.html" : "ai-systems.html", true);
+  });
+
   window.addEventListener("popstate", () => {
     const name = baseName(location.pathname), side = sideOf(name);
-    if (side) { mode === "home" ? enterSection(location.pathname, false) : swapSection(location.pathname, false); }
-    else if (mode === "section") goHome(false);
+    if (side) {
+      if (mode === "home") { enterSection(location.pathname, false); return; }
+      const cur = body.classList.contains("side-left") ? "left" : "right";
+      (side !== cur ? crossSection : swapSection)(location.pathname, false);
+    } else if (mode === "section") goHome(false);
   });
 }
 

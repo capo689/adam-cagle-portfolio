@@ -482,6 +482,29 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
 .app.section-mode.side-right .brain { transform: translate(calc(-50% - 50vw), -50%); }
 .app.section-mode.side-left  .brain { transform: translate(calc(-50% + 50vw), -50%); }
 
+/* hemisphere-cross hotspot: appears over the visible brain half while a section
+   is open. Hovering shows "Go Left/Right Brain"; clicking crosses to the other
+   side. A child of the brain wrap (which stays pointer-events:none so it never
+   blocks the scroll layer); only this small disc re-enables pointer events. */
+.brain-cross-hit {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: clamp(150px, 17vw, 230px); height: clamp(150px, 17vw, 230px);
+  border-radius: 50%; display: grid; place-items: center;
+  pointer-events: none; cursor: pointer; z-index: 3;
+}
+.app.section-mode .brain-cross-hit { pointer-events: auto; }
+.app.section-mode.side-right .brain-cross-hit { left: 72%; }  /* brain docked left  → hover its right half */
+.app.section-mode.side-left  .brain-cross-hit { left: 28%; }  /* brain docked right → hover its left half  */
+.brain-cross-label {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .2em;
+  text-transform: uppercase; white-space: nowrap; padding: 9px 16px; border-radius: 999px;
+  background: rgba(18,22,30,.74); color: #fff;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  opacity: 0; transition: opacity .25s ease; pointer-events: none;
+}
+.app.section-mode .brain-cross-hit:hover .brain-cross-label { opacity: 1; }
+@media (pointer: coarse) { .brain-cross-hit { display: none; } }
+
 /* home UI fades out fast while the brain glides */
 .app .stage { transition: opacity .32s ease; }
 .app.section-mode .stage { opacity: 0; pointer-events: none; }

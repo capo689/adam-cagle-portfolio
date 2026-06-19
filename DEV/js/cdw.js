@@ -5,6 +5,11 @@
 (function () {
   const GS = () => (typeof gsap !== "undefined" ? gsap : null);
 
+  function imageReady(img) {
+    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+    return new Promise((res) => { const d = () => { img.onload = null; img.onerror = null; res(); }; img.onload = d; img.onerror = d; });
+  }
+
   function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
     return a;
@@ -70,8 +75,6 @@
       document.documentElement.classList.add("cdwlb-lock");
       paint(idx < 0 ? 0 : idx);
       const r = srcImg.getBoundingClientRect();
-      const aspect = r.width / r.height || 1;
-      const t = targetRect(aspect);
       const g = GS();
       lb.classList.add("is-open"); lb.setAttribute("aria-hidden", "false");
       if (!g) { imgEl.style.opacity = 1; return; }
@@ -81,7 +84,20 @@
       clone.src = srcImg.currentSrc || srcImg.src;
       Object.assign(clone.style, { position: "fixed", top: r.top + "px", left: r.left + "px", width: r.width + "px", height: r.height + "px", objectFit: "cover", borderRadius: "3px", zIndex: 10001, margin: 0, pointerEvents: "none", boxShadow: "0 40px 80px -30px rgba(0,0,0,.6)" });
       document.body.appendChild(clone);
-      g.to(clone, { top: t.y, left: t.x, width: t.w, height: t.h, duration: .55, ease: "power3.inOut", onComplete: () => { imgEl.style.opacity = 1; if (clone.parentNode) clone.remove(); lb.__animating = false; } });
+      // Fly to the image's TRUE final box (the contain-fit lightbox <img>'s rect),
+      // then crossfade the real image in as the clone fades out — kills the
+      // end-of-zoom pop from a tile-aspect → natural-aspect snap. Mirrors the
+      // Copywriting lightbox fix.
+      imageReady(imgEl).then(() => {
+        const tr = imgEl.getBoundingClientRect();
+        const t = (tr && tr.width > 0) ? { x: tr.left, y: tr.top, w: tr.width, h: tr.height }
+          : targetRect((imgEl.naturalWidth / imgEl.naturalHeight) || (r.width / r.height) || 1);
+        g.to(clone, { top: t.y, left: t.x, width: t.w, height: t.h, duration: .55, ease: "power3.inOut", onComplete: () => {
+          g.set(imgEl, { opacity: 0 });
+          g.to(imgEl, { opacity: 1, duration: .2, ease: "sine.out" });
+          g.to(clone, { opacity: 0, duration: .2, ease: "sine.out", onComplete: () => { if (clone.parentNode) clone.remove(); lb.__animating = false; } });
+        } });
+      });
     };
     lb.close = function () {
       if (lb.__animating) return;

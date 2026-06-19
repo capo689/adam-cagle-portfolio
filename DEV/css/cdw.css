@@ -230,10 +230,10 @@ html.cdwlb-lock { overflow: hidden; }
   width: auto; height: auto; object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 44px 100px -30px rgba(0, 0, 0, .75);
-  transform: scale(.95);
-  transition: transform .38s cubic-bezier(.2, .7, .2, 1);
+  will-change: transform;
 }
-.cdwlb.is-open .cdwlb__img { transform: none; }
+/* the open/close zoom is a clone-free FLIP driven by GSAP in cdw.js — no CSS
+   transform here, or it would fight the JS transform mid-flight */
 .cdwlb__cap {
   color: #f2efe9;
   font-family: "Inter", Arial, sans-serif;

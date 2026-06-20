@@ -72,12 +72,20 @@
   /* checklist */
   .checks{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(24px,4vw,56px);margin-top:40px;list-style:none;padding:0}
   .checks li{display:flex;gap:13px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--line);color:var(--fg);font-size:16px}
-  .checks li .ck{color:var(--accent);font-weight:800;flex:none;margin-top:1px}
+  .checks li::before{content:"\2713";color:var(--accent);font-weight:800;flex:none;margin-top:1px}
 
   /* who pills */
   .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
   .pill{border:1px solid var(--line);border-radius:999px;padding:9px 17px;color:var(--fg2);font-size:14.5px;background:var(--panel)}
   .pill--soft{border-color:transparent;background:transparent;color:var(--fg3);padding-left:0}
+  .hero__line{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.1vw,24px);line-height:1.42;color:var(--fg);border-left:3px solid var(--accent);padding-left:18px;max-width:48ch;margin:22px 0 0}
+  .fitlist{list-style:none;padding:0;margin:34px 0 0;max-width:62ch}
+  .fitlist li{padding:14px 0 14px 28px;border-top:1px solid var(--line);position:relative;color:var(--fg2);font-size:clamp(16px,1.7vw,19px)}
+  .fitlist li:last-child{border-bottom:1px solid var(--line)}
+  .fitlist li::before{content:"";position:absolute;left:2px;top:24px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .fitlist b{color:var(--fg);font-weight:600}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.4vw,30px);margin-top:40px}
+  .trio div{font-family:var(--serif);font-size:clamp(22px,2.9vw,34px);color:var(--fg);padding-top:18px;border-top:2px solid var(--accent)}
 
   /* statement */
   .stmt{text-align:center}
@@ -118,7 +126,7 @@
   footer a{color:var(--fg2);text-decoration:none}footer a:hover{color:var(--fg)}
   .frow2{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
 
-  @media (max-width:760px){ .checks{grid-template-columns:1fr} .split{grid-template-columns:1fr} .frow{grid-template-columns:1fr} }
+  @media (max-width:760px){ .checks{grid-template-columns:1fr} .split{grid-template-columns:1fr} .frow{grid-template-columns:1fr} .trio{grid-template-columns:1fr} }
   @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .reveal{opacity:1;transform:none;transition:none} .btn:hover{transform:none} }
 </style>
 <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
@@ -129,8 +137,9 @@
     <div class="wrap">
       <span class="kicker reveal">Bend &amp; Central Oregon</span>
       <h1 class="reveal">The <span class="accent">$1,000</span> Local Site</h1>
-      <p class="hero__lead reveal">A fast, clean website for local businesses that need to get found, get trusted, and get contacted.</p>
-      <p class="hero__sub reveal">Most local businesses do not need a bloated agency project. They need a website that loads fast, explains the business clearly, works on phones, helps Google and AI understand what they do, and makes it easy to call, book, or reach out.</p>
+      <p class="hero__lead reveal">A fast, clean website for local businesses that need more calls, bookings, visits, and customers.</p>
+      <p class="hero__sub reveal">Most local businesses do not need a bloated agency project. They need a site that loads fast, makes them look legitimate, explains what they do, and makes the next step obvious.</p>
+      <p class="hero__line reveal">If someone finds you on Google, clicks your site, and still does not know why they should call, the site is not doing its job.</p>
       <div class="hero__cta reveal">
         <a class="btn" href="#start">Start my site</a>
         <a class="btn btn--ghost" href="#included">See what's included</a>
@@ -161,18 +170,18 @@
       <h2 class="sec reveal" style="margin-top:14px">A local business website built to do the basics extremely well.</h2>
       <p class="sub reveal">For $1,000, here is exactly what is included.</p>
       <ul class="checks">
-        <li class="reveal"><span class="ck">+</span>A clean, mobile-first website</li>
-        <li class="reveal"><span class="ck">+</span>Up to five core pages</li>
-        <li class="reveal"><span class="ck">+</span>Homepage and page copy if you need it</li>
-        <li class="reveal"><span class="ck">+</span>Contact form wired to your inbox</li>
-        <li class="reveal"><span class="ck">+</span>Location, service area, and map structure</li>
-        <li class="reveal"><span class="ck">+</span>Image gallery or menu section if relevant</li>
-        <li class="reveal"><span class="ck">+</span>Local SEO page titles and descriptions</li>
-        <li class="reveal"><span class="ck">+</span>Built so Google and AI understand your business</li>
-        <li class="reveal"><span class="ck">+</span>Schema and JSON-LD setup</li>
-        <li class="reveal"><span class="ck">+</span>Launch support and a clean handoff</li>
-        <li class="reveal"><span class="ck">+</span>No monthly website rental</li>
-        <li class="reveal"><span class="ck">+</span>You own all of it</li>
+        <li class="reveal">A clean, mobile-first website</li>
+        <li class="reveal">Up to five core pages</li>
+        <li class="reveal">Homepage and page copy if you need it</li>
+        <li class="reveal">Contact form wired to your inbox</li>
+        <li class="reveal">Location, service area, and map structure</li>
+        <li class="reveal">Image gallery or menu section if relevant</li>
+        <li class="reveal">Local SEO page titles and descriptions</li>
+        <li class="reveal">Built so Google and AI understand your business</li>
+        <li class="reveal">Schema and JSON-LD setup</li>
+        <li class="reveal">Launch support and a clean handoff</li>
+        <li class="reveal">No monthly website rental</li>
+        <li class="reveal">You own all of it</li>
       </ul>
     </div>
   </section>
@@ -187,19 +196,16 @@
   <section>
     <div class="wrap">
       <span class="kicker reveal">Who it is for</span>
-      <h2 class="sec reveal" style="margin-top:14px">Built for real local businesses.</h2>
-      <div class="pills">
-        <span class="pill reveal">Contractors</span>
-        <span class="pill reveal">Beauty businesses</span>
-        <span class="pill reveal">Mobile services</span>
-        <span class="pill reveal">Restaurants &amp; food</span>
-        <span class="pill reveal">Event vendors</span>
-        <span class="pill reveal">Real estate pros</span>
-        <span class="pill reveal">Health &amp; wellness</span>
-        <span class="pill reveal">Coaches &amp; trainers</span>
-        <span class="pill reveal">Repair services</span>
-        <span class="pill reveal">Creative businesses</span>
-      </div>
+      <h2 class="sec reveal" style="margin-top:14px">Perfect for local businesses like these.</h2>
+      <ul class="fitlist">
+        <li class="reveal"><b>Contractors</b> who need estimate requests</li>
+        <li class="reveal"><b>Salons and beauty businesses</b> that need bookings</li>
+        <li class="reveal"><b>Food businesses</b> that need menus and location clarity</li>
+        <li class="reveal"><b>Mobile service businesses</b> that need calls</li>
+        <li class="reveal"><b>Event vendors</b> that need trust fast</li>
+        <li class="reveal"><b>Health and wellness providers</b> that need a clean local presence</li>
+        <li class="reveal"><b>Repair businesses</b> that need to show up when people search</li>
+      </ul>
       <p class="sub reveal" style="margin-top:24px">And anyone whose current site is embarrassing, missing, slow, or trapped in a builder.</p>
     </div>
   </section>
@@ -219,6 +225,20 @@
           <div class="step reveal"><h3>I build the site</h3><p>Copy, structure, design, local SEO basics, forms, and mobile layout.</p></div>
           <div class="step reveal"><h3>We review and launch</h3><p>You check it, we make smart adjustments, and it goes live. Usually inside a week when content is ready.</p></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <span class="kicker reveal">Why this is different</span>
+      <h2 class="sec reveal" style="margin-top:14px">Not a template. Not an agency. Not outsourced.</h2>
+      <p class="sub reveal">I am not reselling a template, outsourcing your site, or dragging you through an agency process. I have spent twenty-five years writing, designing, building, and fixing marketing that has to perform.</p>
+      <p class="reveal" style="font-family:var(--serif);font-size:clamp(19px,2.3vw,27px);color:var(--fg);margin-top:6px">This is the stripped down local version of that work.</p>
+      <div class="trio">
+        <div class="reveal">One person.</div>
+        <div class="reveal">One clear price.</div>
+        <div class="reveal">A real site you own.</div>
       </div>
     </div>
   </section>

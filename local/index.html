@@ -99,6 +99,26 @@
   .leaflet-popup-content a{color:#1273e6;text-decoration:none;font-weight:600}
   .leaflet-popup-content a.gmaps{display:inline-block;margin-top:7px}
   .mapbox .leaflet-control-attribution{font-size:10px}
+  /* live example */
+  .site-frame{display:block;margin:32px 0 28px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0a0c11;text-decoration:none;box-shadow:0 26px 64px -34px rgba(0,0,0,.75);transition:border-color .25s,transform .25s}
+  .site-frame:hover{border-color:rgba(47,155,255,.55);transform:translateY(-3px)}
+  .site-frame__bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#15181f;border-bottom:1px solid var(--line)}
+  .site-frame__bar i{width:10px;height:10px;border-radius:50%;background:#3a3f4a;display:block;flex:none}
+  .site-frame__bar em{margin-left:12px;font-family:var(--mono);font-size:12px;color:var(--fg3);font-style:normal}
+  .site-frame__view{display:block;position:relative;width:100%;overflow:hidden;background:#0a0c11;line-height:0}
+  .site-frame__view img{display:block;width:100%;height:auto}
+  /* before / after */
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,30px);margin:36px 0 6px}
+  .ba__item{margin:0}
+  .ba__tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin:0 0 11px}
+  .ba__tag--before{background:#241f1b;color:#caa991;border:1px solid rgba(202,169,145,.35)}
+  .ba__tag--after{background:rgba(47,155,255,.16);color:var(--accent2);border:1px solid rgba(47,155,255,.45)}
+  .ba__shot{display:block;border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#0a0c11}
+  .ba__shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+  a.ba__shot{transition:border-color .25s,transform .25s}
+  a.ba__shot:hover{border-color:rgba(47,155,255,.55);transform:translateY(-3px)}
+  .ba__item figcaption{margin-top:12px;color:var(--fg2);font-size:14.5px;line-height:1.5}
+  .ba__item figcaption a{color:var(--accent2);text-decoration:none;font-weight:600;white-space:nowrap}
 
   /* statement */
   .stmt{text-align:center}
@@ -139,7 +159,7 @@
   footer a{color:var(--fg2);text-decoration:none}footer a:hover{color:var(--fg)}
   .frow2{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
 
-  @media (max-width:760px){ .checks{grid-template-columns:1fr} .split{grid-template-columns:1fr} .frow{grid-template-columns:1fr} .trio{grid-template-columns:1fr} }
+  @media (max-width:760px){ .checks{grid-template-columns:1fr} .split{grid-template-columns:1fr} .frow{grid-template-columns:1fr} .trio{grid-template-columns:1fr} .ba{grid-template-columns:1fr} }
   @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .reveal{opacity:1;transform:none;transition:none} .btn:hover{transform:none} }
 </style>
 <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
@@ -206,6 +226,32 @@
       <p class="sub reveal">Hand-built and styled to match your site, with your real locations and one tap to directions. Not a generic embed. As a demo, here are three of my favorite ice cream shops in Bend.</p>
       <div id="icecream-map" class="mapbox" role="application" aria-label="Map of favorite Bend ice cream shops"></div>
       <p class="fnote reveal">Click a scoop for the address, phone, and directions.</p>
+    </div>
+  </section>
+
+  <section id="example">
+    <div class="wrap">
+      <span class="kicker reveal">A real client</span>
+      <h2 class="sec reveal" style="margin-top:14px">Sips Cocktail Catering. Before and after.</h2>
+      <p class="sub reveal">A Bend mobile bar company. Same business, rebuilt to load fast, explain itself, and get found. Here is the difference.</p>
+      <div class="ba">
+        <figure class="ba__item reveal">
+          <span class="ba__tag ba__tag--before">Before</span>
+          <span class="ba__shot"><img src="img/sips-before.jpg" alt="The old Sips Cocktail Catering website" loading="lazy"></span>
+          <figcaption>Cramped, slow, and nearly invisible to search.</figcaption>
+        </figure>
+        <figure class="ba__item reveal">
+          <span class="ba__tag ba__tag--after">After</span>
+          <a class="ba__shot" href="https://www.sipscocktailcatering.com" target="_blank" rel="noopener" aria-label="Visit the live Sips Cocktail Catering site"><img src="img/sips-after.jpg" alt="The new Sips Cocktail Catering website" loading="lazy"></a>
+          <figcaption>Fast, clear, and built to get found and booked. <a href="https://www.sipscocktailcatering.com" target="_blank" rel="noopener">Visit it live</a></figcaption>
+        </figure>
+      </div>
+      <ul class="checks">
+        <li class="reveal">Built to rank. A local-first title and description for the searches that matter, like mobile bar catering in Bend.</li>
+        <li class="reveal">Answer-engine ready. LocalBusiness and FAQ structure, so Google and AI can understand it and answer for it.</li>
+        <li class="reveal">One clear next step. A request-a-proposal path, with the photos and proof that close the booking.</li>
+        <li class="reveal">Fast, mobile, and owned by the business.</li>
+      </ul>
     </div>
   </section>
 
@@ -354,6 +400,8 @@
       var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
       document.querySelectorAll('.reveal').forEach(function(el,i){el.style.transitionDelay=((i%4)*55)+'ms';io.observe(el);});
     } else { document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); }
+    function scaleSites(){ document.querySelectorAll('.site-frame__view').forEach(function(v){ var f=v.querySelector('iframe'); if(!f) return; var s=v.clientWidth/1440; f.style.transform='scale('+s+')'; v.style.height=Math.round(900*s)+'px'; }); }
+    scaleSites(); window.addEventListener('resize', scaleSites); setTimeout(scaleSites,400);
     var form=document.getElementById('lead'),status=document.getElementById('f-status'),btn=document.getElementById('f-submit');
     form.addEventListener('submit',function(e){
       e.preventDefault();status.className='fstatus';

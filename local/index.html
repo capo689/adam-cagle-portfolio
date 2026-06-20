@@ -113,10 +113,19 @@
   .ba__tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin:0 0 11px}
   .ba__tag--before{background:#241f1b;color:#caa991;border:1px solid rgba(202,169,145,.35)}
   .ba__tag--after{background:rgba(47,155,255,.16);color:var(--accent2);border:1px solid rgba(47,155,255,.45)}
-  .ba__shot{display:block;border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#0a0c11}
-  .ba__shot img{width:100%;height:100%;object-fit:cover;object-position:top}
-  a.ba__shot{transition:border-color .25s,transform .25s}
-  a.ba__shot:hover{border-color:rgba(47,155,255,.55);transform:translateY(-3px)}
+  .ba__shot{display:block;position:relative;width:100%;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#0a0c11;cursor:zoom-in;transition:border-color .25s,transform .25s}
+  .ba__shot:hover{border-color:rgba(47,155,255,.55);transform:translateY(-3px)}
+  .ba__shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .ba__zoom{position:absolute;bottom:10px;right:10px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:rgba(6,8,12,.74);color:#fff;border:1px solid rgba(255,255,255,.18);pointer-events:none;opacity:.85;transition:opacity .2s}
+  .ba__shot:hover .ba__zoom{opacity:1}
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,56px);background:rgba(6,8,12,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+  .lb.open{opacity:1;visibility:visible}
+  .lb__img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 40px 110px -20px rgba(0,0,0,.85);object-fit:contain;transform:scale(.93);transition:transform .38s cubic-bezier(.2,.7,.2,1)}
+  .lb.open .lb__img{transform:scale(1)}
+  .lb__x{position:absolute;top:clamp(12px,2vw,26px);right:clamp(12px,2vw,26px);width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(20,24,32,.85);color:#fff;font:400 26px/1 var(--sans);cursor:pointer;display:grid;place-items:center;transition:background .2s,transform .25s,color .2s}
+  .lb__x:hover{background:var(--accent);color:#04101f;transform:rotate(90deg)}
+  @media (prefers-reduced-motion:reduce){.lb,.lb__img,.lb__x{transition:opacity .2s ease}.lb__img{transform:none}}
   .ba__item figcaption{margin-top:12px;color:var(--fg2);font-size:14.5px;line-height:1.5}
   .ba__item figcaption a{color:var(--accent2);text-decoration:none;font-weight:600;white-space:nowrap}
 
@@ -237,12 +246,12 @@
       <div class="ba">
         <figure class="ba__item reveal">
           <span class="ba__tag ba__tag--before">Before</span>
-          <span class="ba__shot"><img src="/local/img/sips-before.jpg" alt="The old Sips Cocktail Catering website" loading="lazy"></span>
+          <button type="button" class="ba__shot" data-full="/local/img/sips-before.jpg" aria-label="Enlarge the old Sips site"><img src="/local/img/sips-before.jpg" alt="The old Sips Cocktail Catering website" loading="lazy"><span class="ba__zoom">Enlarge</span></button>
           <figcaption>Cramped, slow, and nearly invisible to search.</figcaption>
         </figure>
         <figure class="ba__item reveal">
           <span class="ba__tag ba__tag--after">After</span>
-          <a class="ba__shot" href="https://www.sipscocktailcatering.com" target="_blank" rel="noopener" aria-label="Visit the live Sips Cocktail Catering site"><img src="/local/img/sips-after.jpg" alt="The new Sips Cocktail Catering website" loading="lazy"></a>
+          <button type="button" class="ba__shot" data-full="/local/img/sips-after.jpg" aria-label="Enlarge the new Sips site"><img src="/local/img/sips-after.jpg" alt="The new Sips Cocktail Catering website" loading="lazy"><span class="ba__zoom">Enlarge</span></button>
           <figcaption>Fast, clear, and built to get found and booked. <a href="https://www.sipscocktailcatering.com" target="_blank" rel="noopener">Visit it live</a></figcaption>
         </figure>
       </div>
@@ -361,6 +370,11 @@
     </div>
   </footer>
 
+  <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button class="lb__x" type="button" aria-label="Close preview">&times;</button>
+    <img class="lb__img" alt="">
+  </div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script>
@@ -402,6 +416,13 @@
     } else { document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); }
     function scaleSites(){ document.querySelectorAll('.site-frame__view').forEach(function(v){ var f=v.querySelector('iframe'); if(!f) return; var s=v.clientWidth/1440; f.style.transform='scale('+s+')'; v.style.height=Math.round(900*s)+'px'; }); }
     scaleSites(); window.addEventListener('resize', scaleSites); setTimeout(scaleSites,400);
+    var lb=document.getElementById('lb'), lbImg=lb&&lb.querySelector('.lb__img'), lbX=lb&&lb.querySelector('.lb__x');
+    function openLB(src,alt){ if(!lb) return; lbImg.src=src; lbImg.alt=alt||''; lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); document.documentElement.style.overflow='hidden'; }
+    function closeLB(){ if(!lb) return; lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); document.documentElement.style.overflow=''; }
+    document.querySelectorAll('.ba__shot').forEach(function(b){ b.addEventListener('click', function(){ var img=b.querySelector('img'); openLB(b.getAttribute('data-full')||(img&&img.src), img&&img.alt); }); });
+    if(lbX) lbX.addEventListener('click', closeLB);
+    if(lb) lb.addEventListener('click', function(e){ if(e.target===lb) closeLB(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb && lb.classList.contains('open')) closeLB(); });
     var form=document.getElementById('lead'),status=document.getElementById('f-status'),btn=document.getElementById('f-submit');
     form.addEventListener('submit',function(e){
       e.preventDefault();status.className='fstatus';

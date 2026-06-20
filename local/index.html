@@ -4,267 +4,258 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>A $1,000 Website for Central Oregon Businesses | Adam R. Cagle</title>
+<title>A $1,000 Website That Earns Its Keep | Central Oregon | Adam R. Cagle</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Clean, fast, hand-built websites with a complete SEO and AEO package, for Central Oregon small businesses and startups. $1,000. Usually done in under a week.">
+<meta name="description" content="Fast, clean, hand-built websites for Central Oregon businesses, built to get you found on Google and AI. $1,000 flat. Usually live in under a week.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <meta property="og:type" content="website">
-<meta property="og:title" content="A $1,000 website that gets you found | Adam R. Cagle">
-<meta property="og:description" content="Hand-built, fast, complete SEO + AEO. For Central Oregon small businesses and startups. Usually done in under a week. No tricks, no hidden fees.">
+<meta property="og:title" content="A $1,000 website that earns its keep">
+<meta property="og:description" content="Fast, clean, hand-built websites for Central Oregon. Built to get you found on Google and AI. $1,000 flat. Usually live in under a week. No tricks.">
 <meta property="og:image" content="https://adamcagle.com/og-card.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://adamcagle.com/og-card.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5f0; --surface:#ffffff; --ink:#1c1b19; --ink2:#52504b; --ink3:#85827b;
-    --line:rgba(28,27,25,.12); --accent:#1273e6; --accent-ink:#0c4f9e;
+    --bg:#0c0e13; --bg2:#11141b; --panel:#161a23; --line:rgba(255,255,255,.10);
+    --fg:#f3f4f6; --fg2:#aeb4c0; --fg3:#7b8290;
+    --accent:#2f9bff; --accent2:#7fc0ff;
     --serif:"EB Garamond",Georgia,serif; --sans:"Inter",Arial,sans-serif; --mono:"IBM Plex Mono",monospace;
-    --wrap:1080px;
+    --wrap:1120px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:var(--accent-ink)}
-  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,5vw,40px)}
-  .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink)}
-  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.08;margin:0}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--accent);color:#04101f}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(22px,5vw,48px)}
+  .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent2)}
+  h1,h2{font-family:var(--serif);font-weight:600;line-height:1.04;letter-spacing:-.01em;margin:0}
   p{margin:0 0 1em}
-  .btn{display:inline-block;background:var(--accent);color:#fff;font-family:var(--sans);font-weight:600;font-size:16px;
-    text-decoration:none;padding:15px 30px;border-radius:10px;border:0;cursor:pointer;transition:transform .15s ease,background .2s ease}
-  .btn:hover{background:#0e63c8;transform:translateY(-1px)}
-  .btn--ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);padding:13.5px 26px}
-  .btn--ghost:hover{background:#fff;border-color:var(--ink);transform:translateY(-1px)}
+  .accent{color:var(--accent)}
+  .btn{display:inline-block;background:var(--accent);color:#04101f;font-weight:700;font-size:16px;text-decoration:none;
+    padding:16px 32px;border-radius:999px;border:0;cursor:pointer;transition:transform .15s ease,box-shadow .25s ease,background .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(47,155,255,.7);background:#4aa8ff}
+  .btn--ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line);font-weight:600}
+  .btn--ghost:hover{border-color:var(--fg);box-shadow:none}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
 
   /* hero */
-  .hero{padding:clamp(64px,11vh,120px) 0 clamp(48px,7vh,80px)}
-  .hero h1{font-size:clamp(40px,6.4vw,76px);letter-spacing:-.01em;margin:18px 0 0}
-  .hero .accent{color:var(--accent)}
-  .hero__sub{font-size:clamp(17px,2vw,21px);color:var(--ink2);max-width:40ch;margin:22px 0 0}
-  .hero__cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px}
-  .price{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:40px;padding-top:26px;border-top:1px solid var(--line)}
-  .price__num{font-family:var(--serif);font-size:clamp(44px,6vw,64px);font-weight:600;line-height:1}
-  .price__note{color:var(--ink2);font-size:16px}
+  .hero{position:relative;padding:clamp(70px,13vh,150px) 0 clamp(56px,8vh,96px);overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;
+    background:radial-gradient(120% 90% at 78% 0%, rgba(47,155,255,.20), transparent 55%),
+               radial-gradient(80% 70% at 0% 100%, rgba(47,155,255,.08), transparent 60%)}
+  .hero .wrap{position:relative;z-index:1}
+  .hero h1{font-size:clamp(46px,8.4vw,104px);margin:20px 0 0}
+  .hero__sub{font-size:clamp(18px,2.1vw,23px);color:var(--fg2);max-width:30ch;margin:24px 0 0}
+  .hero__cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+  .tag{display:inline-flex;align-items:center;gap:10px;margin-top:40px;font-family:var(--mono);font-size:14px;color:var(--fg2)}
+  .tag b{color:var(--accent);font-size:19px;letter-spacing:.02em}
+  .tag .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
 
-  section{padding:clamp(44px,7vh,76px) 0}
-  .lead{font-size:clamp(22px,3vw,30px);font-family:var(--serif);line-height:1.25;max-width:24ch}
-  h2.sec{font-size:clamp(26px,3.4vw,38px);letter-spacing:-.01em}
-  .sec-intro{color:var(--ink2);max-width:48ch;margin-top:12px}
+  section{padding:clamp(54px,9vh,108px) 0;position:relative}
+  .band{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  h2.sec{font-size:clamp(30px,4.6vw,52px)}
+  .sub{color:var(--fg2);max-width:52ch;margin-top:16px;font-size:clamp(16px,1.6vw,19px)}
 
-  /* what you get grid */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px;margin-top:34px}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 22px 24px}
-  .card h3{font-family:var(--sans);font-size:17px;font-weight:600;margin:0 0 6px}
-  .card p{font-size:15px;color:var(--ink2);margin:0}
-  .card .tick{color:var(--accent);font-weight:700;margin-right:6px}
+  /* problem rows */
+  .rows{margin-top:46px;border-top:1px solid var(--line)}
+  .prow{display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,4vw,46px);align-items:baseline;
+    padding:clamp(22px,3.4vh,38px) 0;border-bottom:1px solid var(--line)}
+  .prow .n{font-family:var(--serif);font-size:clamp(34px,5vw,60px);color:var(--accent);line-height:.9}
+  .prow h3{font-family:var(--serif);font-weight:600;font-size:clamp(21px,2.7vw,30px);margin:0 0 6px;color:var(--fg)}
+  .prow p{color:var(--fg2);margin:0;max-width:54ch}
+  .closer{margin-top:34px;font-family:var(--serif);font-size:clamp(20px,2.6vw,30px);color:var(--fg)}
+  .closer b{color:var(--accent)}
 
-  /* two-up */
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:start}
-  .two .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(24px,3vw,36px)}
-  .ul{list-style:none;margin:18px 0 0;padding:0}
-  .ul li{position:relative;padding:9px 0 9px 28px;border-top:1px solid var(--line);color:var(--ink2)}
-  .ul li:first-child{border-top:0}
-  .ul li::before{content:"\2713";position:absolute;left:0;top:9px;color:var(--accent);font-weight:700}
-  .ul li b{color:var(--ink);font-weight:600}
+  /* offer blocks */
+  .offers{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.4vw,26px);margin-top:48px}
+  .ob{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(26px,3vw,38px);transition:border-color .25s,transform .25s}
+  .ob:hover{border-color:rgba(47,155,255,.5);transform:translateY(-3px)}
+  .ob h3{font-family:var(--serif);font-weight:600;font-size:clamp(22px,2.7vw,30px);margin:0 0 10px}
+  .ob p{color:var(--fg2);margin:0;font-size:16px}
 
-  /* why me */
-  .why{background:#15171c;color:#eceae4;border-radius:20px;padding:clamp(30px,4vw,52px)}
-  .why .eyebrow{color:#6fb3ff}
-  .why h2{color:#fff}
-  .why p{color:#bcbbb4;max-width:60ch}
-  .why a{color:#6fb3ff}
-  .why .creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:30px}
-  .why .creds .n{font-family:var(--serif);font-size:34px;color:#fff;line-height:1}
-  .why .creds .l{color:#9a988f;font-size:14px;margin-top:6px}
+  /* statement band */
+  .stmt{text-align:center}
+  .stmt .big{font-family:var(--serif);font-weight:600;font-size:clamp(40px,8vw,92px);line-height:1;letter-spacing:-.02em}
+  .stmt .big .accent{text-shadow:0 0 44px rgba(47,155,255,.55)}
+  .stmt p{color:var(--fg2);margin-top:18px;font-size:clamp(16px,1.8vw,20px)}
 
-  /* beyond / promise */
-  .promise{text-align:center;max-width:30ch;margin:0 auto}
-  .promise h2{font-size:clamp(28px,4vw,44px)}
-  .promise p{color:var(--ink2);margin-top:14px}
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,30px);margin-top:48px;counter-reset:s}
+  .step{position:relative;padding-top:18px;border-top:2px solid var(--accent)}
+  .step::before{counter-increment:s;content:"0" counter(s);font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.1em}
+  .step h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:10px 0 6px}
+  .step p{color:var(--fg2);font-size:15px;margin:0}
+
+  /* why split */
+  .split{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,6vw,80px);align-items:center}
+  .why p{color:var(--fg2);font-size:clamp(16px,1.7vw,19px);max-width:46ch}
 
   /* form */
-  .form-sec{background:var(--surface);border-top:1px solid var(--line)}
-  form{max-width:620px;margin:30px 0 0}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  form{max-width:640px;margin:34px 0 0}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .field{margin:0 0 14px}
-  label{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin:0 0 6px}
-  input,textarea{width:100%;font-family:var(--sans);font-size:16px;color:var(--ink);background:#fff;
-    border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;transition:border-color .2s ease}
+  label{display:block;font-size:12.5px;font-weight:600;letter-spacing:.04em;color:var(--fg3);text-transform:uppercase;margin:0 0 7px}
+  input,textarea{width:100%;font-family:var(--sans);font-size:16px;color:var(--fg);background:#0a0c11;border:1.5px solid var(--line);
+    border-radius:12px;padding:14px 15px;transition:border-color .2s}
   input:focus,textarea:focus{outline:none;border-color:var(--accent)}
   textarea{min-height:130px;resize:vertical}
-  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-  .form-note{font-size:14px;color:var(--ink3);margin-top:10px}
-  .form-status{margin-top:16px;font-weight:600;display:none}
-  .form-status.ok{display:block;color:#1d7a3e}
-  .form-status.err{display:block;color:#b3261e}
+  .hp{position:absolute;left:-9999px}
+  .fnote{font-size:14px;color:var(--fg3);margin-top:12px}
+  .fstatus{margin-top:16px;font-weight:600;display:none}
+  .fstatus.ok{display:block;color:#5fd08a}.fstatus.err{display:block;color:#ff7a72}
 
-  footer{padding:40px 0 56px;border-top:1px solid var(--line);color:var(--ink3);font-size:14px}
-  footer a{color:var(--ink2);text-decoration:none}
-  footer a:hover{color:var(--ink)}
-  .foot-row{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
+  footer{padding:42px 0 60px;border-top:1px solid var(--line);color:var(--fg3);font-size:14px}
+  footer a{color:var(--fg2);text-decoration:none}footer a:hover{color:var(--fg)}
+  .frow2{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
 
-  @media (max-width:640px){ .two{grid-template-columns:1fr} .row{grid-template-columns:1fr} }
-  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .btn:hover{transform:none} }
+  @media (max-width:760px){ .offers{grid-template-columns:1fr} .steps{grid-template-columns:1fr} .split{grid-template-columns:1fr} .frow{grid-template-columns:1fr} }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .reveal{opacity:1;transform:none;transition:none} .btn:hover{transform:none} }
 </style>
 </head>
 <body>
 
   <header class="hero">
     <div class="wrap">
-      <span class="eyebrow">Central Oregon small businesses &amp; startups</span>
-      <h1>A <span class="accent">$1,000</span> website that actually gets you found.</h1>
-      <p class="hero__sub">Clean, fast, hand-built code with a complete SEO and AEO package. Built to rank on Google and to show up when people ask AI. No templates. No tricks. No hidden fees.</p>
-      <div class="hero__cta">
-        <a class="btn" href="#start">Start a project</a>
-        <a class="btn btn--ghost" href="https://adamcagle.com" target="_blank" rel="noopener">See my work</a>
+      <span class="kicker reveal">Websites · Bend &amp; Central Oregon</span>
+      <h1 class="reveal">A website that <span class="accent">earns its keep.</span></h1>
+      <p class="hero__sub reveal">Fast, clean, and built to get you found. On Google, and on AI. Usually live in under a week.</p>
+      <div class="hero__cta reveal">
+        <a class="btn" href="#start">Start your site</a>
+        <a class="btn btn--ghost" href="#offer">What you get</a>
       </div>
-      <div class="price">
-        <span class="price__num">$1,000</span>
-        <span class="price__note">Flat. In most cases I am done in under a week.</span>
-      </div>
+      <div class="tag reveal"><span class="dot"></span><b>$1,000 flat.</b> One price. You own it.</div>
     </div>
   </header>
 
-  <section>
+  <section class="band">
     <div class="wrap">
-      <span class="eyebrow">What you get</span>
-      <h2 class="sec">Everything a local business needs to be found and trusted.</h2>
-      <p class="sec-intro">Hand-coded, not dragged together in a bloated page builder. Fast, clean, and structured so both search engines and AI assistants can read it.</p>
-      <div class="grid">
-        <div class="card"><h3><span class="tick">+</span>Clean, fast code</h3><p>Built by hand to load quickly and score well. Speed is part of how you rank.</p></div>
-        <div class="card"><h3><span class="tick">+</span>Complete SEO &amp; AEO</h3><p>Structured so Google ranks you and AI tools like ChatGPT and Perplexity can find and recommend you.</p></div>
-        <div class="card"><h3><span class="tick">+</span>Multi-page site</h3><p>As many pages as your business needs. Home, services, about, contact, and beyond.</p></div>
-        <div class="card"><h3><span class="tick">+</span>Contact forms</h3><p>Real working forms so customers can reach you, with messages sent straight to your inbox.</p></div>
-        <div class="card"><h3><span class="tick">+</span>Custom locator maps</h3><p>Show people exactly where you are, built to match your site instead of a generic embed.</p></div>
-        <div class="card"><h3><span class="tick">+</span>Image galleries &amp; menus</h3><p>Show your work, your space, or your menu, cleanly and fast on every device.</p></div>
-        <div class="card"><h3><span class="tick">+</span>Copywriting if you need it</h3><p>I have written copy professionally for twenty-five years. Bring your own words, or I can write the whole site for you.</p></div>
-        <div class="card"><h3><span class="tick">+</span>You own it</h3><p>It is your site and your content. No lock-in, no surprises.</p></div>
+      <span class="kicker reveal">The part nobody tells you</span>
+      <h2 class="sec reveal" style="margin-top:14px">Right now, your website is doing one of three things.</h2>
+      <div class="rows">
+        <div class="prow reveal"><div class="n">1</div><div><h3>It doesn't exist.</h3><p>So when someone searches for what you do, they find a competitor instead. Every day, quietly.</p></div></div>
+        <div class="prow reveal"><div class="n">2</div><div><h3>It's slow and dated.</h3><p>People tap, wait, and leave before it loads. A slow site does not just look bad. It ranks worse and loses the sale.</p></div></div>
+        <div class="prow reveal"><div class="n">3</div><div><h3>It's a rented template.</h3><p>You pay every month for a site you do not own, that looks like ten thousand others, and that Google has no reason to favor.</p></div></div>
+      </div>
+      <p class="closer reveal">All three cost you customers. <b>All three are fixable for $1,000.</b></p>
+    </div>
+  </section>
+
+  <section id="offer">
+    <div class="wrap">
+      <span class="kicker reveal">What you get</span>
+      <h2 class="sec reveal" style="margin-top:14px">Fast. Found. Yours.</h2>
+      <p class="sub reveal">A real website, hand-built for your business. Not dragged out of a page builder, not rented by the month.</p>
+      <div class="offers">
+        <div class="ob reveal"><h3>Found on Google and AI</h3><p>A complete SEO and AEO package, so the people searching for what you do land on you, whether they ask a search engine or ask an AI.</p></div>
+        <div class="ob reveal"><h3>Fast enough to keep them</h3><p>Hand-coded and lightweight, so it loads the instant they tap. Speed is how you rank, and how you stop losing visitors before they read a word.</p></div>
+        <div class="ob reveal"><h3>Everything a local business needs</h3><p>Multiple pages, working contact forms, image galleries, menus, and custom locator maps. Built to fit you, not a template.</p></div>
+        <div class="ob reveal"><h3>Words, if you need them</h3><p>Bring your own copy, or I write the whole thing. I have written copy for a living for twenty-five years.</p></div>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="wrap two">
-      <div class="panel">
-        <span class="eyebrow">What I need from you</span>
-        <h2 class="sec" style="font-size:clamp(24px,3vw,32px);margin-top:10px">You supply the words and the pictures.</h2>
-        <ul class="ul">
-          <li><b>Your content.</b> The text you want on the site.</li>
-          <li><b>Your imagery.</b> Photos, logo, and anything visual you have.</li>
-        </ul>
-        <p style="color:var(--ink2);margin-top:18px">That is it. I take it from there. And if writing is not your strength, I am a copywriter of twenty-five years. I can write the whole site for you. Just ask.</p>
-      </div>
-      <div class="panel">
-        <span class="eyebrow">Timeline</span>
-        <h2 class="sec" style="font-size:clamp(24px,3vw,32px);margin-top:10px">Usually live in under a week.</h2>
-        <p style="color:var(--ink2);margin-top:18px">Once I have your content and imagery, most sites are built, reviewed, and live within a week. You see it, we adjust, it ships.</p>
-      </div>
+  <section class="band stmt">
+    <div class="wrap reveal">
+      <div class="big">$1,000. <span class="accent">That's the whole price.</span></div>
+      <p>No setup fee. No monthly trap. No surprise invoice. You own the site and the content, free and clear.</p>
     </div>
   </section>
 
   <section>
-    <div class="wrap">
+    <div class="wrap split">
       <div class="why">
-        <span class="eyebrow">Why me</span>
-        <h2 class="sec">A real builder, here in Bend.</h2>
-        <p>I have spent twenty-five years as a creative director and copywriter at Agency689, building brands and campaigns across gaming, hospitality, music, and tech. I build the sites myself, by hand. The same care goes into yours.</p>
-        <p>You are not hiring a template or an offshore shop. You get a local person who writes the copy, builds the code, and answers the phone. This page and <a href="https://adamcagle.com" target="_blank" rel="noopener">adamcagle.com</a> are examples of the work.</p>
-        <div class="creds">
-          <div><div class="n">25 yrs</div><div class="l">Creative direction &amp; copywriting</div></div>
-          <div><div class="n">Bend, OR</div><div class="l">Local, Central Oregon</div></div>
-          <div><div class="n">By hand</div><div class="l">Built clean, no templates</div></div>
+        <span class="kicker reveal">Why me</span>
+        <h2 class="sec reveal" style="margin:14px 0 18px">Twenty-five years. One person. Local.</h2>
+        <p class="reveal">I have spent twenty-five years as a creative director and copywriter, building brands and writing the words that sell them. I build these sites myself, by hand, here in Bend.</p>
+        <p class="reveal">You get a real person who answers the phone, not a ticket in a queue. No agency markup. No offshore template shop. No platform charging you rent every month.</p>
+      </div>
+      <div>
+        <div class="steps" style="grid-template-columns:1fr">
+          <div class="step reveal"><h3>You send your content</h3><p>Your words and photos. Or I write the copy for you.</p></div>
+          <div class="step reveal"><h3>I build it</h3><p>Fast, clean, and made to rank. By hand.</p></div>
+          <div class="step reveal"><h3>It goes live</h3><p>You review, we adjust, it ships. Usually inside a week.</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="wrap two">
+  <section class="band">
+    <div class="wrap split">
       <div>
-        <span class="eyebrow">Beyond the $1,000 site</span>
-        <h2 class="sec" style="margin-top:10px">Need more than a website?</h2>
-        <p class="sec-intro">I also build applications, data-driven sites, games, and custom software. That is a different conversation, but I would love to have it. Tell me what you are trying to do.</p>
+        <span class="kicker reveal">Beyond the $1,000 site</span>
+        <h2 class="sec reveal" style="margin-top:14px;font-size:clamp(26px,3.6vw,40px)">Need more than a website?</h2>
+        <p class="sub reveal">Apps, data-driven sites, custom tools, games, real software. I build those too. Different conversation. Worth having.</p>
       </div>
       <div>
-        <span class="eyebrow">The promise</span>
-        <h2 class="sec" style="margin-top:10px">No tricks. No hidden fees.</h2>
-        <p class="sec-intro">A genuinely great website that loads fast, ranks well, and that you own. Clear price, clear scope, clear timeline.</p>
+        <span class="kicker reveal">The promise</span>
+        <h2 class="sec reveal" style="margin-top:14px;font-size:clamp(26px,3.6vw,40px)">No tricks. No hidden fees.</h2>
+        <p class="sub reveal">A clear price, a clear scope, and a great website that actually gets you found. Then it is yours.</p>
       </div>
     </div>
   </section>
 
-  <section class="form-sec" id="start">
+  <section id="start">
     <div class="wrap">
-      <span class="eyebrow">Start a project</span>
-      <h2 class="sec">Tell me about your business.</h2>
-      <p class="sec-intro">Send a few details and I will get back to you fast with next steps.</p>
-      <form id="lead" novalidate>
+      <span class="kicker reveal">Start a project</span>
+      <h2 class="sec reveal" style="margin-top:14px">Tell me about your business.</h2>
+      <p class="sub reveal">Send a few details and I will come back fast with next steps.</p>
+      <form id="lead" class="reveal" novalidate>
         <input type="hidden" name="access_key" value="WEB3FORMS_ACCESS_KEY">
         <input type="hidden" name="subject" value="New $1,000 website lead (adamcagle.com/local)">
         <input type="hidden" name="from_name" value="adamcagle.com/local">
-        <div class="row">
+        <div class="frow">
           <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
           <div class="field"><label for="f-biz">Business name</label><input id="f-biz" name="business" type="text" autocomplete="organization"></div>
         </div>
-        <div class="row">
+        <div class="frow">
           <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
           <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
         </div>
-        <div class="field"><label for="f-msg">Tell me about your project</label><textarea id="f-msg" name="message" required></textarea></div>
-        <div class="hp"><label>Leave this empty<input name="botcheck" type="checkbox" tabindex="-1" autocomplete="off"></label></div>
-        <button class="btn" type="submit" id="f-submit">Send</button>
-        <p class="form-note">Goes straight to my inbox. No list, no spam.</p>
-        <p class="form-status" id="f-status" role="status" aria-live="polite"></p>
+        <div class="field"><label for="f-msg">What are you building?</label><textarea id="f-msg" name="message" required></textarea></div>
+        <div class="hp"><label>Leave empty<input name="botcheck" type="checkbox" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn" type="submit" id="f-submit">Send it</button>
+        <p class="fnote">Goes straight to my inbox. No list, no spam.</p>
+        <p class="fstatus" id="f-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
 
   <footer>
-    <div class="wrap foot-row">
-      <span>Adam R. Cagle</span><span aria-hidden="true">&middot;</span>
-      <span>Bend, Oregon</span><span aria-hidden="true">&middot;</span>
+    <div class="wrap frow2">
+      <span>Adam R. Cagle</span><span aria-hidden="true">·</span>
+      <span>Bend, Oregon</span><span aria-hidden="true">·</span>
       <a href="https://adamcagle.com" target="_blank" rel="noopener">adamcagle.com</a>
     </div>
   </footer>
 
 <script>
   (function(){
-    var form = document.getElementById('lead');
-    var status = document.getElementById('f-status');
-    var btn = document.getElementById('f-submit');
+    var ro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!ro && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin:'0px 0px -8% 0px', threshold:0.08 });
+      document.querySelectorAll('.reveal').forEach(function(el,i){ el.style.transitionDelay = ((i%4)*55)+'ms'; io.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    }
+    var form = document.getElementById('lead'), status = document.getElementById('f-status'), btn = document.getElementById('f-submit');
     form.addEventListener('submit', function(e){
-      e.preventDefault();
-      status.className = 'form-status';
-      if (!form.reportValidity()) return;
+      e.preventDefault(); status.className='fstatus';
+      if(!form.reportValidity()) return;
       var key = form.querySelector('[name=access_key]').value;
-      if (key === 'WEB3FORMS_ACCESS_KEY') {
-        status.textContent = 'Form not connected yet. Add your Web3Forms access key.';
-        status.className = 'form-status err';
-        return;
-      }
-      btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending...';
-      var data = Object.fromEntries(new FormData(form).entries());
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(function(r){ return r.json(); }).then(function(j){
-        if (j.success) {
-          form.reset();
-          status.textContent = 'Thanks. Your message is in. I will be in touch shortly.';
-          status.className = 'form-status ok';
-        } else {
-          status.textContent = 'Something went wrong. Please email me directly instead.';
-          status.className = 'form-status err';
-        }
-      }).catch(function(){
-        status.textContent = 'Something went wrong. Please email me directly instead.';
-        status.className = 'form-status err';
-      }).finally(function(){ btn.disabled = false; btn.textContent = label; });
+      if(key === 'WEB3FORMS_ACCESS_KEY'){ status.textContent='Form not connected yet. Add your Web3Forms access key.'; status.className='fstatus err'; return; }
+      btn.disabled=true; var lbl=btn.textContent; btn.textContent='Sending...';
+      fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(form).entries()))})
+        .then(function(r){return r.json();}).then(function(j){
+          if(j.success){ form.reset(); status.textContent='Thanks. Your message is in. I will be in touch shortly.'; status.className='fstatus ok'; }
+          else{ status.textContent='Something went wrong. Please email me directly instead.'; status.className='fstatus err'; }
+        }).catch(function(){ status.textContent='Something went wrong. Please email me directly instead.'; status.className='fstatus err'; })
+        .finally(function(){ btn.disabled=false; btn.textContent=lbl; });
     });
   })();
 </script>

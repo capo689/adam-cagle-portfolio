@@ -18,6 +18,9 @@
 <meta name="twitter:image" content="https://adamcagle.com/og-card.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
 <style>
   :root{
     --bg:#0c0e13; --bg2:#11141b; --panel:#161a23; --line:rgba(255,255,255,.10);
@@ -86,6 +89,16 @@
   .fitlist b{color:var(--fg);font-weight:600}
   .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.4vw,30px);margin-top:40px}
   .trio div{font-family:var(--serif);font-size:clamp(22px,2.9vw,34px);color:var(--fg);padding-top:18px;border-top:2px solid var(--accent)}
+  /* map */
+  .mapbox{height:clamp(360px,54vh,500px);margin:34px 0 0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0a0c11}
+  .ice-pin__b{position:relative;width:42px;height:42px;border-radius:50%;background:#fff;border:2px solid var(--accent);display:grid;place-items:center;box-shadow:0 8px 18px rgba(0,0,0,.45)}
+  .ice-pin__b::after{content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--accent)}
+  .ice-pin__e{font-size:23px;line-height:1}
+  .leaflet-popup-content{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:#1c1b19;margin:12px 14px}
+  .leaflet-popup-content strong{font-family:var(--serif);font-size:16px;display:inline-block;margin-bottom:3px}
+  .leaflet-popup-content a{color:#1273e6;text-decoration:none;font-weight:600}
+  .leaflet-popup-content a.gmaps{display:inline-block;margin-top:7px}
+  .mapbox .leaflet-control-attribution{font-size:10px}
 
   /* statement */
   .stmt{text-align:center}
@@ -183,6 +196,16 @@
         <li class="reveal">No monthly website rental</li>
         <li class="reveal">You own all of it</li>
       </ul>
+    </div>
+  </section>
+
+  <section id="map-demo">
+    <div class="wrap">
+      <span class="kicker reveal">See it in action</span>
+      <h2 class="sec reveal" style="margin-top:14px">A custom locator map. Not a generic embed.</h2>
+      <p class="sub reveal">Hand-built with Leaflet and OpenStreetMap, styled to match the site, with your real locations and one tap to directions. As a demo, here are three of my favorite ice cream shops in Bend.</p>
+      <div id="icecream-map" class="mapbox" role="application" aria-label="Map of favorite Bend ice cream shops"></div>
+      <p class="fnote reveal">Click a scoop for the address, phone, and directions.</p>
     </div>
   </section>
 
@@ -292,7 +315,38 @@
     </div>
   </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script>
+  (function(){
+    if (typeof L === 'undefined') return;
+    var el = document.getElementById('icecream-map'); if(!el) return;
+    var shops = [
+      { name:"Handel's Homemade Ice Cream", emoji:"🍦", addr:["61165 South Highway 97","Bend, OR 97702"], phone:"541-633-7553", lat:44.0220262, lng:-121.3163915 },
+      { name:"Bonta Natural Artisan Gelato", emoji:"🍨", addr:["920 NW Bond St #108","Bend, OR 97703"], phone:null, lat:44.0581211, lng:-121.3126866 },
+      { name:"Cuppa Yo", emoji:"🍧", addr:["20789 NW Henry Ave #160","Bend, OR 97703"], phone:null, lat:44.1052445, lng:-121.3070702 }
+    ];
+    var map = L.map(el, { scrollWheelZoom:false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    function iceIcon(emoji){
+      return L.divIcon({ className:'ice-pin', html:'<div class="ice-pin__b"><span class="ice-pin__e">'+emoji+'</span></div>',
+        iconSize:[42,52], iconAnchor:[21,50], popupAnchor:[0,-46] });
+    }
+    var cluster = L.markerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:45 });
+    shops.forEach(function(s){
+      var q = encodeURIComponent(s.name + ', ' + s.addr.join(', '));
+      var gmaps = 'https://www.google.com/maps/search/?api=1&query=' + q;
+      var html = '<strong>'+s.name+'</strong><br>'+s.addr.join('<br>')+'<br>'
+        + (s.phone ? '<a href="tel:'+s.phone.replace(/[^0-9]/g,'')+'">'+s.phone+'</a><br>' : '')
+        + '<a class="gmaps" href="'+gmaps+'" target="_blank" rel="noopener">Open in Google Maps</a>';
+      cluster.addLayer( L.marker([s.lat, s.lng], { icon:iceIcon(s.emoji), title:s.name }).bindPopup(html) );
+    });
+    map.addLayer(cluster);
+    map.fitBounds(cluster.getBounds(), { padding:[55,55] });
+    setTimeout(function(){ map.invalidateSize(); map.fitBounds(cluster.getBounds(), { padding:[55,55] }); }, 350);
+  })();
   (function(){
     var ro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(!ro && 'IntersectionObserver' in window){

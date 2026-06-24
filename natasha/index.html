@@ -9,9 +9,10 @@
 <style>
   :root {
     --bg: #090a0a;
-    --gold: #d49b34;
-    --ember: #be321b;
-    --cream: #f7d884;
+    --gold: #d9a848;
+    --gold-hot: #ffe29a;
+    --red: #b42816;
+    --amber: #f1a33e;
   }
 
   * { box-sizing: border-box; }
@@ -27,13 +28,10 @@
   body {
     display: grid;
     place-items: center;
-    font-family: ui-serif, Georgia, serif;
-    color: var(--cream);
     background:
-      radial-gradient(circle at 32% 24%, rgba(255, 214, 123, .11), transparent 24vw),
-      radial-gradient(circle at 58% 46%, rgba(158, 55, 30, .12), transparent 28vw),
-      radial-gradient(circle at 50% 112%, rgba(230, 162, 58, .1), transparent 34vw),
-      linear-gradient(135deg, #111212 0%, #090a0a 46%, #060606 100%);
+      radial-gradient(circle at 39% 24%, rgba(242, 185, 82, .11), transparent 28vw),
+      radial-gradient(circle at 50% 50%, rgba(113, 42, 21, .18), transparent 34vw),
+      linear-gradient(135deg, #151615 0%, #090a0a 48%, #050505 100%);
   }
 
   body::before {
@@ -41,10 +39,9 @@
     position: fixed;
     inset: 0;
     background:
-      linear-gradient(115deg, transparent 0 36%, rgba(255, 255, 255, .035) 46%, transparent 56%),
-      repeating-radial-gradient(circle at 50% 40%, rgba(255,255,255,.025) 0 1px, transparent 1px 4px);
-    opacity: .42;
-    mix-blend-mode: screen;
+      repeating-radial-gradient(circle at 50% 44%, rgba(255,255,255,.026) 0 1px, transparent 1px 4px),
+      linear-gradient(112deg, transparent 0 35%, rgba(255,255,255,.036) 46%, transparent 58%);
+    opacity: .48;
     pointer-events: none;
   }
 
@@ -52,96 +49,168 @@
     content: "";
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, transparent 0 52%, rgba(0,0,0,.7) 100%);
+    background: radial-gradient(circle at center, transparent 0 50%, rgba(0,0,0,.72) 100%);
     pointer-events: none;
   }
 
   .scene {
     position: relative;
-    width: min(76vw, 650px);
+    width: min(78vw, 690px);
     aspect-ratio: 966 / 1124;
-    animation: sceneSettle 7600ms cubic-bezier(.2,.8,.2,1) both;
+    isolation: isolate;
   }
 
-  .logo-layer {
+  .logo,
+  .svg-layer,
+  .effect {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .logo {
     object-fit: contain;
-    transform-origin: 46% 58%;
+    pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
-    pointer-events: none;
   }
 
-  .logo-shadow {
-    opacity: 0;
-    filter: blur(18px) brightness(0);
-    transform: translate(2.4%, 2.8%) scale(.99);
-    animation: shadowArrive 6800ms ease-out forwards;
+  .svg-layer {
+    overflow: visible;
+    z-index: 2;
   }
 
-  .stem-pass {
-    opacity: 0;
-    filter: saturate(1.25) contrast(1.1) drop-shadow(0 0 12px rgba(220, 155, 46, .58));
-    clip-path: inset(100% 0 0 0);
-    mask-image:
-      radial-gradient(ellipse 48% 64% at 56% 69%, #000 0 63%, transparent 72%),
-      linear-gradient(to bottom, transparent 0 18%, #000 32% 100%);
-    mask-composite: add;
-    -webkit-mask-image:
-      radial-gradient(ellipse 48% 64% at 56% 69%, #000 0 63%, transparent 72%),
-      linear-gradient(to bottom, transparent 0 18%, #000 32% 100%);
-    -webkit-mask-composite: source-over;
-    animation: stalkGrow 6200ms cubic-bezier(.2,.86,.12,1) forwards;
+  .svg-layer image {
+    width: 966px;
+    height: 1124px;
   }
 
-  .leaf-pass {
-    opacity: 0;
-    filter: saturate(1.2) brightness(1.08) drop-shadow(0 0 10px rgba(231, 175, 67, .42));
-    transform: scale(.84) rotate(-4deg);
-    mask-image: radial-gradient(ellipse 38% 24% at 40% 57%, #000 0 52%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse 38% 24% at 40% 57%, #000 0 52%, transparent 70%);
-    animation: leavesOpen 5600ms cubic-bezier(.22,.9,.12,1) forwards;
+  .grow-mask path {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    pathLength: 1;
+    animation: drawPath 3.85s cubic-bezier(.16,.84,.16,1) forwards;
   }
 
-  .bloom-pass {
+  .grow-mask .loop-left { stroke-width: 46; animation-delay: .2s; }
+  .grow-mask .loop-right { stroke-width: 52; animation-delay: .35s; }
+  .grow-mask .main-stem { stroke-width: 42; animation-delay: .7s; }
+  .grow-mask .inner-stem { stroke-width: 21; animation-delay: 1.05s; }
+  .grow-mask .filament { stroke-width: 16; animation-delay: 1.45s; animation-duration: 2.4s; }
+
+  .stalk-image {
+    filter: saturate(1.08) contrast(1.05);
+  }
+
+  .leaf {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
     opacity: 0;
-    filter: saturate(1.28) brightness(1.08) drop-shadow(0 0 18px rgba(226, 77, 28, .34));
-    transform: scale(.42) rotate(-8deg);
-    transform-origin: 38% 34%;
-    mask-image: radial-gradient(ellipse 39% 31% at 37% 35%, #000 0 61%, transparent 73%);
-    -webkit-mask-image: radial-gradient(ellipse 39% 31% at 37% 35%, #000 0 61%, transparent 73%);
-    animation: flowerBloom 6400ms cubic-bezier(.15,.9,.16,1) forwards;
+    clip-path: var(--clip);
+    transform-origin: var(--origin);
+    transform: scale(.2) rotate(var(--start-rot));
+    filter: saturate(1.1);
+    animation: openLeaf 2.45s cubic-bezier(.18,.9,.16,1) forwards;
+    animation-delay: var(--delay);
+  }
+
+  .leaf.left {
+    --clip: polygon(19% 58%, 51% 51%, 53% 61%, 24% 66%);
+    --origin: 46% 62%;
+    --start-rot: -17deg;
+    --delay: 2.75s;
+  }
+
+  .leaf.right {
+    --clip: polygon(48% 55%, 66% 49%, 72% 54%, 52% 63%);
+    --origin: 49% 63%;
+    --start-rot: 16deg;
+    --delay: 3.05s;
+  }
+
+  .petal {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    opacity: 0;
+    clip-path: var(--clip);
+    transform-origin: 39% 38%;
+    transform: translate(var(--tx), var(--ty)) scale(.16) rotate(var(--rot0));
+    filter: saturate(1.2) brightness(1.02);
+    animation: bloomPetal 2.35s cubic-bezier(.14,.9,.18,1) forwards;
+    animation-delay: var(--delay);
+  }
+
+  .petal.p1 {
+    --clip: polygon(23% 39%, 33% 28%, 43% 39%, 38% 48%, 25% 47%);
+    --tx: -7%;
+    --ty: 3%;
+    --rot0: -32deg;
+    --delay: 3.55s;
+  }
+
+  .petal.p2 {
+    --clip: polygon(28% 16%, 42% 16%, 46% 39%, 37% 43%, 30% 36%);
+    --tx: -3%;
+    --ty: -8%;
+    --rot0: -18deg;
+    --delay: 3.8s;
+  }
+
+  .petal.p3 {
+    --clip: polygon(40% 21%, 57% 22%, 57% 42%, 43% 43%, 37% 36%);
+    --tx: 6%;
+    --ty: -6%;
+    --rot0: 16deg;
+    --delay: 4.02s;
+  }
+
+  .petal.p4 {
+    --clip: polygon(43% 38%, 59% 38%, 57% 51%, 43% 48%, 38% 43%);
+    --tx: 8%;
+    --ty: 1%;
+    --rot0: 24deg;
+    --delay: 4.22s;
+  }
+
+  .petal.p5 {
+    --clip: polygon(23% 46%, 42% 42%, 45% 56%, 26% 56%, 21% 51%);
+    --tx: -5%;
+    --ty: 6%;
+    --rot0: -10deg;
+    --delay: 4.42s;
+  }
+
+  .petal.p6 {
+    --clip: polygon(14% 35%, 31% 35%, 35% 45%, 18% 48%, 12% 43%);
+    --tx: -11%;
+    --ty: 1%;
+    --rot0: -38deg;
+    --delay: 4.62s;
   }
 
   .petal-pulse {
     opacity: 0;
-    filter: saturate(1.9) brightness(1.28) contrast(1.12);
+    z-index: 5;
+    clip-path: polygon(12% 15%, 60% 15%, 62% 56%, 22% 58%, 8% 43%);
+    filter: saturate(2.05) brightness(1.35) contrast(1.12);
     mix-blend-mode: screen;
-    transform-origin: 38% 34%;
-    mask-image:
-      radial-gradient(ellipse 30% 23% at 36% 33%, #000 0 54%, transparent 70%),
-      radial-gradient(ellipse 18% 15% at 47% 28%, #000 0 44%, transparent 72%);
-    mask-composite: add;
-    -webkit-mask-image:
-      radial-gradient(ellipse 30% 23% at 36% 33%, #000 0 54%, transparent 70%),
-      radial-gradient(ellipse 18% 15% at 47% 28%, #000 0 44%, transparent 72%);
-    -webkit-mask-composite: source-over;
-    animation: petalHeat 7600ms ease-in-out forwards;
+    animation: petalPulse 7.8s ease-in-out forwards;
   }
 
-  .final-logo {
-    opacity: 0;
-    animation: exactResolve 7600ms ease-out forwards;
-  }
-
-  .glint {
+  .gold-glint {
     position: absolute;
     inset: 0;
-    background: linear-gradient(116deg, transparent 0 42%, rgba(255, 231, 158, .72) 47%, transparent 52%);
-    transform: translateX(-120%);
+    z-index: 7;
+    opacity: 0;
+    background: linear-gradient(112deg, transparent 0 43%, rgba(255, 236, 163, .82) 49%, transparent 55%);
+    transform: translateX(-125%);
     mix-blend-mode: screen;
     mask-image: url("./assets/logo-transparent.png");
     mask-size: contain;
@@ -151,117 +220,128 @@
     -webkit-mask-size: contain;
     -webkit-mask-position: center;
     -webkit-mask-repeat: no-repeat;
-    animation: goldGlint 7600ms cubic-bezier(.4,0,.2,1) forwards;
-    pointer-events: none;
+    animation: glint 7.8s cubic-bezier(.42,0,.2,1) forwards;
+  }
+
+  .final-logo {
+    z-index: 8;
+    opacity: 0;
+    animation: exactLogo 7.8s ease-out forwards;
   }
 
   .replay {
     position: fixed;
     right: 18px;
     bottom: 18px;
+    z-index: 20;
     width: 42px;
     height: 42px;
-    border: 1px solid rgba(247, 216, 132, .35);
+    border: 1px solid rgba(247, 216, 132, .36);
     border-radius: 50%;
-    background: rgba(9, 10, 10, .62);
-    color: rgba(247, 216, 132, .88);
-    font-size: 21px;
-    line-height: 1;
+    background: rgba(9,10,10,.62);
+    color: rgba(247,216,132,.9);
+    font: 700 15px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
     cursor: pointer;
     backdrop-filter: blur(10px);
   }
 
-  .scene.replay-run .logo-shadow,
-  .scene.replay-run .stem-pass,
-  .scene.replay-run .leaf-pass,
-  .scene.replay-run .bloom-pass,
-  .scene.replay-run .petal-pulse,
-  .scene.replay-run .final-logo,
-  .scene.replay-run .glint {
-    animation-name: none;
+  .restart,
+  .restart * {
+    animation: none !important;
   }
 
-  @keyframes sceneSettle {
-    0% { transform: translateY(18px) scale(.985); }
-    65%, 100% { transform: translateY(0) scale(1); }
+  @keyframes drawPath {
+    to { stroke-dashoffset: 0; }
   }
 
-  @keyframes shadowArrive {
-    0%, 18% { opacity: 0; }
-    48% { opacity: .42; }
-    100% { opacity: .38; }
+  @keyframes openLeaf {
+    0% { opacity: 0; transform: scale(.16) rotate(var(--start-rot)); }
+    40% { opacity: 1; }
+    76% { opacity: 1; transform: scale(1.055) rotate(2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
   }
 
-  @keyframes stalkGrow {
-    0%, 8% { opacity: 0; clip-path: inset(100% 0 0 0); }
-    13% { opacity: 1; }
-    54% { opacity: 1; clip-path: inset(17% 0 0 0); }
-    76% { opacity: .82; clip-path: inset(0 0 0 0); }
-    100% { opacity: 0; clip-path: inset(0 0 0 0); }
+  @keyframes bloomPetal {
+    0% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(.16) rotate(var(--rot0)); }
+    34% { opacity: 1; }
+    76% { opacity: 1; transform: translate(0, 0) scale(1.065) rotate(2deg); }
+    100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
   }
 
-  @keyframes leavesOpen {
-    0%, 29% { opacity: 0; transform: scale(.78) rotate(-5deg); }
-    49% { opacity: .95; transform: scale(1.025) rotate(1.4deg); }
-    66% { opacity: .86; transform: scale(1) rotate(0); }
-    100% { opacity: 0; transform: scale(1) rotate(0); }
+  @keyframes petalPulse {
+    0%, 57% { opacity: 0; }
+    63% { opacity: .36; }
+    67% { opacity: .1; }
+    72% { opacity: .48; }
+    77% { opacity: .16; }
+    83% { opacity: .34; }
+    91%, 100% { opacity: 0; }
   }
 
-  @keyframes flowerBloom {
-    0%, 38% { opacity: 0; transform: scale(.42) rotate(-8deg); }
-    52% { opacity: 1; transform: scale(1.08) rotate(2deg); }
-    64% { opacity: .95; transform: scale(.99) rotate(-.6deg); }
-    76% { opacity: .78; transform: scale(1) rotate(0); }
-    100% { opacity: 0; transform: scale(1) rotate(0); }
-  }
-
-  @keyframes petalHeat {
-    0%, 48% { opacity: 0; transform: scale(.98); }
-    56% { opacity: .42; transform: scale(1.01); }
-    62% { opacity: .14; transform: scale(1); }
-    68% { opacity: .52; transform: scale(1.018); }
-    74% { opacity: .18; transform: scale(1); }
-    82% { opacity: .36; transform: scale(1.01); }
-    100% { opacity: 0; transform: scale(1); }
-  }
-
-  @keyframes exactResolve {
-    0%, 69% { opacity: 0; }
-    78%, 100% { opacity: 1; }
-  }
-
-  @keyframes goldGlint {
-    0%, 48% { opacity: 0; transform: translateX(-120%); }
-    58% { opacity: .55; }
-    74% { opacity: .3; transform: translateX(118%); }
+  @keyframes glint {
+    0%, 52% { opacity: 0; transform: translateX(-125%); }
+    62% { opacity: .56; }
+    77% { opacity: .25; transform: translateX(118%); }
     100% { opacity: 0; transform: translateX(118%); }
   }
 
+  @keyframes exactLogo {
+    0%, 84% { opacity: 0; }
+    94%, 100% { opacity: 1; }
+  }
+
   @media (max-width: 720px) {
-    .scene { width: min(92vw, 540px); }
+    .scene { width: min(93vw, 560px); }
     .replay { right: 12px; bottom: 12px; }
   }
 </style>
 </head>
 <body>
 <main class="scene" id="scene" aria-label="Natasha logo animation">
-  <img class="logo-layer logo-shadow" src="./assets/logo-transparent.png" alt="">
-  <img class="logo-layer stem-pass" src="./assets/logo-transparent.png" alt="">
-  <img class="logo-layer leaf-pass" src="./assets/logo-transparent.png" alt="">
-  <img class="logo-layer bloom-pass" src="./assets/logo-transparent.png" alt="">
-  <img class="logo-layer petal-pulse" src="./assets/logo-transparent.png" alt="">
-  <img class="logo-layer final-logo" src="./assets/logo-transparent.png" alt="Natasha floral logo">
-  <span class="glint" aria-hidden="true"></span>
+  <svg class="svg-layer" viewBox="0 0 966 1124" aria-hidden="true">
+    <defs>
+      <mask id="stalkGrowMask" maskUnits="userSpaceOnUse">
+        <g class="grow-mask">
+          <path class="loop-left" d="M461 1032 C347 1088 222 1038 214 916 C207 805 303 742 407 769 C503 794 518 906 454 962 C394 1015 301 1004 256 935" />
+          <path class="loop-right" d="M468 1038 C565 972 624 867 690 744 C754 625 844 512 822 392 C806 307 712 301 626 344 C515 401 479 553 484 704 C489 856 565 1028 715 1035 C823 1040 877 962 830 906" />
+          <path class="main-stem" d="M472 1010 C475 879 464 747 430 618 C401 506 357 417 274 336" />
+          <path class="inner-stem" d="M488 1000 C498 842 512 676 545 545 C576 424 633 354 730 337" />
+          <path class="inner-stem" d="M459 1002 C463 837 443 670 395 522 C359 414 325 335 286 226" />
+          <path class="filament" d="M428 522 C394 453 351 399 318 326" />
+          <path class="filament" d="M435 505 C417 433 405 365 407 288" />
+          <path class="filament" d="M445 502 C446 427 468 362 513 300" />
+          <path class="filament" d="M456 516 C489 447 540 397 607 358" />
+          <path class="filament" d="M416 514 C363 470 295 450 216 451" />
+        </g>
+      </mask>
+    </defs>
+    <image class="stalk-image" href="./assets/logo-transparent.png" mask="url(#stalkGrowMask)"></image>
+  </svg>
+
+  <img class="logo leaf left" src="./assets/logo-transparent.png" alt="">
+  <img class="logo leaf right" src="./assets/logo-transparent.png" alt="">
+
+  <img class="logo petal p1" src="./assets/logo-transparent.png" alt="">
+  <img class="logo petal p2" src="./assets/logo-transparent.png" alt="">
+  <img class="logo petal p3" src="./assets/logo-transparent.png" alt="">
+  <img class="logo petal p4" src="./assets/logo-transparent.png" alt="">
+  <img class="logo petal p5" src="./assets/logo-transparent.png" alt="">
+  <img class="logo petal p6" src="./assets/logo-transparent.png" alt="">
+
+  <img class="logo effect petal-pulse" src="./assets/logo-transparent.png" alt="">
+  <span class="gold-glint" aria-hidden="true"></span>
+  <img class="logo final-logo" src="./assets/logo-transparent.png" alt="Natasha floral logo">
 </main>
-<button class="replay" type="button" aria-label="Replay animation">↺</button>
+<button class="replay" type="button" aria-label="Replay animation">R</button>
 <script>
 (() => {
   const scene = document.getElementById("scene");
   const replay = document.querySelector(".replay");
+
   replay.addEventListener("click", () => {
-    scene.classList.add("replay-run");
+    scene.classList.add("restart");
     scene.offsetHeight;
-    scene.classList.remove("replay-run");
+    scene.classList.remove("restart");
   });
 })();
 </script>

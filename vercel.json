@@ -17,7 +17,8 @@
     { "source": "/brain/:path*", "destination": "/:path*", "permanent": false },
     { "source": "/launch/:path*", "destination": "/:path*", "permanent": false },
     { "source": "/dev", "destination": "/DEV", "permanent": false },
-    { "source": "/dev/:path*", "destination": "/DEV/:path*", "permanent": false }
+    { "source": "/dev/:path*", "destination": "/DEV/:path*", "permanent": false },
+    { "source": "/natasha", "destination": "/natasha/index.html", "permanent": false }
   ],
   "headers": [
     {

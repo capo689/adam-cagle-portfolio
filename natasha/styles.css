@@ -549,6 +549,8 @@ h3 {
 }
 
 .sponsor-card {
+  display: flex;
+  flex-direction: column;
   padding: 32px 28px;
 }
 
@@ -566,6 +568,10 @@ h3 {
   gap: 10px;
   margin: 0 0 26px;
   padding-left: 18px;
+}
+
+.sponsor-card .button {
+  margin-top: auto;
 }
 
 .about {

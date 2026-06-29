@@ -294,6 +294,7 @@
   </section>
 
   <section class="section reserve" id="reserve">
+    <canvas class="reserve__glitter" aria-hidden="true"></canvas>
     <div class="reserve__copy reveal">
       <p class="eyebrow">Receive the next invitation</p>
       <h2>Because chemistry cannot be swiped.</h2>
@@ -426,6 +427,115 @@
       tooltip.classList.remove("is-visible");
     });
   });
+
+  const initReserveGlitter = () => {
+    const canvas = document.querySelector(".reserve__glitter");
+    const band = document.querySelector(".reserve");
+    if (!canvas || !band) return;
+    const gl = canvas.getContext("webgl", { alpha: true, antialias: false });
+    if (!gl) {
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      const sparks = Array.from({ length: 120 }, () => ({
+        x: Math.random(), y: Math.random(), r: Math.random() * 1.8 + .4, p: Math.random() * 6.28
+      }));
+      const resize2d = () => {
+        const rect = band.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(1, Math.round(rect.width * dpr));
+        canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      };
+      const draw2d = (stamp) => {
+        resize2d();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        sparks.forEach((spark) => {
+          const glow = (Math.sin(stamp * .002 + spark.p) + 1) / 2;
+          ctx.globalAlpha = .15 + glow * .55;
+          ctx.fillStyle = "#e2b76a";
+          ctx.beginPath();
+          ctx.arc(spark.x * canvas.width, spark.y * canvas.height, spark.r * glow * 2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw2d);
+      };
+      resize2d();
+      requestAnimationFrame(draw2d);
+      return;
+    }
+
+    const vertex = `
+      attribute vec2 a_position;
+      void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
+    `;
+    const fragment = `
+      precision mediump float;
+      uniform vec2 u_resolution;
+      uniform float u_time;
+      float hash(vec2 p) {
+        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+      }
+      void main() {
+        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+        vec2 grid = floor(uv * vec2(110.0, 42.0));
+        vec2 local = fract(uv * vec2(110.0, 42.0)) - .5;
+        float rnd = hash(grid);
+        float drift = sin(u_time * (.7 + rnd) + rnd * 6.2831) * .18;
+        float star = smoothstep(.105, .0, length(local + vec2(drift * .18, drift * .08)));
+        float twinkle = smoothstep(.42, 1.0, sin(u_time * (1.4 + rnd * 3.0) + rnd * 15.0) * .5 + .5);
+        float bandGlow = smoothstep(.0, .72, 1.0 - abs(uv.y - .5) * 1.8);
+        vec3 gold = mix(vec3(.65, .37, .10), vec3(1.0, .78, .32), rnd);
+        float alpha = star * twinkle * bandGlow * .68;
+        gl_FragColor = vec4(gold, alpha);
+      }
+    `;
+    const compile = (type, source) => {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      return shader;
+    };
+    const program = gl.createProgram();
+    gl.attachShader(program, compile(gl.VERTEX_SHADER, vertex));
+    gl.attachShader(program, compile(gl.FRAGMENT_SHADER, fragment));
+    gl.linkProgram(program);
+    gl.useProgram(program);
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+    const pos = gl.getAttribLocation(program, "a_position");
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+    const resolution = gl.getUniformLocation(program, "u_resolution");
+    const time = gl.getUniformLocation(program, "u_time");
+    let active = true;
+
+    const resize = () => {
+      const rect = band.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    };
+    const draw = (stamp) => {
+      if (active) {
+        resize();
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.uniform2f(resolution, canvas.width, canvas.height);
+        gl.uniform1f(time, stamp * .001);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      }
+      requestAnimationFrame(draw);
+    };
+    new IntersectionObserver((entries) => {
+      active = entries.some((entry) => entry.isIntersecting);
+    }, { rootMargin: "120px" }).observe(band);
+    window.addEventListener("resize", resize);
+    resize();
+    requestAnimationFrame(draw);
+  };
+  initReserveGlitter();
 })();
 </script>
 </body>

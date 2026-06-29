@@ -595,7 +595,7 @@ h3 {
 
 .founder-card {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: minmax(150px, 190px) 1fr;
   gap: 18px;
   align-items: center;
   margin-top: 28px;
@@ -603,10 +603,9 @@ h3 {
 }
 
 .founder-card img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
   border: 1px solid var(--line);
 }
 
@@ -881,6 +880,12 @@ dd {
   .check-grid,
   .signup-form {
     grid-template-columns: 1fr;
+  }
+  .founder-card {
+    grid-template-columns: 1fr;
+  }
+  .founder-card img {
+    max-width: 220px;
   }
   .signal-bar {
     display: grid;

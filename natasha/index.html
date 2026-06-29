@@ -371,6 +371,60 @@
       window.setTimeout(() => { button.textContent = original; }, 1800);
     });
   });
+
+  const tooltip = document.createElement("div");
+  tooltip.className = "image-dim-tooltip";
+  tooltip.setAttribute("role", "status");
+  tooltip.setAttribute("aria-live", "polite");
+  document.body.appendChild(tooltip);
+
+  const labelFor = (img) => {
+    const width = img.naturalWidth || 0;
+    const height = img.naturalHeight || 0;
+    const file = (img.currentSrc || img.src).split("/").pop().split("?")[0];
+    return {
+      text: width && height ? `${width} x ${height} px` : "Loading size",
+      file
+    };
+  };
+
+  const setLabel = (img) => {
+    const label = labelFor(img);
+    img.title = `${label.text} - ${label.file}`;
+    img.dataset.dimLabel = label.text;
+    img.dataset.dimFile = label.file;
+  };
+
+  const moveTooltip = (event) => {
+    const pad = 16;
+    const rect = tooltip.getBoundingClientRect();
+    let x = event.clientX + 16;
+    let y = event.clientY + 18;
+    if (x + rect.width + pad > window.innerWidth) x = event.clientX - rect.width - 16;
+    if (y + rect.height + pad > window.innerHeight) y = event.clientY - rect.height - 16;
+    tooltip.style.left = `${Math.max(pad, x)}px`;
+    tooltip.style.top = `${Math.max(pad, y)}px`;
+  };
+
+  document.querySelectorAll("img").forEach((img) => {
+    if (img.complete) setLabel(img);
+    else img.addEventListener("load", () => setLabel(img), { once: true });
+
+    img.addEventListener("mouseenter", (event) => {
+      setLabel(img);
+      tooltip.textContent = "";
+      tooltip.append(document.createTextNode(img.dataset.dimLabel));
+      const fileLabel = document.createElement("span");
+      fileLabel.textContent = img.dataset.dimFile;
+      tooltip.append(fileLabel);
+      tooltip.classList.add("is-visible");
+      moveTooltip(event);
+    });
+    img.addEventListener("mousemove", moveTooltip);
+    img.addEventListener("mouseleave", () => {
+      tooltip.classList.remove("is-visible");
+    });
+  });
 })();
 </script>
 </body>

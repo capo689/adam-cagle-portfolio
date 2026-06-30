@@ -318,7 +318,8 @@ h3 {
 .details-card p,
 .about__copy p,
 .reserve__copy p,
-.contact__details p {
+.contact__details p,
+.footer__intro p {
   color: var(--muted);
   line-height: 1.72;
 }
@@ -762,21 +763,195 @@ dd {
 }
 
 .site-footer {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 22px;
-  padding: 28px clamp(18px, 5vw, 76px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(56px, 7vw, 92px) clamp(18px, 5vw, 76px) 32px;
   border-top: 1px solid var(--line);
   color: var(--quiet);
-  background: #070808;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(226, 183, 106, .18), transparent 26vw),
+    radial-gradient(circle at 82% 84%, rgba(140, 47, 30, .22), transparent 28vw),
+    linear-gradient(145deg, #070808 0%, #0f0f0d 50%, #050606 100%);
 }
 
-.site-footer p {
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.82), rgba(0,0,0,.36), rgba(0,0,0,.78)),
+    url("./assets/chaconia/floral-corner-transparent.png") right bottom / min(430px, 48vw) auto no-repeat;
+  opacity: .88;
+  pointer-events: none;
+}
+
+.site-footer::after {
+  content: "";
+  position: absolute;
+  left: clamp(18px, 5vw, 76px);
+  right: clamp(18px, 5vw, 76px);
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226,183,106,.74), transparent);
+}
+
+.footer__halo {
+  position: absolute;
+  inset: 12% 3% auto auto;
+  z-index: -1;
+  width: min(420px, 48vw);
+  aspect-ratio: 1;
+  border: 1px solid rgba(226,183,106,.18);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226,183,106,.13), transparent 66%);
+  filter: blur(.2px);
+  opacity: .7;
+  pointer-events: none;
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: minmax(280px, .9fr) minmax(340px, 1fr);
+  gap: clamp(28px, 5vw, 74px);
+  align-items: start;
+}
+
+.footer__intro {
+  max-width: 610px;
+}
+
+.footer__intro .brand {
+  margin-bottom: clamp(26px, 4vw, 42px);
+}
+
+.footer__intro h2 {
+  max-width: 560px;
+  font-size: clamp(38px, 4.8vw, 72px);
+}
+
+.footer__intro p:not(.eyebrow) {
+  max-width: 540px;
+}
+
+.footer__contact-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 28px 0 0;
+}
+
+.footer__contact-list div {
+  min-height: 88px;
+  padding: 16px;
+  border: 1px solid var(--line-soft);
+  background: rgba(0,0,0,.2);
+}
+
+.footer__contact-list a {
+  color: var(--muted);
+}
+
+.footer-form {
+  gap: 12px;
+  padding: clamp(18px, 2.8vw, 28px);
+  border-color: rgba(226, 183, 106, .42);
+  background:
+    linear-gradient(145deg, rgba(17,18,17,.92), rgba(7,8,8,.84)),
+    radial-gradient(circle at 20% 0%, rgba(226,183,106,.14), transparent 24vw);
+  box-shadow: 0 35px 90px rgba(0,0,0,.36);
+  backdrop-filter: blur(12px);
+}
+
+.footer-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.footer-form textarea {
+  min-height: 126px;
+  resize: vertical;
+}
+
+.footer__bottom {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px 28px;
+  align-items: center;
+  margin-top: clamp(34px, 5vw, 62px);
+  padding-top: 22px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.footer__bottom p {
+  grid-column: 1 / -1;
   margin: 0;
-  font-size: 12px;
+  color: rgba(242,228,200,.38);
+  font-size: 11px;
   letter-spacing: .08em;
   text-transform: uppercase;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 14px;
+  color: var(--gold-2);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.footer__links a,
+.site-footer nav a {
+  color: var(--gold-2);
+}
+
+.legal-page {
+  min-height: 100vh;
+}
+
+.legal-shell {
+  width: min(920px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: clamp(34px, 6vw, 76px) 0;
+}
+
+.legal-shell .brand {
+  margin-bottom: 28px;
+}
+
+.legal-card {
+  padding: clamp(28px, 5vw, 58px);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(145deg, rgba(17,18,17,.94), rgba(7,8,8,.9)),
+    url("./assets/chaconia/floral-corner-transparent.png") right bottom / min(360px, 48vw) auto no-repeat;
+  box-shadow: 0 40px 110px rgba(0,0,0,.34);
+}
+
+.legal-card h1 {
+  font-size: clamp(46px, 7vw, 78px);
+}
+
+.legal-card h2 {
+  margin-top: 34px;
+  font-size: clamp(25px, 3vw, 36px);
+}
+
+.legal-card p {
+  max-width: 720px;
+  color: var(--muted);
+  line-height: 1.72;
+}
+
+.legal-card .button {
+  margin-top: 24px;
 }
 
 .reveal {
@@ -855,12 +1030,19 @@ dd {
   .sponsor-grid {
     grid-template-columns: 1fr;
   }
-  .site-footer {
+  .footer__inner,
+  .footer__bottom {
+    grid-template-columns: 1fr;
+  }
+  .footer__contact-list {
     grid-template-columns: 1fr;
   }
   .site-footer nav {
     justify-content: flex-start;
     flex-wrap: wrap;
+  }
+  .footer__links {
+    justify-content: flex-start;
   }
 }
 
@@ -873,6 +1055,18 @@ dd {
   }
   .site-header > .button { display: none; }
   .site-header .nav { display: none; }
+  .site-footer {
+    padding-top: 48px;
+  }
+  .footer-form__grid {
+    grid-template-columns: 1fr;
+  }
+  .footer__intro h2 {
+    font-size: clamp(35px, 12vw, 54px);
+  }
+  .footer__bottom {
+    gap: 16px;
+  }
   .hero {
     display: block;
     min-height: auto;

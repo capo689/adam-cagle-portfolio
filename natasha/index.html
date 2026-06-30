@@ -313,40 +313,51 @@
     </form>
   </section>
 
-  <section class="section contact" id="contact">
-    <div class="contact__details reveal">
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="footer__halo" aria-hidden="true"></div>
+  <div class="footer__inner">
+    <div class="footer__intro reveal">
+      <a class="brand" href="#top" aria-label="Chaconia and Co. home">
+        <img src="./assets/chaconia/floral-icon-transparent.png" alt="">
+        <span>Chaconia &amp; Co.</span>
+      </a>
       <p class="eyebrow">Get in touch</p>
       <h2>We would love to hear from you.</h2>
-      <p>Whether you have a question, want to inquire about sponsorship, or are ready to attend, we would love to hear from you.</p>
-      <dl>
-        <div><dt>Email</dt><dd>hello@chaconiaandco.com</dd></div>
-        <div><dt>Phone</dt><dd>541.213.5278</dd></div>
+      <p>Questions, sponsorship inquiries, private gatherings, or guest list details -- send a note and we will make the next step feel effortless.</p>
+      <dl class="footer__contact-list">
+        <div><dt>Email</dt><dd><a href="mailto:hello@chaconiaandco.com">hello@chaconiaandco.com</a></dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+15412135278">541.213.5278</a></dd></div>
         <div><dt>Location</dt><dd>Bend, Oregon</dd></div>
       </dl>
     </div>
-    <form class="contact-form reveal" aria-label="Contact Chaconia and Co.">
-      <label><span>Your name</span><input type="text" name="name"></label>
-      <label><span>Email address</span><input type="email" name="email"></label>
+    <form class="contact-form footer-form reveal" aria-label="Contact Chaconia and Co.">
+      <div class="footer-form__grid">
+        <label><span>Your name</span><input type="text" name="name"></label>
+        <label><span>Email address</span><input type="email" name="email"></label>
+      </div>
       <label><span>Subject</span><select name="subject"><option>Select an option</option><option>Guest list</option><option>Sponsorship</option><option>Private event</option></select></label>
-      <label><span>Message</span><textarea name="message" rows="6"></textarea></label>
+      <label><span>Message</span><textarea name="message" rows="4"></textarea></label>
       <button class="button button--gold" type="submit">Send message</button>
     </form>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <a class="brand" href="#top" aria-label="Chaconia and Co. home">
-    <img src="./assets/chaconia/floral-icon-transparent.png" alt="">
-    <span>Chaconia & Co.</span>
-  </a>
-  <p>Curated experiences. Meaningful connections.</p>
-  <nav aria-label="Footer navigation">
-    <a href="#experiences">Experiences</a>
-    <a href="#dress">Dress to Impress</a>
-    <a href="#social">Social Club</a>
-    <a href="#sponsorship">Sponsorship</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <div class="footer__bottom">
+      <nav aria-label="Footer navigation">
+        <a href="#experiences">Experiences</a>
+        <a href="#dress">Dress to Impress</a>
+        <a href="#social">Social Club</a>
+        <a href="#sponsorship">Sponsorship</a>
+        <a href="#reserve">Guest List</a>
+      </nav>
+      <div class="footer__links" aria-label="Social and legal links">
+        <a href="https://www.instagram.com/chaconiaandco/" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/chaconiaandco/" rel="noopener">Facebook</a>
+        <a href="./privacy.html">Privacy Policy</a>
+        <a href="./terms.html">T&amp;C</a>
+      </div>
+      <p>&copy; 2026 Chaconia &amp; Co. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
 <script>

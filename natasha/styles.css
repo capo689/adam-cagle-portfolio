@@ -578,57 +578,126 @@ h3 {
 .about {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(280px, .72fr) minmax(0, 1fr);
-  gap: clamp(26px, 5vw, 70px);
-  align-items: center;
-  padding-top: clamp(58px, 7vw, 92px);
-  padding-bottom: clamp(58px, 7vw, 92px);
+  grid-template-columns: minmax(0, .95fr) minmax(320px, .82fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: stretch;
+  padding-top: clamp(62px, 7vw, 98px);
+  padding-bottom: clamp(62px, 7vw, 98px);
   background:
-    radial-gradient(circle at 19% 48%, rgba(226,183,106,.1), transparent 24vw),
-    linear-gradient(90deg, rgba(0,0,0,.14), transparent 42%, rgba(140,47,30,.08));
+    radial-gradient(circle at 20% 36%, rgba(226,183,106,.12), transparent 26vw),
+    radial-gradient(circle at 84% 68%, rgba(140,47,30,.12), transparent 25vw),
+    linear-gradient(90deg, rgba(0,0,0,.18), transparent 48%, rgba(0,0,0,.1));
 }
 
-.about__art {
+.about__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 740px;
+}
+
+.about__copy h2 {
+  max-width: 650px;
+  font-size: clamp(44px, 5.6vw, 82px);
+  line-height: .9;
+}
+
+.about__copy p {
+  max-width: 660px;
+  margin: 18px 0 0;
+}
+
+.about__lead {
+  color: #f4dfb9 !important;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.16 !important;
+}
+
+.about__meaning {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.about__meaning div {
+  display: grid;
+  grid-template-columns: minmax(105px, .32fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 18px 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.about__meaning div:last-child {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.about__meaning span {
+  color: var(--gold-2);
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.5vw, 34px);
+  line-height: .95;
+}
+
+.about__meaning p {
+  margin: 0;
+}
+
+.about__statement {
+  max-width: 590px !important;
+  color: rgba(242, 228, 200, .82) !important;
+  font-style: italic;
+}
+
+.about__identity {
   position: relative;
-  min-height: 430px;
+  display: grid;
+  grid-template-rows: minmax(280px, 1fr) auto;
+  gap: 16px;
+}
+
+.about__mark {
+  position: relative;
   display: grid;
   place-items: center;
+  min-height: 360px;
   overflow: hidden;
-  border: 1px solid rgba(226,183,106,.26);
+  border: 1px solid rgba(226,183,106,.3);
   background:
-    radial-gradient(circle at center, rgba(226,183,106,.16), transparent 48%),
-    linear-gradient(145deg, rgba(17,18,17,.8), rgba(5,6,6,.42));
-  box-shadow: inset 0 0 0 1px rgba(226,183,106,.08), 0 34px 100px rgba(0,0,0,.28);
+    radial-gradient(circle at 50% 42%, rgba(226,183,106,.16), transparent 48%),
+    linear-gradient(145deg, rgba(18,18,15,.86), rgba(5,6,6,.48));
+  box-shadow: inset 0 0 0 1px rgba(226,183,106,.09), 0 34px 100px rgba(0,0,0,.28);
 }
 
-.about__art::before,
-.about__art::after {
+.about__mark::before,
+.about__mark::after {
   content: "";
   position: absolute;
   pointer-events: none;
 }
 
-.about__art::before {
+.about__mark::before {
   inset: 18px;
   border: 1px solid rgba(226,183,106,.14);
 }
 
-.about__art::after {
-  width: 76%;
+.about__mark::after {
+  width: min(340px, 72%);
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid rgba(226,183,106,.12);
   background: radial-gradient(circle, rgba(226,183,106,.08), transparent 62%);
 }
 
-.about__art img {
+.about__mark img {
   position: relative;
   z-index: 1;
-  width: min(400px, 82%);
+  width: min(380px, 78%);
   filter: drop-shadow(0 32px 70px rgba(0,0,0,.75));
 }
 
-.about__art-label {
+.about__mark span {
   position: absolute;
   left: 24px;
   bottom: 22px;
@@ -640,58 +709,13 @@ h3 {
   text-transform: uppercase;
 }
 
-.about__copy {
-  max-width: 720px;
-}
-
-.about__copy h2 {
-  max-width: 620px;
-  font-size: clamp(42px, 5.2vw, 76px);
-}
-
-.about__copy p {
-  max-width: 650px;
-  margin: 18px 0 0;
-}
-
-.about__pillars {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 28px;
-}
-
-.about__pillars div {
-  display: grid;
-  gap: 8px;
-  min-height: 104px;
-  padding: 18px 16px;
-  border: 1px solid var(--line-soft);
-  background: rgba(0,0,0,.2);
-}
-
-.about__pillars span {
-  color: var(--gold-2);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .16em;
-}
-
-.about__pillars strong {
-  color: #f7ead1;
-  font-family: var(--serif);
-  font-size: clamp(20px, 2vw, 27px);
-  font-weight: 500;
-  line-height: .98;
-}
-
 .founder-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(145px, 175px) 1fr;
-  gap: 20px;
+  grid-template-columns: minmax(132px, 165px) 1fr;
+  gap: 18px;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 0;
   padding: 18px;
   overflow: hidden;
   background:
@@ -1291,11 +1315,15 @@ dd {
     align-items: flex-start;
     flex-direction: column;
   }
-  .about__art {
-    min-height: 360px;
+  .about__identity {
+    grid-template-rows: auto;
   }
-  .about__pillars {
+  .about__mark {
+    min-height: 340px;
+  }
+  .about__meaning div {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
   .footer__links {
     justify-content: flex-start;
@@ -1387,7 +1415,6 @@ dd {
   .season-grid,
   .experience-grid,
   .check-grid,
-  .about__pillars,
   .signup-form {
     grid-template-columns: 1fr;
   }

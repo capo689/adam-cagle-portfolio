@@ -443,161 +443,131 @@
     const canvas = document.querySelector(".reserve__glitter");
     const band = document.querySelector(".reserve");
     if (!canvas || !band) return;
-    const gl = canvas.getContext("webgl", { alpha: true, antialias: false });
-    if (!gl) {
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-      const sparks = Array.from({ length: 850 }, () => ({
-        x: Math.random(), y: Math.random(), r: Math.random() * .75 + .25, p: Math.random() * 6.28
-      }));
-      const mouse = { x: .5, y: .5, hover: 0, target: 0 };
-      band.addEventListener("pointermove", (event) => {
-        const rect = band.getBoundingClientRect();
-        mouse.x = (event.clientX - rect.left) / rect.width;
-        mouse.y = 1 - ((event.clientY - rect.top) / rect.height);
-        mouse.target = 1;
-      });
-      band.addEventListener("pointerenter", () => { mouse.target = 1; });
-      band.addEventListener("pointerleave", () => { mouse.target = 0; });
-      const resize2d = () => {
-        const rect = band.getBoundingClientRect();
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.max(1, Math.round(rect.width * dpr));
-        canvas.height = Math.max(1, Math.round(rect.height * dpr));
-      };
-      const draw2d = (stamp) => {
-        resize2d();
-        mouse.hover += (mouse.target - mouse.hover) * .06;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        sparks.forEach((spark) => {
-          const glow = (Math.sin(stamp * .002 + spark.p) + 1) / 2;
-          const dx = spark.x - mouse.x;
-          const dy = spark.y - mouse.y;
-          const wake = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) * 4.2) * mouse.hover;
-          ctx.globalAlpha = .10 + glow * .24 + wake * .34;
-          ctx.fillStyle = glow > .7 ? "#fff0a8" : "#d8a74f";
-          ctx.beginPath();
-          ctx.arc(
-            (spark.x + Math.sin(stamp * .00035 + spark.p) * .003 * (1 + wake)) * canvas.width,
-            (spark.y + Math.cos(stamp * .00032 + spark.p) * .004 * (1 + wake)) * canvas.height,
-            spark.r * (1 + glow * .65 + wake * .75),
-            0,
-            Math.PI * 2
-          );
-          ctx.fill();
-        });
-        requestAnimationFrame(draw2d);
-      };
-      resize2d();
-      requestAnimationFrame(draw2d);
-      return;
-    }
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
 
-    const vertex = `
-      attribute vec2 a_position;
-      void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
-    `;
-    const fragment = `
-      precision mediump float;
-      uniform vec2 u_resolution;
-      uniform vec2 u_mouse;
-      uniform float u_time;
-      uniform float u_hover;
-      float hash(vec2 p) {
-        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+    const palette = [
+      "226,183,106",
+      "244,207,128",
+      "255,232,170",
+      "188,125,42",
+      "214,154,67"
+    ];
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let width = 0;
+    let height = 0;
+    let particles = [];
+    let visible = true;
+    const mouse = { x: -9999, y: -9999, on: false };
+
+    const sample = () => {
+      const rect = band.getBoundingClientRect();
+      width = Math.max(1, Math.round(rect.width));
+      height = Math.max(1, Math.round(rect.height));
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const gap = width < 760 ? 5 : 4;
+      const next = [];
+      for (let y = -gap; y <= height + gap; y += gap) {
+        for (let x = -gap; x <= width + gap; x += gap) {
+          if (Math.random() < .12) continue;
+          const depth = .42 + Math.random() * .58;
+          next.push({
+            hx: x + (Math.random() - .5) * 2.4,
+            hy: y + (Math.random() - .5) * 2.4,
+            x: x + (Math.random() - .5) * 13,
+            y: y + (Math.random() - .5) * 13,
+            vx: 0,
+            vy: 0,
+            size: 1.05 + Math.random() * .85,
+            alpha: .18 + depth * .38,
+            phase: Math.random() * Math.PI * 2,
+            color: palette[Math.floor(Math.random() * palette.length)]
+          });
+        }
       }
-      float noise(vec2 p) {
-        vec2 i = floor(p);
-        vec2 f = fract(p);
-        vec2 u = f * f * (3.0 - 2.0 * f);
-        return mix(
-          mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
-          mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
-          u.y
-        );
-      }
-      void main() {
-        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-        vec2 aspectUv = vec2(uv.x * (u_resolution.x / u_resolution.y), uv.y);
-        vec2 mouseUv = vec2(u_mouse.x * (u_resolution.x / u_resolution.y), u_mouse.y);
-        float wake = smoothstep(.34, .0, distance(aspectUv, mouseUv)) * u_hover;
-        vec2 drift = vec2(
-          noise(uv * 2.7 + u_time * .045),
-          noise(uv * 2.1 - u_time * .038)
-        ) - .5;
-        vec2 shimmerUv = uv + drift * (.010 + wake * .014);
-        vec2 grain = shimmerUv * vec2(820.0, 310.0);
-        float fleck = hash(floor(grain));
-        float sparkle = smoothstep(.972, .998, fleck);
-        float twinkle = .42 + .58 * smoothstep(.2, 1.0, noise(floor(grain) * .37 + u_time * 1.15));
-        float satin = smoothstep(.62, 1.0, noise(shimmerUv * vec2(34.0, 12.0) + u_time * .18)) * .11;
-        float bandGlow = smoothstep(.0, .76, 1.0 - abs(uv.y - .5) * 1.75);
-        vec3 gold = mix(vec3(.70, .43, .12), vec3(1.0, .83, .38), noise(grain * .07));
-        gold = mix(gold, vec3(1.0, .93, .62), wake * .35);
-        float alpha = (sparkle * twinkle * (.34 + wake * .42) + satin) * bandGlow;
-        gl_FragColor = vec4(gold, alpha);
-      }
-    `;
-    const compile = (type, source) => {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      return shader;
+      particles = next;
     };
-    const program = gl.createProgram();
-    gl.attachShader(program, compile(gl.VERTEX_SHADER, vertex));
-    gl.attachShader(program, compile(gl.FRAGMENT_SHADER, fragment));
-    gl.linkProgram(program);
-    gl.useProgram(program);
 
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
-    const pos = gl.getAttribLocation(program, "a_position");
-    gl.enableVertexAttribArray(pos);
-    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-    const resolution = gl.getUniformLocation(program, "u_resolution");
-    const mouseUniform = gl.getUniformLocation(program, "u_mouse");
-    const time = gl.getUniformLocation(program, "u_time");
-    const hoverUniform = gl.getUniformLocation(program, "u_hover");
-    let active = true;
-    const mouse = { x: .5, y: .5, hover: 0, target: 0 };
+    const drawStatic = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = "lighter";
+      particles.forEach((p) => {
+        ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+        ctx.fillRect(p.hx, p.hy, p.size, p.size);
+      });
+      ctx.globalCompositeOperation = "source-over";
+    };
+
+    const draw = (stamp) => {
+      requestAnimationFrame(draw);
+      if (!visible) return;
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = "lighter";
+      const t = stamp * .001;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        let ax = (p.hx - p.x) * .043;
+        let ay = (p.hy - p.y) * .043;
+        if (mouse.on) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const d2 = dx * dx + dy * dy;
+          const radius = 86;
+          if (d2 < radius * radius) {
+            const d = Math.sqrt(d2) || 1;
+            const force = (1 - d / radius) * 6.2;
+            ax += (dx / d) * force;
+            ay += (dy / d) * force;
+          }
+        }
+        p.vx = (p.vx + ax) * .82;
+        p.vy = (p.vy + ay) * .82;
+        p.x += p.vx + (Math.random() - .5) * .24;
+        p.y += p.vy + (Math.random() - .5) * .24;
+        const twinkle = .78 + Math.sin(t * 1.8 + p.phase) * .22;
+        ctx.fillStyle = `rgba(${p.color},${p.alpha * twinkle})`;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+      }
+      ctx.globalCompositeOperation = "source-over";
+    };
+
     band.addEventListener("pointermove", (event) => {
       const rect = band.getBoundingClientRect();
-      mouse.x = (event.clientX - rect.left) / rect.width;
-      mouse.y = 1 - ((event.clientY - rect.top) / rect.height);
-      mouse.target = 1;
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+      mouse.on = true;
     });
-    band.addEventListener("pointerenter", () => { mouse.target = 1; });
-    band.addEventListener("pointerleave", () => { mouse.target = 0; });
+    band.addEventListener("pointerleave", () => {
+      mouse.on = false;
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
 
-    const resize = () => {
-      const rect = band.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.max(1, Math.round(rect.width * dpr));
-      canvas.height = Math.max(1, Math.round(rect.height * dpr));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-    const draw = (stamp) => {
-      if (active) {
-        resize();
-        gl.clearColor(0, 0, 0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        mouse.hover += (mouse.target - mouse.hover) * .06;
-        gl.uniform2f(resolution, canvas.width, canvas.height);
-        gl.uniform2f(mouseUniform, mouse.x, mouse.y);
-        gl.uniform1f(time, stamp * .001);
-        gl.uniform1f(hoverUniform, mouse.hover);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-      }
-      requestAnimationFrame(draw);
-    };
-    new IntersectionObserver((entries) => {
-      active = entries.some((entry) => entry.isIntersecting);
-    }, { rootMargin: "120px" }).observe(band);
-    window.addEventListener("resize", resize);
-    resize();
-    requestAnimationFrame(draw);
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        sample();
+        if (reduced) drawStatic();
+      }, 180);
+    });
+
+    try {
+      new IntersectionObserver((entries) => {
+        visible = entries.some((entry) => entry.isIntersecting);
+      }, { rootMargin: "120px" }).observe(band);
+    } catch (error) {
+      visible = true;
+    }
+
+    sample();
+    drawStatic();
+    if (!reduced) requestAnimationFrame(draw);
   };
   initReserveGlitter();
 })();

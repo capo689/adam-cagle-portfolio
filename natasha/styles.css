@@ -643,8 +643,8 @@ h3 {
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.24), rgba(0,0,0,.78)),
-    radial-gradient(circle at 75% 45%, rgba(140,47,30,.18), transparent 30vw);
+    linear-gradient(90deg, rgba(0,0,0,.58), rgba(0,0,0,.12), rgba(0,0,0,.64)),
+    radial-gradient(circle at 75% 45%, rgba(140,47,30,.14), transparent 30vw);
   pointer-events: none;
 }
 
@@ -654,7 +654,7 @@ h3 {
   z-index: 0;
   width: 100%;
   height: 100%;
-  opacity: .68;
+  opacity: .96;
   pointer-events: none;
 }
 

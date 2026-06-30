@@ -823,10 +823,10 @@ h3 {
 
 .signup-form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) max-content;
-  gap: 10px;
-  align-items: end;
-  padding: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+  align-items: stretch;
+  padding: 18px;
   border: 1px solid rgba(226, 183, 106, .32);
   background: rgba(7, 8, 8, .78);
   box-shadow: 0 24px 70px rgba(0,0,0,.28);
@@ -834,18 +834,41 @@ h3 {
 }
 
 .signup-form label {
-  gap: 6px;
+  display: block;
+}
+
+.signup-form label span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .signup-form input {
-  height: 44px;
+  display: block;
+  height: 46px;
   padding: 0 12px;
+  border-color: rgba(226, 183, 106, .38);
+  background: rgba(0,0,0,.32);
+}
+
+.signup-form input::placeholder {
+  color: rgba(242, 228, 200, .42);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
 
 .signup-form .button {
-  min-height: 44px;
-  height: 44px;
-  padding: 0 16px;
+  grid-column: 2;
+  justify-self: end;
+  min-width: 142px;
+  min-height: 42px;
+  height: 42px;
+  padding: 0 18px;
   white-space: nowrap;
 }
 
@@ -1419,6 +1442,9 @@ dd {
     grid-template-columns: 1fr;
   }
   .signup-form .button {
+    grid-column: 1;
+    justify-self: stretch;
+    min-width: 0;
     width: 100%;
   }
   .founder-card {

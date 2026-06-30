@@ -316,46 +316,71 @@
 </main>
 
 <footer class="site-footer" id="contact">
-  <div class="footer__halo" aria-hidden="true"></div>
+  <div class="footer__mark" aria-hidden="true">
+    <img src="./assets/chaconia/floral-logo-transparent.png" alt="">
+  </div>
   <div class="footer__inner">
-    <div class="footer__intro reveal">
+    <section class="footer__story reveal" aria-labelledby="footer-title">
       <a class="brand" href="#top" aria-label="Chaconia and Co. home">
         <img src="./assets/chaconia/floral-icon-transparent.png" alt="">
         <span>Chaconia &amp; Co.</span>
       </a>
       <p class="eyebrow">Get in touch</p>
-      <h2>We would love to hear from you.</h2>
-      <p>Questions, sponsorship inquiries, private gatherings, or guest list details -- send a note and we will make the next step feel effortless.</p>
+      <h2 id="footer-title">Let&rsquo;s create something unforgettable.</h2>
+      <p>Questions, sponsorship inquiries, private gatherings, or guest list details. Send a note and we will help shape the next invitation with care.</p>
+      <div class="footer__socials" aria-label="Social links">
+        <a href="https://www.instagram.com/chaconiaandco/" rel="noopener" aria-label="Chaconia and Co. on Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3.4" y="3.4" width="17.2" height="17.2" rx="5.1"></rect>
+            <circle cx="12" cy="12" r="4.1"></circle>
+            <circle cx="17.2" cy="6.8" r="1"></circle>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/chaconiaandco/" rel="noopener" aria-label="Chaconia and Co. on Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14.4 8.6h2.2V5.1c-.4-.1-1.7-.2-3.1-.2-3.1 0-5.2 1.9-5.2 5.4v3H5v3.9h3.3v6.1h4v-6.1h3.3l.5-3.9h-3.8v-2.6c0-1.1.3-2.1 2.1-2.1Z"></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="footer__inquiry reveal" aria-labelledby="footer-form-title">
+      <div class="footer__inquiry-head">
+        <span>Private inquiry</span>
+        <h3 id="footer-form-title">Tell us where to begin.</h3>
+      </div>
+      <form class="contact-form footer-form" aria-label="Contact Chaconia and Co.">
+        <div class="footer-form__grid">
+          <label><span>Your name</span><input type="text" name="name"></label>
+          <label><span>Email address</span><input type="email" name="email"></label>
+        </div>
+        <label><span>Subject</span><select name="subject"><option>Select an option</option><option>Guest list</option><option>Sponsorship</option><option>Private event</option></select></label>
+        <label><span>Message</span><textarea name="message" rows="4"></textarea></label>
+        <button class="button button--gold" type="submit">Send message</button>
+      </form>
+    </section>
+
+    <div class="footer__directory">
       <dl class="footer__contact-list">
         <div><dt>Email</dt><dd><a href="mailto:hello@chaconiaandco.com">hello@chaconiaandco.com</a></dd></div>
         <div><dt>Phone</dt><dd><a href="tel:+15412135278">541.213.5278</a></dd></div>
         <div><dt>Location</dt><dd>Bend, Oregon</dd></div>
       </dl>
-    </div>
-    <form class="contact-form footer-form reveal" aria-label="Contact Chaconia and Co.">
-      <div class="footer-form__grid">
-        <label><span>Your name</span><input type="text" name="name"></label>
-        <label><span>Email address</span><input type="email" name="email"></label>
-      </div>
-      <label><span>Subject</span><select name="subject"><option>Select an option</option><option>Guest list</option><option>Sponsorship</option><option>Private event</option></select></label>
-      <label><span>Message</span><textarea name="message" rows="4"></textarea></label>
-      <button class="button button--gold" type="submit">Send message</button>
-    </form>
-    <div class="footer__bottom">
-      <nav aria-label="Footer navigation">
+      <nav class="footer__nav" aria-label="Footer navigation">
         <a href="#experiences">Experiences</a>
         <a href="#dress">Dress to Impress</a>
         <a href="#social">Social Club</a>
         <a href="#sponsorship">Sponsorship</a>
         <a href="#reserve">Guest List</a>
       </nav>
-      <div class="footer__links" aria-label="Social and legal links">
-        <a href="https://www.instagram.com/chaconiaandco/" rel="noopener">Instagram</a>
-        <a href="https://www.facebook.com/chaconiaandco/" rel="noopener">Facebook</a>
+    </div>
+
+    <div class="footer__legal">
+      <p>&copy; 2026 Chaconia &amp; Co. Curated experiences. Meaningful connections.</p>
+      <div class="footer__links" aria-label="Legal links">
         <a href="./privacy.html">Privacy Policy</a>
         <a href="./terms.html">T&amp;C</a>
       </div>
-      <p>&copy; 2026 Chaconia &amp; Co. All rights reserved.</p>
     </div>
   </div>
 </footer>

@@ -799,13 +799,30 @@ h3 {
 
 .signup-form {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 12px;
-  padding: 16px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) max-content;
+  gap: 10px;
+  align-items: end;
+  padding: 14px;
   border: 1px solid rgba(226, 183, 106, .32);
   background: rgba(7, 8, 8, .78);
   box-shadow: 0 24px 70px rgba(0,0,0,.28);
   backdrop-filter: blur(10px);
+}
+
+.signup-form label {
+  gap: 6px;
+}
+
+.signup-form input {
+  height: 44px;
+  padding: 0 12px;
+}
+
+.signup-form .button {
+  min-height: 44px;
+  height: 44px;
+  padding: 0 16px;
+  white-space: nowrap;
 }
 
 label {
@@ -1373,6 +1390,9 @@ dd {
   .about__pillars,
   .signup-form {
     grid-template-columns: 1fr;
+  }
+  .signup-form .button {
+    width: 100%;
   }
   .founder-card {
     grid-template-columns: 1fr;

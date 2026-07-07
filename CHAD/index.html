@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SHIP HAPPENS — Chad 3D (live)</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#0d0714;font:13px 'Courier New',monospace;color:#cfe8e8}
+  #c{display:block;width:100vw;height:100vh}
+  #hud{position:fixed;left:14px;top:12px;pointer-events:none;text-shadow:0 1px 2px #000;line-height:1.5}
+  #hud h1{font-family:Impact,'Arial Black';color:#ff4da6;letter-spacing:1px;margin:0 0 2px;font-size:22px}
+  #hud .k{color:#2ae8d8}
+  #panel{position:fixed;right:14px;top:12px;background:rgba(16,10,26,.82);border:1px solid #35284a;border-radius:8px;padding:10px 12px;max-width:230px}
+  #panel b{color:#f5e6c8}
+  #panel select,#panel button{width:100%;margin:4px 0;background:#0d0714;color:#2ae8d8;border:1px solid #35284a;border-radius:5px;padding:5px;font:12px 'Courier New',monospace;cursor:pointer}
+  #panel button{background:#ff4da6;color:#0d0714;font-weight:bold;border:0}
+  #panel button.alt{background:#2ae8d8}
+  #log{position:fixed;left:14px;bottom:10px;background:rgba(0,0,0,.6);border:1px solid #35284a;border-radius:6px;
+       padding:6px 9px;max-width:52vw;max-height:22vh;overflow:auto;white-space:pre-wrap;font-size:11px;color:#8fe;pointer-events:none}
+  #loadwrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0d0714;z-index:9;flex-direction:column;gap:14px}
+  #bar{width:320px;height:10px;background:#241633;border-radius:6px;overflow:hidden}
+  #barf{height:100%;width:0;background:linear-gradient(90deg,#ff4da6,#2ae8d8);transition:width .2s}
+  #drop{border:2px dashed #2ae8d8;border-radius:10px;padding:14px 22px;color:#2ae8d8;text-align:center;cursor:pointer;max-width:360px}
+  .hot{background:#12202a}
+  kbd{background:#241633;border:1px solid #4a3a66;border-radius:4px;padding:0 5px;color:#f5e6c8}
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="hud">
+  <h1>CHAD CRUZ — 3D</h1>
+  <div><span class="k">WASD</span> move · <span class="k">Shift</span> run · <span class="k">Mouse-drag</span> orbit · <span class="k">Wheel</span> zoom</div>
+  <div><span class="k">Click / Space</span> attack · <span class="k">T</span> taunt · <span class="k">G</span> wrench on/off · <span class="k">P</span> in-place</div>
+</div>
+<div id="panel">
+  <b>ANIMATION TEST</b>
+  <select id="animSel"><option>loading…</option></select>
+  <button id="playOne">PLAY ONCE</button>
+  <button class="alt" id="loopOne">SET AS IDLE-LOOP</button>
+  <b>WRENCH TUNE</b>
+  <div style="font-size:11px">rotZ <input id="wrz" type="range" min="-180" max="180" value="-90" style="width:100%"></div>
+</div>
+<div id="log"></div>
+
+<div id="loadwrap">
+  <div style="font-family:Impact;font-size:26px;color:#ff4da6">SHIP HAPPENS</div>
+  <div id="stat" style="color:#2ae8d8">booting Chad…</div>
+  <div id="bar"><div id="barf"></div></div>
+  <div id="drop" style="display:none">Auto-load blocked (opened as a file).<br>
+    <b>Drag the whole <span style="color:#f5e6c8">CHADGAME</span> folder's FBX files here</b><br>
+    <span style="font-size:11px">…or better: run a local server (see chat) and reload.</span>
+  </div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+
+const log=(m)=>{const l=document.getElementById('log');l.textContent+=m+'\n';l.scrollTop=1e9;console.log(m);};
+const stat=(m)=>{document.getElementById('stat').textContent=m;};
+window.onerror=(m,s,ln)=>log('ERROR '+m+' @'+ln);
+
+/* ---------------- renderer / scene / camera ---------------- */
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(2,devicePixelRatio));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x0d0714);
+scene.fog=new THREE.FogExp2(0x0d0714,0.03);
+
+const camera=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,0.05,500);
+
+// lights: cool key + warm fill + red "emergency" rim
+scene.add(new THREE.HemisphereLight(0xbfe9ff,0x201830,0.9));
+const key=new THREE.DirectionalLight(0xffffff,1.35); key.position.set(-6,12,8);
+key.castShadow=true; key.shadow.mapSize.set(2048,2048);
+key.shadow.camera.near=1;key.shadow.camera.far=60;
+key.shadow.camera.left=-14;key.shadow.camera.right=14;key.shadow.camera.top=14;key.shadow.camera.bottom=-14;
+scene.add(key);
+const red=new THREE.PointLight(0xff3344,0.7,40); red.position.set(6,4,-6); scene.add(red);
+
+/* ---------------- floor ---------------- */
+function makeFloor(){
+  const geo=new THREE.PlaneGeometry(120,120);
+  const mat=new THREE.MeshStandardMaterial({color:0x161022,roughness:.95,metalness:.05});
+  const floor=new THREE.Mesh(geo,mat); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
+  const grid=new THREE.GridHelper(120,60,0x35284a,0x241633); grid.position.y=0.002; scene.add(grid);
+  // try the lounge plate as a decal-ish center pad
+  new THREE.TextureLoader().load('lounge_plate.png',t=>{
+    t.colorSpace=THREE.SRGBColorSpace;
+    const pad=new THREE.Mesh(new THREE.PlaneGeometry(16,16),
+      new THREE.MeshStandardMaterial({map:t,roughness:.9,transparent:true}));
+    pad.rotation.x=-Math.PI/2; pad.position.y=0.004; scene.add(pad);
+    log('lounge_plate loaded as floor pad');
+  },undefined,()=>log('(no lounge_plate — using grid floor)'));
+}
+makeFloor();
+
+/* ---------------- Wrench of Doom (procedural) ---------------- */
+function buildWrench(scale){
+  const g=new THREE.Group();
+  const red=new THREE.MeshStandardMaterial({color:0xc03828,roughness:.6});
+  const dark=new THREE.MeshStandardMaterial({color:0x5a1a12,roughness:.8});
+  const steel=new THREE.MeshStandardMaterial({color:0x9a9aa2,roughness:.35,metalness:.5});
+  const add=(m,y)=>{m.position.y=y*scale;m.castShadow=true;g.add(m);return m;};
+  add(new THREE.Mesh(new THREE.CylinderGeometry(2.6*scale,3.2*scale,52*scale,10),red),26);
+  add(new THREE.Mesh(new THREE.CylinderGeometry(3.4*scale,3.4*scale,14*scale,10),dark),7);
+  add(new THREE.Mesh(new THREE.BoxGeometry(9*scale,10*scale,6*scale),red),54);
+  const jawF=new THREE.Mesh(new THREE.BoxGeometry(4*scale,12*scale,6*scale),steel);jawF.position.set(5*scale,60*scale,0);jawF.castShadow=true;g.add(jawF);
+  const jawM=new THREE.Mesh(new THREE.BoxGeometry(4*scale,9*scale,6*scale),steel);jawM.position.set(-4*scale,59*scale,0);jawM.castShadow=true;g.add(jawM);
+  return g;
+}
+
+/* ---------------- animation state ---------------- */
+const loader=new FBXLoader();
+let chad=null, mixer=null, wrench=null, modelScale=1;
+const actions={};                 // name -> AnimationAction
+let currentLoco='idle', playingOneShot=false, inPlace=true;
+
+// strip horizontal root motion from a clip (keep vertical bob)
+function toInPlace(clip){
+  clip.tracks.forEach(tr=>{
+    if(/mixamorig:Hips\.position$/.test(tr.name)){
+      const v=tr.values, x0=v[0], z0=v[2];
+      for(let i=0;i<v.length;i+=3){ v[i]=x0; v[i+2]=z0; }
+    }
+  });
+  return clip;
+}
+function register(name,clip,{loco=false,oneShot=false}={}){
+  clip.name=name;
+  if(loco) toInPlace(clip);
+  const a=mixer.clipAction(clip);
+  if(oneShot){ a.setLoop(THREE.LoopOnce,1); a.clampWhenFinished=true; }
+  actions[name]=a;
+  const sel=document.getElementById('animSel');
+  if(sel.querySelector('option')?.textContent==='loading…') sel.innerHTML='';
+  const o=document.createElement('option'); o.value=name; o.textContent=name; sel.appendChild(o);
+}
+function playLoco(name,fade=0.22){
+  if(playingOneShot||currentLoco===name||!actions[name])return;
+  actions[name].reset().fadeIn(fade).play();
+  if(actions[currentLoco]) actions[currentLoco].fadeOut(fade);
+  currentLoco=name;
+}
+function oneShot(name,back='idle'){
+  const a=actions[name]; if(!a)return;
+  playingOneShot=true;
+  Object.values(actions).forEach(x=>{if(x!==a)x.fadeOut(0.12);});
+  a.reset().fadeIn(0.08).play();
+  const dur=a.getClip().duration;
+  clearTimeout(oneShot._t);
+  oneShot._t=setTimeout(()=>{ playingOneShot=false; currentLoco='__'; playLoco(back,0.15); }, Math.max(150,dur*1000-120));
+}
+
+/* ---------------- load manifest ---------------- */
+// paths relative to CHADGAME/ ; %20 handled by encodeURI
+const CHAR='mixamo/axe_pack/Chad2.fbx';
+const CLIPS=[
+  ['idle','mixamo/axe_pack/standing idle.fbx',{loco:true}],
+  ['walk','mixamo/axe_pack/standing walk forward.fbx',{loco:true}],
+  ['run','mixamo/axe_pack/standing run forward.fbx',{loco:true}],
+  ['attackH','mixamo/axe_pack/standing melee attack horizontal.fbx',{oneShot:true}],
+  ['attackD','mixamo/axe_pack/standing melee attack downward.fbx',{oneShot:true}],
+  ['combo','mixamo/axe_pack/standing melee combo attack ver. 1.fbx',{oneShot:true}],
+  ['taunt','mixamo/axe_pack/standing taunt battlecry.fbx',{oneShot:true}],
+  ['hurt','mixamo/axe_pack/standing react large gut.fbx',{oneShot:true}],
+  ['jump','mixamo/axe_pack/standing jump.fbx',{oneShot:true}],
+];
+const ATTACKS=['attackH','attackD','combo'];
+
+let done=0; const total=1+CLIPS.length;
+const bump=()=>{done++;document.getElementById('barf').style.width=(done/total*100)+'%';};
+
+function parseChar(obj){
+  chad=obj;
+  const box=new THREE.Box3().setFromObject(chad);
+  const h=box.max.y-box.min.y;
+  modelScale=1.85/h;                         // normalize Chad to ~1.85m
+  chad.scale.setScalar(modelScale);
+  const box2=new THREE.Box3().setFromObject(chad);
+  chad.position.y-=box2.min.y;               // feet on floor
+  chad.traverse(o=>{if(o.isMesh){o.castShadow=true;o.frustumCulled=false;}});
+  scene.add(chad);
+  mixer=new THREE.AnimationMixer(chad);
+  // wrench onto right hand
+  let hand=null; chad.traverse(o=>{if(!hand&&o.isBone&&/RightHand$/.test(o.name))hand=o;});
+  if(hand){ wrench=buildWrench(1/modelScale/180*1.0); wrench.rotation.z=-Math.PI/2; hand.add(wrench);
+            log('Wrench of Doom mounted on '+hand.name); }
+  else log('! RightHand bone not found — no wrench');
+  log('Chad loaded — height normalized, feet planted.');
+}
+
+function loadCharThenClips(get){
+  stat('loading Chad2.fbx (20 MB)…');
+  get(CHAR,obj=>{
+    parseChar(obj); bump();
+    let i=0;
+    (function next(){
+      if(i>=CLIPS.length){ finish(); return; }
+      const [name,path,opt]=CLIPS[i++];
+      stat('loading '+name+'…');
+      get(path,o=>{
+        const clip=o.animations&&o.animations[0];
+        if(clip){ register(name,clip,opt||{}); log('  clip: '+name+'  ('+clip.duration.toFixed(2)+'s)'); }
+        else log('  ! no clip in '+path);
+        bump(); next();
+      }, e=>{ log('  ! failed '+path); bump(); next(); });
+    })();
+  }, e=>{ stat('could not auto-load — see drop box'); document.getElementById('drop').style.display='block'; });
+}
+function finish(){
+  document.getElementById('loadwrap').style.display='none';
+  if(actions.idle){ actions.idle.play(); currentLoco='idle'; }
+  log('READY. '+Object.keys(actions).length+' animations. Go stomp some geriatrics.');
+}
+
+/* server/relative loader */
+function urlGet(path,ok,err){ loader.load(encodeURI(path),ok,undefined,err); }
+/* drag-drop fallback loader (file://) */
+function setupDrop(){
+  const files={};
+  const dz=document.getElementById('drop');
+  dz.ondragover=e=>{e.preventDefault();dz.classList.add('hot');};
+  dz.ondragleave=()=>dz.classList.remove('hot');
+  dz.ondrop=e=>{
+    e.preventDefault();dz.classList.remove('hot');
+    for(const f of e.dataTransfer.files){ files[f.name.toLowerCase()]=f; }
+    log('got '+Object.keys(files).length+' files — matching…');
+    const memGet=(path,okc,errc)=>{
+      const base=path.split('/').pop().toLowerCase();
+      const f=files[base];
+      if(!f){ log('  (missing '+base+')'); errc&&errc(); return; }
+      const r=new FileReader();
+      r.onload=()=>{ try{ const g=loader.parse(r.result,''); okc(g); }catch(x){ log('parse fail '+base); errc&&errc(); } };
+      r.readAsArrayBuffer(f);
+    };
+    loadCharThenClips(memGet);
+  };
+}
+setupDrop();
+
+// Attempt auto-load; if we're on file:// the char load will error → drop box shows.
+loadCharThenClips(urlGet);
+
+/* ---------------- input ---------------- */
+const keys={};
+addEventListener('keydown',e=>{
+  keys[e.code]=true;
+  if(e.code==='Space'){ oneShot(ATTACKS[Math.floor(Math.random()*ATTACKS.length)]); }
+  if(e.key==='t'||e.key==='T') oneShot('taunt');
+  if(e.key==='g'||e.key==='G'){ if(wrench) wrench.visible=!wrench.visible; }
+  if(e.key==='p'||e.key==='P'){ inPlace=!inPlace; log('in-place '+inPlace); }
+});
+addEventListener('keyup',e=>keys[e.code]=false);
+canvas.addEventListener('mousedown',e=>{ if(e.button===0 && !dragging0(e)) {} });
+
+// camera orbit
+let orbit={yaw:Math.PI,pitch:0.5,dist:5.5}, dragging=false,lastX,lastY;
+canvas.addEventListener('mousedown',e=>{ dragging=true;lastX=e.clientX;lastY=e.clientY;
+  clickTime=performance.now(); });
+addEventListener('mouseup',e=>{ dragging=false;
+  if(performance.now()-clickTime<180){ oneShot(ATTACKS[Math.floor(Math.random()*ATTACKS.length)]); }
+});
+let clickTime=0;
+function dragging0(){return false;}
+addEventListener('mousemove',e=>{
+  if(!dragging)return;
+  orbit.yaw-=(e.clientX-lastX)*0.008; orbit.pitch-=(e.clientY-lastY)*0.006;
+  orbit.pitch=Math.max(0.05,Math.min(1.3,orbit.pitch)); lastX=e.clientX;lastY=e.clientY;
+});
+addEventListener('wheel',e=>{ orbit.dist=Math.max(2.2,Math.min(14,orbit.dist+e.deltaY*0.01)); },{passive:true});
+
+// panel test controls
+document.getElementById('playOne').onclick=()=>{ const n=document.getElementById('animSel').value; if(actions[n]) oneShot(n); };
+document.getElementById('loopOne').onclick=()=>{ const n=document.getElementById('animSel').value; if(actions[n]){ playingOneShot=false; actions[n].setLoop(THREE.LoopRepeat,Infinity); currentLoco='__'; playLoco(n,0.2);} };
+document.getElementById('wrz').oninput=e=>{ if(wrench) wrench.rotation.z=e.target.value*Math.PI/180; };
+
+/* ---------------- movement + loop ---------------- */
+const clock=new THREE.Clock();
+const vel=new THREE.Vector3();
+function tick(){
+  requestAnimationFrame(tick);
+  const dt=Math.min(0.05,clock.getDelta());
+  if(mixer) mixer.update(dt);
+
+  if(chad && !playingOneShot){
+    // camera-relative movement
+    let ix=0,iz=0;
+    if(keys['KeyW'])iz+=1; if(keys['KeyS'])iz-=1;
+    if(keys['KeyA'])ix-=1; if(keys['KeyD'])ix+=1;
+    const running=keys['ShiftLeft']||keys['ShiftRight'];
+    if(ix||iz){
+      const len=Math.hypot(ix,iz); ix/=len; iz/=len;
+      // forward = away from camera along yaw
+      const fwd=new THREE.Vector3(Math.sin(orbit.yaw),0,Math.cos(orbit.yaw));
+      const rightv=new THREE.Vector3(fwd.z,0,-fwd.x);
+      vel.set(0,0,0).addScaledVector(fwd,iz).addScaledVector(rightv,ix).normalize();
+      const spd=(running?5.4:2.3);
+      chad.position.addScaledVector(vel,spd*dt);
+      // face move dir (smooth)
+      const targetYaw=Math.atan2(vel.x,vel.z);
+      let cy=chad.rotation.y, d=((targetYaw-cy+Math.PI)%(2*Math.PI))-Math.PI;
+      chad.rotation.y=cy+d*Math.min(1,dt*12);
+      playLoco(running?'run':'walk');
+    } else {
+      playLoco('idle');
+    }
+  }
+
+  // third-person follow
+  if(chad){
+    const hd=orbit.dist*Math.cos(orbit.pitch);
+    const tgt=new THREE.Vector3(chad.position.x,1.1,chad.position.z);
+    camera.position.set(
+      tgt.x - Math.sin(orbit.yaw)*hd,
+      1.1 + orbit.dist*Math.sin(orbit.pitch),
+      tgt.z - Math.cos(orbit.yaw)*hd
+    );
+    camera.lookAt(tgt);
+    red.position.set(chad.position.x+4,4,chad.position.z-4);
+  }
+  renderer.render(scene,camera);
+}
+tick();
+
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+});
+</script>
+</body>
+</html>

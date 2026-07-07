@@ -109,6 +109,14 @@
   .site-frame__bar em{margin-left:12px;font-family:var(--mono);font-size:12px;color:var(--fg3);font-style:normal}
   .site-frame__view{display:block;position:relative;width:100%;overflow:hidden;background:#0a0c11;line-height:0}
   .site-frame__view img{display:block;width:100%;height:auto}
+  .site-frame__view iframe{width:1440px;height:900px;border:0;transform-origin:0 0;pointer-events:none;background:#0a0c11}
+  .example-sites{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,30px);margin-top:34px}
+  .example-card{margin:0;min-width:0}
+  .example-card .site-frame,.example-card .site-frame__view{min-width:0}
+  .example-card .site-frame{margin:0 0 12px}
+  .example-card figcaption{color:var(--fg2);font-size:14.5px;line-height:1.5}
+  .example-card figcaption b{display:block;color:var(--fg);font-size:16px;margin-bottom:2px}
+  .example-card figcaption a{color:var(--accent2);font-weight:600;text-decoration:none;white-space:nowrap}
   /* before / after */
   .ba{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,30px);margin:36px 0 6px}
   .ba__item{margin:0}
@@ -182,7 +190,7 @@
   footer a{color:var(--fg2);text-decoration:none}footer a:hover{color:var(--fg)}
   .frow2{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
 
-  @media (max-width:760px){ .checks{grid-template-columns:1fr} .split{grid-template-columns:1fr} .frow{grid-template-columns:1fr} .trio{grid-template-columns:1fr} .ba{grid-template-columns:1fr} }
+  @media (max-width:760px){ .checks{grid-template-columns:1fr} .split{grid-template-columns:1fr} .frow{grid-template-columns:1fr} .trio{grid-template-columns:1fr} .ba{grid-template-columns:1fr} .example-sites{grid-template-columns:1fr} }
   @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .reveal{opacity:1;transform:none;transition:none} .btn:hover{transform:none} }
 </style>
 <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
@@ -294,6 +302,22 @@
         <li class="reveal">One clear next step. A request-a-proposal path, with the photos and proof that close the booking.</li>
         <li class="reveal">Fast, mobile, and owned by the business.</li>
       </ul>
+      <div class="example-sites">
+        <figure class="example-card reveal">
+          <a class="site-frame" href="https://black-sheep-nu.vercel.app/" target="_blank" rel="noopener" aria-label="Visit the Black Sheep Chocolate example site">
+            <span class="site-frame__bar"><i></i><i></i><i></i><em>black-sheep-nu.vercel.app</em></span>
+            <span class="site-frame__view"><iframe src="https://black-sheep-nu.vercel.app/" title="Black Sheep Chocolate site preview" loading="lazy"></iframe></span>
+          </a>
+          <figcaption><b>Black Sheep Chocolate</b>Organic bean-to-bar chocolate site with product storytelling, local credibility, and clear retailer paths. <a href="https://black-sheep-nu.vercel.app/" target="_blank" rel="noopener">Visit live &#8599;</a></figcaption>
+        </figure>
+        <figure class="example-card reveal">
+          <a class="site-frame" href="https://black-sheep-nu.vercel.app/balloon/" target="_blank" rel="noopener" aria-label="Visit the Balloons by Todd example site">
+            <span class="site-frame__bar"><i></i><i></i><i></i><em>black-sheep-nu.vercel.app/balloon</em></span>
+            <span class="site-frame__view"><iframe src="https://black-sheep-nu.vercel.app/balloon/" title="Balloons by Todd site preview" loading="lazy"></iframe></span>
+          </a>
+          <figcaption><b>Balloons by Todd</b>A playful Bend party-entertainment site built for fast understanding, mobile booking, and event-service trust. <a href="https://black-sheep-nu.vercel.app/balloon/" target="_blank" rel="noopener">Visit live &#8599;</a></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 

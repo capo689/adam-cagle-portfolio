@@ -62,8 +62,8 @@
 <canvas id="c"></canvas>
 <div id="hud">
   <h1>CHAD CRUZ - ZOMBIE ARENA</h1>
-  <div><span class="k">WASD</span> move · <span class="k">Mouse</span> aim · <span class="k">Click/1</span> swing · <span class="k">2</span> heavy · <span class="k">3/T</span> taunt</div>
-  <div class="tiny">First playable slice: survive waves, kite the pack, keep Chad breathing.</div>
+  <div><span class="k">Arrow keys/WASD</span> move · <span class="k">Click zombie</span> auto-attack · <span class="k">2</span> cleave · <span class="k">3</span> shotgun · <span class="k">4/T</span> shout</div>
+  <div class="tiny">Click a target or get jumped and Chad keeps swinging like a proper MMO brawler.</div>
 </div>
 <div id="gameui">
   <div id="objective">Loading Chad...</div>
@@ -81,9 +81,10 @@
     <span>Undead: <b id="zombiesTxt">0</b></span>
   </div>
   <div id="actionbar">
-    <div class="slot ready" data-ability="basic"><span class="key">1</span><span class="icon">W</span><span class="label">Wrench</span><span class="cd"></span></div>
-    <div class="slot alt ready" data-ability="heavy"><span class="key">2</span><span class="icon">H</span><span class="label">Heavy</span><span class="cd"></span></div>
-    <div class="slot gold ready" data-ability="taunt"><span class="key">3</span><span class="icon">T</span><span class="label">Taunt</span><span class="cd"></span></div>
+    <div class="slot ready" data-ability="basic"><span class="key">1</span><span class="icon">A</span><span class="label">Auto</span><span class="cd"></span></div>
+    <div class="slot alt ready" data-ability="heavy"><span class="key">2</span><span class="icon">C</span><span class="label">Cleave</span><span class="cd"></span></div>
+    <div class="slot ready" data-ability="shotgun"><span class="key">3</span><span class="icon">B</span><span class="label">Boom</span><span class="cd"></span></div>
+    <div class="slot gold ready" data-ability="taunt"><span class="key">4</span><span class="icon">T</span><span class="label">Shout</span><span class="cd"></span></div>
   </div>
   <div id="floaters"></div>
 </div>
@@ -295,30 +296,54 @@ loadCharThenClips(urlGet);
 /* ---------------- game state ---------------- */
 const game={
   ready:false,over:false,hp:160,maxHp:160,kills:0,wave:0,zombies:[],toSpawn:0,spawnTimer:0,wavePause:0,grace:0,
-  hitStop:0,target:null,cool:{basic:0,heavy:0,taunt:0},floaters:[]
+  hitStop:0,target:null,cool:{basic:0,heavy:0,shotgun:0,taunt:0},floaters:[],
+  auto:{active:false,target:null,timer:0,range:2.55,speed:1.05}
 };
 const keys={};
 const facing=new THREE.Vector3(0,0,1);
 const arenaRadius=27;
-const zombieGeo={body:new THREE.CapsuleGeometry(.34,.85,4,8),head:new THREE.SphereGeometry(.24,10,8),arm:new THREE.BoxGeometry(.16,.62,.16)};
+const zombieGeo={
+  body:new THREE.CapsuleGeometry(.34,.85,4,8),
+  head:new THREE.SphereGeometry(.24,10,8),
+  arm:new THREE.CapsuleGeometry(.07,.58,4,6),
+  leg:new THREE.CapsuleGeometry(.09,.58,4,6),
+  hand:new THREE.SphereGeometry(.09,8,6),
+  jaw:new THREE.BoxGeometry(.18,.06,.12),
+  wound:new THREE.BoxGeometry(.08,.22,.018)
+};
 const zombieMats=[
   new THREE.MeshStandardMaterial({color:0x355f3d,roughness:.85}),
   new THREE.MeshStandardMaterial({color:0x51602f,roughness:.9}),
   new THREE.MeshStandardMaterial({color:0x6d3434,roughness:.88})
 ];
+const woundMat=new THREE.MeshBasicMaterial({color:0x7d0d16});
 function makeZombie(pos,elite=false){
   const g=new THREE.Group();
   const mat=zombieMats[Math.floor(Math.random()*zombieMats.length)];
-  const body=new THREE.Mesh(zombieGeo.body,mat); body.position.y=.9; body.castShadow=true; g.add(body);
-  const head=new THREE.Mesh(zombieGeo.head,mat); head.position.y=1.55; head.castShadow=true; g.add(head);
-  const armL=new THREE.Mesh(zombieGeo.arm,mat); armL.position.set(-.38,1.08,.1); armL.rotation.z=.45; armL.castShadow=true; g.add(armL);
-  const armR=armL.clone(); armR.position.x=.38; armR.rotation.z=-.45; g.add(armR);
+  const shirt=new THREE.MeshStandardMaterial({color:elite?0x34234d:0x253047,roughness:.9});
+  const body=new THREE.Mesh(zombieGeo.body,shirt); body.position.y=.9; body.rotation.x=.08; body.castShadow=true; g.add(body);
+  const head=new THREE.Mesh(zombieGeo.head,mat); head.position.set(.03,1.55,.06); head.rotation.x=-.18; head.castShadow=true; g.add(head);
+  const jaw=new THREE.Mesh(zombieGeo.jaw,mat); jaw.position.set(.03,1.45,.25); jaw.rotation.x=.24; jaw.castShadow=true; g.add(jaw);
+  const armL=new THREE.Mesh(zombieGeo.arm,mat); armL.position.set(-.42,1.08,.18); armL.rotation.set(1.0,0,.36); armL.castShadow=true; g.add(armL);
+  const armR=armL.clone(); armR.position.x=.42; armR.rotation.z=-.36; g.add(armR);
+  const handL=new THREE.Mesh(zombieGeo.hand,mat); handL.position.set(-.49,.72,.44); handL.castShadow=true; g.add(handL);
+  const handR=handL.clone(); handR.position.x=.49; g.add(handR);
+  const legL=new THREE.Mesh(zombieGeo.leg,mat); legL.position.set(-.16,.35,-.02); legL.rotation.x=.08; legL.castShadow=true; g.add(legL);
+  const legR=legL.clone(); legR.position.x=.18; legR.rotation.x=-.16; g.add(legR);
+  for(let i=0;i<3;i++){
+    const wound=new THREE.Mesh(zombieGeo.wound,woundMat);
+    wound.position.set((Math.random()-.5)*.38,.85+Math.random()*.32,.345);
+    wound.rotation.z=(Math.random()-.5)*.8;
+    g.add(wound);
+  }
   const eyeMat=new THREE.MeshBasicMaterial({color:0xff3344});
   const eye=new THREE.Mesh(new THREE.SphereGeometry(.035,6,4),eyeMat); eye.position.set(.09,1.6,.22); g.add(eye);
   const eye2=eye.clone(); eye2.position.x=-.09; g.add(eye2);
   g.position.copy(pos); g.scale.setScalar(elite?1.22:1);
   scene.add(g);
-  return {mesh:g,hp:elite?120:65,maxHp:elite?120:65,speed:elite?.92:1.02,attackCd:1.3+Math.random(),dead:false,death:0,elite,stun:0};
+  const z={mesh:g,hp:elite?120:65,maxHp:elite?120:65,speed:elite?.92:1.02,attackCd:1.3+Math.random(),dead:false,death:0,elite,stun:0,walkT:Math.random()*10};
+  g.traverse(o=>{o.userData.zombie=z;});
+  return z;
 }
 function spawnZombie(){
   const a=Math.random()*Math.PI*2, r=arenaRadius+Math.random()*3;
@@ -336,6 +361,7 @@ function startWave(){
 function resetGame(){
   game.zombies.forEach(z=>scene.remove(z.mesh));
   Object.assign(game,{over:false,hp:game.maxHp,kills:0,wave:0,zombies:[],toSpawn:0,spawnTimer:0,wavePause:0,grace:7,target:null});
+  game.auto.active=false; game.auto.target=null; game.auto.timer=0;
   if(chad){ chad.position.set(0,0,0); chad.rotation.y=0; }
   ui.gameover.style.display='none';
   startWave(); updateUI();
@@ -351,13 +377,44 @@ function gameOver(){
 /* ---------------- combat ---------------- */
 function abilityReady(name){ return game.cool[name]<=0&&!game.over&&game.ready; }
 function setCooldown(name,seconds){ game.cool[name]=seconds; }
-function swing(kind){
+function setTarget(z,auto=false){
+  if(!z||z.dead)return;
+  game.target=z;
+  if(auto) beginAutoAttack(z,true);
+}
+function beginAutoAttack(z,immediate=false){
+  if(!z||z.dead||game.over||!game.ready)return;
+  game.auto.active=true;
+  game.auto.target=z;
+  game.target=z;
+  game.auto.timer=immediate?0:Math.min(game.auto.timer,.25);
+}
+function stopAutoAttack(){
+  game.auto.active=false;
+  game.auto.target=null;
+  game.auto.timer=0;
+}
+function swing(kind,target=null){
   if(kind==='basic'&&!abilityReady('basic'))return;
   if(kind==='heavy'&&!abilityReady('heavy'))return;
+  if(kind==='shotgun'&&!abilityReady('shotgun'))return;
   const heavy=kind==='heavy';
+  if(kind==='shotgun'){
+    setCooldown('shotgun',4.8);
+    oneShot('combo');
+    hitCone(7.25,.42,52,'shotgun',1.35);
+    addFloat('BOOM',chad.position.clone().add(facing.clone().multiplyScalar(1.4)).add(new THREE.Vector3(0,1.4,0)),'kill');
+    return;
+  }
   setCooldown(kind,heavy?2.6:.55);
   oneShot(heavy?'attackD':'attackH');
-  hitCone(heavy?3.35:2.35,heavy?.78:1.05,heavy?82:36,heavy?'heavy':'basic');
+  if(target&&!target.dead&&target.mesh.position.distanceTo(chad.position)<(heavy?3.35:2.55)){
+    tmpV.copy(target.mesh.position).sub(chad.position).setY(0);
+    if(tmpV.lengthSq()>.01) faceToward(chad,tmpV.normalize(),.08);
+    damageZombie(target,heavy?82:36,heavy?'heavy':'basic',heavy?.75:.35);
+    return;
+  }
+  hitCone(heavy?3.35:2.55,heavy?.78:1.05,heavy?82:36,heavy?'heavy':'basic',heavy?.75:.35);
 }
 function taunt(){
   if(!abilityReady('taunt'))return;
@@ -369,7 +426,28 @@ function taunt(){
   });
   addFloat('TAUNT',chad.position.clone().add(new THREE.Vector3(0,2.4,0)),'kill');
 }
-function hitCone(range,angle,damage,label){
+function updateAutoAttack(dt){
+  if(!game.auto.active||game.over||!game.ready)return;
+  const z=game.auto.target;
+  if(!z||z.dead){ stopAutoAttack(); return; }
+  game.target=z;
+  tmpV.copy(z.mesh.position).sub(chad.position).setY(0);
+  const dist=tmpV.length();
+  if(dist>.05) faceToward(chad,tmpV.normalize(),dt);
+  game.auto.timer-=dt;
+  if(dist>game.auto.range){
+    if(game.auto.timer<=0){
+      addFloat('TOO FAR',z.mesh.position.clone().add(new THREE.Vector3(0,1.9,0)));
+      game.auto.timer=.9;
+    }
+    return;
+  }
+  if(game.auto.timer<=0&&abilityReady('basic')){
+    swing('basic',z);
+    game.auto.timer=game.auto.speed;
+  }
+}
+function hitCone(range,angle,damage,label,knock=.35){
   const origin=chad.position;
   const hit=[];
   game.zombies.forEach(z=>{
@@ -380,20 +458,23 @@ function hitCone(range,angle,damage,label){
     if(tmpV.dot(facing)>Math.cos(angle)) hit.push(z);
   });
   if(!hit.length){ addFloat('MISS',origin.clone().add(facing.clone().multiplyScalar(1.4)).add(new THREE.Vector3(0,1.2,0))); return; }
-  hit.forEach(z=>damageZombie(z,damage,label));
+  hit.forEach(z=>damageZombie(z,damage,label,knock));
 }
-function damageZombie(z,amount,label){
+function damageZombie(z,amount,label,knock=.35){
+  game.target=z;
   z.hp-=amount;
   tmpV.copy(z.mesh.position).sub(chad.position).setY(0).normalize();
-  z.mesh.position.addScaledVector(tmpV,label==='heavy'?.75:.35);
+  z.mesh.position.addScaledVector(tmpV,knock);
   addFloat(String(amount),z.mesh.position.clone().add(new THREE.Vector3(0,1.9,0)),z.hp<=0?'kill':'');
   if(z.hp<=0&&!z.dead){
     z.dead=true; z.death=.75; game.kills++;
+    if(game.auto.target===z) stopAutoAttack();
     addFloat('KILL',z.mesh.position.clone().add(new THREE.Vector3(0,2.25,0)),'kill');
   }
 }
-function hurtChad(amount){
+function hurtChad(amount,attacker=null){
   if(game.over)return;
+  if(attacker&&(!game.auto.active||!game.auto.target||game.auto.target.dead)) beginAutoAttack(attacker,false);
   if(game.grace>0){ addFloat('READY?',chad.position.clone().add(new THREE.Vector3(0,2.1,0)),'kill'); return; }
   game.hp=Math.max(0,game.hp-amount);
   addFloat('-'+amount,chad.position.clone().add(new THREE.Vector3(0,2.1,0)));
@@ -403,17 +484,37 @@ function hurtChad(amount){
 
 /* ---------------- input ---------------- */
 addEventListener('keydown',e=>{
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) e.preventDefault();
   keys[e.code]=true;
-  if(e.code==='Digit1'||e.code==='Space')swing('basic');
+  if(e.code==='Digit1'||e.code==='Space'){
+    if(game.target&&!game.target.dead) beginAutoAttack(game.target,true);
+    swing('basic',game.target);
+  }
   if(e.code==='Digit2'||e.code==='KeyE')swing('heavy');
-  if(e.code==='Digit3'||e.code==='KeyT'||e.code==='KeyQ')taunt();
+  if(e.code==='Digit3'||e.code==='KeyQ')swing('shotgun');
+  if(e.code==='Digit4'||e.code==='KeyT')taunt();
 });
 addEventListener('keyup',e=>keys[e.code]=false);
-addEventListener('mousemove',e=>{
+function setMouse(e){
   mouseNdc.x=(e.clientX/innerWidth)*2-1;
   mouseNdc.y=-(e.clientY/innerHeight)*2+1;
+}
+addEventListener('mousemove',setMouse);
+function pickZombie(){
+  raycaster.setFromCamera(mouseNdc,camera);
+  const roots=game.zombies.filter(z=>!z.dead).map(z=>z.mesh);
+  const hit=raycaster.intersectObjects(roots,true)[0];
+  let o=hit&&hit.object;
+  while(o&&!o.userData.zombie)o=o.parent;
+  return o&&o.userData.zombie;
+}
+canvas.addEventListener('mousedown',e=>{
+  setMouse(e);
+  if(e.button!==0)return;
+  const z=pickZombie();
+  if(z){ setTarget(z,true); swing('basic',z); }
+  else swing('basic',game.target);
 });
-canvas.addEventListener('mousedown',e=>{ if(e.button===0)swing('basic'); });
 canvas.addEventListener('contextmenu',e=>e.preventDefault());
 
 /* ---------------- UI ---------------- */
@@ -469,6 +570,7 @@ function tick(){
     updateWaves(dt);
     updateZombies(dt);
     updateTarget();
+    updateAutoAttack(dt);
   }
   updateCamera(dt);
   updateFloaters(dt);
@@ -481,11 +583,12 @@ function updateAim(){
 }
 function updatePlayer(dt){
   let ix=0,iz=0;
-  if(keys.KeyW)iz-=1; if(keys.KeyS)iz+=1; if(keys.KeyA)ix-=1; if(keys.KeyD)ix+=1;
+  if(keys.KeyW||keys.ArrowUp)iz-=1; if(keys.KeyS||keys.ArrowDown)iz+=1;
+  if(keys.KeyA||keys.ArrowLeft)ix-=1; if(keys.KeyD||keys.ArrowRight)ix+=1;
   const running=keys.ShiftLeft||keys.ShiftRight;
   if(ix||iz){
     const len=Math.hypot(ix,iz); ix/=len; iz/=len;
-    vel.set(ix,0,iz);
+    vel.lerp(tmpV.set(ix,0,iz),Math.min(1,dt*18));
     const spd=running?5.4:3.0;
     chad.position.addScaledVector(vel,spd*dt);
     chad.position.x=Math.max(-arenaRadius,Math.min(arenaRadius,chad.position.x));
@@ -493,8 +596,9 @@ function updatePlayer(dt){
     faceToward(chad,vel,dt);
     playLoco(running?'run':'walk');
   }else{
+    vel.multiplyScalar(Math.max(0,1-dt*12));
     tmpV.copy(aimPoint).sub(chad.position).setY(0);
-    if(tmpV.lengthSq()>.05) faceToward(chad,tmpV.normalize(),dt);
+    if(!game.auto.active&&tmpV.lengthSq()>.05) faceToward(chad,tmpV.normalize(),dt);
     playLoco('idle');
   }
   facing.set(Math.sin(chad.rotation.y),0,Math.cos(chad.rotation.y)).normalize();
@@ -528,11 +632,14 @@ function updateZombies(dt){
     if(z.stun<=0&&dist>.95){
       tmpV.normalize(); z.mesh.position.addScaledVector(tmpV,z.speed*(1+game.wave*.045)*dt);
       faceZombie(z.mesh,tmpV,dt);
-      z.mesh.position.y=Math.sin(performance.now()/140+z.mesh.id)*.025;
+      z.walkT+=dt*8;
+      z.mesh.position.y=Math.sin(z.walkT+z.mesh.id)*.025;
+      z.mesh.rotation.x=Math.sin(z.walkT*.7)*.045;
+      z.mesh.rotation.z=Math.sin(z.walkT*.55)*.055;
     }
     if(dist<1.18&&z.attackCd<=0){
       z.attackCd=1.75+Math.random()*.55;
-      hurtChad(z.elite?8:5);
+      hurtChad(z.elite?8:5,z);
     }
   }
 }
@@ -542,6 +649,11 @@ function faceZombie(obj,dir,dt){
   obj.rotation.y=cy+d*Math.min(1,dt*9);
 }
 function updateTarget(){
+  if(game.auto.active&&game.auto.target&&!game.auto.target.dead){
+    game.target=game.auto.target;
+    return;
+  }
+  if(game.target&&!game.target.dead)return;
   let best=null,bestScore=999;
   game.zombies.forEach(z=>{
     if(z.dead)return;

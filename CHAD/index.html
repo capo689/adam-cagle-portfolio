@@ -64,6 +64,8 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 const log=(m)=>{const l=document.getElementById('log');l.textContent+=m+'\n';l.scrollTop=1e9;console.log(m);};
 const stat=(m)=>{document.getElementById('stat').textContent=m;};
 window.onerror=(m,s,ln)=>log('ERROR '+m+' @'+ln);
+const ASSET_BASE='/CHAD/';
+const assetPath=(path)=>ASSET_BASE+path;
 
 /* ---------------- renderer / scene / camera ---------------- */
 const canvas=document.getElementById('c');
@@ -94,7 +96,7 @@ function makeFloor(){
   const floor=new THREE.Mesh(geo,mat); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
   const grid=new THREE.GridHelper(120,60,0x35284a,0x241633); grid.position.y=0.002; scene.add(grid);
   // try the lounge plate as a decal-ish center pad
-  new THREE.TextureLoader().load('lounge_plate.png',t=>{
+  new THREE.TextureLoader().load(assetPath('lounge_plate.png'),t=>{
     t.colorSpace=THREE.SRGBColorSpace;
     const pad=new THREE.Mesh(new THREE.PlaneGeometry(16,16),
       new THREE.MeshStandardMaterial({map:t,roughness:.9,transparent:true}));
@@ -224,7 +226,7 @@ function finish(){
 }
 
 /* server/relative loader */
-function urlGet(path,ok,err){ loader.load(encodeURI(path),ok,undefined,err); }
+function urlGet(path,ok,err){ loader.load(encodeURI(assetPath(path)),ok,undefined,err); }
 /* drag-drop fallback loader (file://) */
 function setupDrop(){
   const files={};

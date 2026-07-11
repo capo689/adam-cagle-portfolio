@@ -38,19 +38,30 @@
     left:25%; top:7.5%; width:58%; height:56%;
     background:#02040a; overflow:hidden;
   }
-  #game{ width:100%; height:100%; display:block; image-rendering:pixelated; cursor:none; }
+  #game{ width:100%; height:100%; display:block; image-rendering:pixelated; cursor:none; touch-action:none; user-select:none; }
 
   /* control strip lives on the console area so it's visible in fullscreen too */
   #controls{
     position:absolute; left:50%; bottom:1.5%; transform:translateX(-50%);
-    display:flex; gap:1.2vmin; z-index:5;
+    display:flex; gap:.9vmin; align-items:center; justify-content:center; flex-wrap:wrap; z-index:5;
+    width:78%;
+  }
+  #controls button, #controls input{
+    font-family:"Press Start 2P",monospace; font-size:1.15vmin; letter-spacing:.05em;
   }
   #controls button{
-    font-family:"Press Start 2P",monospace; font-size:1.15vmin; letter-spacing:.05em;
     color:#9fe6ff; background:rgba(6,18,30,.85); border:1px solid #1d4e6e;
     border-radius:4px; padding:1vmin 1.4vmin; cursor:pointer; text-transform:uppercase;
   }
   #controls button:hover{ color:#fff; border-color:var(--neon); box-shadow:0 0 10px rgba(55,198,255,.6); }
+  #controls button.active{ color:#02040a; background:var(--neon); border-color:#fff; box-shadow:0 0 12px rgba(55,198,255,.75); }
+  .controlGroup{
+    display:flex; align-items:center; gap:.55vmin; color:#9fe6ff;
+    background:rgba(6,18,30,.78); border:1px solid #1d4e6e; border-radius:4px;
+    padding:.72vmin .9vmin; text-transform:uppercase; white-space:nowrap;
+  }
+  .controlGroup span{ font-size:1.05vmin; color:var(--amber); }
+  .controlGroup input[type="range"]{ width:9vmin; accent-color:var(--neon); cursor:pointer; }
 
   /* faint CRT scanlines over the screen */
   #screen::after{
@@ -71,7 +82,10 @@
     </div>
     <div id="controls">
       <button id="btn-full">Go Full Screen</button>
-      <button id="btn-mute">Sound: On</button>
+      <div class="controlGroup"><span>Skool:</span><button id="btn-new" class="active" data-track="new">New</button><button id="btn-old" data-track="old">Old</button></div>
+      <label class="controlGroup"><span>Music</span><input id="music-vol" type="range" min="0" max="100" value="70"></label>
+      <label class="controlGroup"><span>SFX</span><input id="sfx-vol" type="range" min="0" max="100" value="70"></label>
+      <button id="btn-mute">Mute: Off</button>
       <button id="btn-restart">Restart</button>
     </div>
   </div>
@@ -102,7 +116,7 @@ function load(){
 
 /* ---------- input ---------- */
 const keys={};
-let mouseX=null, mouseFire=false, mouseActive=false;
+let mouseX=null, mouseFire=false, mouseActive=false, activePointer=null;
 addEventListener("keydown",e=>{
   if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"," "].includes(e.key)) e.preventDefault();
   keys[e.key]=true; mouseActive=false;
@@ -114,22 +128,73 @@ function canvasPos(e){
   const r=canvas.getBoundingClientRect();
   return { x:(e.clientX-r.left)/r.width*CW, y:(e.clientY-r.top)/r.height*CH };
 }
-canvas.addEventListener("mousemove",e=>{ const p=canvasPos(e); mouseX=p.x; mouseActive=true; });
-canvas.addEventListener("mousedown",e=>{ e.preventDefault(); mouseFire=true; mouseActive=true; lastMouse={...canvasPos(e)}; onPrimary(true); });
-addEventListener("mouseup",()=>{ mouseFire=false; });
-canvas.addEventListener("touchstart",e=>{ e.preventDefault(); const t=e.touches[0]; const p=canvasPos(t); mouseX=p.x; mouseActive=true; mouseFire=true; lastMouse=p; onPrimary(true); },{passive:false});
-canvas.addEventListener("touchmove",e=>{ e.preventDefault(); const t=e.touches[0]; mouseX=canvasPos(t).x; },{passive:false});
-canvas.addEventListener("touchend",e=>{ e.preventDefault(); mouseFire=false; },{passive:false});
+function setPointerPos(e){
+  const p=canvasPos(e);
+  mouseX=p.x; mouseActive=true; lastMouse=p;
+}
+canvas.addEventListener("pointermove",e=>{
+  if(activePointer!==null && e.pointerId!==activePointer) return;
+  setPointerPos(e);
+});
+canvas.addEventListener("pointerdown",e=>{
+  if(e.button!==undefined && e.button>0) return;
+  e.preventDefault();
+  activePointer=e.pointerId;
+  try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
+  setPointerPos(e);
+  mouseFire=true;
+  onPrimary(true);
+});
+function endPointer(e){
+  if(activePointer!==null && e.pointerId!==activePointer) return;
+  mouseFire=false;
+  activePointer=null;
+  try{ canvas.releasePointerCapture(e.pointerId); }catch(err){}
+}
+canvas.addEventListener("pointerup",endPointer);
+canvas.addEventListener("pointercancel",endPointer);
+canvas.addEventListener("lostpointercapture",()=>{ mouseFire=false; activePointer=null; });
 let lastMouse={x:0,y:0};
 
-/* ---------- audio (tiny beeps) ---------- */
-let AC=null, muted=false;
+/* ---------- audio ---------- */
+let AC=null, muted=false, sfxVol=.7, musicVol=.7, skool="new";
+const MUSIC={new:"concrete-chrome.mp3?v=1",old:"invader-beacon.mp3?v=1"};
+const music=new Audio(MUSIC[skool]);
+music.loop=true;
+music.preload="auto";
+music.volume=musicVol;
+function updateSkoolButtons(){
+  document.querySelectorAll("[data-track]").forEach(btn=>btn.classList.toggle("active",btn.dataset.track===skool));
+}
+function setMusicTrack(track,autoplay){
+  if(!MUSIC[track]) return;
+  const wasPlaying=!music.paused;
+  skool=track;
+  music.src=MUSIC[skool];
+  music.loop=true;
+  music.volume=musicVol;
+  music.muted=muted||musicVol<=0;
+  updateSkoolButtons();
+  if(autoplay||wasPlaying) startMusic();
+}
+function startMusic(){
+  music.volume=musicVol;
+  music.muted=muted||musicVol<=0;
+  if(muted||musicVol<=0) return;
+  const p=music.play();
+  if(p&&p.catch) p.catch(()=>{});
+}
+function stopMusic(){
+  music.pause();
+  music.currentTime=0;
+}
 function beep(freq,dur,type,vol){
-  if(muted) return;
+  if(muted||sfxVol<=0) return;
   try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return; }
+  if(AC.state==="suspended") AC.resume();
   const o=AC.createOscillator(), g=AC.createGain();
   o.type=type||"square"; o.frequency.value=freq;
-  g.gain.value=(vol||.06); o.connect(g); g.connect(AC.destination);
+  g.gain.value=(vol||.06)*sfxVol; o.connect(g); g.connect(AC.destination);
   const t=AC.currentTime; o.start(t); g.gain.exponentialRampToValueAtTime(.0001,t+(dur||.08)); o.stop(t+(dur||.08));
 }
 const sfx={
@@ -167,6 +232,7 @@ function newGame(){
   score=0; lives=3; level=1; weapon=0; shield=0; resetPlayer(); makeStars();
   startLevel();
   state="playing";
+  startMusic();
 }
 
 /* ---------- level building ---------- */
@@ -616,8 +682,24 @@ const fswrap=document.getElementById("fswrap");
 const btnFull=document.getElementById("btn-full");
 btnFull.addEventListener("click",()=>{ if(document.fullscreenElement) document.exitFullscreen(); else (fswrap.requestFullscreen||fswrap.webkitRequestFullscreen).call(fswrap); });
 document.addEventListener("fullscreenchange",()=>{ btnFull.textContent=document.fullscreenElement?"Leave Full Screen":"Go Full Screen"; });
-document.getElementById("btn-mute").addEventListener("click",function(){ muted=!muted; this.textContent="Sound: "+(muted?"Off":"On"); });
-document.getElementById("btn-restart").addEventListener("click",()=>{ state="menu"; });
+document.querySelectorAll("[data-track]").forEach(btn=>{
+  btn.addEventListener("click",()=>setMusicTrack(btn.dataset.track,state==="playing"));
+});
+document.getElementById("music-vol").addEventListener("input",e=>{
+  musicVol=Number(e.target.value)/100;
+  music.volume=musicVol;
+  music.muted=muted||musicVol<=0;
+  if(state==="playing"&&musicVol>0&&!muted) startMusic();
+});
+document.getElementById("sfx-vol").addEventListener("input",e=>{ sfxVol=Number(e.target.value)/100; });
+document.getElementById("btn-mute").addEventListener("click",function(){
+  muted=!muted;
+  music.muted=muted||musicVol<=0;
+  this.textContent="Mute: "+(muted?"On":"Off");
+  if(!muted&&state==="playing") startMusic();
+});
+document.getElementById("btn-restart").addEventListener("click",()=>{ state="menu"; stopMusic(); });
+updateSkoolButtons();
 
 /* ---------- boot ---------- */
 document.getElementById("loading").textContent="LOADING…";

@@ -11,7 +11,7 @@
       for (let i = nums.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [nums[i], nums[j]] = [nums[j], nums[i]]; }
       nums.forEach((n) => {
         const img = document.createElement("img");
-        img.src = `/brain/img/cd/bears/bear${n}.png`;
+        img.src = `/img/cd/bears/bear${n}.png`;
         img.alt = ""; img.setAttribute("aria-hidden", "true");
         img.loading = "lazy"; img.decoding = "async";
         el.appendChild(img);

@@ -7,6 +7,7 @@
 
   const galleries = {
     traveler: [
+      { src: 'img/ads/traveler-jealousy.webp',         hl: 'Making Drummers Jealous.',      meta: 'Redlands Acoustic Series' },
       { src: 'img/ads/traveler-road.webp',             hl: 'The Road.',                     meta: 'Escape Mk III · 25 Years' },
       { src: 'img/ads/traveler-sonic-bloom.webp',      hl: 'Sonic Bloom.',                  meta: 'Redlands Concert · Forest' },
       { src: 'img/ads/traveler-jungle.webp',           hl: 'Hey Jungle, Welcome to Me.',    meta: 'Vaibrant Electric · Tropical' },

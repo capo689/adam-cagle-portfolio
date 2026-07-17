@@ -313,6 +313,8 @@ body.m-leaving .m-curtain { opacity: 1; transition: opacity .42s ease; }
 /* ── résumé page ──────────────────────────────────────────────────────── */
 .m-rz__roles { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg3); }
 .m-rz__roles i { width: 3px; height: 3px; border-radius: 50%; background: var(--accent); }
+.m-rz__roles--flagship { align-items: flex-start; gap: 8px 10px; max-width: 34em; font-size: 10.5px; letter-spacing: .08em; line-height: 1.55; text-transform: none; }
+.m-rz__roles--flagship span { display: inline; }
 .m-rz__dl { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; font-family: var(--sans); font-weight: 700; font-size: 16px; letter-spacing: .01em; color: #07111f; background: var(--accent); border-radius: 14px; padding: 15px 22px; }
 .m-rz__dl .ar { font-size: 17px; }
 .m-rzbody { margin-top: 14px; font-size: 16.5px; line-height: 1.68; color: var(--fg2); }

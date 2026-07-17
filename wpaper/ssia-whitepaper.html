@@ -489,13 +489,17 @@ svg text { font-family: 'JetBrains Mono', monospace; }
   .return-bar { padding: 12px 20px; font-size: 11px; letter-spacing: 0.1em; gap: 10px; }
 }
 </style>
+<style id="work-nav-style">
+.work-nav{position:sticky;top:0;z-index:1000;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;padding:10px 14px;background:rgba(15,15,14,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font:700 10.5px/1.25 Inter,Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.work-nav a{color:#f7f0e6;text-decoration:none;white-space:nowrap}
+.work-nav a:hover{color:#76a8ff}
+@media(max-width:720px){.work-nav{gap:8px 12px;font-size:9.5px;padding:9px 10px}}
+</style>
 </head>
 <body>
+<nav class="work-nav" aria-label="Work sections"><a href="/ai-systems.html">AI Systems</a><a href="/ai-enablement.html">AI Enablement</a><a href="/technical-writing.html">Technical Writing</a><a href="/ux-ui.html">UX/UI</a><a href="/copywriting.html">Copywriting</a><a href="/managing-director.html">Managing Director</a><a href="/creative-writing.html">Creative Writing</a></nav>
 
-<nav class="return-bar" aria-label="Sample navigation">
-  <a href="/ai-systems.html"><span class="arrow">←</span>AI Systems</a>
-  <a href="/creative-writing.html">Writing Samples<span class="arrow">→</span></a>
-</nav>
+<nav class="work-nav work-nav--return" aria-label="Work sections"><a href="/ai-systems.html">AI Systems</a><a href="/ai-enablement.html">AI Enablement</a><a href="/technical-writing.html">Technical Writing</a><a href="/ux-ui.html">UX/UI</a><a href="/copywriting.html">Copywriting</a><a href="/managing-director.html">Managing Director</a><a href="/creative-writing.html">Creative Writing</a></nav>
 
 <div class="container">
 

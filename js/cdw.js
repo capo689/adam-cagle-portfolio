@@ -1,4 +1,4 @@
-/* Creative Direction studio wall — built from the full work manifest.
+/* Managing Director studio wall, built from the full work manifest.
    Order is shuffled every load; images lazy-load as the reel scrolls; clicking
    a piece flies it to the centre (GSAP) instead of popping. The AMD comic tile
    opens the 3D flipbook. Idempotent: CDWall.init() rebuilds after SPA swaps. */

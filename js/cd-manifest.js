@@ -1,4 +1,4 @@
-/* auto-generated: every Creative Direction piece from PILE */
+/* auto-generated: every Managing Director piece from PILE */
 window.CD_TILES = [
   {s:'/img/cd/work/agency689-work-panels-hotel-figueroa-collateral.jpg',l:'Hotel Figueroa',t:'work',w:1100,h:677},
   {s:'/img/cd/work/bloom-after.jpg',l:'Traveler Guitar',t:'work',w:1100,h:481},

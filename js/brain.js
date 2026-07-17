@@ -136,8 +136,8 @@ function initBrain() {
 
 /* ───────────────────────── section navigation (no reload) ───────────────────────── */
 function wireNav() {
-  const LEFT  = new Set(["ai-systems.html", "ux-ui.html", "technical-writing.html"]);
-  const RIGHT = new Set(["creative-direction.html", "copywriting.html", "creative-writing.html"]);
+  const LEFT  = new Set(["ai-systems.html", "ai-enablement.html", "technical-writing.html", "ux-ui.html"]);
+  const RIGHT = new Set(["managing-director.html", "copywriting.html", "creative-writing.html"]);
   const barNav = document.querySelector(".bar__nav");
   const pageContent = document.querySelector(".page__content");
   const HOME_TITLE = document.title;

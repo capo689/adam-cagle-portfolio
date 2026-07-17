@@ -1,23 +1,25 @@
 # Adam R. Cagle
 
-> Adam R. Cagle is a creative director, lead copywriter, and builder of production AI systems. He is co-founder, Creative Director, and Lead Copywriter at Agency689, a full-service identity, branding, and launch studio in Bend, Oregon. His sister studio Agentic689 ships production AI agents and AI-assisted creative workflows on the Anthropic Claude API. Twenty-five years of work across gaming, hospitality, music, and consumer tech. Ad Club and Webby honored for copy.
+> Adam R. Cagle builds production AI systems and writes the brands they speak for. Founder of Agentic689, which ships production AI agents, AI enablement systems, and AI-assisted creative workflows. Co-founder and Managing Director of Agency689 for 25 years, where he ran new business, pitches, proposals, client relationships, teams, and schedules while directing creative and copy for sixty-plus brands. Based in Bend, Oregon. Ad Club and Webby honored for copy.
 
 ## Who
 
 - Name: Adam R. Cagle
-- Roles: Creative Director, Copywriter, AI Systems Architect
-- Studios: Agency689 (branding and launch studio, founded 2001) and Agentic689 (AI agents, founded 2024)
+- Roles: AI Systems Builder, AI Enablement Lead, Managing Director, Copywriter
+- Studios: Agentic689 (production AI agents and enablement, founded 2024) and Agency689 (branding and launch studio, founded 2001)
 - Based: Bend, Oregon
 - Contact: adamrcagle@gmail.com
 - LinkedIn: https://www.linkedin.com/in/adamcagle/
+- GitHub: https://github.com/capo689
 
 ## Sections
 
-- [Home](https://adamcagle.com/): overview of the two minds, one brain. Creative direction and AI systems.
+- [Home](https://adamcagle.com/): overview of the two minds, one brain. AI systems, enablement, copywriting, and management.
 - [Copywriting](https://adamcagle.com/copywriting.html): campaign and copy case studies. Killer Network, Traveler Guitar, Sunset Marquis, Hotel Figueroa, Clink, FileKeepers, NAVIS.
-- [Creative Direction](https://adamcagle.com/creative-direction.html): twenty-five years of creative direction for product and brand launches across gaming, hospitality, music, and tech.
+- [Managing Director](https://adamcagle.com/managing-director.html): 25 years running Agency689. New business, pitches, proposals, accounts, teams, and the creative directed along the way.
 - [Creative Writing](https://adamcagle.com/creative-writing.html): long-form fiction and nonfiction samples. Ship Happens, The Deal, The Ledger, The Vampire's Babysitter.
 - [AI Systems](https://adamcagle.com/ai-systems.html): production AI agents and AI-assisted creative systems. Singularity SEO, brand-voice writing tools, market and geospatial intelligence agents, persona governance.
+- [AI Enablement](https://adamcagle.com/ai-enablement.html): adoption playbooks, prompt and agent libraries, voice governance, human-in-the-loop workflows, and production AI change management.
 - [UX / UI Design](https://adamcagle.com/ux-ui.html): interface and product design, from interface to database.
 - [Technical Writing](https://adamcagle.com/technical-writing.html): white papers and field notes on the AI systems he builds.
 - [Résumé](https://adamcagle.com/mobile/resume.html): full résumé. Summary, capabilities, experience, stack, recognition.

@@ -114,18 +114,21 @@ body {
 }
 
 /* stage: side | brain | side — recedes when a stack is open */
-.stage { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr var(--bsize) 1fr;
-  align-items: center; justify-items: center;
+.stage { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr var(--bsize) 1fr; grid-template-rows: auto 1fr;
+  align-items: center; justify-items: center; row-gap: clamp(44px, 8vh, 80px);
   transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); }
 body.stack-open .stage { opacity: 0; transform: scale(.94); pointer-events: none; }
 body.stack-open .bar  { opacity: .25; }
 
 .fusion-line {
-  position: absolute; top: clamp(10px, 4vh, 42px); left: 50%; transform: translateX(-50%);
-  width: min(92vw, 920px); margin: 0; z-index: 2; pointer-events: none;
-  font-family: var(--garamond); font-size: clamp(24px, 3.1vw, 46px); line-height: 1.05;
+  grid-column: 1 / -1; grid-row: 1;
+  width: min(88vw, 640px); margin: 0; z-index: 2; pointer-events: none;
+  font-family: var(--garamond); font-size: clamp(17px, 1.65vw, 24px); line-height: 1.14;
   font-style: italic; font-weight: 500; text-align: center; color: var(--ink);
 }
+
+.side,
+.brain-slot { grid-row: 2; }
 
 /* home footer: Writer · Builder · Strategist · Director */
 .home-foot {
@@ -484,6 +487,7 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
   z-index: 2; pointer-events: none;
   transition: transform .85s cubic-bezier(.5, 0, .2, 1);
 }
+.app:not(.section-mode) .brain { top: calc(50% + clamp(18px, 4vh, 36px)); }
 .brain-slot { width: var(--bsize); height: var(--bsize); }   /* keeps the home grid shape */
 
 /* docks: the brain centre lands on the viewport edge, one half showing */

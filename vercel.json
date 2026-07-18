@@ -16,6 +16,8 @@
     },
     { "source": "/creative-direction.html", "destination": "/managing-director.html", "permanent": true },
     { "source": "/mobile/creative-direction.html", "destination": "/mobile/managing-director.html", "permanent": true },
+    { "source": "/ai-enablement.html", "destination": "/ai-systems.html", "permanent": true },
+    { "source": "/mobile/ai-enablement.html", "destination": "/mobile/ai-systems.html", "permanent": true },
     { "source": "/brain/:path*", "destination": "/:path*", "permanent": false },
     { "source": "/launch/:path*", "destination": "/:path*", "permanent": false },
     { "source": "/dev", "destination": "/DEV", "permanent": false },

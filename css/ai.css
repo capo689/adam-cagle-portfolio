@@ -141,6 +141,7 @@ body.theme-tech .work .pm-num {
     font-family: var(--sans); font-weight: 700; font-size: 26px;
     letter-spacing: -0.04em; color: var(--fg); line-height: 1;
   }
+body.theme-tech .work .pm-num--label { font-size: clamp(18px, 1.55vw, 22px); letter-spacing: -0.02em; line-height: 1.08; }
 body.theme-tech .work .pm-num .u { font-size: 0.52em; color: var(--accent); margin-left: 1px; font-weight: 500; letter-spacing: 0; }
 body.theme-tech .work .pm-lab { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fg-3); line-height: 1.4; }
 body.theme-tech .work .case-grid {

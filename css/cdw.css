@@ -36,7 +36,7 @@
 /* (paint washes removed — gummy bears now provide the colour punctuation) */
 
 /* ── editorial manifesto: defines the role before the reel ──────────────── */
-.cd-manifesto { max-width: 920px; padding: clamp(12px,2vh,28px) 0 clamp(18px,3vh,38px); color: #211d18; }
+.cd-manifesto { max-width: 920px; padding: clamp(36px,6vh,76px) 0 clamp(18px,3vh,38px); color: #211d18; }
 .cd-manifesto .cdm-kicker {
   display: flex; align-items: center; gap: 12px; margin: 0 0 18px;
   font-family: var(--mono,"IBM Plex Mono",monospace);
@@ -44,10 +44,15 @@
 }
 .cd-manifesto .cdm-dash { width: 36px; height: 1px; background: #c2b9a7; }
 .cd-manifesto .cdm-lead {
+  font-family: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-style: normal; font-weight: 800;
+  font-size: clamp(52px,8vw,124px); line-height: .86; letter-spacing: -.05em;
+  color: #211d18; margin: 0 0 clamp(22px,3vh,36px); max-width: 9ch;
+}
+.cd-manifesto .cdm-lead .ital {
   font-family: var(--garamond,"EB Garamond",Georgia,serif);
-  font-style: italic; font-weight: 500;
-  font-size: clamp(27px,3.3vw,44px); line-height: 1.05; letter-spacing: -.01em;
-  color: #211d18; margin: 0 0 14px; max-width: 28ch;
+  font-style: italic; font-weight: 400;
+  letter-spacing: -.02em; color: var(--blue, #4D8BE8);
 }
 .cd-manifesto .cdm-def {
   font-family: var(--garamond,"EB Garamond",Georgia,serif);
@@ -68,8 +73,9 @@
 .cd-manifesto .cdm-pull {
   font-family: var(--garamond,"EB Garamond",Georgia,serif); font-style: italic;
   font-size: clamp(21px,2.2vw,32px); line-height: 1.18; color: #4D8BE8;
-  margin: 14px 0; max-width: 30ch;
+  margin: 14px 0; max-width: 38ch;
 }
+.cd-manifesto .nowrap { white-space: nowrap; }
 .cd-manifesto .cdm-outro {
   font-family: var(--garamond,"EB Garamond",Georgia,serif); font-style: italic;
   font-size: clamp(16px,1.3vw,20px); line-height: 1.45; color: #6b6354; margin: 0;

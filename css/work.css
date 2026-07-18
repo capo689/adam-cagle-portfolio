@@ -511,9 +511,11 @@ body.lb-open .page__content { overflow: hidden; }
 /* lead-in line above the quoted wins, with the (static) business bear at right */
 .work .wins-lead { display: flex; align-items: center; flex-wrap: wrap; gap: clamp(14px, 2vw, 34px); margin: 8px 0 26px; }
 .work .wins-lead-text {
-  font-family: var(--italic); font-style: italic;
-  font-size: clamp(22px, 2.6vw, 38px); line-height: 1.15; letter-spacing: -.01em; color: var(--fg);
+  font-family: var(--sans); font-style: normal; font-weight: 800;
+  font-size: clamp(48px, 7.6vw, 116px); line-height: .9; letter-spacing: -.05em; color: var(--fg);
+  margin: 0; max-width: 10.5ch;
 }
+.work .wins-lead-text .ital { font-family: var(--italic); font-style: italic; font-weight: 400; letter-spacing: -.02em; color: var(--accent); }
 .work .wins-lead-bear { height: clamp(54px, 7vw, 104px); width: auto; flex: 0 0 auto; margin-left: auto; filter: drop-shadow(0 12px 18px rgba(40,35,28,.18)); }
 /* the case header now sits BELOW the wins, smaller than the old hero title */
 .work .hero .hero-title {

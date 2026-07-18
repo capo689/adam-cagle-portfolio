@@ -399,6 +399,7 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
 .rz-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .rz-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: #4D8BE8; margin: 0 0 12px; }
 .rz-roles { display: flex; align-items: center; gap: 11px; flex-wrap: wrap; margin-top: 16px; font-family: var(--mono); font-size: clamp(11px,1.05vw,13px); letter-spacing: .22em; text-transform: uppercase; color: #6a6052; }
+.rz-roles--flagship { gap: 8px 12px; max-width: 58em; font-size: clamp(10px,.86vw,12px); letter-spacing: .08em; line-height: 1.55; text-transform: none; }
 .rz-roles .d { width: 5px; height: 5px; border-radius: 50%; background: #4D8BE8; }
 .rz-dl { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
   font-family: "Inter", Arial, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .03em; color: #fff;

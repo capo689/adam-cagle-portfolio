@@ -171,6 +171,21 @@ body.m-leaving .m-curtain { opacity: 1; transition: opacity .42s ease; }
 .m-metric b { display: block; font-family: var(--sans); font-weight: 800; font-size: 22px; color: var(--accent2); letter-spacing: -.02em; }
 .m-metric b.m-metric__label { font-size: 16px; line-height: 1.12; letter-spacing: 0; }
 .m-metric span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.4; color: var(--fg3); }
+.m-cert {
+  display: grid;
+  grid-template-columns: 58px minmax(0,1fr);
+  gap: 14px;
+  align-items: center;
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(77,139,232,.28);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(77,139,232,.12), rgba(255,255,255,.035) 44%, rgba(255,255,255,.02));
+}
+.m-cert img { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,.32)); }
+.m-cert span { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.m-cert b { font-family: var(--sans); font-size: 15px; line-height: 1.18; color: var(--fg); }
+.m-cert em { font-style: normal; font-size: 13px; line-height: 1.5; color: var(--fg2); }
 .m-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
 .m-chips span { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; }
 .m-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
@@ -333,6 +348,21 @@ body.m-leaving .m-curtain { opacity: 1; transition: opacity .42s ease; }
 .m-rzstack { margin-top: 20px; display: flex; flex-direction: column; gap: 18px; }
 .m-rzgroup h4 { font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--fg); }
 .m-rzgroup .m-chips { margin-top: 10px; }
+.m-rzcert {
+  display: grid;
+  grid-template-columns: 62px minmax(0,1fr);
+  gap: 14px;
+  align-items: center;
+  margin-top: 18px;
+  padding: 15px;
+  border: 1px solid rgba(77,139,232,.28);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(77,139,232,.12), var(--bg2) 48%, #10141b);
+}
+.m-rzcert img { width: 62px; height: 62px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,.32)); }
+.m-rzcert span { display: flex; min-width: 0; flex-direction: column; gap: 6px; }
+.m-rzcert b { font-family: var(--sans); font-size: 16px; line-height: 1.18; color: var(--fg); }
+.m-rzcert em { font-style: normal; font-size: 13.5px; line-height: 1.55; color: var(--fg2); }
 .m-rztrio { margin-top: 6px; display: flex; flex-direction: column; gap: 22px; }
 .m-rztrio__h { font-family: var(--serif); font-weight: 600; font-size: 24px; letter-spacing: -.02em; }
 

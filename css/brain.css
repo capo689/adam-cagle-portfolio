@@ -437,6 +437,66 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
 .rz-group { background: rgba(255,253,248,.5); border: 1px solid rgba(40,35,28,.1); border-radius: 12px; padding: 18px 18px 20px; }
 .rz-group h4 { margin: 0 0 13px; font-family: "Inter", Arial, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #4D8BE8; }
 
+.rz-cert {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  max-width: 920px;
+  padding: 18px 20px;
+  border: 1px solid rgba(40,35,28,.12);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(77,139,232,.10), rgba(255,253,248,.68) 42%, rgba(255,253,248,.5));
+  box-shadow: 0 22px 52px -40px rgba(40,35,28,.55);
+  text-decoration: none;
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.rz-cert:hover {
+  border-color: rgba(77,139,232,.5);
+  transform: translateY(-2px);
+  box-shadow: 0 24px 52px -36px rgba(40,35,28,.7);
+}
+.rz-cert img {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(40,35,28,.16));
+}
+.rz-cert__body {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+.rz-cert__eyebrow,
+.rz-cert__cta {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  line-height: 1.45;
+  text-transform: uppercase;
+  color: #4D8BE8;
+}
+.rz-cert strong {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(18px,1.5vw,22px);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: #2a2620;
+}
+.rz-cert__body span:last-child {
+  font-family: var(--garamond);
+  font-size: clamp(15px,1.1vw,17px);
+  line-height: 1.55;
+  color: #43362a;
+}
+.rz-cert__cta {
+  justify-self: end;
+  white-space: nowrap;
+  color: #6a6052;
+}
+
 /* capabilities cards */
 .rz-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap: 16px; }
 .rz-card { background: rgba(255,253,248,.5); border: 1px solid rgba(40,35,28,.1); border-radius: 12px; padding: clamp(20px,2vw,28px); }
@@ -464,7 +524,12 @@ body.resume-open .resume { clip-path: inset(0 0 0 0); opacity: 1; }
 /* recognition / education / board */
 .rz-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 .rz-tcol h2 { font-family: "Inter", Arial, sans-serif; font-weight: 600; font-size: clamp(13px,1vw,15px); letter-spacing: .2em; text-transform: uppercase; color: #4D8BE8; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(40,35,28,.13); }
-@media (max-width: 720px) { .rz-trio { grid-template-columns: 1fr; gap: 34px; } }
+@media (max-width: 720px) {
+  .rz-trio { grid-template-columns: 1fr; gap: 34px; }
+  .rz-cert { grid-template-columns: 64px minmax(0,1fr); gap: 14px; padding: 16px; }
+  .rz-cert img { width: 64px; height: 64px; }
+  .rz-cert__cta { grid-column: 2; justify-self: start; }
+}
 
 .rz-download { display: inline-block; margin-top: 48px; font-family: "Inter", Arial, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #4D8BE8; border-bottom: 1px solid #4D8BE8; padding-bottom: 5px; text-decoration: none; transition: opacity .2s; }
 .rz-download:hover { opacity: .65; }

@@ -363,6 +363,21 @@ body.m-leaving .m-curtain { opacity: 1; transition: opacity .42s ease; }
 .m-rzcert span { display: flex; min-width: 0; flex-direction: column; gap: 6px; }
 .m-rzcert b { font-family: var(--sans); font-size: 16px; line-height: 1.18; color: var(--fg); }
 .m-rzcert em { font-style: normal; font-size: 13.5px; line-height: 1.55; color: var(--fg2); }
+.m-claude { margin-top: 14px; padding: 16px; border: 1px solid rgba(210,107,72,.3); border-radius: 14px; background: radial-gradient(circle at 100% 0%, rgba(210,107,72,.19), transparent 30%), linear-gradient(145deg,#171514,#11151b); }
+.m-claude__head { display: flex; align-items: center; gap: 12px; }
+.m-claude__head > span:last-child { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+.m-claude__mark { display: grid; flex: 0 0 46px; width: 46px; height: 46px; place-items: center; border-radius: 13px; background: #d26b48; box-shadow: 0 10px 22px -12px #000; font-family: var(--serif); font-size: 27px; font-weight: 700; color: #fff9f2; }
+.m-claude__head em,.m-claude__head small { font-family: var(--mono); font-style: normal; text-transform: uppercase; }
+.m-claude__head em { font-size: 8.5px; letter-spacing: .12em; color: #e58a68; }
+.m-claude__head b { font-family: var(--sans); font-size: 17px; line-height: 1.2; color: var(--fg); }
+.m-claude__head small { font-size: 7.5px; letter-spacing: .09em; color: var(--fg2); }
+.m-claude__list { display: flex; flex-direction: column; gap: 7px; margin-top: 15px; }
+.m-claude__list a { display: grid; grid-template-columns: 25px minmax(0,1fr) auto; align-items: center; gap: 9px; min-height: 54px; padding: 9px 10px; border: 1px solid rgba(255,255,255,.07); border-radius: 9px; background: rgba(255,255,255,.035); }
+.m-claude__list a:focus-visible { border-color: rgba(210,107,72,.65); outline: none; }
+.m-claude__list a > span { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+.m-claude__list i { font-family: var(--mono); font-size: 9px; font-style: normal; color: #dd7957; }
+.m-claude__list b { font-family: var(--sans); font-size: 13px; line-height: 1.25; color: var(--fg); }
+.m-claude__list em { font-family: var(--mono); font-size: 7.5px; font-style: normal; letter-spacing: .13em; text-transform: uppercase; color: var(--fg2); }
 .m-rztrio { margin-top: 6px; display: flex; flex-direction: column; gap: 22px; }
 .m-rztrio__h { font-family: var(--serif); font-weight: 600; font-size: 24px; letter-spacing: -.02em; }
 

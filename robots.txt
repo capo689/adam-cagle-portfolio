@@ -3,7 +3,7 @@
 User-agent: *
 Allow: /
 
-# AI answer / search crawlers (explicitly welcomed)
+# AI search, user-request, and training crawlers (explicitly welcomed)
 User-agent: GPTBot
 Allow: /
 User-agent: OAI-SearchBot
@@ -12,11 +12,13 @@ User-agent: ChatGPT-User
 Allow: /
 User-agent: ClaudeBot
 Allow: /
-User-agent: Claude-Web
+User-agent: Claude-SearchBot
 Allow: /
-User-agent: anthropic-ai
+User-agent: Claude-User
 Allow: /
 User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
 Allow: /
 User-agent: Google-Extended
 Allow: /

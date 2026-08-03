@@ -19,7 +19,6 @@
 - [Managing Director](https://adamcagle.com/managing-director.html): 25 years running Agency689. New business, pitches, proposals, accounts, teams, and the creative directed along the way.
 - [Creative Writing](https://adamcagle.com/creative-writing.html): long-form fiction and nonfiction samples. Ship Happens, The Deal, The Ledger, The Vampire's Babysitter.
 - [AI Systems](https://adamcagle.com/ai-systems.html): production, free-beta, open-source, and research AI work. Includes Singularity SEO in production, Agent Exchange in free beta, open-source architecture samples, brand-voice systems, market intelligence, geospatial analysis, and research decision-support tools.
-- [AI Enablement](https://adamcagle.com/ai-enablement.html): adoption playbooks, prompt and agent libraries, voice governance, human-in-the-loop workflows, and production AI change management.
 - [UX / UI Design](https://adamcagle.com/ux-ui.html): interface and product design, from interface to database.
 - [Technical Writing](https://adamcagle.com/technical-writing.html): white papers and field notes on the AI systems he builds.
 - [Résumé](https://adamcagle.com/mobile/resume.html): full résumé. Summary, capabilities, experience, stack, recognition.

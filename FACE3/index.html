@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="theme-color" content="#000000">
+  <title>FACE3 · Voice Lab</title>
+  <style>
+    :root { color-scheme: dark; --gold: #d8a943; --panel: clamp(232px, 22vw, 286px); }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #000; }
+    body { touch-action: none; color: #eee8dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    canvas { display: block; width: 100%; height: 100%; }
+    #stage { position: fixed; inset: 0 0 0 calc(var(--panel) - 18px); overflow: hidden; }
+    .fallback { position: fixed; inset: 0 0 0 var(--panel); display: none; place-items: center; color: var(--gold); background: #000; font: 10px/1.5 ui-monospace, monospace; letter-spacing: .22em; text-transform: uppercase; }
+
+    .panel {
+      position: fixed; inset: 0 auto 0 0; z-index: 10; width: var(--panel); padding: 30px 42px 24px 24px;
+      display: flex; flex-direction: column; background: #050505;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, calc(100% - 20px) 36%, 100% 41%, 100% 59%, calc(100% - 20px) 64%, calc(100% - 20px) 100%, 0 100%);
+      box-shadow: 18px 0 50px rgba(0,0,0,.84);
+    }
+    .panel::after { content: ""; position: absolute; top: 0; bottom: 0; right: 20px; width: 1px; background: linear-gradient(transparent, rgba(216,169,67,.28) 20%, rgba(216,169,67,.28) 80%, transparent); }
+    .eyebrow { margin: 0 0 8px; color: rgba(216,169,67,.58); font-size: 8px; letter-spacing: .3em; text-transform: uppercase; }
+    h1 { margin: 0; font: 500 18px/1.05 ui-monospace, monospace; letter-spacing: -.04em; }
+    .rule { width: 34px; height: 1px; margin: 17px 0 20px; background: var(--gold); opacity: .52; }
+    .state { display: flex; gap: 8px; align-items: center; min-height: 14px; color: rgba(216,169,67,.75); font-size: 8px; letter-spacing: .16em; text-transform: uppercase; }
+    .state::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 12px currentColor; }
+    .status { white-space: normal; }
+
+    .field { display: grid; gap: 8px; margin-top: 24px; }
+    .field > span { color: rgba(255,255,255,.38); font-size: 7px; letter-spacing: .22em; text-transform: uppercase; }
+    select {
+      width: 100%; padding: 10px 27px 10px 10px; border: 1px solid rgba(216,169,67,.22); border-radius: 0;
+      color: #e8dcc3; background: #0b0b0b; font: 9px/1.2 ui-monospace, monospace; letter-spacing: .08em;
+      appearance: none; background-image: linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%); background-position: calc(100% - 13px) 14px,calc(100% - 9px) 14px; background-size: 4px 4px; background-repeat: no-repeat;
+    }
+    button { font-family: inherit; }
+    .secondary { margin-top: 8px; padding: 8px 10px; border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.52); background: transparent; cursor: pointer; font-size: 8px; letter-spacing: .16em; text-transform: uppercase; }
+    .secondary:hover { color: var(--gold); border-color: rgba(216,169,67,.32); }
+
+    .transcript { margin-top: 25px; min-height: 104px; overflow: hidden; font-size: 10px; line-height: 1.5; }
+    .transcript[hidden] { display: block; visibility: hidden; }
+    .transcript p { margin: 0 0 13px; }
+    .transcript p::before { display: block; margin-bottom: 4px; color: rgba(255,255,255,.28); font-size: 7px; letter-spacing: .2em; }
+    .transcript .user { color: rgba(255,255,255,.55); }
+    .transcript .user::before { content: "YOU"; }
+    .transcript .agent { color: rgba(216,169,67,.88); }
+    .transcript .agent::before { content: "AGENT"; }
+
+    .controls { margin-top: auto; display: grid; gap: 9px; }
+    .wake, .mic {
+      position: relative; width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid rgba(216,169,67,.48);
+      color: var(--gold); background: #090909; cursor: pointer; font-size: 8px; letter-spacing: .2em; text-transform: uppercase;
+    }
+    .wake::after, .mic::after { content: ""; position: absolute; inset: -1px; border: inherit; opacity: .32; transform: scaleX(var(--progress,.08)); transform-origin: left; pointer-events: none; }
+    .wake[hidden], .mic[hidden], .replay[hidden] { display: none; }
+    .mic[data-active="true"] { color: #fff1cc; background: rgba(216,169,67,.14); box-shadow: 0 0 24px rgba(216,169,67,.13) inset; }
+    .mic:disabled { opacity: .38; cursor: wait; }
+    .replay { border: 0; padding: 5px; color: rgba(255,255,255,.35); background: transparent; cursor: pointer; font: 7px/1 ui-monospace, monospace; letter-spacing: .17em; text-transform: uppercase; }
+
+    @media (max-width: 680px) {
+      :root { --panel: 220px; }
+      .panel { padding: 22px 36px 18px 18px; }
+      h1 { font-size: 15px; }
+      .transcript { font-size: 9px; }
+    }
+  </style>
+  <script type="module" crossorigin src="/FACE3/runtime/index-kl_nOPlm.js"></script>
+</head>
+<body>
+  <main id="stage" aria-label="Animated gold particle AI face"></main>
+  <p class="fallback" id="fallback">WebGL is required</p>
+  <aside class="panel" aria-label="Voice agent controls">
+    <header>
+      <p class="eyebrow">FACE / 03</p>
+      <h1>VOICE<br>AGENT</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="state"><output class="status" id="status" aria-live="polite">Offline</output></div>
+    <label class="field">
+      <span>Voice model</span>
+      <select id="voice" aria-label="Voice model">
+        <optgroup label="Local · Inflect Micro">
+          <option value="inflect">Inflect · Micro</option>
+        </optgroup>
+        <optgroup label="Groq · Orpheus V1">
+          <option value="autumn">Autumn</option>
+          <option value="diana">Diana</option>
+          <option value="hannah">Hannah</option>
+          <option value="austin">Austin</option>
+          <option value="daniel" selected>Daniel</option>
+          <option value="troy">Troy</option>
+        </optgroup>
+      </select>
+    </label>
+    <button class="secondary" id="preview" type="button">Preview voice</button>
+    <section class="transcript" id="transcript" aria-live="polite" hidden>
+      <p class="user" id="user-line"></p>
+      <p class="agent" id="agent-line"></p>
+    </section>
+    <div class="controls">
+      <button class="wake" id="wake" type="button"><span>Initialize agent</span></button>
+      <button class="mic" id="mic" type="button" aria-label="Start or stop talking" hidden><span>Talk</span></button>
+      <button class="replay" id="replay" type="button" hidden>Repeat greeting</button>
+    </div>
+  </aside>
+</body>
+</html>

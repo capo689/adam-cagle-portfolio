@@ -1,5 +1,5 @@
 const SAMPLE_RATE = 24000;
-const DEMO = "Hello, Adam. This voice is being generated entirely inside your browser. No server, no API key, and no virtual machine.";
+const DEMO = "I'm awake. Tap the circle and talk to me.";
 
 type ProgressMessage = {type: "progress"; modelKey: string; fraction: number; phase: "downloading" | "compiling"};
 type PreloadedMessage = {type: "preloaded"; id: string; modelKey: string};
@@ -16,7 +16,7 @@ type FaceController = {
 declare global {
   interface Window {
     FACE?: FaceController;
-    FACE2?: {preload(): Promise<void>; speak(text: string): Promise<void>};
+    FACE2?: {preload(): Promise<void>; speak(text: string): Promise<void>; stop(): void; ask?(text: string): Promise<void>};
   }
 }
 
@@ -100,7 +100,7 @@ function animateMouth(endTime: number) {
     if (!analyser || !audioContext || audioContext.currentTime >= endTime) {
       face()?.clearExpression();
       face()?.setState("listening");
-      status.value = "Inflect · ready";
+      status.value = document.querySelector<HTMLButtonElement>("#mic")?.hidden === false ? "Groq · ready" : "Inflect · ready";
       return;
     }
     analyser.getByteTimeDomainData(waveform);
@@ -158,9 +158,11 @@ async function speak(text: string) {
   status.dataset.synthMs = String(Math.round(message.synthMs));
   status.value = `Inflect · speaking · ${(message.synthMs / 1000).toFixed(2)}s synthesis`;
   const endTime = audioContext.currentTime + buffer.duration;
-  source.onended = () => { activeSources = []; };
-  source.start();
-  animateMouth(endTime);
+  await new Promise<void>((resolve) => {
+    source.onended = () => { activeSources = []; resolve(); };
+    source.start();
+    animateMouth(endTime);
+  });
 }
 
 wake.addEventListener("click", async () => {
@@ -172,6 +174,7 @@ wake.addEventListener("click", async () => {
     wake.hidden = true;
     replay.hidden = false;
     await speak(DEMO);
+    window.dispatchEvent(new CustomEvent("face2:ready"));
   } catch (error) {
     console.error(error);
     wake.disabled = false;
@@ -186,4 +189,4 @@ replay.addEventListener("click", () => speak(DEMO).catch((error) => {
   status.value = "Inflect · synthesis failed";
 }));
 
-window.FACE2 = {preload, speak};
+window.FACE2 = {preload, speak, stop};

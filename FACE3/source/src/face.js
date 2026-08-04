@@ -14,7 +14,7 @@ try {
   throw new Error("WebGL unavailable");
 }
 
-renderer.setClearColor(0x000000, 1);
+renderer.setClearColor(0x010208, 1);
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(stageWidth(), stageHeight());
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -22,16 +22,20 @@ stage.append(renderer.domElement);
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(39, stageWidth() / stageHeight(), 0.1, 50);
-camera.position.z = 13;
+
+function fitCamera() {
+  camera.aspect = stageWidth() / stageHeight();
+  camera.position.z = 13 + Math.max(0, .9 - camera.aspect) * 10;
+  camera.updateProjectionMatrix();
+}
+
+fitCamera();
 
 const clock = new THREE.Clock();
 const pointer = new THREE.Vector2();
 const pointerTarget = new THREE.Vector2();
 let viewWidth = 16;
 let viewHeight = 9.5;
-
-const GOLD = new THREE.Color(1.0, 0.68, 0.16);
-const DEEP_GOLD = new THREE.Color(0.39, 0.19, 0.025);
 
 const fieldUniforms = {
   uTime: { value: 0 },
@@ -64,9 +68,10 @@ const fieldMaterial = new THREE.ShaderMaterial({
       float tension = exp(-pow((radius - 1.12) * 2.2, 2.0));
       float wrinkle = sin(radius * 35.0 + angle * 5.0) * .115 * tension;
       float shimmer = sin(p.x * .82 + p.y * .61 + uTime * .38 + aSeed * 3.0) * .018;
-      p.z = -.92 + wrinkle + shimmer + mouseWave * .15;
+      float current = sin(length(p.xy) * 1.9 - uTime * .22 + aSeed) * .012;
+      p.z = -.92 + wrinkle + shimmer + current + mouseWave * .15;
       p.xy += normalize(md + vec2(.0001)) * mouseWave * .045;
-      vLight = .22 + tension * .17 + mouseWave * .16;
+      vLight = .14 + tension * .24 + mouseWave * .20;
       vSeed = aSeed;
       vec4 mv = modelViewMatrix * vec4(p, 1.0);
       gl_PointSize = min(6.5, aSize * uPixelRatio * (11.5 / max(1.0, -mv.z)));
@@ -83,9 +88,13 @@ const fieldMaterial = new THREE.ShaderMaterial({
       if (d > .5) discard;
       float core = smoothstep(.5, .06, d);
       float glow = smoothstep(.5, .18, d) * .30;
-      float pulse = .88 + .12 * sin(uTime * 1.65 + vSeed * 8.0);
-      vec3 gold = mix(vec3(.34,.15,.018), vec3(1.0,.63,.12), vLight);
-      gl_FragColor = vec4(gold * (core * 1.6 + glow) * pulse, core + glow);
+      float pulse = .84 + .16 * sin(uTime * 1.34 + vSeed * 8.0);
+      vec3 midnight = vec3(.018,.026,.075);
+      vec3 bronze = vec3(.43,.20,.045);
+      vec3 gold = vec3(1.0,.67,.20);
+      vec3 color = mix(midnight, bronze, smoothstep(.08,.31,vLight));
+      color = mix(color, gold, smoothstep(.28,.55,vLight));
+      gl_FragColor = vec4(color * (core * 1.55 + glow) * pulse, (core + glow) * (.62 + vLight));
     }
   `
 });
@@ -93,30 +102,37 @@ const fieldMaterial = new THREE.ShaderMaterial({
 const faceUniforms = {
   uTime: { value: 0 },
   uPixelRatio: { value: renderer.getPixelRatio() },
-  uOpacity: { value: 0 }
+  uOpacity: { value: 0 },
+  uSpeaking: { value: 0 }
 };
 
 const faceMaterial = new THREE.ShaderMaterial({
   uniforms: faceUniforms,
   transparent: true,
   depthWrite: false,
-  blending: THREE.AdditiveBlending,
+  blending: THREE.NormalBlending,
   vertexShader: `
     attribute float aSeed;
     attribute float aSize;
     attribute float aLight;
+    attribute float aAlpha;
     uniform float uTime;
     uniform float uPixelRatio;
     uniform float uOpacity;
+    uniform float uSpeaking;
     varying float vLight;
     varying float vSeed;
     varying float vOpacity;
+    varying vec3 vPosition;
     void main() {
       vLight = aLight;
       vSeed = aSeed;
-      vOpacity = uOpacity;
-      vec4 mv = modelViewMatrix * vec4(position, 1.0);
-      gl_PointSize = min(8.5, aSize * uPixelRatio * (12.5 / max(1.0, -mv.z)));
+      vOpacity = uOpacity * aAlpha;
+      vPosition = position;
+      vec3 p = position;
+      p.z += sin(aSeed * 9.0 + uTime * 1.4) * .006 * (1.0 - aAlpha);
+      vec4 mv = modelViewMatrix * vec4(p, 1.0);
+      gl_PointSize = min(9.2, aSize * uPixelRatio * (12.8 / max(1.0, -mv.z)) * (1.0 + uSpeaking * .08));
       gl_Position = projectionMatrix * mv;
     }
   `,
@@ -125,15 +141,100 @@ const faceMaterial = new THREE.ShaderMaterial({
     varying float vLight;
     varying float vSeed;
     varying float vOpacity;
+    varying vec3 vPosition;
     void main() {
       vec2 p = gl_PointCoord - .5;
       float d = length(p);
       if (d > .5) discard;
       float core = smoothstep(.5, .035, d);
-      float glow = smoothstep(.5, .16, d) * .48;
-      float pulse = .91 + .09 * sin(uTime * 2.0 + vSeed * 9.0);
-      vec3 gold = mix(vec3(.42,.20,.02), vec3(1.0,.78,.23), clamp(vLight, 0.0, 1.0));
-      gl_FragColor = vec4(gold * (core * 2.05 + glow) * pulse, (core + glow) * vOpacity);
+      float glow = smoothstep(.5, .14, d) * .30;
+      float pulse = .94 + .06 * sin(uTime * 1.7 + vSeed * 9.0);
+      vec3 shadow = vec3(.045,.055,.16);
+      vec3 bronze = vec3(.37,.16,.045);
+      vec3 gold = vec3(.96,.57,.16);
+      vec3 ivory = vec3(1.0,.91,.66);
+      vec3 color = mix(shadow, bronze, smoothstep(.12,.38,vLight));
+      color = mix(color, gold, smoothstep(.34,.68,vLight));
+      color = mix(color, ivory, smoothstep(.76,1.0,vLight));
+      float coolRim = smoothstep(1.55,2.75,abs(vPosition.x)) * smoothstep(.1,.75,vLight);
+      color = mix(color, vec3(.18,.32,.62), coolRim * .38);
+      gl_FragColor = vec4(color * (core * 1.55 + glow) * pulse, (core + glow) * vOpacity);
+    }
+  `
+});
+
+const veilMaterial = new THREE.ShaderMaterial({
+  uniforms: faceUniforms,
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  vertexShader: `
+    attribute float aSeed;
+    attribute float aSize;
+    attribute float aLight;
+    attribute float aAlpha;
+    uniform float uTime;
+    uniform float uPixelRatio;
+    uniform float uOpacity;
+    varying float vLight;
+    varying float vSeed;
+    varying float vOpacity;
+    void main(){
+      vLight=aLight; vSeed=aSeed; vOpacity=uOpacity*aAlpha;
+      vec3 p=position;
+      p.z += sin(aSeed*5.0+uTime*.42)*.018*(1.0-aAlpha);
+      vec4 mv=modelViewMatrix*vec4(p,1.0);
+      gl_PointSize=min(6.2,aSize*uPixelRatio*(11.8/max(1.0,-mv.z)));
+      gl_Position=projectionMatrix*mv;
+    }
+  `,
+  fragmentShader: `
+    varying float vLight; varying float vSeed; varying float vOpacity;
+    uniform float uTime;
+    void main(){
+      float d=length(gl_PointCoord-.5); if(d>.5)discard;
+      float core=smoothstep(.5,.08,d);
+      float pulse=.76+.24*sin(uTime*.72+vSeed*7.0);
+      vec3 color=mix(vec3(.07,.13,.34),vec3(.93,.48,.11),smoothstep(.18,.72,vLight));
+      gl_FragColor=vec4(color*core*pulse,core*vOpacity*.56);
+    }
+  `
+});
+
+const eyeUniforms = {
+  uTime: {value: 0},
+  uPixelRatio: {value: renderer.getPixelRatio()},
+  uOpacity: {value: 0},
+  uSpeaking: {value: 0}
+};
+
+const eyeMaterial = new THREE.ShaderMaterial({
+  uniforms: eyeUniforms,
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  vertexShader: `
+    attribute float aSeed; attribute float aSize; attribute float aLight; attribute float aAlpha;
+    uniform float uTime; uniform float uPixelRatio; uniform float uOpacity; uniform float uSpeaking;
+    varying float vBand; varying float vSeed; varying float vOpacity;
+    void main(){
+      vBand=aLight; vSeed=aSeed; vOpacity=uOpacity*aAlpha;
+      vec4 mv=modelViewMatrix*vec4(position,1.0);
+      gl_PointSize=min(11.0,aSize*uPixelRatio*(13.6/max(1.0,-mv.z))*(1.0+uSpeaking*.12));
+      gl_Position=projectionMatrix*mv;
+    }
+  `,
+  fragmentShader: `
+    uniform float uTime; uniform float uSpeaking;
+    varying float vBand; varying float vSeed; varying float vOpacity;
+    void main(){
+      float d=length(gl_PointCoord-.5); if(d>.5)discard;
+      float core=smoothstep(.5,.035,d); float glow=smoothstep(.5,.14,d)*.62;
+      vec3 deep=vec3(.015,.08,.13); vec3 teal=vec3(.08,1.0,.82); vec3 ice=vec3(.72,1.0,1.0);
+      vec3 color=mix(deep,teal,smoothstep(.18,.68,vBand));
+      color=mix(color,ice,smoothstep(.84,1.0,vBand));
+      float flicker=.88+.12*sin(uTime*3.2+vSeed*13.0)+uSpeaking*.08;
+      gl_FragColor=vec4(color*(core*2.25+glow)*flicker,(core+glow)*vOpacity);
     }
   `
 });
@@ -197,7 +298,7 @@ function chooseWeighted(cumulative, total) {
   return lo;
 }
 
-function createFaceSamples(data, count = 52000) {
+function createFaceSamples(data, count = 76000) {
   const cumulative = [];
   let total = 0;
   for (const face of data.faces) { total += triangleArea(data.rest, face); cumulative.push(total); }
@@ -247,12 +348,14 @@ function attributeSet(count, baseSize=1.5) {
   const seeds = new Float32Array(count);
   const sizes = new Float32Array(count);
   const lights = new Float32Array(count);
-  for (let i=0;i<count;i++) { seeds[i]=Math.random()*Math.PI*2; sizes[i]=baseSize+Math.random()*1.5; lights[i]=.55; }
+  const alphas = new Float32Array(count);
+  for (let i=0;i<count;i++) { seeds[i]=Math.random()*Math.PI*2; sizes[i]=baseSize+Math.random()*1.5; lights[i]=.55; alphas[i]=1; }
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute("position", new THREE.BufferAttribute(positions,3));
   geometry.setAttribute("aSeed", new THREE.BufferAttribute(seeds,1));
   geometry.setAttribute("aSize", new THREE.BufferAttribute(sizes,1));
   geometry.setAttribute("aLight", new THREE.BufferAttribute(lights,1));
+  geometry.setAttribute("aAlpha", new THREE.BufferAttribute(alphas,1));
   return geometry;
 }
 
@@ -262,7 +365,7 @@ function createField() {
   viewHeight = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov/2)) * distance * 1.06;
   viewWidth = viewHeight * camera.aspect;
   fieldUniforms.uView.value.set(viewWidth, viewHeight);
-  const target = stageWidth() < 720 ? 76000 : 145000;
+  const target = stageWidth() < 720 ? 82000 : 168000;
   const gap = Math.sqrt((viewWidth*viewHeight)/target);
   const positions=[], seeds=[], sizes=[];
   for (let y=-viewHeight/2-gap*3; y<=viewHeight/2+gap*3; y+=gap) {
@@ -298,11 +401,11 @@ function buildScene(data) {
   scene.add(faceCloud);
 
   const skirtGeometry=attributeSet(skirtSamples.length,1.0);
-  skirtCloud=new THREE.Points(skirtGeometry,faceMaterial);
+  skirtCloud=new THREE.Points(skirtGeometry,veilMaterial);
   scene.add(skirtCloud);
 
-  const eyeGeometry=attributeSet(420,1.7);
-  eyesCloud=new THREE.Points(eyeGeometry,faceMaterial);
+  const eyeGeometry=attributeSet(760,1.55);
+  eyesCloud=new THREE.Points(eyeGeometry,eyeMaterial);
   scene.add(eyesCloud);
   createField();
 }
@@ -330,26 +433,27 @@ function phonemes(t) {
 function timeline(elapsed) {
   const t=reducedMotion?11.2:elapsed%14;
   const speech=phonemes(t);
-  const blink=Math.max(pulse(t,9.05,9.34,.08),pulse(t,11.55,11.82,.07));
+  const blink=Math.max(pulse(t,1.92,2.13,.06),pulse(t,9.05,9.34,.08),pulse(t,11.55,11.82,.07));
   const lookLeft=pulse(t,2.75,4.55,.65);
   const lookRight=pulse(t,9.8,11.3,.45);
   return {
     open:speech.open,wide:speech.wide,pucker:speech.pucker,
-    smile:pulse(t,8.7,10.05,.45)*.7,
+    smile:.045+pulse(t,8.7,10.05,.45)*.72,
     blink,brow:pulse(t,2.8,4.3,.45)*.38,
     yaw:-lookLeft*.30+lookRight*.22+pointer.x*.07,
     pitch:pointer.y*.04-pulse(t,3.2,4.3,.4)*.06,
     roll:-lookLeft*.10,
     gazeX:pointer.x*.20-lookLeft*.18+lookRight*.12,
-    gazeY:pointer.y*.10,
+    gazeY:pointer.y*.10+Math.sin(elapsed*.31)*.025,
     emerge:reducedMotion?1:smoothstep(.2,2.7,elapsed)
   };
 }
 
 function currentControls(elapsed) {
   const base=timeline(elapsed);
-  if (externalState === "listening") Object.assign(base,{open:.02,smile:.08,brow:.22,gazeX:pointer.x*.25,gazeY:pointer.y*.15});
-  if (externalState === "thinking") Object.assign(base,{open:.02,pucker:.12,brow:.36,yaw:-.16,gazeX:.24,gazeY:.12});
+  const microBlink=Math.max(pulse(elapsed%5.7,4.84,5.05,.055),pulse(elapsed%8.3,7.72,7.94,.06));
+  if (externalState === "listening") Object.assign(base,{open:.018,smile:.10+Math.sin(elapsed*.45)*.025,brow:.18+Math.sin(elapsed*.31)*.045,blink:microBlink,gazeX:pointer.x*.29+Math.sin(elapsed*.22)*.035,gazeY:pointer.y*.16+Math.sin(elapsed*.29)*.025});
+  if (externalState === "thinking") Object.assign(base,{open:.018,pucker:.10,brow:.32+Math.sin(elapsed*.8)*.05,yaw:-.14+Math.sin(elapsed*.25)*.035,gazeX:.22+Math.sin(elapsed*.43)*.055,gazeY:.10+Math.cos(elapsed*.37)*.035,blink:microBlink});
   if (externalState === "speaking") Object.assign(base,phonemes((elapsed-speechStarted)%3.45+5.2));
   if (externalExpression) Object.assign(base,externalExpression);
   return base;
@@ -376,11 +480,15 @@ function deformVertices(c) {
       const corner=Math.min(1,Math.abs(x)/1.25);
       y+=c.smile*corner*.34;
     }
-    if(y<-.72&&Math.abs(x)<2.25){const w=smoothstep(-.72,-3.55,y);y-=c.open*.43*w;z+=c.open*.08*w;}
+    if(y<-.72&&Math.abs(x)<2.25){const w=smoothstep(-.72,-3.55,y);y-=c.open*.48*w;z+=c.open*.10*w;}
     if(LEFT_EYE.has(i))y=THREE.MathUtils.lerp(y,leftEyeCenter[1],c.blink*.93);
     if(RIGHT_EYE.has(i))y=THREE.MathUtils.lerp(y,rightEyeCenter[1],c.blink*.93);
-    if(LEFT_BROW.has(i)||RIGHT_BROW.has(i))y+=c.brow*.38;
-    if(c.smile>0&&y>-.9&&y<.15&&Math.abs(x)>.65)z+=c.smile*.12;
+    if(LEFT_BROW.has(i)||RIGHT_BROW.has(i)){y+=c.brow*.42;z+=c.brow*.045;}
+    if(c.smile>0&&y>-.95&&y<.30&&Math.abs(x)>.55){
+      const cheek=smoothstep(.48,1.45,Math.abs(x))*(1-smoothstep(1.55,2.45,Math.abs(x)));
+      y+=c.smile*.10*cheek;z+=c.smile*.18*cheek;
+    }
+    if(y>.20&&y<1.2&&Math.abs(x)<.55)z+=c.brow*.035;
     const p=transformPoint(x,y,z,c);deformed[j]=p[0];deformed[j+1]=p[1];deformed[j+2]=p[2];
   }
 }
@@ -397,9 +505,11 @@ function calculateNormals() {
   for(let i=0;i<meshData.count;i++){const j=i*3,l=Math.hypot(normalBuffer[j],normalBuffer[j+1],normalBuffer[j+2])||1;normalBuffer[j]/=l;normalBuffer[j+1]/=l;normalBuffer[j+2]/=l;}
 }
 
-function updateFace(c) {
+function updateFace(c,time) {
   deformVertices(c);calculateNormals();
-  const pos=faceCloud.geometry.attributes.position.array,light=faceCloud.geometry.attributes.aLight.array;
+  const pos=faceCloud.geometry.attributes.position.array,light=faceCloud.geometry.attributes.aLight.array,alpha=faceCloud.geometry.attributes.aAlpha.array;
+  const lightX=-.42+Math.sin(time*.19)*.16,lightY=.36+Math.cos(time*.23)*.08,lightZ=.84;
+  const leftEyeCenter=averageIndices(deformed,LEFT_EYE),rightEyeCenter=averageIndices(deformed,RIGHT_EYE);
   for(let i=0;i<faceSamples.count;i++){
     const a=faceSamples.a[i],b=faceSamples.b[i],cc=faceSamples.c[i],u=faceSamples.u[i],v=faceSamples.v[i],w=1-u-v;
     const j=i*3,ai=a*3,bi=b*3,ci=cc*3;
@@ -412,41 +522,63 @@ function updateFace(c) {
     const nx=normalBuffer[ai]*w+normalBuffer[bi]*u+normalBuffer[ci]*v;
     const ny=normalBuffer[ai+1]*w+normalBuffer[bi+1]*u+normalBuffer[ci+1]*v;
     const nz=normalBuffer[ai+2]*w+normalBuffer[bi+2]*u+normalBuffer[ci+2]*v;
-    const sculpted=THREE.MathUtils.clamp(.30+nz*.50+nx*.12+ny*.08+(surfaceZ+.8)*.045,.18,1);
-    light[i]=THREE.MathUtils.lerp(.22,sculpted,c.emerge);
+    const key=Math.max(0,nx*lightX+ny*lightY+nz*lightZ);
+    const rim=Math.pow(1-Math.abs(nz),2.2);
+    const sculpted=THREE.MathUtils.clamp(.08+key*.72+rim*.34+(surfaceZ+.9)*.038,.04,1);
+    light[i]=THREE.MathUtils.lerp(.12,sculpted,c.emerge);
+    const edgeRadius=Math.hypot(flatX/3.18,flatY/3.82);
+    const edgeFade=1-smoothstep(.78,1.13,edgeRadius);
+    const featureBoost=1-smoothstep(.22,.52,Math.hypot(flatX/3.2,(flatY+.16)/3.7));
+    const eyeDistance=Math.min(
+      Math.hypot((flatX-leftEyeCenter[0])/.30,(flatY-leftEyeCenter[1])/.17),
+      Math.hypot((flatX-rightEyeCenter[0])/.30,(flatY-rightEyeCenter[1])/.17)
+    );
+    const socket=smoothstep(.56,1.12,eyeDistance);
+    alpha[i]=THREE.MathUtils.clamp((.42+edgeFade*.58+featureBoost*.14)*(.12+.88*socket),0,1);
   }
-  faceCloud.geometry.attributes.position.needsUpdate=true;faceCloud.geometry.attributes.aLight.needsUpdate=true;
+  faceCloud.geometry.attributes.position.needsUpdate=true;faceCloud.geometry.attributes.aLight.needsUpdate=true;faceCloud.geometry.attributes.aAlpha.needsUpdate=true;
 }
 
 function updateSkirt(c,time) {
-  const pos=skirtCloud.geometry.attributes.position.array,light=skirtCloud.geometry.attributes.aLight.array;
+  const pos=skirtCloud.geometry.attributes.position.array,light=skirtCloud.geometry.attributes.aLight.array,alpha=skirtCloud.geometry.attributes.aAlpha.array;
   skirtSamples.forEach((s,i)=>{
     const ai=s.a*3,bi=s.b*3,k=s.along,t=s.t,e=t*t*(3-2*t);
     const bx=THREE.MathUtils.lerp(deformed[ai],deformed[bi],k),by=THREE.MathUtils.lerp(deformed[ai+1],deformed[bi+1],k),bz=THREE.MathUtils.lerp(deformed[ai+2],deformed[bi+2],k);
     const scale=1.0+e*.50,ox=bx*scale,oy=by*scale,wrinkle=Math.sin(t*28+s.seed*4+time*.22)*.10*(1-e);
     const j=i*3;pos[j]=THREE.MathUtils.lerp(bx,ox,e);pos[j+1]=THREE.MathUtils.lerp(by,oy,e);pos[j+2]=THREE.MathUtils.lerp(THREE.MathUtils.lerp(-.91,bz,c.emerge),-.92,e)+wrinkle*c.emerge;
-    light[i]=THREE.MathUtils.lerp(.22,.34+(1-e)*.35,c.emerge);
+    light[i]=THREE.MathUtils.lerp(.16,.27+(1-e)*.48,c.emerge);
+    alpha[i]=Math.pow(1-e,1.18)*(.52+.48*Math.sin(s.seed*3+time*.18)*.5+.24);
   });
-  skirtCloud.geometry.attributes.position.needsUpdate=true;skirtCloud.geometry.attributes.aLight.needsUpdate=true;
+  skirtCloud.geometry.attributes.position.needsUpdate=true;skirtCloud.geometry.attributes.aLight.needsUpdate=true;skirtCloud.geometry.attributes.aAlpha.needsUpdate=true;
 }
 
-function updateEyes(c) {
+function updateEyes(c,time) {
   const left=averageIndices(deformed,LEFT_EYE),right=averageIndices(deformed,RIGHT_EYE);
-  const pos=eyesCloud.geometry.attributes.position.array,light=eyesCloud.geometry.attributes.aLight.array;
-  for(let i=0;i<420;i++){
-    const side=i<210?left:right,local=i%210,a=(local/210)*Math.PI*2*7,r=.025+((local*37)%210)/210*.17;
-    const j=i*3;pos[j]=side[0]+Math.cos(a)*r+c.gazeX*.12;pos[j+1]=side[1]+Math.sin(a)*r*.72+c.gazeY*.08;pos[j+2]=side[2]+.08;light[i]=.96;
+  const pos=eyesCloud.geometry.attributes.position.array,light=eyesCloud.geometry.attributes.aLight.array,alpha=eyesCloud.geometry.attributes.aAlpha.array;
+  const saccadeX=Math.sin(time*.83)*.012+Math.sin(time*2.31)*.005;
+  const saccadeY=Math.cos(time*.67)*.008;
+  for(let i=0;i<760;i++){
+    const side=i<380?left:right,local=i%380,q=(local+.5)/380,a=local*2.399963+time*.06,rn=Math.sqrt(q),r=.145*rn;
+    const irisMotion=Math.sin(time*1.4+rn*8.0)*.003*(1-rn);
+    const j=i*3;
+    pos[j]=side[0]+Math.cos(a)*(r+irisMotion)+(c.gazeX+saccadeX)*.13;
+    pos[j+1]=side[1]+Math.sin(a)*(r+irisMotion)*.86+(c.gazeY+saccadeY)*.085;
+    pos[j+2]=side[2]+.11+(.022*(1-rn));
+    light[i]=rn<.24?.01:rn<.76?(.76+.22*Math.sin(a*6.0+time*.95)):.18;
+    const pupil=rn<.235?.035:1;
+    alpha[i]=Math.pow(1-c.blink,2.4)*smoothstep(1.0,.78,rn)*pupil;
   }
-  eyesCloud.visible=c.emerge>.72&&c.blink<.72;
-  eyesCloud.geometry.attributes.position.needsUpdate=true;eyesCloud.geometry.attributes.aLight.needsUpdate=true;
+  eyesCloud.visible=c.emerge>.62&&c.blink<.93;
+  eyesCloud.geometry.attributes.position.needsUpdate=true;eyesCloud.geometry.attributes.aLight.needsUpdate=true;eyesCloud.geometry.attributes.aAlpha.needsUpdate=true;
 }
 
 function animate() {
   const elapsed=clock.getElapsedTime(),c=currentControls(elapsed);
   pointer.lerp(pointerTarget,.04);
   fieldUniforms.uTime.value=elapsed;fieldUniforms.uPointer.value.copy(pointer);
-  faceUniforms.uTime.value=elapsed;faceUniforms.uOpacity.value=c.emerge;
-  if(meshData){updateFace(c);updateSkirt(c,elapsed);updateEyes(c);}
+  faceUniforms.uTime.value=elapsed;faceUniforms.uOpacity.value=c.emerge;faceUniforms.uSpeaking.value=externalState==="speaking"?1:0;
+  eyeUniforms.uTime.value=elapsed;eyeUniforms.uOpacity.value=c.emerge;eyeUniforms.uSpeaking.value=externalState==="speaking"?1:0;
+  if(meshData){updateFace(c,elapsed);updateSkirt(c,elapsed);updateEyes(c,elapsed);}
   renderer.render(scene,camera);requestAnimationFrame(animate);
 }
 
@@ -454,8 +586,9 @@ addEventListener("pointermove",event=>{const rect=stage.getBoundingClientRect();
 
 let resizeTimer;
 addEventListener("resize",()=>{
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(stageWidth(),stageHeight());camera.aspect=stageWidth()/stageHeight();camera.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(stageWidth(),stageHeight());fitCamera();
   fieldUniforms.uPixelRatio.value=renderer.getPixelRatio();faceUniforms.uPixelRatio.value=renderer.getPixelRatio();
+  eyeUniforms.uPixelRatio.value=renderer.getPixelRatio();
   clearTimeout(resizeTimer);resizeTimer=setTimeout(createField,140);
 },{passive:true});
 

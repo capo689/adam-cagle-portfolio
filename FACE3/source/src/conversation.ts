@@ -15,6 +15,8 @@ let recorder: MediaRecorder | undefined;
 let chunks: Blob[] = [];
 let recording = false;
 let busy = false;
+let holdRequested = false;
+let activePointer: number | undefined;
 let speechQueue = Promise.resolve();
 
 function setStatus(value: string) {
@@ -57,17 +59,34 @@ async function startRecording() {
   recorder.start(250);
   recording = true;
   mic.dataset.active = "true";
-  micLabel.textContent = "Listening";
+  mic.setAttribute("aria-pressed", "true");
+  micLabel.textContent = "Release to send";
   window.FACE?.setState("listening");
-  setStatus("Groq · listening · tap to send");
+  setStatus("Groq · listening · release to send");
+  if (!holdRequested) stopRecording();
 }
 
 function stopRecording() {
   if (!recording || !recorder) return;
   recording = false;
   mic.dataset.active = "false";
-  micLabel.textContent = "Talk";
+  mic.setAttribute("aria-pressed", "false");
+  micLabel.textContent = "Hold to talk";
   recorder.stop();
+}
+
+function beginHold() {
+  if (busy || mic.disabled || holdRequested) return;
+  holdRequested = true;
+  mic.dataset.pressed = "true";
+  startRecording().catch(handleError);
+}
+
+function endHold() {
+  if (!holdRequested) return;
+  holdRequested = false;
+  mic.dataset.pressed = "false";
+  stopRecording();
 }
 
 async function transcribe(blob: Blob) {
@@ -152,7 +171,7 @@ async function processRecording() {
   } finally {
     busy = false;
     mic.disabled = false;
-    micLabel.textContent = "Talk";
+    micLabel.textContent = "Hold to talk";
     window.FACE?.setState("listening");
   }
 }
@@ -179,8 +198,11 @@ function handleError(error: unknown) {
   console.error(error);
   busy = false;
   recording = false;
+  holdRequested = false;
   mic.disabled = false;
   mic.dataset.active = "false";
+  mic.dataset.pressed = "false";
+  mic.setAttribute("aria-pressed", "false");
   micLabel.textContent = "Retry";
   const message = errorMessage(error);
   setStatus(`Groq · ${message}`);
@@ -188,9 +210,44 @@ function handleError(error: unknown) {
   transcript.hidden = false;
 }
 
-mic.addEventListener("click", () => {
-  if (recording) stopRecording();
-  else startRecording().catch(handleError);
+mic.addEventListener("pointerdown", (event) => {
+  if (event.button !== 0) return;
+  event.preventDefault();
+  activePointer = event.pointerId;
+  mic.setPointerCapture(event.pointerId);
+  beginHold();
+});
+
+for (const eventName of ["pointerup", "pointercancel", "lostpointercapture"] as const) {
+  mic.addEventListener(eventName, (event) => {
+    if (activePointer !== undefined && event.pointerId !== activePointer) return;
+    event.preventDefault();
+    activePointer = undefined;
+    endHold();
+  });
+}
+
+mic.addEventListener("contextmenu", (event) => event.preventDefault());
+
+function keyboardTargetIsEditable(target: EventTarget | null) {
+  return target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement || (target instanceof HTMLElement && target.isContentEditable);
+}
+
+window.addEventListener("keydown", (event) => {
+  if (event.code !== "Space" || event.repeat || keyboardTargetIsEditable(event.target) || mic.hidden) return;
+  event.preventDefault();
+  beginHold();
+});
+
+window.addEventListener("keyup", (event) => {
+  if (event.code !== "Space" || keyboardTargetIsEditable(event.target) || mic.hidden) return;
+  event.preventDefault();
+  endHold();
+});
+
+window.addEventListener("blur", endHold);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) endHold();
 });
 
 window.addEventListener("face3:ready", () => {

@@ -5,24 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
   <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-  <meta name="theme-color" content="#000000">
-  <title>FACE3 · Voice Lab</title>
+  <meta name="theme-color" content="#03040a">
+  <title>FACE3 · Living Signal</title>
   <style>
-    :root { color-scheme: dark; --gold: #d8a943; --panel: clamp(232px, 22vw, 286px); }
+    :root { color-scheme: dark; --gold: #e6bd66; --iris: #55f4df; --panel: clamp(232px, 22vw, 286px); }
     * { box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #000; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #03040a; }
     body { touch-action: none; color: #eee8dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
     canvas { display: block; width: 100%; height: 100%; }
-    #stage { position: fixed; inset: 0 0 0 calc(var(--panel) - 18px); overflow: hidden; }
+    #stage { position: fixed; inset: 0 0 0 calc(var(--panel) - 18px); overflow: hidden; background: radial-gradient(circle at 54% 43%, #101326 0, #050712 38%, #010207 78%); }
+    #stage::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 52% 45%, transparent 12%, rgba(1,2,8,.08) 38%, rgba(1,2,8,.72) 100%); mix-blend-mode: multiply; }
     .fallback { position: fixed; inset: 0 0 0 var(--panel); display: none; place-items: center; color: var(--gold); background: #000; font: 10px/1.5 ui-monospace, monospace; letter-spacing: .22em; text-transform: uppercase; }
 
     .panel {
       position: fixed; inset: 0 auto 0 0; z-index: 10; width: var(--panel); padding: 30px 42px 24px 24px;
-      display: flex; flex-direction: column; background: #050505;
+      display: flex; flex-direction: column; background: linear-gradient(180deg, #070810 0%, #03040a 58%, #050508 100%);
       clip-path: polygon(0 0, calc(100% - 20px) 0, calc(100% - 20px) 36%, 100% 41%, 100% 59%, calc(100% - 20px) 64%, calc(100% - 20px) 100%, 0 100%);
       box-shadow: 18px 0 50px rgba(0,0,0,.84);
     }
-    .panel::after { content: ""; position: absolute; top: 0; bottom: 0; right: 20px; width: 1px; background: linear-gradient(transparent, rgba(216,169,67,.28) 20%, rgba(216,169,67,.28) 80%, transparent); }
+    .panel::after { content: ""; position: absolute; top: 0; bottom: 0; right: 20px; width: 1px; background: linear-gradient(transparent, rgba(85,244,223,.18) 18%, rgba(230,189,102,.34) 48%, rgba(85,244,223,.14) 82%, transparent); }
     .eyebrow { margin: 0 0 8px; color: rgba(216,169,67,.58); font-size: 8px; letter-spacing: .3em; text-transform: uppercase; }
     h1 { margin: 0; font: 500 18px/1.05 ui-monospace, monospace; letter-spacing: -.04em; }
     .rule { width: 34px; height: 1px; margin: 17px 0 20px; background: var(--gold); opacity: .52; }
@@ -57,9 +58,15 @@
     }
     .wake::after, .mic::after { content: ""; position: absolute; inset: -1px; border: inherit; opacity: .32; transform: scaleX(var(--progress,.08)); transform-origin: left; pointer-events: none; }
     .wake[hidden], .mic[hidden], .replay[hidden] { display: none; }
-    .mic[data-active="true"] { color: #fff1cc; background: rgba(216,169,67,.14); box-shadow: 0 0 24px rgba(216,169,67,.13) inset; }
+    .mic[data-active="true"] { color: #f2fffd; border-color: rgba(85,244,223,.72); background: rgba(33,190,176,.14); box-shadow: 0 0 30px rgba(85,244,223,.12) inset, 0 0 18px rgba(85,244,223,.08); }
+    .mic[data-active="true"]::before { content: ""; position: absolute; left: 12px; top: 50%; width: 5px; height: 5px; border-radius: 50%; background: var(--iris); box-shadow: 0 0 12px var(--iris); transform: translateY(-50%); animation: listenPulse .8s ease-in-out infinite alternate; }
+    .mic[data-pressed="true"] { transform: translateY(1px); }
     .mic:disabled { opacity: .38; cursor: wait; }
+    .keyhint { margin: -2px 0 0; color: rgba(255,255,255,.28); font-size: 7px; line-height: 1.4; letter-spacing: .14em; text-align: center; text-transform: uppercase; }
+    .keyhint kbd { color: rgba(85,244,223,.68); font: inherit; }
     .replay { border: 0; padding: 5px; color: rgba(255,255,255,.35); background: transparent; cursor: pointer; font: 7px/1 ui-monospace, monospace; letter-spacing: .17em; text-transform: uppercase; }
+
+    @keyframes listenPulse { to { opacity: .35; transform: translateY(-50%) scale(.65); } }
 
     @media (max-width: 680px) {
       :root { --panel: 220px; }
@@ -70,7 +77,7 @@
   </style>
 </head>
 <body>
-  <main id="stage" aria-label="Animated gold particle AI face"></main>
+  <main id="stage" aria-label="Animated luminous particle AI face"></main>
   <p class="fallback" id="fallback">WebGL is required</p>
   <aside class="panel" aria-label="Voice agent controls">
     <header>
@@ -102,7 +109,8 @@
     </section>
     <div class="controls">
       <button class="wake" id="wake" type="button"><span>Initialize agent</span></button>
-      <button class="mic" id="mic" type="button" aria-label="Start or stop talking" hidden><span>Talk</span></button>
+      <button class="mic" id="mic" type="button" aria-label="Hold to talk, release to send" aria-pressed="false" hidden><span>Hold to talk</span></button>
+      <p class="keyhint">Hold button or <kbd>Space</kbd> · release to send</p>
       <button class="replay" id="replay" type="button" hidden>Repeat greeting</button>
     </div>
   </aside>

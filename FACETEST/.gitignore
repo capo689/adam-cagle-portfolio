@@ -1,0 +1,10 @@
+# FACETEST is Troy-only; do not publish copied local Inflect assets.
+micro/
+ort/
+source/node_modules/
+runtime/index-D_AePQDj.js
+runtime/index-BK7GjAqi.js
+runtime/worker-0DioYhee.js
+runtime/*.wasm
+source/src/normalize.ts
+source/src/worker.ts

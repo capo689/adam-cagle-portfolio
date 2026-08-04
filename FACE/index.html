@@ -18,6 +18,24 @@
       color: #c99b3a; background: #000; font: 11px/1.5 ui-monospace, monospace;
       letter-spacing: .22em; text-transform: uppercase;
     }
+    .voice-wake {
+      position: fixed; inset: 0; z-index: 3; display: none; place-items: center;
+      border: 0; color: #d8a943; background: rgba(0, 0, 0, .18);
+      font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .34em; text-transform: uppercase; cursor: pointer;
+    }
+    .voice-wake::before {
+      content: ""; position: absolute; width: 46px; height: 46px; border: 1px solid rgba(216, 169, 67, .45);
+      border-radius: 50%; box-shadow: 0 0 32px rgba(216, 169, 67, .12);
+    }
+    .voice-wake span { margin-top: 82px; opacity: .78; }
+    .voice-wake[data-visible="true"] { display: grid; }
+    .voice-status {
+      position: fixed; left: 18px; bottom: 16px; z-index: 4; opacity: 0;
+      color: rgba(216, 169, 67, .72); font: 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .24em; text-transform: uppercase; pointer-events: none; transition: opacity .5s ease;
+    }
+    .voice-status[data-visible="true"] { opacity: 1; }
   </style>
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
@@ -26,6 +44,11 @@
 <body>
   <main id="stage" aria-label="Animated gold particle face"></main>
   <p class="fallback" id="fallback">WebGL is required</p>
+  <button class="voice-wake" id="voice-wake" type="button" aria-label="Enable local FACE voice">
+    <span>Click to wake</span>
+  </button>
+  <output class="voice-status" id="voice-status" aria-live="polite"></output>
   <script type="module" src="face.js"></script>
+  <script type="module" src="voice.js"></script>
 </body>
 </html>

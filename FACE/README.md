@@ -9,6 +9,24 @@ An unlinked, non-indexed WebGL facial interface: a gold particle membrane on bla
 - `window.FACE` exposes `setState`, `setExpression`, `clearExpression`, and `reset` hooks for a future AI-agent controller.
 - `prefers-reduced-motion` holds the portrait in its final pose.
 
+## Free local Codex mirror
+
+The local bridge uses the Mac's installed speech synthesizer, then feeds the generated audio through the browser's Web Audio analyser so the particle lips follow the actual sound. It binds only to `127.0.0.1`, stores temporary audio in the system temp directory, and does not use an API key or paid API.
+
+```sh
+node FACE/local-bridge.mjs
+```
+
+Open `http://127.0.0.1:4173/FACE/` and click once to wake audio. Send text to the face with:
+
+```sh
+curl -sS -X POST http://127.0.0.1:4173/__face/speak \
+  -H 'content-type: application/json' \
+  --data '{"text":"Hello. I am speaking through the particle interface."}'
+```
+
+The voice layer activates only on `localhost` or `127.0.0.1`; the deployed `/FACE/` remains a clean, silent particle canvas.
+
 The canonical face topology is from Google MediaPipe and is distributed under Apache License 2.0. See `assets/MEDIAPIPE-LICENSE.txt`.
 
 Serve the repository root and open `/FACE/`.

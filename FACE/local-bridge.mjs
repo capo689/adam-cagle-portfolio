@@ -12,7 +12,7 @@ const ROOT = resolve(import.meta.dirname, "..");
 const AUDIO_DIR = resolve(tmpdir(), "face-codex-mirror");
 const PORT = Number(process.env.FACE_PORT || 4173);
 const HOST = "127.0.0.1";
-const VOICE = process.env.FACE_VOICE || "Reed (English (US))";
+const VOICE = process.env.FACE_VOICE || "Daniel";
 const clients = new Set();
 
 const MIME = {

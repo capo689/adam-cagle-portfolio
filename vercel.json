@@ -22,9 +22,24 @@
     { "source": "/launch/:path*", "destination": "/:path*", "permanent": false },
     { "source": "/dev", "destination": "/DEV", "permanent": false },
     { "source": "/dev/:path*", "destination": "/DEV/:path*", "permanent": false },
+    { "source": "/FACE", "destination": "/FACE/index.html", "permanent": false },
     { "source": "/natasha", "destination": "/natasha/index.html", "permanent": false }
   ],
   "headers": [
+    {
+      "source": "/FACE",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet, noimageindex" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/FACE/:path*",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet, noimageindex" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
     {
       "source": "/natasha",
       "headers": [

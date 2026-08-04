@@ -17,6 +17,8 @@ The local bridge uses the Mac's installed speech synthesizer, then feeds the gen
 node FACE/local-bridge.mjs
 ```
 
+The default voice is `Reed (English (US))`. Override it for an audition with `FACE_VOICE="Daniel" node FACE/local-bridge.mjs`.
+
 Open `http://127.0.0.1:4173/FACE/` and click once to wake audio. Send text to the face with:
 
 ```sh

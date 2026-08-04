@@ -12,6 +12,7 @@ const ROOT = resolve(import.meta.dirname, "..");
 const AUDIO_DIR = resolve(tmpdir(), "face-codex-mirror");
 const PORT = Number(process.env.FACE_PORT || 4173);
 const HOST = "127.0.0.1";
+const VOICE = process.env.FACE_VOICE || "Reed (English (US))";
 const clients = new Set();
 
 const MIME = {
@@ -56,7 +57,7 @@ function run(command, args) {
 async function synthesize(text, output) {
   const intermediate = `${output}.aiff`;
   try {
-    await run("/usr/bin/say", ["-r", "176", "-o", intermediate, text]);
+    await run("/usr/bin/say", ["-v", VOICE, "-r", "176", "-o", intermediate, text]);
     await run("/usr/bin/afconvert", ["-f", "WAVE", "-d", "LEI16@22050", intermediate, output]);
   } finally {
     await unlink(intermediate).catch(() => {});
@@ -130,6 +131,7 @@ await mkdir(AUDIO_DIR, {recursive: true});
 await cleanOldAudio();
 server.listen(PORT, HOST, () => {
   console.log(`FACE Codex mirror: http://${HOST}:${PORT}/FACE/`);
+  console.log(`Voice: ${VOICE}`);
   console.log(`Send speech: curl -sS -X POST http://${HOST}:${PORT}/__face/speak -H 'content-type: application/json' --data '{"text":"Hello world"}'`);
 });
 

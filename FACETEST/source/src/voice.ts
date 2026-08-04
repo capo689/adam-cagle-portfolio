@@ -10,6 +10,7 @@ type FaceController = {
 type AgentController = {
   initialize(): Promise<void>;
   unlock(): Promise<void>;
+  introduce(): Promise<boolean>;
   speak(text: string): Promise<void>;
   stop(): void;
   ask?(text: string): Promise<void>;
@@ -29,6 +30,8 @@ let activeSources: AudioBufferSourceNode[] = [];
 let animationFrame = 0;
 let initializePromise: Promise<void> | undefined;
 let greetingBuffer: AudioBuffer | undefined;
+let introduced = false;
+let introducing = false;
 
 function face() {
   return window.FACE;
@@ -148,6 +151,19 @@ async function speak(text: string) {
   await play(buffer);
 }
 
+async function introduce() {
+  if (introduced || introducing || !greetingBuffer) return false;
+  introducing = true;
+  try {
+    stop();
+    await play(greetingBuffer);
+    introduced = true;
+    return true;
+  } finally {
+    introducing = false;
+  }
+}
+
 async function initialize() {
   initializePromise ||= (async () => {
     await waitForFace();
@@ -159,11 +175,13 @@ async function initialize() {
       window.dispatchEvent(new CustomEvent("facetest:ready"));
       try {
         await play(greetingBuffer, true);
+        introduced = true;
       } catch (error) {
         console.info("Greeting is ready for the first audio-enabled interaction", error);
         status.value = "Troy · ready";
         face()?.setState("listening");
         announce("ready");
+        window.dispatchEvent(new CustomEvent("facetest:intro-pending"));
       }
     } catch (error) {
       console.error(error);
@@ -175,5 +193,5 @@ async function initialize() {
   return initializePromise;
 }
 
-window.FACETEST = {initialize, unlock, speak, stop};
+window.FACETEST = {initialize, unlock, introduce, speak, stop};
 initialize().catch(console.error);

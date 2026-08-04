@@ -95,10 +95,18 @@ function stopRecording() {
   recorder.stop();
 }
 
-function beginHold() {
+async function beginHold() {
   if (busy || mic.disabled || holdRequested) return;
   holdRequested = true;
-  startRecording().catch(handleError);
+  try {
+    if (await window.FACETEST?.introduce()) {
+      holdRequested = false;
+      return;
+    }
+    if (holdRequested) await startRecording();
+  } catch (error) {
+    handleError(error);
+  }
 }
 
 function endHold() {
@@ -231,7 +239,7 @@ mic.addEventListener("pointerdown", (event) => {
   event.preventDefault();
   activePointer = event.pointerId;
   mic.setPointerCapture(event.pointerId);
-  beginHold();
+  beginHold().catch(handleError);
 });
 
 for (const eventName of ["pointerup", "pointercancel", "lostpointercapture"] as const) {
@@ -252,7 +260,7 @@ function keyboardTargetIsEditable(target: EventTarget | null) {
 window.addEventListener("keydown", (event) => {
   if (event.code !== "Space" || event.repeat || keyboardTargetIsEditable(event.target) || mic.disabled) return;
   event.preventDefault();
-  beginHold();
+  beginHold().catch(handleError);
 });
 
 window.addEventListener("keyup", (event) => {
@@ -270,6 +278,12 @@ window.addEventListener("facetest:ready", () => {
   mic.disabled = false;
   setControl("idle", "Push and hold to talk");
   setStatus("Troy · ready");
+});
+
+window.addEventListener("facetest:intro-pending", () => {
+  mic.disabled = false;
+  setControl("idle", "Tap once to hear Troy");
+  setStatus("Tap to hear Troy introduce himself");
 });
 
 window.addEventListener("facetest:voice-state", (event) => {

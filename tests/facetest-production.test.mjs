@@ -3,6 +3,7 @@ import test from "node:test";
 
 import chatHandler from "../api/facetest-chat.mjs";
 import speakHandler from "../api/facetest-speak.mjs";
+import {groqFetch} from "../api/_groq-failover.mjs";
 
 function mockResponse() {
   return {
@@ -53,5 +54,43 @@ test("FACETEST speech is locked to Troy server-side", async () => {
     assert.equal(res.headers["content-type"], "audio/wav");
   } finally {
     globalThis.fetch = originalFetch;
+  }
+});
+
+test("Groq quota errors fail over from the primary key to the backup key", async () => {
+  process.env.GROQ_API_KEY = "primary-key";
+  process.env.GROQ_API_KEY_BACKUP = "backup-key";
+  const originalFetch = globalThis.fetch;
+  const authorizations = [];
+  globalThis.fetch = async (_url, options) => {
+    authorizations.push(new Headers(options.headers).get("authorization"));
+    if (authorizations.length === 1) return new Response("quota", {status: 429});
+    return new Response("ok", {status: 200});
+  };
+  try {
+    const result = await groqFetch("https://api.groq.test", {method: "POST", body: "test"});
+    assert.equal(await result.response.text(), "ok");
+    assert.equal(result.slot, "backup");
+    assert.deepEqual(authorizations, ["Bearer primary-key", "Bearer backup-key"]);
+  } finally {
+    globalThis.fetch = originalFetch;
+    delete process.env.GROQ_API_KEY_BACKUP;
+  }
+});
+
+test("Groq authentication errors remain visible and do not rotate keys", async () => {
+  process.env.GROQ_API_KEY = "primary-key";
+  process.env.GROQ_API_KEY_BACKUP = "backup-key";
+  const originalFetch = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async () => { calls++; return new Response("unauthorized", {status: 401}); };
+  try {
+    const result = await groqFetch("https://api.groq.test", {method: "POST"});
+    assert.equal(result.response.status, 401);
+    assert.equal(result.slot, "primary");
+    assert.equal(calls, 1);
+  } finally {
+    globalThis.fetch = originalFetch;
+    delete process.env.GROQ_API_KEY_BACKUP;
   }
 });

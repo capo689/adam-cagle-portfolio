@@ -1,3 +1,5 @@
+import {groqConfigured, groqFetch} from "./_groq-failover.mjs";
+
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL = "openai/gpt-oss-120b";
 const SYSTEM_PROMPT = `You are the intelligence behind FACETEST, a living particle face created by Adam Cagle.
@@ -22,7 +24,7 @@ function cleanMessages(input) {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return reject(res, 405, "POST required");
-  if (!process.env.GROQ_API_KEY) return reject(res, 503, "Groq is not configured yet");
+  if (!groqConfigured()) return reject(res, 503, "Groq is not configured yet");
 
   const messages = cleanMessages(req.body?.messages);
   if (!messages.length || messages.at(-1)?.role !== "user") {
@@ -31,7 +33,7 @@ export default async function handler(req, res) {
 
   let upstream;
   try {
-    upstream = await fetch(GROQ_URL, {
+    const result = await groqFetch(GROQ_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
@@ -46,6 +48,8 @@ export default async function handler(req, res) {
         reasoning_effort: "low"
       })
     });
+    upstream = result.response;
+    res.setHeader("X-Groq-Key-Slot", result.slot);
   } catch {
     return reject(res, 502, "Groq could not be reached");
   }

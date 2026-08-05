@@ -1,10 +1,10 @@
 const RETRYABLE_STATUS = new Set([402, 408, 409, 425, 429, 500, 502, 503, 504]);
 
 function configuredKeys() {
-  return [...new Set([
-    process.env.GROQ_API_KEY,
-    process.env.GROQ_API_KEY_BACKUP
-  ].map((key) => String(key || "").trim()).filter(Boolean))];
+  const backup = String(process.env.GROQ_API_KEY_BACKUP || "").trim();
+  if (backup) return [{value: backup, slot: "backup"}];
+  const primary = String(process.env.GROQ_API_KEY || "").trim();
+  return primary ? [{value: primary, slot: "primary"}] : [];
 }
 
 export function groqConfigured() {
@@ -18,7 +18,7 @@ export async function groqFetch(url, init, {timeoutMs = 30000} = {}) {
 
   for (let index = 0; index < keys.length; index++) {
     const headers = new Headers(init?.headers || {});
-    headers.set("Authorization", `Bearer ${keys[index]}`);
+    headers.set("Authorization", `Bearer ${keys[index].value}`);
     try {
       const response = await fetch(url, {
         ...init,
@@ -27,7 +27,7 @@ export async function groqFetch(url, init, {timeoutMs = 30000} = {}) {
       });
       const retryable = RETRYABLE_STATUS.has(response.status);
       if (!retryable || index === keys.length - 1) {
-        return {response, slot: index === 0 ? "primary" : "backup"};
+        return {response, slot: keys[index].slot};
       }
       console.warn("Groq primary unavailable; trying backup", response.status);
       await response.body?.cancel().catch(() => {});

@@ -195,7 +195,7 @@ async function askGroq(userText: string) {
   function consumeToken(token: string, done = false) {
     if (cueResolved) return appendVisible(token);
     cueBuffer += token;
-    const cue = cueBuffer.match(/^\s*\[\[face:([a-z]+):([0-9.]+)\]\]\s*/i);
+    const cue = cueBuffer.match(/^\s*\[\[(?:face:)?([a-z]+):([0-9.]+)\]\]\s*/i);
     if (cue) {
       window.FACE?.perform(cue[1].toLowerCase(), Number(cue[2]), 7.5);
       cueResolved = true;
@@ -203,10 +203,10 @@ async function askGroq(userText: string) {
       cueBuffer = "";
       return;
     }
-    const clearlyNotCue = cueBuffer.trim().length > 5 && !cueBuffer.trimStart().startsWith("[[face:");
+    const clearlyNotCue = cueBuffer.trim().length > 5 && !cueBuffer.trimStart().startsWith("[[");
     if (done || cueBuffer.length > 96 || clearlyNotCue) {
       cueResolved = true;
-      appendVisible(cueBuffer.replace(/^\s*\[\[face:[^\]]*\]\]\s*/i, ""));
+      appendVisible(cueBuffer.replace(/^\s*\[\[(?:face:)?[^\]]*\]\]\s*/i, ""));
       cueBuffer = "";
     }
   }

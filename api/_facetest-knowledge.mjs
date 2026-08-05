@@ -71,7 +71,7 @@ export function retrieveAdamKnowledge(query, {limit = 3, maxCharacters = 2200} =
   if (!queryTerms.length) return [];
   const ranked = ADAM_KNOWLEDGE
     .map((record) => ({record, score: score(record, queryTerms)}))
-    .filter((item) => item.score > 0)
+    .filter((item) => item.score >= 5)
     .sort((a, b) => b.score - a.score || a.record.id.localeCompare(b.record.id));
   const selected = [];
   const sourceCounts = new Map();

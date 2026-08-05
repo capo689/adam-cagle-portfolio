@@ -13,10 +13,12 @@ function terms(value) {
 
 function score(record, queryTerms) {
   const title = record.title.toLowerCase();
+  const metadata = String(record.search || "").toLowerCase();
   const body = record.text.toLowerCase();
   let value = 0;
   for (const term of queryTerms) {
     if (title.includes(term)) value += 5;
+    if (metadata.includes(term)) value += 3;
     const matches = body.match(new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "g"));
     value += Math.min(4, matches?.length || 0);
   }
@@ -25,7 +27,9 @@ function score(record, queryTerms) {
 }
 
 export function retrieveAdamKnowledge(query, {limit = 5, maxCharacters = 3600} = {}) {
-  const queryTerms = [...new Set(terms(query))];
+  const allTerms = [...new Set(terms(query))];
+  const specificTerms = allTerms.filter((term) => term !== "adam" && term !== "cagle");
+  const queryTerms = specificTerms.length ? specificTerms : allTerms;
   if (!queryTerms.length) return [];
   const ranked = ADAM_KNOWLEDGE
     .map((record) => ({record, score: score(record, queryTerms)}))

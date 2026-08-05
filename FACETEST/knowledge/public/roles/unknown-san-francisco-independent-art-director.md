@@ -1,0 +1,28 @@
+---
+id: role.sf_independent.art_director
+type: role
+title: San Francisco Independent — Art Director
+summary: Sparse record of Adam's early newspaper art-direction work at the San Francisco Independent.
+status: incomplete
+confidence: 0.75
+public_safe: true
+last_updated: 2026-08-04
+date_start: unknown
+date_end: unknown
+tags:
+  - art-direction
+  - newspaper
+  - early-career
+aliases: []
+entities:
+  - person.adam_r_cagle
+source_ids:
+  - source.fodder.resume_v2
+answerable_questions:
+  - Did Adam work in newspapers?
+---
+
+# Role Record
+
+Adam is reported to have worked as an Art Director at the San Francisco Independent. No reliable dates, team structure, responsibilities, tools, results, or transition details are currently documented. This role should be mentioned only as early-career context.
+

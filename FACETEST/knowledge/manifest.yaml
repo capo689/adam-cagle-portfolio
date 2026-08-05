@@ -1,9 +1,76 @@
-name: Adam Cagle Knowledge Library
-version: 0.1.0
-status: awaiting_full_library
-visibility: public_only
-updated: 2026-08-04
-notes: >-
-  Markdown files in this directory are compiled into the FACETEST Next local
-  retrieval index. Never place secrets, credentials, private addresses, private
-  contact details, or unapproved personal information here.
+library:
+  subject: Adam R. Cagle
+  canonical_name: Adam R. Cagle
+  public_name: Adam Cagle
+  version: 1.0.0
+  generated_on: 2026-08-04
+  intended_use: Public-facing retrieval-augmented conversational agent about Adam Cagle
+  default_agent_name: Adam Cagle Portfolio Guide
+  language: en-US
+  public_only: true
+  total_files: 84
+  known_date_range: unknown-present
+  retrieval_notes: Prefer atomic claims with verified or reported status; retrieve project and case-study files before generic summaries when a question names a system, client, result, or technology.
+
+deployment:
+  target: FACETEST Next
+  public_safe_only: true
+  compiled_chunks: 495
+  excluded_from_deployment:
+    - review directory
+    - indexes containing internal source labels
+    - public/projects/goldfinger-agent.md
+    - public/organizations/firstsource.md
+
+priorities:
+  - Prefer canonical fodder and the July 2026 evidence audit over promotional website wording.
+  - Prefer specific projects, responsibilities, and qualified metrics over generic positioning.
+  - Distinguish production products, internal systems, public betas, open-source systems, and research prototypes.
+  - State uncertainty and evidence limits directly.
+  - Use current-goals material only while its review date remains valid.
+
+safety:
+  prohibited_topics:
+    - authentication secrets
+    - API keys and credentials
+    - financial account information
+    - private home address
+    - private phone number
+    - sensitive information about third parties
+  facts_requiring_qualification:
+    - backtested financial-system results
+    - company growth influenced by many contributors
+    - acquisition-related work
+    - public-surface metrics not adopted by canonical fodder
+    - technical skills shown only in broad stack lists
+  privacy_rules:
+    - Publish only contact channels already presented as public professional links.
+    - Never expose private-candidate material from review/private_candidates.md.
+    - Avoid personal facts without an explicit public source or Adam's approval.
+  impersonation_rules:
+    - The agent is not Adam and must never claim to be him.
+    - First-person sample biographies are reusable copy, not permission to impersonate Adam.
+    - Attribute opinions as documented views or direct statements.
+
+retrieval:
+  preferred_chunk_size_words: 350
+  maximum_chunks_per_question: 8
+  relevance_fields:
+    - title
+    - summary
+    - tags
+    - aliases
+    - entities
+    - answerable_questions
+    - claim_ids
+  recency_rules: Prefer newer evidence for current goals, project status, technology use, and employment status; preserve older sources for historical events.
+  contradiction_handling: Use the recommended canonical answer in review/contradictions.md and disclose material ambiguity when it affects the answer.
+  source_priority:
+    - source.fodder.resume_v2
+    - source.fodder.high_yield
+    - source.evidence.canonical_map
+    - source.statement.adam
+    - source.profile.master_public
+    - source.public.repository
+    - source.public.portfolio
+    - source.inference

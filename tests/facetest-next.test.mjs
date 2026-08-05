@@ -17,10 +17,11 @@ function mockResponse() {
   };
 }
 
-test("local Adam retrieval finds creator records without an embedding API", () => {
-  const records = retrieveAdamKnowledge("Who created and designed this face?");
+test("local Adam retrieval finds detailed project records without an embedding API", () => {
+  const records = retrieveAdamKnowledge("What is Singularity SEO?");
   assert.ok(records.length > 0);
-  assert.match(records[0].text, /Adam Cagle created and designed/);
+  assert.match(records[0].source, /singularity-seo/);
+  assert.match(records.map((record) => record.text).join(" "), /production/i);
 });
 
 test("FACETEST Next injects retrieved knowledge and streams an expression cue", async () => {
@@ -29,15 +30,16 @@ test("FACETEST Next injects retrieved knowledge and streams an expression cue", 
   globalThis.fetch = async (_url, options) => {
     const request = JSON.parse(options.body);
     assert.match(request.messages[0].content, /RETRIEVED ADAM RECORDS/);
-    assert.match(request.messages[0].content, /Adam Cagle created and designed/);
+    assert.match(request.messages[0].content, /Singularity SEO/);
+    assert.match(request.messages[0].content, /genuinely love talking about Adam Cagle/);
     assert.match(request.messages[0].content, /\[\[face:EXPRESSION:INTENSITY\]\]/);
     return new Response('data: {"choices":[{"delta":{"content":"[[face:warm:0.7]]Hello."}}]}\n\ndata: [DONE]\n\n', {status: 200});
   };
   try {
     const res = mockResponse();
-    await nextChatHandler({method: "POST", body: {messages: [{role: "user", content: "Who designed this face?"}]}}, res);
+    await nextChatHandler({method: "POST", body: {messages: [{role: "user", content: "What is Singularity SEO?"}]}}, res);
     assert.equal(res.chunks.join(""), "[[face:warm:0.7]]Hello.");
-    assert.equal(res.headers["x-facetest-knowledge"], "1");
+    assert.ok(Number(res.headers["x-facetest-knowledge"]) > 0);
   } finally {
     globalThis.fetch = originalFetch;
   }

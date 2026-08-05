@@ -121,46 +121,6 @@ async function synthesize(text: string) {
   return context().decodeAudioData(await response.arrayBuffer());
 }
 
-function fallbackVoice() {
-  const voices = speechSynthesis.getVoices();
-  const preferred = ["Daniel", "Reed", "Aaron", "Samantha", "Google US English"];
-  return preferred.map((name) => voices.find((voice) => voice.name.includes(name))).find(Boolean)
-    || voices.find((voice) => voice.lang.startsWith("en-US"))
-    || voices.find((voice) => voice.lang.startsWith("en"));
-}
-
-async function speakWithBrowser(text: string) {
-  if (!("speechSynthesis" in window)) throw new Error("Voice is temporarily unavailable");
-  speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = fallbackVoice() || null;
-  utterance.rate = .96;
-  utterance.pitch = .94;
-  face()?.setState("speaking");
-  announce("speaking");
-  let talking = true;
-  const started = performance.now();
-  function animateFallback() {
-    if (!talking) return;
-    const t = (performance.now() - started) / 1000;
-    const envelope = .22 + Math.abs(Math.sin(t * 8.7) * .42) + Math.abs(Math.sin(t * 13.1) * .14);
-    face()?.setExpression({open: Math.min(.68, envelope), wide: Math.sin(t * 4.1) * .12, pucker: Math.max(0, Math.sin(t * 5.3)) * .16});
-    animationFrame = requestAnimationFrame(animateFallback);
-  }
-  animateFallback();
-  await new Promise<void>((resolve, reject) => {
-    utterance.onend = () => resolve();
-    utterance.onerror = (event) => event.error === "canceled" ? resolve() : reject(new Error("Browser voice failed"));
-    speechSynthesis.speak(utterance);
-  }).finally(() => {
-    talking = false;
-    cancelAnimationFrame(animationFrame);
-    face()?.setExpression({open: 0, wide: 0, pucker: 0});
-    face()?.setState("listening");
-    announce("ready");
-  });
-}
-
 async function loadStaticGreeting() {
   const response = await fetch(STATIC_GREETING_URL, {cache: "force-cache"});
   if (!response.ok) return undefined;
@@ -194,13 +154,8 @@ async function speak(text: string) {
   stop();
   face()?.setState("thinking");
   announce("thinking");
-  try {
-    const buffer = await synthesize(text);
-    await play(buffer);
-  } catch (error) {
-    console.warn("Troy unavailable; using browser voice fallback", error);
-    await speakWithBrowser(text);
-  }
+  const buffer = await synthesize(text);
+  await play(buffer);
 }
 
 async function introduce() {

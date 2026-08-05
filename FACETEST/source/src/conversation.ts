@@ -151,7 +151,9 @@ function extractSentences(buffer: string, flush = false) {
 
 async function askGroq(userText: string) {
   history.push({role: "user", content: userText});
-  const response = await fetch("/api/facetest-chat", {
+  const inferred = inferExpression(userText);
+  window.FACE?.perform(inferred.name, inferred.intensity, 4.8);
+  const response = await fetch("/api/facetest-next-chat", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({messages: history})
@@ -163,22 +165,62 @@ async function askGroq(userText: string) {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let reply = "";
+  let cueBuffer = "";
+  let cueResolved = false;
   let sentenceBuffer = "";
-  for (;;) {
-    const {done, value} = await reader.read();
-    const token = decoder.decode(value || new Uint8Array(), {stream: !done});
+
+  function appendVisible(token: string) {
+    if (!token) return;
     reply += token;
     sentenceBuffer += token;
     agentLine.textContent = reply.trim();
-    const extracted = extractSentences(sentenceBuffer, done);
+    const extracted = extractSentences(sentenceBuffer);
     sentenceBuffer = extracted.rest;
     extracted.sentences.forEach(queueSpeech);
+  }
+
+  function consumeToken(token: string, done = false) {
+    if (cueResolved) return appendVisible(token);
+    cueBuffer += token;
+    const cue = cueBuffer.match(/^\s*\[\[face:([a-z]+):([0-9.]+)\]\]\s*/i);
+    if (cue) {
+      window.FACE?.perform(cue[1].toLowerCase(), Number(cue[2]), 7.5);
+      cueResolved = true;
+      appendVisible(cueBuffer.slice(cue[0].length));
+      cueBuffer = "";
+      return;
+    }
+    const clearlyNotCue = cueBuffer.trim().length > 5 && !cueBuffer.trimStart().startsWith("[[face:");
+    if (done || cueBuffer.length > 96 || clearlyNotCue) {
+      cueResolved = true;
+      appendVisible(cueBuffer.replace(/^\s*\[\[face:[^\]]*\]\]\s*/i, ""));
+      cueBuffer = "";
+    }
+  }
+
+  for (;;) {
+    const {done, value} = await reader.read();
+    const token = decoder.decode(value || new Uint8Array(), {stream: !done});
+    consumeToken(token, done);
     if (done) break;
   }
+  const extracted = extractSentences(sentenceBuffer, true);
+  extracted.sentences.forEach(queueSpeech);
   const cleanReply = reply.trim();
   if (!cleanReply) throw new Error("Troy returned an empty reply");
   history.push({role: "assistant", content: cleanReply});
   await speechQueue;
+}
+
+function inferExpression(text: string) {
+  const value = text.toLowerCase();
+  if (/\b(wow|amazing|incredible|no way|holy)\b/.test(value)) return {name: "surprised", intensity: .72};
+  if (/\b(sad|sorry|hurt|died|loss|afraid|scared|worried)\b/.test(value)) return {name: "empathetic", intensity: .74};
+  if (/\b(lol|haha|funny|joke|hilarious)\b/.test(value)) return {name: "amused", intensity: .76};
+  if (/\b(really|sure|seriously|prove|doubt)\b/.test(value)) return {name: "skeptical", intensity: .55};
+  if (/\b(love|beautiful|wonderful|great|excellent)\b/.test(value)) return {name: "warm", intensity: .68};
+  if (/\?$/.test(value.trim()) || /\b(why|how|what if|wonder)\b/.test(value)) return {name: "curious", intensity: .58};
+  return {name: "attentive", intensity: .44};
 }
 
 async function processRecording() {

@@ -1,9 +1,10 @@
 export {};
 
-const GREETING = "Hi, I'm a face created by Adam Cagle, push and hold the button to chat with me, let go when you're finished talking. You can also use the spacebar on a computer.";
+const STATIC_GREETING_URL = "/FACETEST/audio/troy-intro.wav";
 type FaceController = {
   setState(state: string): void;
   setExpression(values: Record<string, number>): void;
+  perform(name: string, intensity?: number, duration?: number): void;
   clearExpression(): void;
 };
 
@@ -64,7 +65,7 @@ function stop() {
     try { source.stop(); } catch {}
   }
   activeSources = [];
-  face()?.clearExpression();
+  face()?.setExpression({open: 0, wide: 0, pucker: 0});
 }
 
 function animateMouth(endTime: number) {
@@ -75,7 +76,7 @@ function animateMouth(endTime: number) {
 
   function frame() {
     if (!analyser || !audioContext || audioContext.currentTime >= endTime) {
-      face()?.clearExpression();
+      face()?.setExpression({open: 0, wide: 0, pucker: 0});
       face()?.setState("listening");
       announce("ready");
       return;
@@ -117,6 +118,12 @@ async function synthesize(text: string) {
     const data = await response.json().catch(() => ({}));
     throw new Error(data.error || "Troy could not generate speech");
   }
+  return context().decodeAudioData(await response.arrayBuffer());
+}
+
+async function loadStaticGreeting() {
+  const response = await fetch(STATIC_GREETING_URL, {cache: "force-cache"});
+  if (!response.ok) return undefined;
   return context().decodeAudioData(await response.arrayBuffer());
 }
 
@@ -171,17 +178,23 @@ async function initialize() {
     status.value = "Troy · waking up";
     announce("thinking");
     try {
-      greetingBuffer = await synthesize(GREETING);
+      greetingBuffer = await loadStaticGreeting();
       window.dispatchEvent(new CustomEvent("facetest:ready"));
-      try {
-        await play(greetingBuffer, true);
-        introduced = true;
-      } catch (error) {
-        console.info("Greeting is ready for the first audio-enabled interaction", error);
+      if (greetingBuffer) {
+        try {
+          await play(greetingBuffer, true);
+          introduced = true;
+        } catch (error) {
+          console.info("Greeting is ready for the first audio-enabled interaction", error);
+          status.value = "Troy · ready";
+          face()?.setState("listening");
+          announce("ready");
+          window.dispatchEvent(new CustomEvent("facetest:intro-pending"));
+        }
+      } else {
         status.value = "Troy · ready";
         face()?.setState("listening");
         announce("ready");
-        window.dispatchEvent(new CustomEvent("facetest:intro-pending"));
       }
     } catch (error) {
       console.error(error);

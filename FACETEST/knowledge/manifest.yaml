@@ -1,0 +1,9 @@
+name: Adam Cagle Knowledge Library
+version: 0.1.0
+status: awaiting_full_library
+visibility: public_only
+updated: 2026-08-04
+notes: >-
+  Markdown files in this directory are compiled into the FACETEST Next local
+  retrieval index. Never place secrets, credentials, private addresses, private
+  contact details, or unapproved personal information here.

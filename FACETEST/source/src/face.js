@@ -255,8 +255,27 @@ let skirtSamples;
 let deformed;
 let normalBuffer;
 let externalExpression = null;
+let expressionCurrent = {};
+let expressionExpires = 0;
 let externalState = null;
 let speechStarted = 0;
+
+const EXPRESSION_PRESETS = {
+  neutral: {},
+  attentive: {brow:.12,browInner:.08,eyeWide:.08,smile:.025},
+  curious: {browLeft:.30,browRight:.06,browInner:.14,eyeWide:.08,smileLeft:.10,yaw:-.055,roll:-.025},
+  warm: {smile:.38,eyeSquint:.12,brow:.08},
+  amused: {smile:.58,smileLeft:.15,eyeSquint:.28,browLeft:.12,jawSide:.035},
+  delighted: {smile:.82,open:.13,eyeSquint:.34,brow:.22,cheek:.40},
+  skeptical: {browLeft:.38,browRight:-.18,eyeSquintRight:.34,lipPress:.20,smileLeft:-.08,yaw:.065,roll:.028},
+  surprised: {open:.26,wide:-.12,brow:.64,browInner:.30,eyeWide:.48,pupil:.32},
+  concerned: {browInner:.48,browLeft:.12,browRight:.12,frown:.32,eyeSquint:.08},
+  empathetic: {browInner:.38,brow:.08,smile:.10,eyeSquint:.10,yaw:-.035,roll:-.018},
+  thinking: {browLeft:.30,browRight:.02,eyeSquintRight:.22,pucker:.12,gazeX:.20,gazeY:.08,yaw:-.08},
+  wry: {smileLeft:.40,smileRight:-.10,browLeft:.20,browRight:-.10,eyeSquintRight:.26,jawSide:.04},
+  playful: {smile:.50,smileLeft:.18,browLeft:.30,eyeSquintRight:.32,jawSide:.055,roll:-.025},
+  proud: {smile:.28,brow:.15,eyeSquint:.08,pitch:.035}
+};
 
 function parseOBJ(text) {
   const vertices = [];
@@ -440,6 +459,9 @@ function timeline(elapsed) {
     open:speech.open,wide:speech.wide,pucker:speech.pucker,
     smile:.045+pulse(t,8.7,10.05,.45)*.72,
     blink,brow:pulse(t,2.8,4.3,.45)*.38,
+    blinkLeft:0,blinkRight:0,browLeft:0,browRight:0,browInner:0,
+    eyeSquint:0,eyeSquintLeft:0,eyeSquintRight:0,eyeWide:0,
+    smileLeft:0,smileRight:0,frown:0,lipPress:0,sneer:0,cheek:0,jawSide:0,pupil:0,
     yaw:-lookLeft*.30+lookRight*.22+pointer.x*.07,
     pitch:pointer.y*.04-pulse(t,3.2,4.3,.4)*.06,
     roll:-lookLeft*.10,
@@ -452,10 +474,19 @@ function timeline(elapsed) {
 function currentControls(elapsed) {
   const base=timeline(elapsed);
   const microBlink=Math.max(pulse(elapsed%5.7,4.84,5.05,.055),pulse(elapsed%8.3,7.72,7.94,.06));
-  if (externalState === "listening") Object.assign(base,{open:.018,smile:.10+Math.sin(elapsed*.45)*.025,brow:.18+Math.sin(elapsed*.31)*.045,blink:microBlink,gazeX:pointer.x*.29+Math.sin(elapsed*.22)*.035,gazeY:pointer.y*.16+Math.sin(elapsed*.29)*.025});
-  if (externalState === "thinking") Object.assign(base,{open:.018,pucker:.10,brow:.32+Math.sin(elapsed*.8)*.05,yaw:-.14+Math.sin(elapsed*.25)*.035,gazeX:.22+Math.sin(elapsed*.43)*.055,gazeY:.10+Math.cos(elapsed*.37)*.035,blink:microBlink});
+  const microAsymmetry=Math.sin(elapsed*.19)*.025;
+  if (externalState === "listening") Object.assign(base,{open:.018,smile:.08+Math.sin(elapsed*.45)*.02,brow:.14+Math.sin(elapsed*.31)*.04,browLeft:microAsymmetry,browRight:-microAsymmetry,blink:microBlink,gazeX:pointer.x*.29+Math.sin(elapsed*.22)*.035,gazeY:pointer.y*.16+Math.sin(elapsed*.29)*.025});
+  if (externalState === "thinking") Object.assign(base,{open:.018,pucker:.09,brow:.18+Math.sin(elapsed*.8)*.04,browLeft:.20,browRight:-.05,eyeSquintRight:.14,yaw:-.12+Math.sin(elapsed*.25)*.035,gazeX:.22+Math.sin(elapsed*.43)*.055,gazeY:.10+Math.cos(elapsed*.37)*.035,blink:microBlink});
   if (externalState === "speaking") Object.assign(base,phonemes((elapsed-speechStarted)%3.45+5.2));
-  if (externalExpression) Object.assign(base,externalExpression);
+  if (expressionExpires && elapsed > expressionExpires) { externalExpression=null; expressionExpires=0; }
+  const target=externalExpression||{};
+  const keys=new Set([...Object.keys(expressionCurrent),...Object.keys(target)]);
+  for(const key of keys){
+    const next=Number(target[key]||0),current=Number(expressionCurrent[key]||0);
+    const eased=current+(next-current)*(next>current?.12:.075);
+    if(Math.abs(eased)<.0005&&!Object.hasOwn(target,key))delete expressionCurrent[key];else expressionCurrent[key]=eased;
+  }
+  for(const [key,value] of Object.entries(expressionCurrent)) base[key]=Number(base[key]||0)+value;
   return base;
 }
 
@@ -474,19 +505,36 @@ function deformVertices(c) {
     const j=i*3;let x=deformed[j],y=deformed[j+1],z=deformed[j+2];
     if(LIPS.has(i)){
       const lower=y<-1.50;
+      const side=x<0?Number(c.smileLeft||0):Number(c.smileRight||0);
       y+=lower?-c.open*.58:c.open*.20;
       x*=1+c.wide*.16-c.pucker*.22;
       z+=c.pucker*.26;
       const corner=Math.min(1,Math.abs(x)/1.25);
-      y+=c.smile*corner*.34;
+      y+=(c.smile+side)*corner*.34-c.frown*corner*.22;
+      y+=lower?c.lipPress*.09:-c.lipPress*.08;
+      if(!lower)y+=c.sneer*(x<0?1:.72)*.11;
     }
-    if(y<-.72&&Math.abs(x)<2.25){const w=smoothstep(-.72,-3.55,y);y-=c.open*.48*w;z+=c.open*.10*w;}
-    if(LEFT_EYE.has(i))y=THREE.MathUtils.lerp(y,leftEyeCenter[1],c.blink*.93);
-    if(RIGHT_EYE.has(i))y=THREE.MathUtils.lerp(y,rightEyeCenter[1],c.blink*.93);
-    if(LEFT_BROW.has(i)||RIGHT_BROW.has(i)){y+=c.brow*.42;z+=c.brow*.045;}
+    if(y<-.72&&Math.abs(x)<2.25){const w=smoothstep(-.72,-3.55,y);y-=c.open*.48*w;z+=c.open*.10*w;x+=c.jawSide*w*.34;}
+    if(LEFT_EYE.has(i)){
+      const close=THREE.MathUtils.clamp(c.blink+c.blinkLeft+c.eyeSquint*.30+c.eyeSquintLeft*.52-c.eyeWide*.22,0,1);
+      y=THREE.MathUtils.lerp(y,leftEyeCenter[1],close*.93);
+    }
+    if(RIGHT_EYE.has(i)){
+      const close=THREE.MathUtils.clamp(c.blink+c.blinkRight+c.eyeSquint*.30+c.eyeSquintRight*.52-c.eyeWide*.22,0,1);
+      y=THREE.MathUtils.lerp(y,rightEyeCenter[1],close*.93);
+    }
+    if(LEFT_BROW.has(i)){
+      const inner=1-smoothstep(.18,1.25,Math.abs(x));
+      y+=(c.brow+c.browLeft+c.browInner*inner)*.42;z+=(c.brow+c.browLeft)*.045;
+    }
+    if(RIGHT_BROW.has(i)){
+      const inner=1-smoothstep(.18,1.25,Math.abs(x));
+      y+=(c.brow+c.browRight+c.browInner*inner)*.42;z+=(c.brow+c.browRight)*.045;
+    }
     if(c.smile>0&&y>-.95&&y<.30&&Math.abs(x)>.55){
       const cheek=smoothstep(.48,1.45,Math.abs(x))*(1-smoothstep(1.55,2.45,Math.abs(x)));
-      y+=c.smile*.10*cheek;z+=c.smile*.18*cheek;
+      const side=x<0?Number(c.smileLeft||0):Number(c.smileRight||0);
+      y+=(c.smile+side)*.10*cheek;z+=(c.smile+side+c.cheek)*.18*cheek;
     }
     if(y>.20&&y<1.2&&Math.abs(x)<.55)z+=c.brow*.035;
     const p=transformPoint(x,y,z,c);deformed[j]=p[0];deformed[j+1]=p[1];deformed[j+2]=p[2];
@@ -559,16 +607,19 @@ function updateEyes(c,time) {
   const saccadeY=Math.cos(time*.67)*.008;
   for(let i=0;i<760;i++){
     const side=i<380?left:right,local=i%380,q=(local+.5)/380,a=local*2.399963+time*.06,rn=Math.sqrt(q),r=.145*rn;
+    const isLeft=i<380;
+    const sideBlink=THREE.MathUtils.clamp(c.blink+(isLeft?c.blinkLeft:c.blinkRight)+c.eyeSquint*.25+(isLeft?c.eyeSquintLeft:c.eyeSquintRight)*.45-c.eyeWide*.18,0,1);
     const irisMotion=Math.sin(time*1.4+rn*8.0)*.003*(1-rn);
     const j=i*3;
     pos[j]=side[0]+Math.cos(a)*(r+irisMotion)+(c.gazeX+saccadeX)*.13;
     pos[j+1]=side[1]+Math.sin(a)*(r+irisMotion)*.86+(c.gazeY+saccadeY)*.085;
     pos[j+2]=side[2]+.11+(.022*(1-rn));
-    light[i]=rn<.24?.01:rn<.76?(.76+.22*Math.sin(a*6.0+time*.95)):.18;
-    const pupil=rn<.235?.035:1;
-    alpha[i]=Math.pow(1-c.blink,2.4)*smoothstep(1.0,.78,rn)*pupil;
+    const pupilRadius=.225+THREE.MathUtils.clamp(c.pupil,0,1)*.08;
+    light[i]=rn<pupilRadius?.01:rn<.76?(.76+.22*Math.sin(a*6.0+time*.95)):.18;
+    const pupil=rn<pupilRadius?.035:1;
+    alpha[i]=Math.pow(1-sideBlink,2.4)*smoothstep(1.0,.78,rn)*pupil;
   }
-  eyesCloud.visible=c.emerge>.62&&c.blink<.93;
+  eyesCloud.visible=c.emerge>.62&&c.blink<.98;
   eyesCloud.geometry.attributes.position.needsUpdate=true;eyesCloud.geometry.attributes.aLight.needsUpdate=true;eyesCloud.geometry.attributes.aAlpha.needsUpdate=true;
 }
 
@@ -595,8 +646,14 @@ addEventListener("resize",()=>{
 window.FACE={
   setState(state){externalState=state;speechStarted=clock.getElapsedTime();},
   setExpression(values){externalExpression={...(externalExpression||{}),...values};},
-  clearExpression(){externalExpression=null;},
-  reset(){externalState=null;externalExpression=null;}
+  perform(name,intensity=.65,duration=5.5){
+    const preset=EXPRESSION_PRESETS[name]||EXPRESSION_PRESETS.attentive;
+    const strength=THREE.MathUtils.clamp(Number(intensity)||.65,.15,1);
+    externalExpression=Object.fromEntries(Object.entries(preset).map(([key,value])=>[key,value*strength]));
+    expressionExpires=clock.getElapsedTime()+THREE.MathUtils.clamp(Number(duration)||5.5,1.2,12);
+  },
+  clearExpression(){externalExpression=null;expressionExpires=0;},
+  reset(){externalState=null;externalExpression=null;expressionCurrent={};expressionExpires=0;}
 };
 
 async function init() {

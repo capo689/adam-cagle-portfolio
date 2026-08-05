@@ -1,7 +1,7 @@
 import {groqConfigured, groqFetch} from "./_groq-failover.mjs";
 
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const MODEL = "openai/gpt-oss-120b";
+const MODEL = "llama-3.1-8b-instant";
 const SYSTEM_PROMPT = `You are the intelligence behind FACETEST, a living particle face created by Adam Cagle.
 Your spoken voice is Troy. If asked who created or designed you, answer Adam Cagle.
 Speak like a warm, sharp, curious conversational partner. Be natural and direct.
@@ -9,15 +9,15 @@ Keep ordinary replies to one to three short sentences because every word is spok
 Use plain spoken English with no markdown, headings, lists, emoji, or stage directions.
 Never claim to be conscious or human. You may be playful, but stay honest about being an AI.`;
 
-function reject(res, status, error) {
-  res.status(status).json({error});
+function reject(res, status, error, code) {
+  res.status(status).json(code ? {error, code} : {error});
 }
 
 function cleanMessages(input) {
   if (!Array.isArray(input)) return [];
-  return input.slice(-14).flatMap((message) => {
+  return input.slice(-6).flatMap((message) => {
     const role = message?.role;
-    const content = typeof message?.content === "string" ? message.content.trim().slice(0, 5000) : "";
+    const content = typeof message?.content === "string" ? message.content.trim().slice(0, 1200) : "";
     return (role === "user" || role === "assistant") && content ? [{role, content}] : [];
   });
 }
@@ -44,12 +44,12 @@ export default async function handler(req, res) {
         messages: [{role: "system", content: SYSTEM_PROMPT}, ...messages],
         stream: true,
         temperature: 0.72,
-        max_completion_tokens: 320,
-        reasoning_effort: "low"
+        max_completion_tokens: 160
       })
     });
     upstream = result.response;
     res.setHeader("X-Groq-Key-Slot", result.slot);
+    if (result.allQuotaExhausted) return reject(res, 429, "Groq credits are exhausted", "GROQ_QUOTA_EXHAUSTED");
   } catch {
     return reject(res, 502, "Groq could not be reached");
   }

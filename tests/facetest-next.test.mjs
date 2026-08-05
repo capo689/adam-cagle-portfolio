@@ -31,13 +31,13 @@ test("FACETEST Next injects retrieved knowledge and streams an expression cue", 
     const request = JSON.parse(options.body);
     assert.match(request.messages[0].content, /RETRIEVED ADAM RECORDS/);
     assert.match(request.messages[0].content, /Singularity SEO/);
-    assert.match(request.messages[0].content, /genuinely love talking about Adam Cagle/);
+    assert.match(request.messages[0].content, /delight in Adam's verified skills/);
     assert.match(request.messages[0].content, /\[\[face:EXPRESSION:INTENSITY\]\]/);
     return new Response('data: {"choices":[{"delta":{"content":"[[face:warm:0.7]]Hello."}}]}\n\ndata: [DONE]\n\n', {status: 200});
   };
   try {
     const res = mockResponse();
-    await nextChatHandler({method: "POST", body: {messages: [{role: "user", content: "What is Singularity SEO?"}]}}, res);
+    await nextChatHandler({method: "POST", body: {messages: [{role: "user", content: "Compare Singularity SEO with Adam's broader portfolio."}]}}, res);
     assert.equal(res.chunks.join(""), "[[face:warm:0.7]]Hello.");
     assert.ok(Number(res.headers["x-facetest-knowledge"]) > 0);
   } finally {

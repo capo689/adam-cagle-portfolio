@@ -11,6 +11,44 @@ function terms(value) {
     .filter((term) => term.length > 1 && !STOP_WORDS.has(term));
 }
 
+const FAQ_SOURCE = "FACETEST/knowledge/public/14_frequently_asked_questions.md";
+const EXPRESSION_MAP = {thoughtful: "thinking", excited: "delighted"};
+
+function normalizeQuestion(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\b(?:please|could|can|would|you|tell|me|about|just)\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const FAQS = ADAM_KNOWLEDGE.flatMap((record) => {
+  if (record.source !== FAQ_SOURCE) return [];
+  const match = record.text.match(/^\d+\.\s*(.+?)\s+\*\*Short answer:\*\*\s*(.+?)\s+\*\*Detailed answer:\*\*[\s\S]*?\*\*Expression suggestion:\*\*\s*([a-z]+)/i);
+  if (!match) return [];
+  return [{
+    id: record.id,
+    question: normalizeQuestion(match[1]),
+    answer: match[2].trim(),
+    expression: EXPRESSION_MAP[match[3].toLowerCase()] || match[3].toLowerCase()
+  }];
+});
+
+export function findAdamFaqAnswer(query) {
+  const normalized = normalizeQuestion(query);
+  if (normalized.length < 4) return undefined;
+  const exact = FAQS.find((faq) => faq.question === normalized);
+  const contained = exact || FAQS.find((faq) =>
+    faq.question.length >= 12 && (normalized.includes(faq.question) || faq.question.includes(normalized))
+  );
+  if (!contained) return undefined;
+  const delighted = new Set(["proud", "delighted", "playful"]);
+  const prefix = delighted.has(contained.expression) ? "Heck yes—" : "";
+  return `[[face:${contained.expression}:0.68]]${prefix}${contained.answer}`;
+}
+
 function score(record, queryTerms) {
   const title = record.title.toLowerCase();
   const metadata = String(record.search || "").toLowerCase();
@@ -26,7 +64,7 @@ function score(record, queryTerms) {
   return value;
 }
 
-export function retrieveAdamKnowledge(query, {limit = 5, maxCharacters = 3600} = {}) {
+export function retrieveAdamKnowledge(query, {limit = 3, maxCharacters = 2200} = {}) {
   const allTerms = [...new Set(terms(query))];
   const specificTerms = allTerms.filter((term) => term !== "adam" && term !== "cagle");
   const queryTerms = specificTerms.length ? specificTerms : allTerms;
@@ -36,10 +74,14 @@ export function retrieveAdamKnowledge(query, {limit = 5, maxCharacters = 3600} =
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score || a.record.id.localeCompare(b.record.id));
   const selected = [];
+  const sourceCounts = new Map();
   let characters = 0;
   for (const {record} of ranked) {
-    if (selected.length >= limit || characters + record.text.length > maxCharacters) break;
+    if (selected.length >= limit) break;
+    if ((sourceCounts.get(record.source) || 0) >= 2) continue;
+    if (characters + record.text.length > maxCharacters) continue;
     selected.push(record);
+    sourceCounts.set(record.source, (sourceCounts.get(record.source) || 0) + 1);
     characters += record.text.length;
   }
   return selected;

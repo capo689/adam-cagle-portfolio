@@ -20,12 +20,20 @@ let busy = false;
 let holdRequested = false;
 let activePointer: number | undefined;
 let speechQueue = Promise.resolve();
+let outOfCredits = false;
+
+class GroqQuotaError extends Error {
+  constructor(message = "Groq credits are exhausted") {
+    super(message);
+    this.name = "GroqQuotaError";
+  }
+}
 
 function setStatus(value: string) {
   status.value = value;
 }
 
-function setControl(state: "idle" | "recording" | "thinking" | "speaking", label: string) {
+function setControl(state: "idle" | "recording" | "thinking" | "speaking" | "exhausted", label: string) {
   mic.dataset.state = state;
   micLabel.textContent = label;
 }
@@ -39,6 +47,11 @@ function showTranscript(user: string, agent = "") {
 
 function errorMessage(error: unknown) {
   return error instanceof Error ? error.message : "Something went wrong";
+}
+
+function upstreamError(response: Response, data: Record<string, unknown>, fallback: string) {
+  const message = typeof data.error === "string" ? data.error : fallback;
+  return response.status === 429 && data.code === "GROQ_QUOTA_EXHAUSTED" ? new GroqQuotaError(message) : new Error(message);
 }
 
 function preferredMimeType() {
@@ -122,7 +135,7 @@ async function transcribe(blob: Blob) {
     body: blob
   });
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || "Transcription failed");
+  if (!response.ok) throw upstreamError(response, data, "Transcription failed");
   return String(data.text || "").trim();
 }
 
@@ -160,7 +173,7 @@ async function askGroq(userText: string) {
   });
   if (!response.ok || !response.body) {
     const data = await response.json().catch(() => ({}));
-    throw new Error(data.error || "Troy could not answer");
+    throw upstreamError(response, data, "Troy could not answer");
   }
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
@@ -238,9 +251,11 @@ async function processRecording() {
     setStatus("Troy · ready");
   } finally {
     busy = false;
-    mic.disabled = false;
-    setControl("idle", "Push and hold to talk");
-    window.FACE?.setState("listening");
+    if (!outOfCredits) {
+      mic.disabled = false;
+      setControl("idle", "Push and hold to talk");
+      window.FACE?.setState("listening");
+    }
   }
 }
 
@@ -258,9 +273,11 @@ async function ask(text: string) {
     setStatus("Troy · ready");
   } finally {
     busy = false;
-    mic.disabled = false;
-    setControl("idle", "Push and hold to talk");
-    window.FACE?.setState("listening");
+    if (!outOfCredits) {
+      mic.disabled = false;
+      setControl("idle", "Push and hold to talk");
+      window.FACE?.setState("listening");
+    }
   }
 }
 
@@ -269,8 +286,17 @@ function handleError(error: unknown) {
   busy = false;
   recording = false;
   holdRequested = false;
-  mic.disabled = false;
   mic.setAttribute("aria-pressed", "false");
+  if (error instanceof GroqQuotaError || (error instanceof Error && error.name === "GroqQuotaError")) {
+    outOfCredits = true;
+    mic.disabled = true;
+    mic.setAttribute("aria-label", "Groq credits exhausted");
+    setControl("exhausted", "Out of credits");
+    setStatus("Groq credits exhausted · try again later");
+    window.FACE?.perform("concerned", .68, 8);
+    return;
+  }
+  mic.disabled = false;
   setControl("idle", "Try again");
   const message = errorMessage(error);
   setStatus(`Troy · ${message}`);
@@ -317,19 +343,21 @@ document.addEventListener("visibilitychange", () => {
 });
 
 window.addEventListener("facetest:ready", () => {
+  if (outOfCredits) return;
   mic.disabled = false;
   setControl("idle", "Push and hold to talk");
   setStatus("Troy · ready");
 });
 
 window.addEventListener("facetest:intro-pending", () => {
+  if (outOfCredits) return;
   mic.disabled = false;
   setControl("idle", "Tap once to hear Troy");
   setStatus("Tap to hear Troy introduce himself");
 });
 
 window.addEventListener("facetest:voice-state", (event) => {
-  if (busy || recording) return;
+  if (busy || recording || outOfCredits) return;
   const state = (event as CustomEvent<{state?: string}>).detail?.state;
   if (state === "speaking") {
     mic.disabled = true;

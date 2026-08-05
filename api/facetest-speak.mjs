@@ -3,8 +3,8 @@ import {groqConfigured, groqFetch} from "./_groq-failover.mjs";
 const GROQ_URL = "https://api.groq.com/openai/v1/audio/speech";
 const VOICE = "troy";
 
-function reject(res, status, error) {
-  res.status(status).json({error});
+function reject(res, status, error, code) {
+  res.status(status).json(code ? {error, code} : {error});
 }
 
 export default async function handler(req, res) {
@@ -32,6 +32,7 @@ export default async function handler(req, res) {
     });
     upstream = result.response;
     res.setHeader("X-Groq-Key-Slot", result.slot);
+    if (result.allQuotaExhausted) return reject(res, 429, "Groq credits are exhausted", "GROQ_QUOTA_EXHAUSTED");
   } catch {
     return reject(res, 502, "Groq could not be reached");
   }

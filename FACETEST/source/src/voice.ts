@@ -116,7 +116,9 @@ async function synthesize(text: string) {
   });
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
-    throw new Error(data.error || "Troy could not generate speech");
+    const error = new Error(data.error || "Troy could not generate speech");
+    if (response.status === 429 && data.code === "GROQ_QUOTA_EXHAUSTED") error.name = "GroqQuotaError";
+    throw error;
   }
   return context().decodeAudioData(await response.arrayBuffer());
 }

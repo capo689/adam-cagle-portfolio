@@ -23,6 +23,19 @@
 - [Technical Writing](https://adamcagle.com/technical-writing.html): white papers and field notes on the AI systems he builds.
 - [Résumé](https://adamcagle.com/mobile/resume.html): full résumé. Summary, capabilities, experience, stack, recognition.
 
+## Applied-AI capabilities
+
+- Multi-model orchestration, task-based model routing, model selection, LLM benchmarking (OpenRouter)
+- Structured outputs, JSON Schema, deterministic validation
+- Synthetic, fixture, and live-API testing; independent verification
+- Fail-closed workflows, bounded retries, model-diverse repair
+- Embeddings, semantic retrieval, OCR, multimodal extraction
+- Evidence traceability, stable evidence IDs, SHA-256 provenance, workflow auditing
+- AI cost tracking, risk assessment, production-readiness planning
+- Opportunity prioritization, shadow-mode pilots, measurable production rollout
+- Interactive workflow visualization (React Flow / XYFlow, ELK.js)
+- Workflow automation: n8n Cloud, Zapier, MCP tools
+
 ## White papers
 
 - [Singularity SEO](https://adamcagle.com/wpaper/singularity-seo-white-paper-light.html): AI-managed WordPress SEO and AIO system.

@@ -2,6 +2,7 @@ html { background: #f2efe9; }
 .video-work { max-width: 1120px; }
 .video-work .hero { padding-top: clamp(72px, 9vw, 132px); }
 .video-work .hero-title { max-width: 9ch; }
+.video-work .hero-sub { grid-template-columns: 1fr; }
 .video-work .gallery-section { padding-bottom: clamp(88px, 10vw, 150px); }
 .video-work .gallery-eyebrow { margin: 0; font-weight: 500; }
 

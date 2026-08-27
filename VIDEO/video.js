@@ -1,11 +1,22 @@
 (function () {
-  const videos = Array.from(document.querySelectorAll(".film video"));
+  const cards = Array.from(document.querySelectorAll(".video-card"));
 
-  videos.forEach((video) => {
-    video.addEventListener("play", () => {
-      videos.forEach((other) => {
-        if (other !== video && !other.paused) other.pause();
+  cards.forEach((card) => {
+    const video = card.querySelector("video");
+    const preview = card.querySelector(".video-preview");
+
+    preview.addEventListener("click", () => {
+      cards.forEach((otherCard) => {
+        const otherVideo = otherCard.querySelector("video");
+        if (otherVideo !== video && !otherVideo.paused) otherVideo.pause();
+      });
+
+      preview.classList.add("is-hidden");
+      video.play().catch(() => {
+        preview.classList.remove("is-hidden");
       });
     });
+
+    video.addEventListener("ended", () => preview.classList.remove("is-hidden"));
   });
 })();

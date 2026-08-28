@@ -168,6 +168,21 @@ body.theme-tech .work .screens img, body.theme-tech .work .screen-full {
     width: 100%; height: auto; display: block;
     border-radius: 3px; border: 1px solid var(--rule);
   }
+body.theme-tech .work .migration-preview {
+    position: relative; display: block; overflow: hidden;
+    border: 1px solid rgba(77,139,232,.34); border-radius: 10px;
+    background: #f4f4f4; box-shadow: 0 24px 54px -34px rgba(0,0,0,.85);
+    transition: transform .22s ease, border-color .22s ease;
+  }
+body.theme-tech .work .migration-preview:hover { transform: translateY(-3px); border-color: rgba(77,139,232,.72); }
+body.theme-tech .work .migration-preview img { width: 100%; height: auto; display: block; }
+body.theme-tech .work .migration-preview span {
+    position: absolute; right: 14px; bottom: 14px;
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: .11em; text-transform: uppercase;
+    color: #fff; background: rgba(11,14,19,.9); border: 1px solid rgba(255,255,255,.22);
+    border-radius: 5px; padding: 9px 12px;
+  }
 body.theme-tech .work .system-stack {
     background: linear-gradient(180deg, rgba(18,24,32,.62), rgba(15,20,28,.48));
     border: 1px solid rgba(77,139,232,.24);

@@ -27,11 +27,19 @@
   document.addEventListener("mouseleave", () => cur.classList.add("hide"));
   document.addEventListener("mouseenter", () => cur.classList.remove("hide"));
 
-  const VIEW = '.ux-tile, .tw-card, .cdw__tile, .cdw__tile--book, .work-cover, .hf-cover-wrap, .skill-view, [data-skill-view], [data-paper], [data-ux-open], [data-flip], [data-cursor="view"], .sample-card';
+  const VIEW = '.ux-tile, .tw-card, .cdw__tile, .cdw__tile--book, .work-cover, .hf-cover-wrap, .ad[data-gallery], .skill-view, [data-skill-view], [data-paper], [data-ux-open], [data-flip], [data-cursor="view"], .sample-card';
   function resolve(t) {
     if (!t || !t.closest) return null;
+    const explicit = t.closest('[data-cursor]');
+    if (explicit) {
+      const mode = explicit.dataset.cursor;
+      const text = explicit.dataset.cursorText;
+      if (mode === 'external') return ["ext", text || "Open"];
+      if (mode === 'view') return ["view", text || "View"];
+    }
     if (t.closest('a[href^="mailto:"]')) return ["email", "Email"];
-    if (t.closest(VIEW)) return ["view", "View"];
+    const view = t.closest(VIEW);
+    if (view) return ["view", view.dataset.cursorText || "View"];
     if (t.closest('a[target="_blank"]')) return ["ext", "Open"];
     if (t.closest('a[href], button, summary, label, .stack, [data-stack], [role="button"], input, textarea, select')) return ["link", ""];
     return null;

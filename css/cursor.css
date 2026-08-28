@@ -45,8 +45,11 @@
   color: currentColor; opacity: 0; transition: opacity .2s ease;
 }
 
-/* plain link/button: reticle tightens a touch (focused, precise) */
-.cur.on[data-state="link"] .cur-in { transform: scale(1.4); }
+/* plain links/buttons get the same unmistakable target morph as the labeled
+   states. The old scale-only change was too subtle to read as hover feedback. */
+.cur.on[data-state="link"] .cur-t, .cur.on[data-state="link"] .cur-b,
+.cur.on[data-state="link"] .cur-l, .cur.on[data-state="link"] .cur-r { opacity: 0; }
+.cur.on[data-state="link"] .cur-fr { opacity: 1; transform: none; }
 
 /* view / email / external: ticks fade, target brackets bloom in, label shows */
 .cur.on[data-state="view"]  .cur-t, .cur.on[data-state="view"]  .cur-b,
@@ -66,7 +69,7 @@
 
 /* press feedback */
 .cur.press .cur-in { transform: scale(.78); }
-.cur.on[data-state="link"].press .cur-in { transform: scale(1.18); }
+.cur.on[data-state="link"].press .cur-in { transform: scale(.84); }
 
 /* per-theme tint */
 body.theme-tech { --cur: #1FA2FF; }

@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="css/brain.css?v=42">
   <link rel="stylesheet" href="css/cursor.css?v=41">
   <link rel="stylesheet" href="css/interior.css?v=44">
-  <link rel="stylesheet" href="css/work.css?v=43">
+  <link rel="stylesheet" href="css/work.css?v=44">
   <style>/* layout guard: keep content clear of the floating brain even if a stale interior.css is cached */
   .interior--right .page__content{padding-left:clamp(220px,24vw,340px);position:relative;z-index:2;}
   .interior--right .brain--float{z-index:1;pointer-events:none;}
@@ -536,7 +536,10 @@
             <h2 class="sect-head">Performance <span class="it">marketing.</span></h2>
 
             <figure class="performance-hero">
-              <img loading="lazy" src="img/performance/banner-hero.webp" alt="A decade of Sunset Marquis and multi-client banner campaigns across hospitality, food, events, and lifestyle marketing">
+              <div class="ad performance-lightbox" data-gallery="performance" data-index="0">
+                <img loading="lazy" src="img/performance/banner-hero.webp" alt="A decade of Sunset Marquis and multi-client banner campaigns across hospitality, food, events, and lifestyle marketing">
+                <div class="overlay"><div class="overlay-inner"><span class="hl">View Banner Campaigns.</span><span>Open Gallery</span></div></div>
+              </div>
               <figcaption><span>Banner &amp; Display Campaigns</span><span>Strategy · Concepts · Copy</span></figcaption>
             </figure>
 
@@ -585,7 +588,7 @@
                   <span class="pull-format">The Discipline · <em>Performance</em></span>
                   <p class="pull-line">Make the brand <em>perform.</em></p>
                   <div class="pull-body">
-                    <p>Performance marketing is not where brand voice goes to disappear. It is where strategy, timing, offer, and language have to work hardest together—month after month, channel after channel, with the numbers keeping score.</p>
+                    <p>Performance marketing is not where brand voice goes to disappear. It is where strategy, timing, offer, and language have to work hardest together. Month after month. Channel after channel. With the numbers keeping score.</p>
                   </div>
                   <div class="pull-sig"><span>10+ Years</span><span>Multiple Clients &amp; Verticals</span></div>
                 </div>
@@ -593,7 +596,7 @@
                 <div class="case-grid-2">
                   <div class="case-cell">
                     <div class="cell-label">Scope</div>
-                    <p class="cell-body">Campaign strategy and copy across promotional, seasonal, editorial, event, food and beverage, wellness, hospitality, product, and brand-building programs—often several campaigns per client, per month.</p>
+                    <p class="cell-body">Campaign strategy and copy across promotional, seasonal, editorial, event, food and beverage, wellness, hospitality, product, and brand-building programs. Often several campaigns per client, per month.</p>
                   </div>
                   <div class="case-cell">
                     <div class="cell-label">Outcome</div>
@@ -607,11 +610,17 @@
 
             <div class="performance-gallery">
               <figure class="performance-panel">
-                <img loading="lazy" src="img/performance/email-mockup.webp" alt="Sunset Marquis email campaigns featuring rooms, dining, wellness, events, offers, and seasonal promotions">
+                <div class="ad performance-lightbox" data-gallery="performance" data-index="1">
+                  <img loading="lazy" src="img/performance/email-mockup.webp" alt="Sunset Marquis email campaigns featuring rooms, dining, wellness, events, offers, and seasonal promotions">
+                  <div class="overlay"><div class="overlay-inner"><span class="hl">View Email Campaigns.</span><span>Open Gallery</span></div></div>
+                </div>
                 <figcaption><span>Email Campaigns</span><span>$150K average revenue per email</span></figcaption>
               </figure>
               <figure class="performance-panel">
-                <img loading="lazy" src="img/performance/social-mockup.webp" alt="Sunset Marquis social media campaigns featuring the hotel, pool, dining, spa, music history, and seasonal moments">
+                <div class="ad performance-lightbox" data-gallery="performance" data-index="2">
+                  <img loading="lazy" src="img/performance/social-mockup.webp" alt="Sunset Marquis social media campaigns featuring the hotel, pool, dining, spa, music history, and seasonal moments">
+                  <div class="overlay"><div class="overlay-inner"><span class="hl">View Social Campaigns.</span><span>Open Gallery</span></div></div>
+                </div>
                 <figcaption><span>Social Campaigns</span><span>Always-on brand storytelling</span></figcaption>
               </figure>
             </div>
@@ -865,7 +874,7 @@
   </script>
   <script type="module" src="js/interior.js?v=40"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-  <script src="js/work-lightbox.js?v=42" defer></script>
+  <script src="js/work-lightbox.js?v=43" defer></script>
   <script src="js/work-flipbook.js?v=40" defer></script>
   <script src="js/cursor.js?v=40" defer></script>
   <script src="js/contact.js?v=40" defer></script>

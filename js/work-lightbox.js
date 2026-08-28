@@ -39,6 +39,11 @@
       { src: 'img/ads/navis-most-powerful.jpg', hl: 'The most powerful booking engine in the world.',  meta: 'Hospitality is a people business' },
       { src: 'img/ads/navis-traffic.jpg',       hl: "Traffic doesn't make reservations.",             meta: 'Guests do' }
     ],
+    performance: [
+      { src: 'img/performance/banner-hero.webp',   hl: 'Banner & Display Campaigns.', meta: 'Strategy · Concepts · Copy' },
+      { src: 'img/performance/email-mockup.webp',  hl: 'Email Campaigns.',             meta: '$150K Average Revenue Per Email' },
+      { src: 'img/performance/social-mockup.webp', hl: 'Social Campaigns.',            meta: 'Always-On Brand Storytelling' }
+    ],
     clink: [
       { src: 'img/CLINK/ws-panel_0000_homepage.jpg',                                                          hl: 'Homepage.',  meta: 'Clink Hostels' },
       { src: 'img/CLINK/ws-panel_0001_screencapture-clinkhostels-clink78-2023-09-13-09_58_23.jpg',            hl: 'Clink78.',   meta: 'London' },

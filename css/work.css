@@ -493,7 +493,7 @@ body.lb-open .page__content { overflow: hidden; }
 .work { max-width: none; margin: 0; padding: 0; background: transparent; }
 .work__scene {
   max-width: 1140px;
-  margin: 0 0 0 clamp(220px, 19vw, 320px);   /* clear the fixed, half-off brain */
+  margin: 0;   /* page__content already clears the fixed brain */
   padding: 0 clamp(20px,2.6vw,44px) 110px;
 }
 

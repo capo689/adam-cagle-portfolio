@@ -872,6 +872,28 @@ h3 {
   white-space: nowrap;
 }
 
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-status {
+  margin: 2px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+}
+
+.signup-form .form-status {
+  grid-column: 1 / -1;
+}
+
 label {
   display: grid;
   gap: 7px;

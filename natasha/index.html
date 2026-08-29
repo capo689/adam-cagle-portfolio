@@ -313,14 +313,16 @@
       <h2>Get on the List</h2>
       <p>Join the list for upcoming events, curated experiences, and private announcements.</p>
     </div>
-    <form class="signup-form reveal" aria-label="Join the Chaconia guest list">
+    <form class="signup-form reveal" aria-label="Join the Chaconia guest list" action="/api/contact" method="post" data-contact-form>
+      <input type="hidden" name="formType" value="Guest list">
+      <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label>
         <span>Your name</span>
-        <input type="text" name="name" autocomplete="name" placeholder="Your name">
+        <input type="text" name="name" autocomplete="name" placeholder="Your name" required>
       </label>
       <label>
         <span>Email address</span>
-        <input type="email" name="email" autocomplete="email" placeholder="Email address">
+        <input type="email" name="email" autocomplete="email" placeholder="Email address" required>
       </label>
       <button class="button button--gold" type="submit">Join the list</button>
     </form>
@@ -362,10 +364,12 @@
         <span>Private inquiry</span>
         <h3 id="footer-form-title">Tell us where to begin.</h3>
       </div>
-      <form class="contact-form footer-form" aria-label="Contact Chaconia and Co.">
+      <form class="contact-form footer-form" aria-label="Contact Chaconia and Co." action="/api/contact" method="post" data-contact-form>
+        <input type="hidden" name="formType" value="Private inquiry">
+        <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="footer-form__grid">
-          <label><span>Your name</span><input type="text" name="name"></label>
-          <label><span>Email address</span><input type="email" name="email"></label>
+          <label><span>Your name</span><input type="text" name="name" autocomplete="name" required></label>
+          <label><span>Email address</span><input type="email" name="email" autocomplete="email" required></label>
         </div>
         <label><span>Subject</span><select name="subject"><option>Select an option</option><option>Guest list</option><option>Sponsorship</option><option>Private event</option></select></label>
         <label><span>Message</span><textarea name="message" rows="4"></textarea></label>
@@ -375,7 +379,7 @@
 
     <div class="footer__directory">
       <dl class="footer__contact-list">
-        <div><dt>Email</dt><dd><a href="mailto:hello@chaconiaandco.com">hello@chaconiaandco.com</a></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:natasha@chaconiaco.com">natasha@chaconiaco.com</a></dd></div>
         <div><dt>Phone</dt><dd><a href="tel:+15412135278">541.213.5278</a></dd></div>
         <div><dt>Location</dt><dd>Bend, Oregon</dd></div>
       </dl>
@@ -411,14 +415,42 @@
   }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
   reveals.forEach((el) => observer.observe(el));
 
-  document.querySelectorAll("form").forEach((form) => {
-    form.addEventListener("submit", (event) => {
+  document.querySelectorAll("[data-contact-form]").forEach((form) => {
+    const status = document.createElement("p");
+    status.className = "form-status";
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    form.appendChild(status);
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const button = form.querySelector("button");
       if (!button) return;
       const original = button.textContent;
-      button.textContent = "Thank you";
-      window.setTimeout(() => { button.textContent = original; }, 1800);
+      button.disabled = true;
+      button.textContent = "Sending";
+      status.textContent = "";
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) throw new Error(result.error || "Message could not be sent");
+        form.reset();
+        button.textContent = "Thank you";
+        status.textContent = "Sent. Natasha will be in touch soon.";
+      } catch (error) {
+        button.textContent = original;
+        status.textContent = "Something went wrong. Please email natasha@chaconiaco.com.";
+      } finally {
+        window.setTimeout(() => {
+          button.disabled = false;
+          button.textContent = original;
+        }, 1800);
+      }
     });
   });
 

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<base href="/migration_new/"/>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet"/>
+<title>Migration Accelerator · Guided Workflow Preview</title>
+<meta name="description" content="A narrated, interactive demonstration of an AI-assisted legacy website content migration workflow with task-based routing, verification, and human review."/>
+<link rel="canonical" href="https://adamcagle.com/migration_new"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://adamcagle.com/migration_new"/>
+<meta property="og:title" content="Legacy Website Migration Accelerator"/>
+<meta property="og:description" content="Follow three records through an AI-assisted migration workflow with task-based routing, verification, and human review."/>
+<meta property="og:image" content="https://adamcagle.com/migration_new/og-card.jpg"/>
+<meta property="og:image:secure_url" content="https://adamcagle.com/migration_new/og-card.jpg"/>
+<meta property="og:image:type" content="image/jpeg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Screenshot of Adam Cagle's interactive Legacy Website Migration Accelerator workflow."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Legacy Website Migration Accelerator"/>
+<meta name="twitter:description" content="Follow three records through an AI-assisted migration workflow with task-based routing, verification, and human review."/>
+<meta name="twitter:image" content="https://adamcagle.com/migration_new/og-card.jpg"/>
+<meta name="twitter:image:alt" content="Screenshot of Adam Cagle's interactive Legacy Website Migration Accelerator workflow."/>
+<style>
+  :root{
+    --ink:#f4f6f8; --dim:rgba(244,246,248,.68); --line:rgba(244,246,248,.16); --panel:rgba(37,44,54,.97);
+    --paper:#323a45; --soft:#3c4450; --cool:rgba(77,139,232,.12); --red:#4D8BE8; --red-dark:#185FA5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:var(--paper);color:var(--ink);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  canvas{display:block;position:fixed;left:0;top:0}
+  button{font:inherit}
+  button:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+  .app-header{position:fixed;left:0;right:380px;top:0;height:64px;z-index:6;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line)}
+  .app-header:after{content:"";position:absolute;left:0;bottom:-1px;width:190px;height:3px;background:var(--red)}
+  .mark{position:absolute;top:14px;left:22px;pointer-events:none;line-height:1.25}
+  .mark b{display:block;font-size:16px;font-weight:850;letter-spacing:-.025em}
+  .mark b em{color:var(--red);font-style:normal}
+  .mark span{display:block;font:700 10px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .legend{position:absolute;top:22px;right:22px;display:flex;gap:14px;font:700 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .legend i{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:0;border:1px solid currentColor}
+
+  .launcher{position:fixed;left:0;top:0;right:380px;bottom:0;z-index:12;display:grid;place-items:center;padding:24px;background:rgba(244,244,244,.92);backdrop-filter:blur(8px);transition:opacity .32s ease}
+  .launcher.gone{opacity:0;pointer-events:none}
+  .launcher-card{width:min(900px,100%);background:#fff;border:1px solid var(--line);border-top:7px solid var(--red);padding:34px}
+  .eyebrow{font:800 11px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+  .launcher h1{font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-.045em;margin:12px 0 14px;max-width:780px}
+  .launcher-intro{font-size:16px;line-height:1.6;color:var(--dim);max-width:720px}
+  .scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px}
+  .scenario{min-height:178px;text-align:left;padding:19px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;transition:transform .18s,border-color .18s,background .18s}
+  .scenario:hover{transform:translateY(-3px);border-color:var(--red);background:#fff}
+  .scenario small{display:block;font:800 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;color:var(--red);margin-bottom:22px}
+  .scenario strong{display:block;font-size:19px;line-height:1.15;margin-bottom:9px}
+  .scenario span{font-size:13px;line-height:1.5;color:var(--dim)}
+
+  .bar{position:fixed;left:calc((100vw - 380px)/2);bottom:22px;transform:translateX(-50%);z-index:8;display:flex;align-items:center;gap:9px;padding:8px;background:var(--panel);border:1px solid var(--line);box-shadow:0 12px 36px rgba(26,26,26,.12);width:min(820px,calc(100vw - 416px))}
+  .btn{width:42px;height:42px;border-radius:3px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;display:grid;place-items:center;flex:0 0 auto;transition:background .18s,border-color .18s,color .18s}
+  .btn:hover{background:var(--soft);border-color:#aeb1b7}
+  .btn svg{width:15px;height:15px;fill:currentColor}
+  .btn.primary,.btn.on{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.primary:hover,.btn.on:hover{background:var(--red-dark);border-color:var(--red-dark)}
+  .track{position:relative;flex:1 1 320px;height:26px;cursor:pointer;min-width:150px}
+  .rail{position:absolute;top:11px;left:0;right:0;height:4px;background:var(--line)}
+  .fill{position:absolute;top:11px;left:0;height:4px;background:var(--red);width:0}
+  .head{position:absolute;top:5px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#fff;border:4px solid var(--red);left:0}
+  .tick{position:absolute;top:7px;width:2px;height:12px;background:#8b8f96;margin-left:-1px;pointer-events:none}
+  .now{flex:0 0 auto;font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--dim);min-width:132px;text-align:right;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .guide{position:fixed;right:0;top:0;bottom:0;z-index:7;width:380px;background:#fff;border-left:1px solid var(--line);padding:0 24px 104px;overflow:auto;box-shadow:-12px 0 34px rgba(26,26,26,.08)}
+  .guide-top{position:relative;margin:0 -24px 18px;padding:19px 24px;background:var(--ink);color:#fff;border-top:7px solid var(--red);overflow:hidden}
+  .guide-top:after{content:"";position:absolute;right:-34px;top:25px;width:120px;height:120px;border:1px solid rgba(255,255,255,.12);border-radius:50%;box-shadow:0 0 0 18px rgba(255,255,255,.035),0 0 0 38px rgba(255,255,255,.025);pointer-events:none}
+  .guide .record{position:relative;z-index:1;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+  .record-id{font:900 18px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#fff}
+  .record-summary{display:grid;gap:3px;text-align:right}
+  .record-title{font-size:12px;line-height:1.25;color:#fff}
+  .record-route{font:700 9.5px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:#fff;opacity:.64;text-transform:uppercase;letter-spacing:.06em}
+  .guide h2{font-size:18px;line-height:1.15;margin:7px 0 10px}
+  .guide p{font-size:13px;line-height:1.55;color:var(--dim)}
+  .guide dl{display:grid;grid-template-columns:72px 1fr;gap:8px 10px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line);font-size:12px;line-height:1.45}
+  .guide dt{font:800 10px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+  .guide dd{color:#383838}
+  .change-scenario{min-height:40px;border:1px solid var(--line);background:#fff;padding:8px 11px;font-size:11px;font-weight:800;cursor:pointer}
+  .human-countdown{padding:11px 13px;border-left:4px solid var(--red);background:var(--cool);color:var(--ink)!important;font:800 11px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace!important}
+  .change-scenario:hover{border-color:var(--red);color:var(--red)}
+  .change-scenario{margin-top:14px;width:100%;text-transform:uppercase;letter-spacing:.08em}
+  .rail-scenarios{margin:0 0 17px;padding:0 0 16px;border-bottom:1px solid var(--line)}
+  .rail-scenarios .eyebrow{margin-bottom:9px}
+  .rail-scenario-list{display:grid;gap:6px}
+  .rail-scenario{display:grid;grid-template-columns:34px 1fr;align-items:center;min-height:42px;border:1px solid var(--line);background:var(--paper);color:var(--ink);text-align:left;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+  .rail-scenario b{display:grid;place-items:center;align-self:stretch;border-right:1px solid var(--line);font:900 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--red)}
+  .rail-scenario span{padding:8px 10px;font-size:11.5px;font-weight:750;line-height:1.25}
+  .rail-scenario:hover{background:#fff;border-color:var(--red)}
+  .rail-scenario.active{background:var(--ink);border-color:var(--ink);color:#fff}
+  .rail-scenario.active b{background:var(--red);border-color:var(--red);color:#fff}
+  .narration-panel{margin:0 0 16px;padding:12px 13px;border:1px solid var(--line);background:var(--cool)}
+  .narration-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:7px}
+  .narration-head strong{font:900 10px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+  .narration-head span{font:700 10px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--dim)}
+  .narration-caption{font-size:11.5px!important;line-height:1.5!important;color:#383838!important;max-height:92px;overflow:auto}
+
+  .detail{position:fixed;right:400px;top:50%;transform:translate(24px,-50%);z-index:9;width:310px;background:var(--panel);border:1px solid var(--line);border-top:5px solid var(--red);padding:17px;opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s ease;box-shadow:0 12px 34px rgba(26,26,26,.12)}
+  .detail.show{opacity:1;pointer-events:auto;transform:translate(0,-50%)}
+  .detail .k{font:800 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+  .detail h3{font-size:16px;font-weight:700;margin:7px 0 9px;line-height:1.3}
+  .detail p{font-size:12.5px;line-height:1.55;color:var(--dim)}
+  .detail .x{position:absolute;top:10px;right:12px;cursor:pointer;color:var(--dim);font-size:17px;
+    line-height:1;padding:4px}
+  .detail .x:hover{color:var(--ink)}
+
+  .info{position:fixed;inset:0;z-index:13;display:grid;place-items:center;background:rgba(26,26,26,.48);backdrop-filter:blur(6px);opacity:0;pointer-events:none;
+    transition:opacity .25s ease}
+  .info.show{opacity:1;pointer-events:auto}
+  .sheet{width:min(610px,calc(100vw - 40px));background:#fff;border:1px solid var(--line);border-top:7px solid var(--red);padding:26px 28px}
+  .sheet h2{font-size:20px;margin-bottom:17px;font-weight:800}
+  .sheet dl{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-size:12.5px}
+  .sheet dt{color:var(--dim)}
+  .sheet dd{color:var(--ink);font-variant-numeric:tabular-nums}
+  .sheet code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px}
+  .sheet .close{margin-top:20px;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red);cursor:pointer}
+  .hint{position:fixed;right:0;bottom:0;z-index:9;width:380px;padding:13px 24px 14px;background:#fff;border-top:1px solid var(--line);font-size:10px;letter-spacing:.08em;color:var(--dim);opacity:1;transition:opacity .5s ease;pointer-events:none;text-align:left}
+  .fallback{position:fixed;inset:0;display:none;place-items:center;padding:32px;text-align:center;
+    font-size:14px;color:var(--dim);z-index:10}
+  body.nogl .fallback{display:grid}
+  body.nogl canvas,body.nogl .bar,body.nogl .launcher,body.nogl .legend,body.nogl .hint{display:none}
+
+  @media (max-width:900px){
+    .app-header{right:0;height:54px}.mark{top:10px;left:14px}.legend{display:none}.scenario-grid{grid-template-columns:1fr}.launcher{right:0;bottom:42vh}.launcher-card{padding:20px;max-height:calc(58vh - 24px);overflow:auto}.launcher-intro{font-size:14px}.scenario-grid{margin-top:18px}.scenario{min-height:0;padding:14px}.scenario small{margin-bottom:8px}.guide{left:0;right:0;top:58vh;bottom:0;width:100%;padding:0 18px 82px;border-left:0;box-shadow:0 -10px 28px rgba(26,26,26,.08)}.guide-top{margin:0 -18px 14px;padding:13px 18px}.guide h2{font-size:16px}.guide p{font-size:12px}.guide dl{margin-top:10px;padding-top:10px}.now{display:none}.track{min-width:90px}.bar{left:50%;bottom:calc(42vh + 10px);width:calc(100vw - 24px)}.detail{right:12px;left:12px;top:29vh;width:auto}.hint{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+  /* Portfolio preview theme + guided-journey refinements */
+  html,body{background:radial-gradient(125% 125% at 50% 38%,#3a414e 0%,#262b33 100%);color:var(--ink)}
+  body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:linear-gradient(rgba(77,139,232,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(77,139,232,.07) 1px,transparent 1px);background-size:80px 80px}
+  .app-header{right:380px;background:rgba(31,38,48,.92);border-color:rgba(77,139,232,.25);backdrop-filter:blur(16px)}
+  .app-header:after{background:var(--red);width:230px}
+  .mark b,.record-title{color:var(--ink)}
+  .mark b em{color:var(--red)}
+  .mark span,.legend{color:var(--dim)}
+  .legend i{border-color:currentColor!important}
+  .launcher{right:0;top:64px;bottom:0;background:rgba(38,44,53,.94);backdrop-filter:blur(18px)}
+  .launcher-card{border-color:rgba(244,246,248,.14);border-top-color:var(--red);background:linear-gradient(145deg,rgba(77,139,232,.14),rgba(35,42,52,.98) 42%);box-shadow:0 34px 90px -36px rgba(0,0,0,.88)}
+  .launcher h1{color:var(--ink)}
+  .launcher-intro,.scenario span{color:var(--dim)}
+  .scenario{background:rgba(244,246,248,.045);border-color:var(--line);color:var(--ink)}
+  .scenario:hover{border-color:var(--red);background:rgba(77,139,232,.12)}
+  .scenario small,.eyebrow{color:var(--red)}
+  body.choosing .guide,body.choosing .bar,body.choosing .journey,body.choosing .completion{display:none}
+  body.choosing .app-header{right:0}
+
+  .journey{position:fixed;left:0;right:380px;top:64px;height:48px;z-index:6;display:grid;grid-template-columns:repeat(8,1fr);background:rgba(31,38,48,.9);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+  .journey-step{position:relative;display:flex;align-items:center;justify-content:center;padding:0 6px;border-right:1px solid var(--line);font:700 9px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,246,248,.38);text-align:center;transition:color .2s,background .2s}
+  .journey-step:last-child{border-right:0}
+  .journey-step.done{color:rgba(244,246,248,.72);background:rgba(77,139,232,.05)}
+  .journey-step.current{color:#fff;background:rgba(77,139,232,.2)}
+  .journey-step.current:after{content:"";position:absolute;left:12%;right:12%;bottom:0;height:3px;background:var(--red)}
+
+  .guide{background:rgba(35,42,52,.98);border-color:var(--line);box-shadow:-18px 0 46px rgba(0,0,0,.22)}
+  .guide-top{background:#202630;border-top-color:var(--red)}
+  .record-route{color:var(--dim)}
+  body.has-scenario .rail-scenarios{display:none}
+  .rail-scenario{background:rgba(244,246,248,.045);border-color:var(--line);color:var(--ink)}
+  .rail-scenario b{border-color:var(--line);color:var(--red)}
+  .rail-scenario:hover{background:rgba(77,139,232,.11);border-color:var(--red)}
+  .rail-scenario.active{background:#202630;border-color:var(--red)}
+  .rail-scenario.active b{background:var(--red);border-color:var(--red)}
+  .narration-panel{margin-top:18px;background:rgba(77,139,232,.1);border-color:rgba(77,139,232,.28)}
+  .narration-panel summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none}
+  .narration-panel summary::-webkit-details-marker{display:none}
+  .narration-panel summary:after{content:"+";font:800 16px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--red)}
+  .narration-panel[open] summary:after{content:"−"}
+  .narration-head{display:contents;margin:0}
+  .narration-caption{margin-top:10px;padding-top:10px;border-top:1px solid rgba(77,139,232,.2);color:var(--ink)!important;max-height:128px}
+  .guide h2{font-size:21px;color:var(--ink)}
+  .guide p{color:var(--dim)}
+  .guide dl{grid-template-columns:72px 1fr;border-color:var(--line)}
+  .guide dt{color:var(--red)}
+  .guide dd{color:var(--ink)}
+  .guide .decision-value{font-size:15px;font-weight:800;line-height:1.35;color:#fff}
+  .next-label,.next-value{display:none}
+  .change-scenario{background:transparent;border-color:var(--line);color:var(--ink)}
+  .change-scenario:hover{background:rgba(77,139,232,.1);border-color:var(--red);color:#fff}
+  .human-countdown{border-color:var(--red);background:rgba(77,139,232,.13);color:var(--ink)!important}
+
+  .bar{bottom:18px;background:rgba(31,38,48,.94);border-color:var(--line);box-shadow:0 18px 48px rgba(0,0,0,.3);backdrop-filter:blur(16px)}
+  .control-group{display:flex;align-items:center;gap:6px}
+  .view-controls{padding-left:8px;border-left:1px solid var(--line)}
+  .btn{border-color:var(--line);background:rgba(244,246,248,.05);color:var(--ink)}
+  .btn:hover{background:rgba(77,139,232,.13);border-color:rgba(77,139,232,.62)}
+  .btn.primary,.btn.on{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.primary:hover,.btn.on:hover{background:var(--red-dark);border-color:var(--red-dark)}
+  .rail{background:rgba(244,246,248,.14)}
+  .fill{background:var(--red)}
+  .head{background:#202630;border-color:var(--red)}
+  .tick{background:rgba(244,246,248,.42)}
+  .now{color:var(--dim)}
+  .hint{background:rgba(35,42,52,.98);border-color:var(--line);color:var(--dim)}
+
+  .detail{background:rgba(35,42,52,.98);border-color:var(--line);border-top-color:var(--red);box-shadow:0 20px 50px rgba(0,0,0,.34)}
+  .detail .k{color:var(--red)}
+  .detail h3{color:var(--ink)}
+  .detail p{color:var(--dim)}
+  .detail .x{color:var(--dim)}
+  .info{background:rgba(10,14,20,.7)}
+  .sheet{background:#2a323e;border-color:var(--line);border-top-color:var(--red)}
+  .sheet dt{color:var(--dim)}
+  .sheet dd{color:var(--ink)}
+  .sheet code{background:rgba(244,246,248,.07)}
+  .sheet .close{color:var(--red)}
+
+  .completion{position:fixed;left:0;right:380px;top:64px;bottom:0;z-index:11;display:grid;place-items:center;padding:28px;background:rgba(35,42,52,.8);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .28s ease}
+  .completion.show{opacity:1;pointer-events:auto}
+  .completion-card{width:min(720px,100%);padding:clamp(28px,4vw,48px);border:1px solid rgba(77,139,232,.36);border-top:6px solid var(--red);background:linear-gradient(145deg,rgba(77,139,232,.16),#252d38 45%);box-shadow:0 36px 90px -30px rgba(0,0,0,.86)}
+  .completion-card h2{margin:10px 0 12px;font-size:clamp(30px,4vw,48px);line-height:1;letter-spacing:-.04em}
+  .completion-card>p{max-width:60ch;color:var(--dim);line-height:1.6}
+  .completion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:24px 0;background:var(--line);border:1px solid var(--line)}
+  .completion-grid div{padding:15px;background:#2d3541}
+  .completion-grid small{display:block;margin-bottom:6px;font:800 9px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+  .completion-grid strong{font-size:13px;line-height:1.35}
+  .completion-actions{display:flex;gap:9px;flex-wrap:wrap}
+  .completion-actions button{padding:11px 14px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+  .completion-actions button:first-child{background:var(--red);border-color:var(--red);color:#fff}
+
+  @media (max-width:1150px) and (min-width:901px){
+    .now{display:none}.btn{width:38px;height:38px}.bar{width:calc(100vw - 416px)}
+  }
+
+  @media (max-width:900px){
+    .app-header{right:0}.journey{left:0;right:0;top:54px;height:42px;overflow-x:auto;grid-template-columns:repeat(8,minmax(86px,1fr))}.journey-step{font-size:8px}
+    .launcher{top:54px;bottom:0}.launcher-card{max-height:calc(100vh - 78px)}
+    .guide{background:rgba(35,42,52,.985)}.bar{bottom:calc(42vh + 9px)}
+    #follow,#fit,#infobtn{display:none}.view-controls{padding-left:6px}
+    .completion{left:0;right:0;top:54px;bottom:42vh}.completion-card{max-height:calc(58vh - 82px);overflow:auto}.completion-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body class="choosing">
+
+<header class="app-header">
+  <div class="mark"><b><em>Website</em> Content</b><span>Migration accelerator</span></div>
+  <div class="legend">
+    <span><i style="background:#aeb9c8"></i>Deterministic</span>
+    <span><i style="background:#4d8be8"></i>Gate</span>
+    <span><i style="background:#263e60;border-color:#8cb8f5"></i>Model</span>
+    <span><i style="background:#f4f6f8"></i>Human</span>
+  </div>
+</header>
+
+<div class="journey" id="journey" aria-label="Workflow stages">
+  <span class="journey-step" data-chapter="0">Intake</span>
+  <span class="journey-step" data-chapter="1">Extraction</span>
+  <span class="journey-step" data-chapter="2">Retrieval</span>
+  <span class="journey-step" data-chapter="3">Recommendation</span>
+  <span class="journey-step" data-chapter="4">Repair</span>
+  <span class="journey-step" data-chapter="5">Ambiguity</span>
+  <span class="journey-step" data-chapter="6">Verification</span>
+  <span class="journey-step" data-chapter="7">Authority &amp; Audit</span>
+</div>
+
+<div class="launcher" id="launcher"><section class="launcher-card" aria-labelledby="launcher-title">
+  <p class="eyebrow">Guided workflow</p>
+  <h1 id="launcher-title">Follow one record. See why it takes that route.</h1>
+  <p class="launcher-intro">Choose a tested scenario. The workflow makes the internal routing decisions. You only act where a real human retains authority.</p>
+  <div class="scenario-grid">
+    <button class="scenario" data-scenario="standard"><small>01 · STANDARD</small><strong>Current event page</strong><span>A valid, low-risk record reaches implementation consultant review.</span></button>
+    <button class="scenario" data-scenario="risk"><small>02 · HIGH RISK</small><strong>Scanned budget document</strong><span>Extraction, ambiguity analysis, verification, and senior review.</span></button>
+    <button class="scenario" data-scenario="verification"><small>03 · VERIFY &amp; ESCALATE</small><strong>Unsupported merge claim</strong><span>The independent verifier rejects a recommendation that goes beyond the evidence and sends it to senior review.</span></button>
+  </div>
+</section></div>
+
+<aside class="guide" id="guide" aria-live="polite">
+  <div class="guide-top">
+    <div class="record"><span class="record-id" id="recordid">SELECT</span><span class="record-summary"><strong class="record-title" id="recordtitle">Choose a scenario</strong><span class="record-route" id="recordroute">Review route appears here</span></span></div>
+  </div>
+  <nav class="rail-scenarios" aria-label="Workflow scenarios">
+    <p class="eyebrow">Choose a scenario</p>
+    <div class="rail-scenario-list">
+      <button class="rail-scenario" data-side-scenario="standard" type="button"><b>01</b><span>Current event page</span></button>
+      <button class="rail-scenario" data-side-scenario="risk" type="button"><b>02</b><span>Scanned budget document</span></button>
+      <button class="rail-scenario" data-side-scenario="verification" type="button"><b>03</b><span>Unsupported merge claim</span></button>
+    </div>
+  </nav>
+  <details class="narration-panel" id="narrationpanel">
+    <summary class="narration-head"><strong>Guided narration</strong><span id="narrationvoice">Choose a scenario</span></summary>
+    <p class="narration-caption" id="narrationcaption">Select one of the three routes to begin its narrated walkthrough.</p>
+  </details>
+  <p class="eyebrow" id="stepcount">Guided replay</p>
+  <h2 id="stepname">Choose a scenario to begin</h2>
+  <p id="stepwhat">One record will move through the exact executable graph.</p>
+  <dl><dt>Decision</dt><dd class="decision-value" id="stepdecision">Waiting for a scenario</dd><dt>Why</dt><dd id="stepwhy">The input determines the route.</dd><dt class="next-label">Next</dt><dd class="next-value" id="stepnext">Choose one of the three tested records.</dd></dl>
+  <button class="change-scenario" id="change-scenario" type="button">View scenario overview</button>
+</aside>
+
+
+<div class="bar" id="bar">
+  <div class="control-group journey-controls">
+    <button class="btn" id="prev" title="Previous step" aria-label="Previous step">
+      <svg viewBox="0 0 24 24"><path d="M15.5 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="btn primary" id="play" title="Play / pause  (space)" aria-label="Play">
+      <svg viewBox="0 0 24 24"><path id="playicon" d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="btn" id="next" title="Next step" aria-label="Next step">
+      <svg viewBox="0 0 24 24"><path d="M8.5 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <div class="track" id="track">
+    <div class="rail"></div><div class="fill" id="fill"></div><div class="head" id="head"></div>
+  </div>
+  <div class="now" id="now">Ready</div>
+  <div class="control-group view-controls">
+    <button class="btn on" id="follow" title="Follow the run  (f)" aria-label="Follow">
+      <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm0-6v3m0 14v3M2 12h3m14 0h3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <button class="btn" id="fit" title="Fit whole graph  (r)" aria-label="Fit">
+      <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <button class="btn" id="restart" title="Restart scenario" aria-label="Restart scenario">
+      <svg viewBox="0 0 24 24"><path d="M5 8V4m0 0h4M5 4l3 3a7 7 0 11-1.2 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="btn" id="mute" title="Mute narration" aria-label="Mute narration" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><path d="M5 9v6h4l5 4V5L9 9H5zm12.5-.5a5 5 0 010 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="btn" id="infobtn" title="Provenance" aria-label="Provenance">
+      <svg viewBox="0 0 24 24"><path d="M12 10v7m0-10.5v.5" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+    </button>
+  </div>
+</div>
+
+<section class="completion" id="completion" aria-hidden="true" aria-labelledby="completion-title">
+  <div class="completion-card">
+    <p class="eyebrow">Guided run complete</p>
+    <h2 id="completion-title">Review-ready record</h2>
+    <p id="completion-copy">The workflow has finished with its evidence, recommendation, route, and human outcome preserved.</p>
+    <div class="completion-grid">
+      <div><small>Verification</small><strong id="completion-verification">Supported</strong></div>
+      <div><small>Human route</small><strong id="completion-route">Consultant review</strong></div>
+      <div><small>Public writes</small><strong>Zero</strong></div>
+    </div>
+    <div class="completion-actions">
+      <button type="button" id="completion-compare">Compare another scenario</button>
+      <button type="button" id="completion-replay">Replay this route</button>
+    </div>
+  </div>
+</section>
+
+<div class="detail" id="detail">
+  <span class="x" id="detailx">&times;</span>
+  <div class="k" id="dkind">Node</div>
+  <h3 id="dname">—</h3>
+  <p id="dbody"></p>
+</div>
+
+<div class="info" id="info"><div class="sheet">
+  <h2>What you are looking at</h2>
+  <dl>
+    <dt>Workflow</dt><dd>Migration Accelerator v5.1 — Evidence IDs</dd>
+    <dt>n8n id</dt><dd><code>4XDr2Tb5aQ5GZn2v</code></dd>
+    <dt>Fixture export</dt><dd><code>0607b692…ab871</code></dd>
+    <dt>Graph</dt><dd>40 executing nodes · 45 connections</dd>
+    <dt>Replay</dt><dd>Final live executions 77–81 · five governed completions</dd>
+    <dt>Repair path</dt><dd>Execution 52 — forced repair, Gemini returned valid output</dd>
+    <dt>Data</dt><dd>Synthetic records only · zero public writes</dd>
+  </dl>
+  <div class="close" id="infoclose">Close</div>
+</div></div>
+
+<div class="hint">Drag to look · scroll to move · click any node for detail</div>
+<div class="fallback"><div>This view needs WebGL.<br/>The exact workflow diagram and the importable JSON are on the project page.</div></div>
+
+<script src="lib/three.min.js"></script>
+<script src="narration/manifest.js"></script>
+<script src="lib/authority-depth.js"></script>
+</body>
+</html>

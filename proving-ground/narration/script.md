@@ -3,7 +3,7 @@
 Voice: calm, exact, technically credible. Let the failed release feel like a successful control.
 
 ## 01 — Test item
-We begin with EV-042, a frozen golden-set case. Its input, expected behavior, evidence IDs, and hash are versioned, so this prompt revision faces the same test as the last one.
+We begin with a frozen golden-set case. Its input, expected behavior, and evidence are versioned, so this prompt revision faces the same test as the last one.
 
 ## 02 — Calibration
 Two humans establish the reference label, and the judge pair must reach at least point-six kappa on a held-out slice. This rubric clears at point-seven-one. Below the floor, evaluation stops here.

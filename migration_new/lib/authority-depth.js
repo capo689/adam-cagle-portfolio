@@ -937,7 +937,8 @@ function step(now) {
       }
       if (clock > h.t1 && (i === r.hops.length - 1 || clock < r.hops[i + 1].t0)) {
         var lastHop = (i === r.hops.length - 1);
-        if (lastHop && clock > h.t1 + 1.6) break;   // retire after settling
+        // Keep the record visible at its final node until the completion card appears.
+        if (lastHop && clock >= DURATION) break;
         var dn = byName[h.target];
         if (dn) {
           r.pos.copy(dn.pos); r.pos.z += 0.9;
@@ -985,7 +986,7 @@ function step(now) {
     }
   });
 
-  // ---- camera follow: frame the chapter where most of the action is
+  // ---- camera follow: keep the moving record as the visual subject
   if (live) {
     var best = -1, bestN = -1, ci;
     for (ci = 0; ci < CHAPTERS.length; ci++) {
@@ -994,16 +995,17 @@ function step(now) {
     if (best >= 0 && bestN > 0) curCh = best;
   }
   if (currentScenario) updateJourney(curCh);
-  if (follow && chFrame[curCh]) {
-    var fr = chFrame[curCh];
-    cam.tFocus.copy(fr.center);
-    cam.tDist = fitDist(fr.w, fr.h);
-    cam.tPitch = 0.12;
-    cam.tYaw = Math.sin(clock * 0.085) * 0.17;
+  if (follow && currentRunner && currentRunner.active) {
+    cam.tFocus.copy(currentRunner.pos);
+    cam.tDist = window.innerWidth <= 900 ? 11.8 : 10.4;
+    cam.tPitch = 0.10;
+    cam.tYaw = 0.055;
   }
 
   var k = 1 - Math.pow(0.0012, dt);
-  cam.focus.lerp(cam.tFocus, k);
+  // Focus catches the record quickly; zoom and angle retain a softer transition.
+  var focusK = follow && currentRunner && currentRunner.active ? 1 - Math.pow(0.0000002, dt) : k;
+  cam.focus.lerp(cam.tFocus, focusK);
   cam.dist += (cam.tDist - cam.dist) * k;
   cam.yaw += (cam.tYaw - cam.yaw) * k;
   cam.pitch += (cam.tPitch - cam.pitch) * k;

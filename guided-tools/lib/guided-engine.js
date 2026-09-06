@@ -185,12 +185,12 @@ function activePath(edge){if(!edge){activeLine.visible=false;return;}activeLine.
 
 function frame(now){var dt=Math.min(.05,(now-last)/1000);last=now;if(playing){clock+=dt;if(clock>=duration){clock=duration;setPlaying(false);showCompletion();}}
   var pos=new THREE.Vector3(),activeId=cfg.route[0],activeEdge=null,on=false;
-  for(var i=0;i<hops.length;i++){var h=hops[i];if(clock>=h.t0&&clock<=h.t1){var u=(clock-h.t0)/Math.max(.001,h.t1-h.t0);h.edge.curve.getPoint(u,pos);activeId=u<.42?h.source:h.target;activeEdge=h.edge;on=true;break;}if(clock>h.t1&&(i===hops.length-1||clock<hops[i+1].t0)){var n=byId[h.target];if(n){pos.copy(n.pos);pos.z+=.82;activeId=h.target;on=true;}break;}}
+  for(var i=0;i<hops.length;i++){var h=hops[i];if(clock>=h.t0&&clock<=h.t1){var u=(clock-h.t0)/Math.max(.001,h.t1-h.t0);h.edge.curve.getPoint(u,pos);activeId=u<.82?h.source:h.target;activeEdge=h.edge;on=true;break;}if(clock>h.t1&&(i===hops.length-1||clock<hops[i+1].t0)){var n=byId[h.target];if(n){pos.copy(n.pos);pos.z+=.82;activeId=h.target;on=true;}break;}}
   if(!on&&clock<=.01&&byId[cfg.route[0]]){pos.copy(byId[cfg.route[0]].pos);pos.z+=.82;on=true;}
   record.visible=on;recordHalo.visible=on;if(on){record.position.copy(pos);recordHalo.position.copy(pos);recordHalo.quaternion.copy(camera.quaternion);var activeNode=byId[activeId];if(activeNode)activeNode.highlight=1;renderGuide(activeId);}
   activePath(activeEdge);completedPath();
   nodes.forEach(function(n){if(n.highlight>0){n.highlight*=.935;n.glow.visible=true;n.glow.material.opacity=n.highlight*.85;var s=1+n.highlight*.1;n.card.scale.set(s,s,1);}else if(n.glow.visible){n.glow.visible=false;n.card.scale.set(1,1,1);}});
-  if(follow&&on){cam.target.copy(pos);cam.targetDist=window.innerWidth<=900?18.5:17;cam.targetYaw=.045;cam.targetPitch=.08;}
+  if(follow&&on){cam.target.copy(pos);cam.target.y+=window.innerWidth<=900?.7:1.3;cam.targetDist=window.innerWidth<=900?20:18.5;cam.targetYaw=.045;cam.targetPitch=.08;}
   var smooth=1-Math.pow(.0015,dt),focusSmooth=follow&&on?1-Math.pow(.0000004,dt):smooth;cam.focus.lerp(cam.target,focusSmooth);cam.dist+=(cam.targetDist-cam.dist)*smooth;cam.yaw+=(cam.targetYaw-cam.yaw)*smooth;cam.pitch+=(cam.targetPitch-cam.pitch)*smooth;applyCamera();
   nodes.forEach(function(n){n.card.quaternion.copy(camera.quaternion);n.glow.quaternion.copy(camera.quaternion);});recordHalo.quaternion.copy(camera.quaternion);
   $('fill').style.width=(clock/duration*100)+'%';$('head').style.left=(clock/duration*100)+'%';$('now').textContent=clock>=duration-.01?'Run complete':cfg.stages[stageFor(activeId)];

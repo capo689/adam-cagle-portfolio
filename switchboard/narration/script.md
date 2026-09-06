@@ -9,7 +9,7 @@ A support application requests a cited JSON resolution summary. It declares the 
 The OpenRouter registry combines live price and latency with quality measured in Proving Ground. The selector chooses the cheapest model that clears the task’s published floor.
 
 ## 03 — Privacy
-PII, residency, and tenant rules run before transport. This redacted request may use a hosted model; a flagged request would be forced to the local no-egress route.
+PII, residency, and tenant rules run before transport. This redacted request may use a hosted model. The tour pauses at the local no-egress branch to make the alternative explicit, then bypasses it because this case is cleared.
 
 ## 04 — Semantic cache
 An eligibility gate first decides whether this task may consult cached output at all. The grounded support summary passes under same-tenant, same-policy, and freshness rules; creative generation and sensitive decisions would bypass reuse. The eligible request then misses the strict point-nine-four similarity threshold and proceeds to inference.
@@ -21,7 +21,7 @@ The small model writes a useful summary, but one citation array violates the sch
 Confidence comes from schema validity, citation coverage, sample agreement, and an independent judge—not from asking the model how confident it feels. This request escalates.
 
 ## 07 — Repair and escalation
-A reasoning retry still returns one unknown citation. Policy permits a single alternate-family repair, then reruns the original validator without relaxing any rule. It passes; otherwise the route ends with a human.
+A reasoning retry still returns one unknown citation. Policy permits a single alternate-family repair, then reruns the original validator without relaxing any rule. It passes. The tour inspects and bypasses the human terminus, showing exactly where a final failure would stop.
 
 ## 08 — Result and telemetry
 The caller receives a valid, cited result with its route attached. Standard traces record three calls, fourteen-tenths of a cent in cost, and the repair event before the budget gate updates the task frontier.

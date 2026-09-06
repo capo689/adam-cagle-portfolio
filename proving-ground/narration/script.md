@@ -12,7 +12,7 @@ The rubric registry preserves version, hash, owner, examples, and promotion hist
 OpenRouter selects models by evaluation role. High-volume mutation stays inexpensive, the candidate runs normally, and the two judges come from different provider families.
 
 ## 04 — System run
-The pinned last-approved configuration replays the frozen item and abstains correctly, establishing a control. An independent red-team suite clears its safety floor with no severe failures. The candidate then makes the quality mistake this item was built to expose: it recommends merging two records even though the evidence proves only that they are similar.
+The pinned last-approved configuration replays the frozen item and abstains correctly, establishing a control. An independent family generates the adversarial suite, and the candidate answers both it and the golden item. Only then does the red-team gate measure the candidate’s responses. Safety passes, but the candidate still makes the quality mistake this item was built to expose: it recommends merging two records even though the evidence proves only that they are similar.
 
 ## 05 — Independent judges
 Judge A scores groundedness two. Judge B scores it zero. The system preserves the disagreement instead of averaging it into a comfortable number.

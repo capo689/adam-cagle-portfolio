@@ -21,7 +21,7 @@ The calibrated brand rubric removes one generic candidate. A lift model ranks th
 A marketer reviews the evidence, policy verdicts, voice scores, and predicted rank, then approves exactly two variants. The system never publishes brand copy by itself.
 
 ## 07 — Experiment
-Sticky assignment and a predeclared guardrail create a valid test. Alpha spending and a minimum sample—not daily peeking—determine when variant D may be called the winner.
+Sticky assignment and exposure logging create a valid test. Alpha spending and a minimum sample—not daily peeking—determine when the primary metric may name Variant D the winner. A separate downstream guardrail then receives veto power; qualified-demo rate remains inside its boundary, so the winner is eligible to ship.
 
 ## 08 — Pattern learning
 The result card publishes the interval, sample, stopping rule, and guardrail. A batch frontier model learns the winning strategy pattern, while the library stores no winning sentence.

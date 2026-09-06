@@ -24,4 +24,4 @@ Volumes and delays remain ranges where discovery was vague. Deterministic formul
 A tool-capable model scaffolds one read-only happy path. The sandbox runs it, permits one bounded repair, and verifies that no customer write scope or production credential exists.
 
 ## 08 — Engagement packet
-The final packet combines the cited graph, evidence index, approved backlog, cost model, runnable prototype, and a shadow-mode pilot plan with owners and kill criteria.
+Before delivery, a human approves a fourteen-day read-only shadow run with a named reviewer, daily comparison, a success threshold, an escalation path, and an immediate kill criterion for any uncited status. The final packet combines that governed pilot with the cited graph, evidence index, approved backlog, cost model, and runnable prototype.

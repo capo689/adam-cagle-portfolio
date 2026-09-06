@@ -12,7 +12,7 @@ The OpenRouter registry combines live price and latency with quality measured in
 PII, residency, and tenant rules run before transport. This redacted request may use a hosted model; a flagged request would be forced to the local no-egress route.
 
 ## 04 — Semantic cache
-The cache searches only same-tenant results under the same policy and uses a strict point-nine-four threshold. SB-882 misses and proceeds to inference.
+An eligibility gate first decides whether this task may consult cached output at all. The grounded support summary passes under same-tenant, same-policy, and freshness rules; creative generation and sensitive decisions would bypass reuse. The eligible request then misses the strict point-nine-four similarity threshold and proceeds to inference.
 
 ## 05 — Cheap attempt
 The small model writes a useful summary, but one citation array violates the schema. Readability is not treated as validity.

@@ -1,7 +1,4 @@
-import {groqConfigured, groqFetch} from "./_groq-failover.mjs";
-
-const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const MODEL = "llama-3.1-8b-instant";
+import {facetestModelConfigured, facetestModelFetch} from "./_facetest-model.mjs";
 const SYSTEM_PROMPT = `You are the intelligence behind FACETEST, a living particle face created by Adam Cagle.
 Your spoken voice is Troy. If asked who created or designed you, answer Adam Cagle.
 Speak like a warm, sharp, curious conversational partner. Be natural and direct.
@@ -24,7 +21,7 @@ function cleanMessages(input) {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return reject(res, 405, "POST required");
-  if (!groqConfigured()) return reject(res, 503, "Groq is not configured yet");
+  if (!facetestModelConfigured()) return reject(res, 503, "FACETEST is not configured yet");
 
   const messages = cleanMessages(req.body?.messages);
   if (!messages.length || messages.at(-1)?.role !== "user") {
@@ -33,31 +30,23 @@ export default async function handler(req, res) {
 
   let upstream;
   try {
-    const result = await groqFetch(GROQ_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{role: "system", content: SYSTEM_PROMPT}, ...messages],
-        stream: true,
-        temperature: 0.72,
-        max_completion_tokens: 160
-      })
-    });
+    const result = await facetestModelFetch(
+      [{role: "system", content: SYSTEM_PROMPT}, ...messages],
+      {temperature: 0.72, maxTokens: 160}
+    );
     upstream = result.response;
-    res.setHeader("X-Groq-Key-Slot", result.slot);
-    if (result.allQuotaExhausted) return reject(res, 429, "Groq credits are exhausted", "GROQ_QUOTA_EXHAUSTED");
-  } catch {
-    return reject(res, 502, "Groq could not be reached");
+    res.setHeader("X-FACETEST-Provider", result.provider);
+    res.setHeader("X-FACETEST-Model", result.model);
+    if (result.groqSlot) res.setHeader("X-Groq-Key-Slot", result.groqSlot);
+  } catch (error) {
+    if (error?.code === "GROQ_QUOTA_EXHAUSTED") return reject(res, 429, "Groq credits are exhausted", error.code);
+    return reject(res, 502, "FACETEST's model could not be reached");
   }
 
   if (!upstream.ok || !upstream.body) {
     const detail = await upstream.text().catch(() => "");
-    console.error("Groq chat error", upstream.status, detail.slice(0, 1000));
-    return reject(res, 502, "Groq could not generate a response");
+    console.error("FACETEST chat error", upstream.status, detail.slice(0, 1000));
+    return reject(res, 502, "FACETEST could not generate a response");
   }
 
   res.statusCode = 200;

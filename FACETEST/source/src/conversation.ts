@@ -1,6 +1,7 @@
 export {};
 
 type ChatMessage = {role: "user" | "assistant"; content: string};
+type ExpressionCue = {name: string; intensity: number};
 
 const mic = document.querySelector<HTMLButtonElement>("#mic")!;
 const micLabel = mic.querySelector<HTMLSpanElement>("span")!;
@@ -139,10 +140,15 @@ async function transcribe(blob: Blob) {
   return String(data.text || "").trim();
 }
 
-function queueSpeech(text: string) {
+function queueSpeech(text: string, cue?: ExpressionCue) {
   const spoken = text.replace(/\s+/g, " ").trim();
   if (!spoken) return;
-  speechQueue = speechQueue.catch(() => {}).then(() => window.FACETEST?.speak(spoken));
+  const performance = cue ? {...cue} : undefined;
+  const duration = Math.min(9.5, Math.max(4.2, 3.3 + spoken.length / 30));
+  speechQueue = speechQueue.catch(() => {}).then(async () => {
+    if (performance) window.FACE?.perform(performance.name, performance.intensity, duration);
+    await window.FACETEST?.speak(spoken);
+  });
 }
 
 function extractSentences(buffer: string, flush = false) {
@@ -178,9 +184,9 @@ async function askGroq(userText: string) {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let reply = "";
-  let cueBuffer = "";
-  let cueResolved = false;
+  let streamBuffer = "";
   let sentenceBuffer = "";
+  let activeCue: ExpressionCue = inferred;
 
   function appendVisible(token: string) {
     if (!token) return;
@@ -189,25 +195,45 @@ async function askGroq(userText: string) {
     agentLine.textContent = reply.trim();
     const extracted = extractSentences(sentenceBuffer);
     sentenceBuffer = extracted.rest;
-    extracted.sentences.forEach(queueSpeech);
+    extracted.sentences.forEach((sentence) => queueSpeech(sentence, activeCue));
+  }
+
+  function removeCue(markerLength: number) {
+    let rest = streamBuffer.slice(markerLength);
+    if (reply && rest && !/\s$/.test(reply) && !/^\s/.test(rest)) rest = ` ${rest}`;
+    streamBuffer = rest;
   }
 
   function consumeToken(token: string, done = false) {
-    if (cueResolved) return appendVisible(token);
-    cueBuffer += token;
-    const cue = cueBuffer.match(/^\s*\[\[(?:face:)?([a-z]+):([0-9.]+)\]\]\s*/i);
-    if (cue) {
-      window.FACE?.perform(cue[1].toLowerCase(), Number(cue[2]), 7.5);
-      cueResolved = true;
-      appendVisible(cueBuffer.slice(cue[0].length));
-      cueBuffer = "";
-      return;
-    }
-    const clearlyNotCue = cueBuffer.trim().length > 5 && !cueBuffer.trimStart().startsWith("[[");
-    if (done || cueBuffer.length > 96 || clearlyNotCue) {
-      cueResolved = true;
-      appendVisible(cueBuffer.replace(/^\s*\[\[(?:face:)?[^\]]*\]\]\s*/i, ""));
-      cueBuffer = "";
+    streamBuffer += token;
+    for (;;) {
+      const cueStart = streamBuffer.indexOf("[[");
+      if (cueStart < 0) {
+        const keep = done ? 0 : streamBuffer.endsWith("[[") ? 2 : streamBuffer.endsWith("[") ? 1 : 0;
+        const safeLength = streamBuffer.length - keep;
+        appendVisible(streamBuffer.slice(0, safeLength));
+        streamBuffer = streamBuffer.slice(safeLength);
+        return;
+      }
+      if (cueStart > 0) {
+        appendVisible(streamBuffer.slice(0, cueStart));
+        streamBuffer = streamBuffer.slice(cueStart);
+        continue;
+      }
+      const cueEnd = streamBuffer.indexOf("]]", 2);
+      if (cueEnd < 0) {
+        if (done || streamBuffer.length > 96) streamBuffer = "";
+        return;
+      }
+      const marker = streamBuffer.slice(0, cueEnd + 2);
+      const cue = marker.match(/^\[\[(?:face:)?([a-z]+):([0-9.]+)\]\]$/i);
+      if (cue) {
+        activeCue = {
+          name: cue[1].toLowerCase(),
+          intensity: Math.min(1, Math.max(.2, Number(cue[2]) || .55))
+        };
+      }
+      removeCue(cueEnd + 2);
     }
   }
 
@@ -217,8 +243,9 @@ async function askGroq(userText: string) {
     consumeToken(token, done);
     if (done) break;
   }
+  consumeToken("", true);
   const extracted = extractSentences(sentenceBuffer, true);
-  extracted.sentences.forEach(queueSpeech);
+  extracted.sentences.forEach((sentence) => queueSpeech(sentence, activeCue));
   const cleanReply = reply.trim();
   if (!cleanReply) throw new Error("Troy returned an empty reply");
   history.push({role: "assistant", content: cleanReply});

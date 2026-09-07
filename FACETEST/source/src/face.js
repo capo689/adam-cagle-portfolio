@@ -257,24 +257,33 @@ let normalBuffer;
 let externalExpression = null;
 let expressionCurrent = {};
 let expressionExpires = 0;
+let speechTarget = {};
+let speechCurrent = {};
 let externalState = null;
 let speechStarted = 0;
+let previousFrameTime = 0;
+let nextBlinkAt = 1.8 + Math.random() * 1.6;
+let blinkStartedAt = -10;
+let doubleBlink = false;
+let nextGazeAt = 1.2 + Math.random() * 1.8;
+const naturalGazeTarget = new THREE.Vector2();
+const naturalGaze = new THREE.Vector2();
 
 const EXPRESSION_PRESETS = {
   neutral: {},
-  attentive: {brow:.12,browInner:.08,eyeWide:.08,smile:.025},
-  curious: {browLeft:.30,browRight:.06,browInner:.14,eyeWide:.08,smileLeft:.10,yaw:-.055,roll:-.025},
-  warm: {smile:.38,eyeSquint:.12,brow:.08},
-  amused: {smile:.58,smileLeft:.15,eyeSquint:.28,browLeft:.12,jawSide:.035},
-  delighted: {smile:.82,open:.13,eyeSquint:.34,brow:.22,cheek:.40},
-  skeptical: {browLeft:.38,browRight:-.18,eyeSquintRight:.34,lipPress:.20,smileLeft:-.08,yaw:.065,roll:.028},
-  surprised: {open:.26,wide:-.12,brow:.64,browInner:.30,eyeWide:.48,pupil:.32},
-  concerned: {browInner:.48,browLeft:.12,browRight:.12,frown:.32,eyeSquint:.08},
-  empathetic: {browInner:.38,brow:.08,smile:.10,eyeSquint:.10,yaw:-.035,roll:-.018},
-  thinking: {browLeft:.30,browRight:.02,eyeSquintRight:.22,pucker:.12,gazeX:.20,gazeY:.08,yaw:-.08},
-  wry: {smileLeft:.40,smileRight:-.10,browLeft:.20,browRight:-.10,eyeSquintRight:.26,jawSide:.04},
-  playful: {smile:.50,smileLeft:.18,browLeft:.30,eyeSquintRight:.32,jawSide:.055,roll:-.025},
-  proud: {smile:.28,brow:.15,eyeSquint:.08,pitch:.035}
+  attentive: {brow:.16,browInner:.11,eyeWide:.11,smile:.04,pitch:-.012},
+  curious: {browLeft:.48,browRight:.08,browInner:.22,eyeWide:.14,smileLeft:.18,yaw:-.09,roll:-.04,gazeX:-.08},
+  warm: {smile:.55,eyeSquint:.18,brow:.11,cheek:.22,pitch:.018},
+  amused: {smile:.74,smileLeft:.24,eyeSquint:.36,browLeft:.20,jawSide:.06,yaw:.035},
+  delighted: {smile:.98,open:.22,eyeSquint:.42,brow:.32,cheek:.72,pupil:.12,pitch:.025},
+  skeptical: {browLeft:.54,browRight:-.24,eyeSquintRight:.46,lipPress:.31,smileLeft:-.12,yaw:.10,roll:.042,gazeX:.07},
+  surprised: {open:.48,wide:-.18,brow:.90,browInner:.42,eyeWide:.78,pupil:.48,pitch:-.025},
+  concerned: {browInner:.68,browLeft:.16,browRight:.16,frown:.48,eyeSquint:.12,pitch:-.018},
+  empathetic: {browInner:.54,brow:.11,smile:.14,eyeSquint:.15,yaw:-.055,roll:-.028,pitch:.018},
+  thinking: {browLeft:.46,browRight:.03,eyeSquintRight:.34,pucker:.18,gazeX:.27,gazeY:.11,yaw:-.11,roll:-.02},
+  wry: {smileLeft:.58,smileRight:-.14,browLeft:.31,browRight:-.15,eyeSquintRight:.38,jawSide:.065,yaw:.045},
+  playful: {smile:.68,smileLeft:.27,browLeft:.46,eyeSquintRight:.43,jawSide:.08,roll:-.04,pupil:.10},
+  proud: {smile:.42,brow:.22,eyeSquint:.12,cheek:.16,pitch:.052}
 };
 
 function parseOBJ(text) {
@@ -438,55 +447,84 @@ function pulse(t,start,end,edge=.12) {
   return smoothstep(start,start+edge,t)*(1-smoothstep(end-edge,end,t));
 }
 
-function phonemes(t) {
-  const shapes=[
-    [5.20,5.52,.10,.00,.00], [5.52,5.90,.62,.24,.00], [5.90,6.24,.25,.42,.00],
-    [6.24,6.72,.65,-.10,.72], [6.98,7.46,.38,-.18,.85], [7.46,7.88,.54,.16,.18],
-    [7.88,8.22,.20,.40,.00], [8.22,8.62,.07,.10,.00]
-  ];
-  let open=.025,wide=0,pucker=0;
-  for(const [s,e,o,w,p] of shapes){const n=pulse(t,s,e,.10);open+=o*n;wide+=w*n;pucker+=p*n;}
-  return {open,wide,pucker};
+function damp(current,target,speed,delta) {
+  return current+(target-current)*(1-Math.exp(-speed*delta));
 }
 
-function timeline(elapsed) {
-  const t=reducedMotion?11.2:elapsed%14;
-  const speech=phonemes(t);
-  const blink=Math.max(pulse(t,1.92,2.13,.06),pulse(t,9.05,9.34,.08),pulse(t,11.55,11.82,.07));
-  const lookLeft=pulse(t,2.75,4.55,.65);
-  const lookRight=pulse(t,9.8,11.3,.45);
+function naturalBlink(elapsed) {
+  if (reducedMotion) return 0;
+  if (elapsed >= nextBlinkAt) {
+    blinkStartedAt=elapsed;
+    doubleBlink=Math.random()<.18;
+    nextBlinkAt=elapsed+2.7+Math.random()*4.4;
+  }
+  const first=pulse(elapsed,blinkStartedAt,blinkStartedAt+.19,.055);
+  const second=doubleBlink?pulse(elapsed,blinkStartedAt+.25,blinkStartedAt+.41,.05):0;
+  return Math.max(first,second);
+}
+
+function updateNaturalGaze(elapsed,delta) {
+  if (!reducedMotion && elapsed >= nextGazeAt) {
+    naturalGazeTarget.set((Math.random()-.5)*.24,(Math.random()-.5)*.12);
+    nextGazeAt=elapsed+1.7+Math.random()*3.8;
+  }
+  const amount=1-Math.exp(-2.2*delta);
+  naturalGaze.lerp(naturalGazeTarget,amount);
+}
+
+function baseExpression(elapsed,delta) {
+  updateNaturalGaze(elapsed,delta);
+  const breath=Math.sin(elapsed*.68);
   return {
-    open:speech.open,wide:speech.wide,pucker:speech.pucker,
-    smile:.045+pulse(t,8.7,10.05,.45)*.72,
-    blink,brow:pulse(t,2.8,4.3,.45)*.38,
+    open:.014,wide:0,pucker:0,
+    smile:.045+breath*.008,
+    blink:naturalBlink(elapsed),brow:.055+breath*.012,
     blinkLeft:0,blinkRight:0,browLeft:0,browRight:0,browInner:0,
     eyeSquint:0,eyeSquintLeft:0,eyeSquintRight:0,eyeWide:0,
     smileLeft:0,smileRight:0,frown:0,lipPress:0,sneer:0,cheek:0,jawSide:0,pupil:0,
-    yaw:-lookLeft*.30+lookRight*.22+pointer.x*.07,
-    pitch:pointer.y*.04-pulse(t,3.2,4.3,.4)*.06,
-    roll:-lookLeft*.10,
-    gazeX:pointer.x*.20-lookLeft*.18+lookRight*.12,
-    gazeY:pointer.y*.10+Math.sin(elapsed*.31)*.025,
+    yaw:naturalGaze.x*.22+pointer.x*.055+Math.sin(elapsed*.16)*.012,
+    pitch:naturalGaze.y*.14+pointer.y*.035+Math.sin(elapsed*.21)*.008,
+    roll:-naturalGaze.x*.08+Math.sin(elapsed*.13)*.006,
+    gazeX:naturalGaze.x+pointer.x*.16,
+    gazeY:naturalGaze.y+pointer.y*.08+Math.sin(elapsed*.31)*.012,
     emerge:reducedMotion?1:smoothstep(.2,2.7,elapsed)
   };
 }
 
-function currentControls(elapsed) {
-  const base=timeline(elapsed);
-  const microBlink=Math.max(pulse(elapsed%5.7,4.84,5.05,.055),pulse(elapsed%8.3,7.72,7.94,.06));
-  const microAsymmetry=Math.sin(elapsed*.19)*.025;
-  if (externalState === "listening") Object.assign(base,{open:.018,smile:.08+Math.sin(elapsed*.45)*.02,brow:.14+Math.sin(elapsed*.31)*.04,browLeft:microAsymmetry,browRight:-microAsymmetry,blink:microBlink,gazeX:pointer.x*.29+Math.sin(elapsed*.22)*.035,gazeY:pointer.y*.16+Math.sin(elapsed*.29)*.025});
-  if (externalState === "thinking") Object.assign(base,{open:.018,pucker:.09,brow:.18+Math.sin(elapsed*.8)*.04,browLeft:.20,browRight:-.05,eyeSquintRight:.14,yaw:-.12+Math.sin(elapsed*.25)*.035,gazeX:.22+Math.sin(elapsed*.43)*.055,gazeY:.10+Math.cos(elapsed*.37)*.035,blink:microBlink});
-  if (externalState === "speaking") Object.assign(base,phonemes((elapsed-speechStarted)%3.45+5.2));
-  if (expressionExpires && elapsed > expressionExpires) { externalExpression=null; expressionExpires=0; }
-  const target=externalExpression||{};
-  const keys=new Set([...Object.keys(expressionCurrent),...Object.keys(target)]);
+function blendLayer(current,target,delta,inSpeed,outSpeed) {
+  const keys=new Set([...Object.keys(current),...Object.keys(target)]);
   for(const key of keys){
-    const next=Number(target[key]||0),current=Number(expressionCurrent[key]||0);
-    const eased=current+(next-current)*(next>current?.12:.075);
-    if(Math.abs(eased)<.0005&&!Object.hasOwn(target,key))delete expressionCurrent[key];else expressionCurrent[key]=eased;
+    const next=Number(target[key]||0),value=Number(current[key]||0);
+    const eased=damp(value,next,Math.abs(next)>Math.abs(value)?inSpeed:outSpeed,delta);
+    if(Math.abs(eased)<.0005&&!Object.hasOwn(target,key))delete current[key];else current[key]=eased;
   }
-  for(const [key,value] of Object.entries(expressionCurrent)) base[key]=Number(base[key]||0)+value;
+}
+
+function currentControls(elapsed,delta) {
+  const base=baseExpression(elapsed,delta);
+  const microAsymmetry=Math.sin(elapsed*.19)*.025;
+  if (externalState === "listening") Object.assign(base,{open:.012,smile:.07+Math.sin(elapsed*.45)*.012,brow:.11+Math.sin(elapsed*.31)*.018,browLeft:microAsymmetry,browRight:-microAsymmetry,gazeX:naturalGaze.x+pointer.x*.25,gazeY:naturalGaze.y+pointer.y*.13});
+  if (externalState === "thinking") Object.assign(base,{open:.01,pucker:.035,brow:.14+Math.sin(elapsed*.8)*.018,browLeft:.13,browRight:-.035,eyeSquintRight:.09,yaw:-.06+Math.sin(elapsed*.25)*.018,gazeX:.13+naturalGaze.x*.35,gazeY:.055+Math.cos(elapsed*.37)*.018});
+  if (expressionExpires && elapsed > expressionExpires) { externalExpression=null; expressionExpires=0; }
+  blendLayer(expressionCurrent,externalExpression||{},delta,6.5,2.6);
+  blendLayer(speechCurrent,externalState==="speaking"?speechTarget:{},delta,22,14);
+  for(const [key,value] of Object.entries(expressionCurrent)) {
+    const mouthScale=externalState==="speaking"&&["open","wide","pucker"].includes(key) ? .32 : 1;
+    base[key]=Number(base[key]||0)+value*mouthScale;
+  }
+  base.open+=Number(speechCurrent.open||0);
+  base.wide+=Number(speechCurrent.wide||0);
+  base.pucker+=Number(speechCurrent.pucker||0);
+  const speechEnergy=Number(speechCurrent.energy||0);
+  const emotionalLife=externalExpression?Math.sin(elapsed*1.07)*.014:0;
+  base.brow+=emotionalLife;
+  base.smile+=emotionalLife*.7;
+  if (externalState === "speaking") {
+    base.brow+=speechEnergy*.035;
+    base.cheek+=speechEnergy*.055;
+    base.eyeSquint+=speechEnergy*.018;
+    base.pupil+=speechEnergy*.035;
+  }
   return base;
 }
 
@@ -624,8 +662,11 @@ function updateEyes(c,time) {
 }
 
 function animate() {
-  const elapsed=clock.getElapsedTime(),c=currentControls(elapsed);
-  pointer.lerp(pointerTarget,.04);
+  const elapsed=clock.getElapsedTime();
+  const delta=THREE.MathUtils.clamp(elapsed-previousFrameTime,1/240,.05);
+  previousFrameTime=elapsed;
+  const c=currentControls(elapsed,delta);
+  pointer.lerp(pointerTarget,1-Math.exp(-7.5*delta));
   fieldUniforms.uTime.value=elapsed;fieldUniforms.uPointer.value.copy(pointer);
   faceUniforms.uTime.value=elapsed;faceUniforms.uOpacity.value=c.emerge;faceUniforms.uSpeaking.value=externalState==="speaking"?1:0;
   eyeUniforms.uTime.value=elapsed;eyeUniforms.uOpacity.value=c.emerge;eyeUniforms.uSpeaking.value=externalState==="speaking"?1:0;
@@ -646,6 +687,7 @@ addEventListener("resize",()=>{
 window.FACE={
   setState(state){externalState=state;speechStarted=clock.getElapsedTime();},
   setExpression(values){externalExpression={...(externalExpression||{}),...values};},
+  setSpeech(values){speechTarget={...speechTarget,...values};},
   perform(name,intensity=.65,duration=5.5){
     const preset=EXPRESSION_PRESETS[name]||EXPRESSION_PRESETS.attentive;
     const strength=THREE.MathUtils.clamp(Number(intensity)||.65,.15,1);
@@ -653,7 +695,7 @@ window.FACE={
     expressionExpires=clock.getElapsedTime()+THREE.MathUtils.clamp(Number(duration)||5.5,1.2,12);
   },
   clearExpression(){externalExpression=null;expressionExpires=0;},
-  reset(){externalState=null;externalExpression=null;expressionCurrent={};expressionExpires=0;}
+  reset(){externalState=null;externalExpression=null;expressionCurrent={};speechTarget={};speechCurrent={};expressionExpires=0;}
 };
 
 async function init() {

@@ -4,6 +4,7 @@ const STATIC_GREETING_URL = "/FACETEST/audio/troy-intro.wav";
 type FaceController = {
   setState(state: string): void;
   setExpression(values: Record<string, number>): void;
+  setSpeech(values: Record<string, number>): void;
   perform(name: string, intensity?: number, duration?: number): void;
   clearExpression(): void;
 };
@@ -65,7 +66,7 @@ function stop() {
     try { source.stop(); } catch {}
   }
   activeSources = [];
-  face()?.setExpression({open: 0, wide: 0, pucker: 0});
+  face()?.setSpeech({open: 0, wide: 0, pucker: 0, energy: 0});
 }
 
 function animateMouth(endTime: number) {
@@ -73,10 +74,11 @@ function animateMouth(endTime: number) {
   const waveform = new Uint8Array(analyser.fftSize);
   const spectrum = new Uint8Array(analyser.frequencyBinCount);
   let envelope = 0;
+  let brightness = .32;
 
   function frame() {
     if (!analyser || !audioContext || audioContext.currentTime >= endTime) {
-      face()?.setExpression({open: 0, wide: 0, pucker: 0});
+      face()?.setSpeech({open: 0, wide: 0, pucker: 0, energy: 0});
       face()?.setState("listening");
       announce("ready");
       return;
@@ -88,20 +90,21 @@ function animateMouth(endTime: number) {
       const value = (sample - 128) / 128;
       energy += value * value;
     }
-    const target = Math.min(1, Math.max(0, (Math.sqrt(energy / waveform.length) - .01) * 8.5));
-    envelope += (target - envelope) * (target > envelope ? .5 : .2);
+    const rms = Math.sqrt(energy / waveform.length);
+    const target = Math.min(1, Math.max(0, (rms - .018) * 7.2));
+    envelope += (target - envelope) * (target > envelope ? .34 : .13);
     let low = 0;
     let high = 0;
     const split = Math.floor(spectrum.length * .18);
     for (let i = 2; i < split; i++) low += spectrum[i]!;
     for (let i = split; i < spectrum.length * .56; i++) high += spectrum[i]!;
-    const brightness = high / Math.max(1, low + high);
-    face()?.setExpression({
-      open: .025 + envelope * .74,
+    const brightnessTarget = high / Math.max(1, low + high);
+    brightness += (brightnessTarget - brightness) * .12;
+    face()?.setSpeech({
+      open: envelope * .64,
       wide: envelope * Math.max(-.1, Math.min(.48, (brightness - .22) * 1.9)),
       pucker: envelope * Math.max(0, Math.min(.62, (.43 - brightness) * 2.2)),
-      smile: .08 + envelope * .08,
-      brow: .08
+      energy: envelope
     });
     animationFrame = requestAnimationFrame(frame);
   }
@@ -135,8 +138,8 @@ async function play(buffer: AudioBuffer, autoplay = false) {
   if (audio.state !== "running") throw new Error("Audio needs a tap to begin");
   const source = audio.createBufferSource();
   analyser ||= audio.createAnalyser();
-  analyser.fftSize = 512;
-  analyser.smoothingTimeConstant = .58;
+  analyser.fftSize = 1024;
+  analyser.smoothingTimeConstant = .72;
   source.buffer = buffer;
   source.connect(analyser);
   analyser.connect(audio.destination);

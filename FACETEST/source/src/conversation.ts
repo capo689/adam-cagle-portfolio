@@ -3,6 +3,15 @@ export {};
 type ChatMessage = {role: "user" | "assistant"; content: string};
 type ExpressionCue = {name: string; intensity: number};
 
+const EXPRESSIONS = new Set(["neutral", "attentive", "curious", "warm", "amused", "delighted", "skeptical", "surprised", "concerned", "empathetic", "thinking", "wry", "playful", "proud"]);
+const EXPRESSION_ALIASES: Record<string, string> = {
+  thoughtful: "thinking",
+  excited: "delighted",
+  happy: "warm",
+  confident: "proud",
+  serious: "concerned"
+};
+
 const mic = document.querySelector<HTMLButtonElement>("#mic")!;
 const micLabel = mic.querySelector<HTMLSpanElement>("span")!;
 const status = document.querySelector<HTMLOutputElement>("#status")!;
@@ -168,6 +177,35 @@ function extractSentences(buffer: string, flush = false) {
   return {sentences, rest};
 }
 
+function normalizeCue(name: string, intensity: number, fallback: ExpressionCue): ExpressionCue {
+  const normalized = name.toLowerCase();
+  const expression = EXPRESSION_ALIASES[normalized] || normalized;
+  return {
+    name: EXPRESSIONS.has(expression) ? expression : fallback.name,
+    intensity: Math.min(1, Math.max(.2, Number(intensity) || fallback.intensity))
+  };
+}
+
+function inferNextBeat(sentence: string, previous: ExpressionCue): ExpressionCue {
+  const value = sentence.toLowerCase();
+  if (/\b(proof|result|built|created|shipped|led|grew|won|adopted|working)\b/.test(value)) return {name: "proud", intensity: .72};
+  if (/\b(but|however|not|never|can't|cannot|risk|hard|rare)\b/.test(value)) return {name: "skeptical", intensity: .58};
+  if (/\b(love|great|beautiful|human|together|trust)\b/.test(value)) return {name: "warm", intensity: .66};
+  if (/\b(funny|joke|ridiculous|absurd|honestly)\b/.test(value)) return {name: "wry", intensity: .62};
+  if (/\b(why|how|idea|possibility|imagine|wonder)\b/.test(value)) return {name: "curious", intensity: .61};
+  const contrast: Record<string, ExpressionCue> = {
+    thinking: {name: "proud", intensity: .68},
+    curious: {name: "proud", intensity: .68},
+    proud: {name: "wry", intensity: .58},
+    skeptical: {name: "warm", intensity: .60},
+    concerned: {name: "empathetic", intensity: .62},
+    empathetic: {name: "warm", intensity: .62},
+    warm: {name: "proud", intensity: .64},
+    delighted: {name: "playful", intensity: .62}
+  };
+  return contrast[previous.name] || {name: "warm", intensity: .58};
+}
+
 async function askGroq(userText: string) {
   history.push({role: "user", content: userText});
   const inferred = inferExpression(userText);
@@ -187,6 +225,17 @@ async function askGroq(userText: string) {
   let streamBuffer = "";
   let sentenceBuffer = "";
   let activeCue: ExpressionCue = inferred;
+  let cueVersion = 0;
+  let lastQueuedCue: ExpressionCue | undefined;
+  let lastQueuedCueVersion = -1;
+
+  function queueSentence(sentence: string) {
+    let cue = activeCue;
+    if (lastQueuedCue && (cueVersion === lastQueuedCueVersion || cue.name === lastQueuedCue.name)) cue = inferNextBeat(sentence, lastQueuedCue);
+    queueSpeech(sentence, cue);
+    lastQueuedCue = cue;
+    lastQueuedCueVersion = cueVersion;
+  }
 
   function appendVisible(token: string) {
     if (!token) return;
@@ -195,7 +244,7 @@ async function askGroq(userText: string) {
     agentLine.textContent = reply.trim();
     const extracted = extractSentences(sentenceBuffer);
     sentenceBuffer = extracted.rest;
-    extracted.sentences.forEach((sentence) => queueSpeech(sentence, activeCue));
+    extracted.sentences.forEach(queueSentence);
   }
 
   function removeCue(markerLength: number) {
@@ -228,10 +277,8 @@ async function askGroq(userText: string) {
       const marker = streamBuffer.slice(0, cueEnd + 2);
       const cue = marker.match(/^\[\[(?:face:)?([a-z]+):([0-9.]+)\]\]$/i);
       if (cue) {
-        activeCue = {
-          name: cue[1].toLowerCase(),
-          intensity: Math.min(1, Math.max(.2, Number(cue[2]) || .55))
-        };
+        activeCue = normalizeCue(cue[1], Number(cue[2]), activeCue);
+        cueVersion++;
       }
       removeCue(cueEnd + 2);
     }
@@ -245,7 +292,7 @@ async function askGroq(userText: string) {
   }
   consumeToken("", true);
   const extracted = extractSentences(sentenceBuffer, true);
-  extracted.sentences.forEach((sentence) => queueSpeech(sentence, activeCue));
+  extracted.sentences.forEach(queueSentence);
   const cleanReply = reply.trim();
   if (!cleanReply) throw new Error("Troy returned an empty reply");
   history.push({role: "assistant", content: cleanReply});

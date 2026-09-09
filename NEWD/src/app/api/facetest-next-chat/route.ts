@@ -104,7 +104,10 @@ function sanitizeDynamicReply(raw: string) {
     .replace(/\[\[[^\]]+\]\]/g, " ")
     .replace(/\bTroy\b/g, "ACE")
     .replace(/Agency\s*(?:six\s+hundred(?:\s+and)?\s+eighty[-\s]?nine|six[-\s]?eighty[-\s]?nine|689)/gi, "Agency689")
-    .replace(/[—–]/g, ",")
+    .replace(/\bmonthly attributed revenue\b/gi, "attributed revenue per email")
+    .replace(/\b(?:per send|per month|per campaign|a month)\b/gi, "per email")
+    .replace(/\s*[—–]\s*/g, ", ")
+    .replace(/,(?=\S)/g, ", ")
     .replace(/[*#`_]/g, "")
     .replace(/\s+/g, " ")
     .trim();

@@ -24,8 +24,12 @@ const textFiles = [
   join(repositoryRoot, "api", "_facetest-knowledge.generated.mjs"),
 ].filter((path) => [".ts", ".tsx", ".js", ".mjs", ".json", ".md"].includes(extname(path)));
 const corpus = textFiles.map((path) => readFileSync(path, "utf8")).join("\n");
+const truthCorpus = textFiles
+  .filter((path) => !path.includes(`${join("src", "app", "api")}`))
+  .map((path) => readFileSync(path, "utf8"))
+  .join("\n");
 
-check(!/per month|monthly attributed|monthly revenue|per send|a month/i.test(corpus), "Sunset Marquis metric drifted away from per email.");
+check(!/per month|monthly attributed|monthly revenue|per send|a month/i.test(truthCorpus), "Sunset Marquis metric drifted away from per email.");
 check(!/face for the internet|internet with a face/i.test(corpus), "The retired snippy ACE line returned.");
 check(!/\bTroy\b/.test(readFileSync(join(root, "src", "lib", "facetest-voice-stream.ts"), "utf8")), "The retired Troy agent name returned to the voice runtime.");
 check(!/Agentic\s*689/i.test(readFileSync(join(repositoryRoot, "api", "_facetest-knowledge.generated.mjs"), "utf8")), "Agentic689 leaked into the public ACE index.");
@@ -33,6 +37,7 @@ check(!guardAceRequest("Tell me about Sunset Marquis."), "ACE misclassified a na
 const chatRoute = readFileSync(join(root, "src", "app", "api", "facetest-next-chat", "route.ts"), "utf8");
 check(!/function scopeBoundary/.test(chatRoute), "The frontend API restored the brittle generic scope gate.");
 check(chatRoute.includes("X-FACETEST-Proxy-Token"), "The chat proxy is missing its private upstream credential.");
+check(chatRoute.includes("per send|per month|per campaign|a month"), "The Sunset Marquis output-unit lock is missing.");
 
 const figueroaPages = readdirSync(join(root, "public", "brand", "hotel-figueroa-book"))
   .filter((name) => /^HotelFigueroa \d+\.jpeg$/.test(name));

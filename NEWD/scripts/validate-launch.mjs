@@ -66,6 +66,10 @@ const sourceCorpus = walk(join(root, "src"))
   .join("\n");
 const assetReferences = new Set([...sourceCorpus.matchAll(/["']\/(?!api\/)([^"'?#]+\.(?:png|jpe?g|webp|svg|mp3|pdf|woff2?))/gi)].map((match) => decodeURI(`/${match[1]}`)));
 for (const asset of assetReferences) {
+  if (/^\/og\/[^/]+\.png$/i.test(asset)) {
+    check(existsSync(join(root, "src", "app", "og", "[variant]", "route.tsx")), `Missing dynamic OG image route for ${asset}.`);
+    continue;
+  }
   const sourceAsset = asset === "/icon.svg" ? join(root, "src", "app", "icon.svg") : join(root, "public", asset);
   check(existsSync(sourceAsset), `Missing public asset ${asset}.`);
 }

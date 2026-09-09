@@ -46,13 +46,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `/${slug.join("/")}`,
-      images: [{ url: `/og/${card}`, width: 1200, height: 630, alt: `${title} by Adam R. Cagle` }],
+      images: [{ url: `/og/${card}.png`, width: 1200, height: 630, alt: `${title} by Adam R. Cagle` }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [`/og/${card}`],
+      images: [`/og/${card}.png`],
     },
   };
 }

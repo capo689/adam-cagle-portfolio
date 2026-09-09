@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     url: "/",
     title: "Adam R. Cagle | AI, Brand and Copy",
     description: "Agency founder, copywriter, brand leader, and hands-on applied AI systems builder.",
-    images: [{ url: "/og/main", width: 1200, height: 630, alt: "Adam R. Cagle, AI systems, brand and copy" }],
+    images: [{ url: "/og/main.png", width: 1200, height: 630, alt: "Adam R. Cagle, AI systems, brand and copy" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Adam R. Cagle | AI, Brand and Copy",
     description: "Agency founder, copywriter, brand leader, and hands-on applied AI systems builder.",
-    images: ["/og/main"],
+    images: ["/og/main.png"],
   },
 };
 

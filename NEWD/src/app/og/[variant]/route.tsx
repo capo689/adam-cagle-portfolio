@@ -20,7 +20,8 @@ export async function GET(
   { params }: { params: Promise<{ variant: string }> },
 ) {
   const { variant } = await params;
-  const card = cards[variant as CardName] || cards.main;
+  const cardName = variant.replace(/\.png$/i, "") as CardName;
+  const card = cards[cardName] || cards.main;
   // ImageResponse may transfer the supplied buffer while rendering. Give each
   // request its own ArrayBuffer so concurrent cards never detach one another's font.
   const font = Uint8Array.from(
@@ -70,7 +71,7 @@ export async function GET(
               display: "flex",
               marginTop: 40,
               color: "#d9ae52",
-              fontSize: variant === "copy" ? 72 : card.title.length > 28 ? 92 : 122,
+              fontSize: cardName === "copy" ? 72 : card.title.length > 28 ? 92 : 122,
               fontWeight: 900,
               letterSpacing: "-0.025em",
               lineHeight: 0.86,

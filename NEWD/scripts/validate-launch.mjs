@@ -30,6 +30,7 @@ check(!/face for the internet|internet with a face/i.test(corpus), "The retired 
 check(!/\bTroy\b/.test(readFileSync(join(root, "src", "lib", "facetest-voice-stream.ts"), "utf8")), "The retired Troy agent name returned to the voice runtime.");
 check(!/Agentic\s*689/i.test(readFileSync(join(repositoryRoot, "api", "_facetest-knowledge.generated.mjs"), "utf8")), "Agentic689 leaked into the public ACE index.");
 check(!guardAceRequest("Tell me about Sunset Marquis."), "ACE misclassified a named client as off-topic.");
+check(!/function scopeBoundary/.test(readFileSync(join(root, "src", "app", "api", "facetest-next-chat", "route.ts"), "utf8")), "The frontend API restored the brittle generic scope gate.");
 
 const figueroaPages = readdirSync(join(root, "public", "brand", "hotel-figueroa-book"))
   .filter((name) => /^HotelFigueroa \d+\.jpeg$/.test(name));

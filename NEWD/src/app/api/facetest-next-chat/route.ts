@@ -67,19 +67,6 @@ function standardAnswer(query: string) {
   return compiledAnswers.find((answer) => answer.patterns.some((pattern) => pattern.test(query)));
 }
 
-const TOPIC_TERMS = /\b(adam|cagle|ace|agency|role|job|hire|candidate|career|experience|work|project|portfolio|resume|résumé|skill|capabilit|client|brand|copy|writing|campaign|lead|team|management|result|metric|outcome|ai|agent|workflow|system|product|technical|code|developer|programmer|seo|aio|singularity|creative|hospitality|hotel|resort|fintech|financial|firstsource|dgwb|certification|education|location|remote|contact|email|github|linkedin|fit|fun|donkey|physics|sulu|invader|game|ship|novel|book)\w*\b/i;
-
-function scopeBoundary(query: string, messages: Message[], context: InterfaceContext) {
-  if (TOPIC_TERMS.test(query)) return undefined;
-  const hasVisibleContext = Boolean(context.focus || context.lastPresentationLabel || context.lastPresentationText);
-  const isContextualFollowUp = /\b(this|that|it|page|here|these|those|project|system|workflow)\b/i.test(query)
-    && query.split(/\s+/).length <= 12;
-  if (hasVisibleContext && isContextualFollowUp) return undefined;
-  const hasPriorAnswer = messages.slice(0, -1).some((message) => message.role === "assistant");
-  if (hasPriorAnswer && query.split(/\s+/).length <= 7) return undefined;
-  return findAnswer("off-topic");
-}
-
 function directResponse(answer: AceAnswer) {
   return new Response(`[[face:${answer.expression}:0.68]]${answer.display}`, {
     status: 200,
@@ -160,7 +147,7 @@ export async function POST(request: Request) {
   }
 
   const userText = messages.at(-1)!.content;
-  const direct = hardBoundary(userText) || standardAnswer(userText) || scopeBoundary(userText, messages, context);
+  const direct = hardBoundary(userText) || standardAnswer(userText);
   if (direct) return directResponse(direct);
 
   const upstreamMessages = [

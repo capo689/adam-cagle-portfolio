@@ -1,0 +1,604 @@
+[
+  {
+    "id": "site-intro",
+    "expression": "warm",
+    "patterns": [],
+    "display": "Hi. I'm ACE. I'm the AI for AdamCagle.com. Now, let's meet the best candidate for your job.",
+    "audio": "/ace-answers/site-intro.mp3?v=ace-intro-2"
+  },
+  {
+    "id": "home-page-welcome",
+    "expression": "warm",
+    "patterns": [],
+    "display": "Welcome to Adam's site. Explore on your own, or press the blue button and ask me for any page, client, project, or question about Adam. I'll take it from there.",
+    "audio": "/ace-answers/home-page-welcome.mp3"
+  },
+  {
+    "id": "ai-page-intro",
+    "expression": "proud",
+    "patterns": [],
+    "display": "Adam's AI practice spans prompt engineering, MCP and API integrations, agents, workflows, and, if I may say so, one remarkably handsome chatbot. The point is practical: make the work better and ship what earns its place.",
+    "audio": "/ace-answers/ai-page-intro.mp3"
+  },
+  {
+    "id": "brand-page-intro",
+    "expression": "proud",
+    "patterns": [],
+    "display": "Adam's brand experience across Agency689 and DGWB includes Toshiba, Xbox, Sunset Marquis, and Traveler Guitar. He built the strategy, built the team, and stayed accountable for the result.",
+    "audio": "/ace-answers/brand-page-intro.mp3?v=agency-name-2"
+  },
+  {
+    "id": "copy-page-intro",
+    "expression": "warm",
+    "patterns": [],
+    "display": "Adam's copywriting began with writing the lines, then grew into building the systems that create the lines and grow the business. The craft still matters. Now it can scale without losing the brand.",
+    "audio": "/ace-answers/copy-page-intro.mp3"
+  },
+  {
+    "id": "courtesy",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "^(?:hi|hello|hey|good (?:morning|afternoon|evening)|how are you|thanks|thank you)[.! ]*$",
+        "flags": "i"
+      }
+    ],
+    "display": "Running clean and staying in scope. What do you want to know about Adam?",
+    "audio": "/ace-answers/courtesy.mp3"
+  },
+  {
+    "id": "ace-identity",
+    "expression": "playful",
+    "patterns": [
+      {
+        "source": "\\bwho are you\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat are you\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "I'm ACE, Adam's site agent. Think portfolio guide with a copywriter's red pen and a programmer's healthy suspicion of edge cases.",
+    "audio": "/ace-answers/ace-identity.mp3"
+  },
+  {
+    "id": "ace-capabilities",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\bwhat can you do\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bhow can you help\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat can i ask\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "I can explain Adam's experience, open the work, connect projects across disciplines, and test his fit for your role. Give me the problem you are hiring someone to solve.",
+    "audio": "/ace-answers/ace-capabilities.mp3"
+  },
+  {
+    "id": "who-is-adam",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\bwho is adam(?: cagle)?\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btell me about adam\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bintroduce adam\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam Cagle is a copywriter, agency operator, brand leader, and hands-on AI systems builder. In plain English, he can find the signal, write the line, architect the workflow, and ship the thing.",
+    "audio": "/ace-answers/who-is-adam.mp3"
+  },
+  {
+    "id": "what-adam-does",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bwhat does adam (?:actually )?do\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bdescribe adam(?:'s)? work\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam turns ambiguous business problems into clear stories and working systems. Depending on the brief, that can mean positioning a brand, leading a team, writing the campaign, building the product, or wiring the AI workflow behind it.",
+    "audio": "/ace-answers/what-adam-does.mp3"
+  },
+  {
+    "id": "why-hire-adam",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bwhy\\b.{0,30}\\bhire adam\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhy adam\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat makes adam (?:different|special|valuable|stand out)\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Most candidates hand you one layer of the solution. Adam can diagnose the business problem, find the creative throughline, win the room, and build enough of the technical answer to get it out of the deck and into use.",
+    "audio": "/ace-answers/why-hire-adam.mp3"
+  },
+  {
+    "id": "current-role",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bcurrent role\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\blatest (?:role|job)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhere does adam work\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's current and latest role is at Agency689, the company he co-founded in 2001. His brand, copy, leadership, digital product, and applied AI work all live inside that one continuous practice.",
+    "audio": "/ace-answers/current-role.mp3?v=agency-name-2"
+  },
+  {
+    "id": "agency689",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bagency\\s*(?:689|six.*nine)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bagency work\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Agency689 is the throughline of Adam's career: 25 years of winning work, leading teams, shaping brands, writing campaigns, building digital products, and holding senior client relationships. The AI systems are the next build in that same codebase, not a separate personality.",
+    "audio": "/ace-answers/agency689.mp3?v=agency-name-2"
+  },
+  {
+    "id": "old-ai-label",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bagentic\\s*689\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "That was an earlier label for Adam's dedicated AI work. The current story is cleaner and more accurate: those products, agents, and workflows are part of his Agency689 practice.",
+    "audio": "/ace-answers/old-ai-label.mp3?v=agency-name-2"
+  },
+  {
+    "id": "ai-philosophy",
+    "expression": "thinking",
+    "patterns": [
+      {
+        "source": "\\bai (?:philosophy|approach|method|process)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bhow does adam (?:approach|build|use) ai\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bfriction to production\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam starts inside the real process, finds the expensive friction, and prototypes the smallest credible fix. An idea earns production only through real use cases, measurable improvement, security, evaluation, and clear human authority.",
+    "audio": "/ace-answers/ai-philosophy.mp3"
+  },
+  {
+    "id": "ai-fluency",
+    "expression": "curious",
+    "patterns": [
+      {
+        "source": "\\bai fluency\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btraining|enablement|adoption\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "For Adam, AI fluency means people understand the capability, the failure modes, and the decision they still own. Adoption is not a launch email; it is a usable system, role-specific practice, guardrails, feedback, and proof that the work got better.",
+    "audio": "/ace-answers/ai-fluency.mp3"
+  },
+  {
+    "id": "security-ethics",
+    "expression": "concerned",
+    "patterns": [
+      {
+        "source": "\\bsecurity|privacy|ethic|governance|responsible ai|safety\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Security, privacy, ethics, and governance are acceptance criteria, not garnish. Adam designs permissions, evidence, approval, monitoring, rollback, and stop conditions around the risk of the decision before the system gets production authority.",
+    "audio": "/ace-answers/security-ethics.mp3"
+  },
+  {
+    "id": "ai-work",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bwhat (?:ai )?(?:has adam built|did adam build|products|systems|agents)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bshow me (?:his |adam's )?ai\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam has shipped production search infrastructure, governed creative systems, research agents, model-routing tools, knowledge systems, evaluation workflows, and evidence-controlled automation. Singularity SEO is the flagship, and the Creative Suite shows how the pieces work together around real agency work.",
+    "audio": "/ace-answers/ai-work.mp3"
+  },
+  {
+    "id": "singularity",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bsingularity(?: seo)?\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Singularity SEO turns ChatGPT into the control room for a connected WordPress site. It audits, researches, proposes, measures, and preserves approval and rollback, so the agent can do serious work without quietly becoming the publisher.",
+    "audio": "/ace-answers/singularity.mp3"
+  },
+  {
+    "id": "creative-suite",
+    "expression": "delighted",
+    "patterns": [
+      {
+        "source": "\\bcreative suite\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bcreative workflows\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "The Creative Suite connects audience research, governed brand knowledge, strategic copy development, creative review, testing, and campaign production. Each tool solves a distinct constraint, and the learning moves forward instead of dying in a presentation folder.",
+    "audio": "/ace-answers/creative-suite.mp3"
+  },
+  {
+    "id": "copywriting",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bcopywriting|copywriter|writing work|brand voice\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam has spent 25 years making complicated things clear, distinct, and worth choosing. His copy work spans naming, positioning, campaigns, web, email, packaging, video, performance creative, and voice systems that keep working after the launch line is approved.",
+    "audio": "/ace-answers/copywriting.mp3"
+  },
+  {
+    "id": "brand-strategy",
+    "expression": "thinking",
+    "patterns": [
+      {
+        "source": "\\bbrand strategy|branding|brand work\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam treats a brand as an operating decision, not a mood board. He finds the useful position, builds the language and identity around it, then makes sure the idea survives campaigns, products, teams, channels, and time.",
+    "audio": "/ace-answers/brand-strategy.mp3"
+  },
+  {
+    "id": "business-results",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bresults|outcomes|metrics|business impact|performance\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "The proof points include Traveler Guitar direct-to-consumer growth from roughly 1.1 million dollars to 5 million, a 30 percent banner return-on-ad-spend lift, and a Sunset Marquis email program producing roughly 150 thousand dollars in attributed revenue per send. Those are team and business outcomes tied to Adam's strategy, copy, creative direction, and delivery.",
+    "audio": "/ace-answers/business-results.mp3"
+  },
+  {
+    "id": "leadership",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bleadership|lead teams|manager|management style|team size\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam has led multidisciplinary teams of up to 15 and owned relationships from working teams through founders, boards, and the C-suite. His style is clear brief, visible standard, honest feedback, accountable owner, and enough room for good people to improve the answer.",
+    "audio": "/ace-answers/leadership.mp3"
+  },
+  {
+    "id": "technical-depth",
+    "expression": "wry",
+    "patterns": [
+      {
+        "source": "\\bcan adam code\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bsoftware engineer\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btechnical (?:is adam|skills|depth)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bprogrammer\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is not selling himself as a conventional software engineer. He does write code, integrate APIs, design architectures, deploy products, test failure modes, and debug the ugly middle, with senior creative and business judgment deciding what is worth building.",
+    "audio": "/ace-answers/technical-depth.mp3"
+  },
+  {
+    "id": "firstsource",
+    "expression": "curious",
+    "patterns": [
+      {
+        "source": "\\bfirstsource\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Firstsource was Adam's bridge from design into working software. He helped turn a catalog company into a real-time ecommerce business, built front-end experiences in HTML and ASP, and later helped select the agency supporting its IPO preparation.",
+    "audio": "/ace-answers/firstsource.mp3"
+  },
+  {
+    "id": "dgwb",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bdgwb\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "At DGWB, Adam led the first-wave interactive practice while remaining a lead copywriter. He translated emerging technology into usable client work, ran delivery, and helped win business for finance, technology, music, consumer, and restaurant brands.",
+    "audio": "/ace-answers/dgwb.mp3"
+  },
+  {
+    "id": "hospitality",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\bhospitality|hotel|resort\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's hospitality work combines positioning, voice, campaign ideas, websites, email, performance media, and long-term brand stewardship. Agency689 has served Sunset Marquis as Agency of Record since 2004, which is a pretty unforgiving unit test for trust.",
+    "audio": "/ace-answers/hospitality.mp3?v=agency-name-2"
+  },
+  {
+    "id": "fintech",
+    "expression": "thinking",
+    "patterns": [
+      {
+        "source": "\\bfintech|financial services|finance work\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's financial and fintech work spans early ecommerce, banking and lending clients, market-intelligence agents, evidence controls, model evaluation, and enterprise workflow design. The common architecture is clarity, traceable evidence, bounded authority, and a human decision maker who never disappears from the stack.",
+    "audio": "/ace-answers/fintech.mp3"
+  },
+  {
+    "id": "role-fit",
+    "expression": "curious",
+    "patterns": [
+      {
+        "source": "\\bfit for (?:this|the|our) role\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat roles? (?:is|would) adam\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bbest role\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\brole fit\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is strongest where the job crosses applied AI, product thinking, creative or marketing systems, technical communication, and meaningful ownership. Give me the mandate and success measure, and I can map the most relevant proof without sanding him down into a generic title.",
+    "audio": "/ace-answers/role-fit.mp3"
+  },
+  {
+    "id": "credentials",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bcertification|certifications|credentials|education\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam studied Design and Art Direction at the Academy of Art in San Francisco. His current credentials include Google Analytics certification and eight completed Claude and applied AI courses from Anthropic and CodePath.",
+    "audio": "/ace-answers/credentials.mp3"
+  },
+  {
+    "id": "location",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bwhere (?:is adam|does adam live|is he based)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\blocation|remote\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is based in Bend, Oregon and is targeting senior remote work in the United States. Scheduling and location specifics should go directly to him.",
+    "audio": "/ace-answers/location.mp3"
+  },
+  {
+    "id": "contact",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\bcontact adam\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bemail adam\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bhow (?:do|can) i (?:reach|contact)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btalk to adam\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "You can reach Adam at adam r cagle at gmail dot com, or use the email icon in the site header. His LinkedIn and GitHub are linked below this conversation.",
+    "audio": "/ace-answers/contact.mp3"
+  },
+  {
+    "id": "fun-projects",
+    "expression": "playful",
+    "patterns": [
+      {
+        "source": "\\bfun stuff\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bfun projects?\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bside projects?\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's side-project lab includes ACE, Donkey on the Edge, SULU Invaders, and Ship Happens. Different mediums, same habit: learn the machinery, follow the interesting edge case, and keep going until the idea becomes something people can actually use, play, or read.",
+    "audio": "/ace-answers/fun-projects.mp3"
+  },
+  {
+    "id": "ace-stack",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bhow does ace work\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bace (?:stack|technology|architecture)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat is ace built with\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "ACE combines Next.js, Groq transcription, reviewed portfolio RAG, DeepSeek through OpenRouter, Fish Audio, and a custom Three.js WebGL face. Recent turns, the current page, and the open project stay in the active tab; conversation and browsing history are not stored.",
+    "audio": "/ace-answers/ace-stack.mp3"
+  },
+  {
+    "id": "donkey-on-the-edge",
+    "expression": "amused",
+    "patterns": [
+      {
+        "source": "\\bdonkey on the edge\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bdonkey project\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bphysics project\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Donkey on the Edge is Adam's public attempt to learn a difficult scientific field honestly. It traces a thirty-eight-document path from introductory physics toward quantum gravity, using AI-assisted author, editor, and adversarial-review loops while documenting uncertainty instead of pretending the work settled physics.",
+    "audio": "/ace-answers/donkey-on-the-edge.mp3"
+  },
+  {
+    "id": "sulu-invaders",
+    "expression": "delighted",
+    "patterns": [
+      {
+        "source": "\\bsulu(?: invaders?)?\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bspace invaders? game\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "SULU Invaders is Adam's playable neon browser shooter, built with JavaScript and Canvas inside a custom retro-futurist console. It includes keyboard, pointer, and touch controls, ship upgrades, shields, enemy waves, sound effects, and selectable soundtracks because a side project should commit to the bit.",
+    "audio": "/ace-answers/sulu-invaders.mp3"
+  },
+  {
+    "id": "ship-happens",
+    "expression": "wry",
+    "patterns": [
+      {
+        "source": "\\bship happens\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bchad cruz\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Ship Happens is Adam's comedy novel, subtitled A Chad Cruz Zombie Adventure. The public sample uses a funeral-home sales pitch and a disputed inheritance to show comic voice, character, dialogue, pacing, and the useful discipline of landing the joke without stepping on it.",
+    "audio": "/ace-answers/ship-happens.mp3"
+  },
+  {
+    "id": "compensation",
+    "expression": "attentive",
+    "patterns": [],
+    "display": "That is a conversation for Adam, not his website with cheekbones. I can show you the experience, scope, and results that make the conversation worth having.",
+    "audio": "/ace-answers/compensation.mp3"
+  },
+  {
+    "id": "private-information",
+    "expression": "concerned",
+    "patterns": [],
+    "display": "I keep Adam's private life and confidential client information out of the build. I can stay useful on his public work, experience, and fit for the role.",
+    "audio": "/ace-answers/private-information.mp3"
+  },
+  {
+    "id": "protected-system",
+    "expression": "wry",
+    "patterns": [],
+    "display": "Nice try, but the system prompt, private reasoning, keys, and security details stay server-side. Ask me about Adam's work and I will happily open the hood on what is public.",
+    "audio": "/ace-answers/protected-system.mp3"
+  },
+  {
+    "id": "unknown-answer",
+    "expression": "attentive",
+    "patterns": [],
+    "display": "I don't have a reviewed answer for that, and I won't improvise one. That question needs to go directly to Adam.",
+    "audio": "/ace-answers/unknown-answer.mp3"
+  },
+  {
+    "id": "off-topic",
+    "expression": "playful",
+    "patterns": [],
+    "display": "I am built to discuss Adam and the work, not become the internet with a face. Point me at the role, problem, skill, client story, or project you want to investigate.",
+    "audio": "/ace-answers/off-topic.mp3"
+  }
+]

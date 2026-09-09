@@ -1,10 +1,23 @@
 import { proxyFacetest } from "@/lib/facetest-proxy";
+import { guardApiRequest, readRequestText } from "@/lib/api-request-guard";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 export async function POST(request: Request) {
-  const body = await request.text();
+  const guarded = guardApiRequest(request, {
+    limit: 50,
+    windowMs: 5 * 60 * 1000,
+    maxBytes: 8 * 1024,
+    contentTypes: ["application/json"],
+  });
+  if (guarded) return guarded;
+  let body = "";
+  try {
+    body = await readRequestText(request, 8 * 1024);
+  } catch {
+    return Response.json({error: "Request is too large"}, {status: 413, headers: {"Cache-Control": "no-store"}});
+  }
   let input: Record<string, unknown>;
   try {
     input = JSON.parse(body || "{}");

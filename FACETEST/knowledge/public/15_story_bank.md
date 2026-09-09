@@ -46,12 +46,12 @@ answerable_questions:
 - Situation: a distinctive hotel needed consistent voice and communications across many guest touchpoints and sub-brands.
 - Adam's role: long-term client leadership, copy, creative direction, email, web, in-room, advertising, and brand governance.
 - Actions: built and maintained a connected guest-lifecycle system rather than isolated campaigns.
-- Outcome: Agency of Record since 2004; roughly $150,000 monthly attributed email revenue; 30 percent banner ROAS improvement.
+- Outcome: Agency of Record since 2004; roughly $150,000 in attributed revenue per email; 30 percent banner ROAS improvement.
 - Lesson: longevity and revenue come from understanding the entire experience, not only acquisition.
 - Evidence: source.fodder.resume_v2.
 - Confidence: 0.98.
 - Public safety: safe; keep metrics approximate.
-- 30-second spoken version: Agency689 has worked with Sunset Marquis since 2004. Adam's work spans the guest journey, and the email program produced about $150,000 a month in attributed revenue.
+- 30-second spoken version: Agency689 has worked with Sunset Marquis since 2004. Adam's work spans the guest journey, and the email program produced about $150,000 in attributed revenue per email.
 - 90-second spoken version: Include web, email, in-room, Cavatina, LIVE, Bar 1200, gallery, and the banner result.
 - Retrieve for: hospitality, lifecycle, retention, measurable results.
 - Expression: warm.
@@ -198,4 +198,3 @@ answerable_questions:
 - 90-second spoken version: Add AEO origin, competitor response, approvals, and rollback.
 - Retrieve for: AI philosophy, Singularity origin, build-over-buy.
 - Expression: excited.
-

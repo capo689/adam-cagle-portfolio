@@ -3,9 +3,9 @@ import { normalizeSpeechText, splitSpeechText } from "@/lib/speech-text";
 
 export {};
 
-const agentName = document.body.dataset.voiceName || "Troy";
+const agentName = document.body.dataset.voiceName || "ACE";
 const speechEndpoint = document.body.dataset.speechEndpoint || "/api/facetest-speak";
-const staticGreetingUrl = document.body.dataset.staticGreeting ?? "/FACETEST/audio/troy-intro.wav";
+const staticGreetingUrl = document.body.dataset.staticGreeting || "";
 type ExpressionCue = {name: string; intensity: number};
 type FaceController = {
   setState(state: string): void;

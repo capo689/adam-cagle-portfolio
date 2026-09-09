@@ -1,4 +1,5 @@
 import {groqConfigured, groqFetch} from "./_groq-failover.mjs";
+import {guardFacetestRequest} from "./_facetest-request-guard.mjs";
 
 export const config = {api: {bodyParser: false}};
 
@@ -22,6 +23,7 @@ async function readAudio(req) {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return reject(res, 405, "POST required");
+  if (!guardFacetestRequest(req, res, {limit: 28})) return;
   if (!groqConfigured()) return reject(res, 503, "Groq is not configured yet");
 
   let audio;

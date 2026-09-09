@@ -40,9 +40,6 @@ Pronunciation must remain conservative. No pronunciation below should be treated
 - Agency689
   - Spoken approximation: AGENCY six-eight-nine
   - Confidence: 0.90
-- Agentic689
-  - Spoken approximation: ay-JEN-tik six-eight-nine
-  - Confidence: 0.90
 - Singularity SEO
   - Spoken approximation: sing-gyuh-LAIR-ih-tee S-E-O
   - Confidence: 0.96
@@ -81,14 +78,12 @@ Pronunciation must remain conservative. No pronunciation below should be treated
   - Spoken approximation: high-touch
   - Confidence: 0.99
 - NAVIS
-  - Spoken approximation: NAY-viss is plausible
-  - Confidence: 0.50
-  - Note: confirm before use in generated speech
+  - Spoken approximation: NAV-iss, with the A in apple
+  - Confidence: 1.00
 - Bend, Oregon
   - Spoken approximation: BEND OR-uh-gun
   - Confidence: 0.98
 
 ## Required Confirmations
 
-Ask Adam to confirm Cagle, AuScan, NAVIS, Agency689, Agentic689, VRT2, SSIA, and any client-specific preferred pronunciations before production voice deployment.
-
+Ask Adam to confirm Cagle, AuScan, Agency689, VRT2, SSIA, and any client-specific preferred pronunciations before production voice deployment.

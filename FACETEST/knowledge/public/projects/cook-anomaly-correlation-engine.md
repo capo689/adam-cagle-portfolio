@@ -17,7 +17,7 @@ aliases:
   - COOK
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.profile.master_public
 answerable_questions:
@@ -31,4 +31,3 @@ COOK is described as a multi-asset anomaly-correlation engine with a dashboard i
 ## Evidence Boundary
 
 The current sources do not reliably establish its acronym expansion, dates, architecture, status, data sources, users, metrics, or business outcome. It may be discussed as a named experimental system only.
-

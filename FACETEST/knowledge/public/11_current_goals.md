@@ -71,7 +71,7 @@ Full-time, contract, contract-to-hire, W-2, and 1099 work are possible when scop
 
 ## Product and Portfolio Goals
 
-- Continue improving and documenting Agentic689 systems.
+- Continue improving and documenting Agency689's AI systems.
 - Strengthen public demonstrations of useful, governed agents and workflows.
 - Keep portfolio, LinkedIn, GitHub, and résumé claims consistent with canonical evidence.
 - Improve Agent Exchange beyond its current free-beta utility when priorities permit.
@@ -91,4 +91,3 @@ Adam actively experiments with frontier models, agent harnesses, APIs, MCP, retr
 ## Desired Future State
 
 A well-paid role on a capable team where Adam can turn ambiguous business and creative problems into useful AI-enabled products, workflows, content, or customer experiences—without being pushed into pure management or asked to pretend adjacent experience is something it is not.
-

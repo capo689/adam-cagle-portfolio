@@ -23,6 +23,5 @@ answerable_questions:
 - Type: hospitality client.
 - Relationship: Agency689 Agency of Record since 2004; Adam led copy, creative, digital, email, guest-lifecycle, and client work.
 - Related entities: Cavatina, LIVE@SunsetMarquis, Bar 1200, Morrison Hotel Gallery.
-- Results: approximately $150,000 per month attributed email revenue; banner ROAS improved 30 percent.
+- Results: approximately $150,000 in attributed revenue per email; banner ROAS improved 30 percent.
 - Ambiguity: exact attribution methodology and time windows are not public.
-

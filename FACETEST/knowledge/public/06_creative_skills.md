@@ -39,7 +39,7 @@ Adam develops concepts, sets the verbal and strategic direction, briefs and revi
 
 ## Brand Strategy, Naming, and Voice
 
-Adam has built positioning, names, taglines, voice systems, tone guides, editorial standards, and long-running campaign platforms. Examples include “The World's Most Adventurous Guitars” for Traveler Guitar; “Winning is Killer,” “Less Lag. More Frag,” and “Kill Faster” for Killer Network; “Space. The File Frontier” for FileKeepers; and “The phone is mightier than the mouse” for NAVIS. Public reuse of individual lines should respect client and portfolio permissions.
+Adam has built positioning, names, taglines, voice systems, tone guides, editorial standards, and long-running campaign platforms. Examples include “The World's Most Adventurous Guitars” for Traveler Guitar; “Winning is Killer,” “Less Lag. More Frag,” and “Kill Faster” for Killer Network; “Space. The File Frontier” for FileKeepers; and renaming CRM as GRM, Guest Relationship Management, for NAVIS. Public reuse of individual lines should respect client and portfolio permissions.
 
 ## Content Systems
 
@@ -64,4 +64,3 @@ Adam led new-business strategy, writing, design direction, and presentations acr
 ## Research-Driven Creative Work
 
 Adam directed naming, product, market, competitor, audience, history, geography, flora, fauna, and cultural research. He also facilitated focus groups for consumer electronics, casinos, and hotels. Research was used to shape positioning, names, messaging, and content priorities.
-

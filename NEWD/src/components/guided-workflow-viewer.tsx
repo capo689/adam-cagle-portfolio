@@ -122,7 +122,6 @@ export function GuidedWorkflowViewer({item, voiceEnabled, onClose}: Props) {
     } else {
       const begin = document.querySelector<HTMLButtonElement>("#begin");
       begin?.click();
-      begin?.click();
       const play = document.querySelector<HTMLButtonElement>("#play");
       if (play?.getAttribute("aria-label") === "Pause") play.click();
       const config = contentWindow.WORKFLOW_CONFIG;
@@ -183,14 +182,17 @@ export function GuidedWorkflowViewer({item, voiceEnabled, onClose}: Props) {
       media.pause();
     });
 
-    const style = document.createElement("style");
-    style.textContent = `
-      .newd-embedded .launcher { display: none !important; }
-      .newd-embedded body { overscroll-behavior: none; }
-      .newd-embedded .completion { backdrop-filter: blur(12px); }
-      .newd-embedded .completion-actions .secondary { background: transparent; }
-    `;
-    document.head.appendChild(style);
+    if (!document.querySelector("#newd-embedded-style")) {
+      const style = document.createElement("style");
+      style.id = "newd-embedded-style";
+      style.textContent = `
+        .newd-embedded .launcher { display: none !important; }
+        .newd-embedded body { overscroll-behavior: none; }
+        .newd-embedded .completion { backdrop-filter: blur(12px); }
+        .newd-embedded .completion-actions .secondary { background: transparent; }
+      `;
+      document.head.appendChild(style);
+    }
 
     replayCleanup.current?.();
     const replay = document.querySelector<HTMLButtonElement>("#completion-replay");

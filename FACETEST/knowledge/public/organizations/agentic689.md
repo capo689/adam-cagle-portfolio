@@ -5,7 +5,7 @@ title: Agentic689
 summary: Adam's applied-AI studio for products, agents, governed workflows, creative systems, SEO/AEO, research, and technical communication.
 status: verified
 confidence: 0.96
-public_safe: true
+public_safe: false
 last_updated: 2026-08-04
 date_start: 2024
 date_end: present
@@ -27,4 +27,3 @@ answerable_questions:
 - Major systems: Singularity SEO, Agent Exchange, VRT2, BookLite, AuScan, Donkey on the Edge, Persona Governance System, and COOK.
 - Public evidence: portfolio AI Systems page and GitHub repositories.
 - Ambiguities: formal entity structure, staff, revenue, client roster, and product pricing.
-

@@ -5,7 +5,7 @@ title: Agentic689 Website
 summary: Lightweight AI-generated studio site deployed without a framework or build step, with Cloudflare contact handling.
 status: reported
 confidence: 0.88
-public_safe: true
+public_safe: false
 last_updated: 2026-08-04
 date_start: unknown
 date_end: present
@@ -35,4 +35,3 @@ Adam directed and assembled the site, wrote or governed its content, implemented
 ## Limits
 
 The exact live URL is reported as https://agentic689.com in canonical fodder but was not included in the checked-link block. Verify before production retrieval presents it as checked.
-

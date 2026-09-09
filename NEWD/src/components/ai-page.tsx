@@ -16,10 +16,12 @@ import { ElectricShimmerTitle } from "@/components/electric-shimmer-title";
 import { AiSystemPortrait } from "@/components/ai-system-portrait";
 import { GoldPixelWord } from "@/components/gold-pixel-word";
 import { showAceNarration } from "@/lib/ace-transcript";
+import { useModalAccessibility } from "@/lib/modal-accessibility";
 
 type PlaybackState = "idle" | "loading" | "playing" | "paused" | "complete";
 
 function WorkCard({ item, onOpen }: { item: AiWorkItem; onOpen: (item: AiWorkItem) => void }) {
+  const maturity = item.id === "singularity-seo" ? "Production system" : item.kind === "workflow" ? "Interactive workflow prototype" : "Working system";
   return (
     <article className="ai-card" data-kind={item.kind}>
       <button className="ai-card-open" onClick={() => onOpen(item)} type="button" aria-label={`Open ${item.title}`}>
@@ -29,7 +31,7 @@ function WorkCard({ item, onOpen }: { item: AiWorkItem; onOpen: (item: AiWorkIte
         <span className="ai-card-headline">{item.headline}</span>
         <span className="ai-card-summary">{item.summary}</span>
         <span className="ai-card-footer">
-          <span>{item.tags.slice(0, 3).join(" / ")}</span>
+          <span>{maturity} / {item.tags.slice(0, 2).join(" / ")}</span>
           <ArrowUpRight size={21} aria-hidden="true" />
         </span>
       </button>
@@ -66,6 +68,7 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
   const [guidedItem, setGuidedItem] = useState<AiWorkItem | null>(null);
   const [playback, setPlayback] = useState<PlaybackState>("idle");
   const playId = useRef(0);
+  const selectedDialogRef = useModalAccessibility<HTMLElement>(Boolean(selected), closeItem);
 
   useEffect(() => {
     const onVoiceState = (event: Event) => {
@@ -116,6 +119,8 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     window.FACETEST?.stop();
     setSelected(item);
     setPlayback("idle");
+    const path = `/ai/${item.id}`;
+    if (window.location.pathname !== path) window.history.pushState({}, "", path);
     if (voiceEnabled) window.setTimeout(() => narrate(item), 80);
   }
 
@@ -124,6 +129,7 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     window.FACETEST?.stop();
     setSelected(null);
     setPlayback("idle");
+    if (window.location.pathname.startsWith("/ai/")) window.history.replaceState({}, "", "/ai");
   }
 
   async function togglePlayback() {
@@ -158,6 +164,8 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     setSelected(null);
     setPlayback("idle");
     setGuidedItem(item);
+    const path = `/ai/${item.id}/workflow`;
+    if (window.location.pathname !== path) window.history.pushState({}, "", path);
   }
 
   useEffect(() => {
@@ -298,7 +306,7 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
 
       {selected && createPortal(
         <div className="ai-detail-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && closeItem()}>
-          <article className="ai-detail" role="dialog" aria-modal="true" aria-labelledby="ai-detail-title">
+          <article className="ai-detail" ref={selectedDialogRef} role="dialog" aria-modal="true" aria-labelledby="ai-detail-title" tabIndex={-1}>
             <button className="ai-detail-close" onClick={closeItem} type="button" aria-label="Close system detail"><X size={22} /></button>
             <div className="ai-detail-marker">{selected.group} / {selected.kicker}</div>
             <h2 id="ai-detail-title">{selected.title}</h2>
@@ -329,6 +337,7 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
             </div>
 
             <div className="ai-detail-meta">
+              <div><span>Maturity</span><p>{selected.id === "singularity-seo" ? "Production system" : selected.kind === "workflow" ? "Interactive workflow prototype" : "Working system"}</p></div>
               <div><span>Business tags</span><p>{selected.tags.join(" · ")}</p></div>
               <div><span>Languages</span><p>{selected.languages.join(" · ")}</p></div>
               <div><span>Technology and controls</span><p>{selected.technology.join(" · ")}</p></div>
@@ -350,7 +359,7 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
       )}
 
       {guidedItem && (
-        <GuidedWorkflowViewer item={guidedItem} voiceEnabled={voiceEnabled} onClose={() => setGuidedItem(null)} />
+        <GuidedWorkflowViewer item={guidedItem} voiceEnabled={voiceEnabled} onClose={() => { setGuidedItem(null); window.history.replaceState({}, "", "/ai"); }} />
       )}
     </div>
   );

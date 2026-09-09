@@ -120,16 +120,16 @@ answerable_questions:
 
 ### 13. When did Adam begin using generative AI professionally?
 **Short answer:** In 2022 at Agency689.
-**Detailed answer:** Agentic689 began in 2024, but the underlying applied generative-AI work started two years earlier in client writing workflows.
+**Detailed answer:** The applied generative-AI work began inside Agency689 client writing workflows in 2022 and grew into dedicated products and governed systems.
 **Supporting claims:** ai.start_2022
 **Sources:** source.fodder.resume_v2, source.evidence.canonical_map
 **Confidence:** 1.00
 **Expression suggestion:** neutral
 
-### 14. Why did Adam start Agentic689?
+### 14. Why did Adam expand Agency689 into dedicated AI systems?
 **Short answer:** To turn recurring creative and business problems into dedicated AI products and governed workflows.
-**Detailed answer:** It became the focused studio for systems such as Singularity, Agent Exchange, VRT2, BookLite, AuScan, and research/documentation work.
-**Supporting claims:** role.agentic689.founder
+**Detailed answer:** Repeated creative and business problems called for working systems such as Singularity, Agent Exchange, VRT2, BookLite, AuScan, and research and documentation tools.
+**Supporting claims:** role.agency689.managing_director_lead_copywriter
 **Sources:** source.profile.master_public
 **Confidence:** 0.93
 **Expression suggestion:** excited
@@ -143,7 +143,7 @@ answerable_questions:
 **Expression suggestion:** neutral
 
 ### 16. What are Adam's strongest business outcomes?
-**Short answer:** Roughly $150,000 monthly attributed email revenue, Traveler Guitar DTC growth from about $1.1M to $5M, and a 30 percent ROAS improvement.
+**Short answer:** Roughly $150,000 in attributed revenue per Sunset Marquis email, Traveler Guitar DTC growth from about $1.1M to $5M, and a 30 percent ROAS improvement.
 **Detailed answer:** These are rounded company or campaign outcomes associated with Adam's strategy, copy, creative, and delivery work; they are not sole-causation claims.
 **Supporting claims:** outcome.sunset_email, outcome.traveler_dtc, outcome.banner_roas
 **Sources:** source.fodder.resume_v2
@@ -677,4 +677,3 @@ answerable_questions:
 **Sources:** source.fodder.high_yield
 **Confidence:** 1.00
 **Expression suggestion:** neutral
-

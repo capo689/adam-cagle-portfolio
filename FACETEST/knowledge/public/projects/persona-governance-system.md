@@ -16,7 +16,7 @@ tags:
 aliases: []
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.profile.master_public
   - source.fodder.high_yield
@@ -26,9 +26,8 @@ answerable_questions:
 
 # Overview
 
-The Persona Governance System is a named Agentic689 system for persona scaffolding and hard-rule governance across brand voice, audience fit, channel constraints, and escalation to human judgment.
+The Persona Governance System is an Agency689 system for persona scaffolding and hard-rule governance across brand voice, audience fit, channel constraints, and escalation to human judgment.
 
 ## Evidence Boundary
 
 Canonical sources support the name, purpose, Adam's authorship of persona/governance materials, and the broader design approach. Architecture, users, deployment status, metrics, and public URL are unknown. Do not classify it as production without additional evidence.
-

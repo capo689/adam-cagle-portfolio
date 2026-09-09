@@ -5,7 +5,7 @@ title: Agentic689 — Founder & AI Agent Architect
 summary: Adam's founder role building, documenting, governing, deploying, and explaining applied-AI products and workflows.
 status: verified
 confidence: 0.97
-public_safe: true
+public_safe: false
 last_updated: 2026-08-04
 date_start: 2024
 date_end: present
@@ -65,4 +65,3 @@ Agentic689 is where Adam turns the operating problems he knows firsthand into wo
 ## Unknowns
 
 Revenue by product, customer counts, formal staffing, production support arrangements, and roadmap commitments not publicly documented.
-

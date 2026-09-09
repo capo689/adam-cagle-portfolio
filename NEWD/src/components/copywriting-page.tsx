@@ -16,6 +16,7 @@ import {
 import { ElectricShimmerTitle } from "@/components/electric-shimmer-title";
 import { copyCases, type CopyCase } from "@/content/copywriting-content";
 import { showAceNarration } from "@/lib/ace-transcript";
+import { useModalAccessibility } from "@/lib/modal-accessibility";
 
 type PlaybackState = "idle" | "loading" | "playing" | "paused" | "complete";
 type LightboxState = { item: CopyCase; index: number };
@@ -109,6 +110,8 @@ export function CopywritingPage({ voiceEnabled }: { voiceEnabled: boolean }) {
   const [activeImages, setActiveImages] = useState<Record<string, number>>({});
   const [playback, setPlayback] = useState<PlaybackState>("idle");
   const playId = useRef(0);
+  const detailDialogRef = useModalAccessibility<HTMLElement>(Boolean(selected), closeDetail);
+  const lightboxDialogRef = useModalAccessibility<HTMLElement>(Boolean(lightbox), () => setLightbox(null));
 
   useEffect(() => {
     const onVoiceState = (event: Event) => {
@@ -177,6 +180,8 @@ export function CopywritingPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     window.FACETEST?.stop();
     setSelected(item);
     setPlayback("idle");
+    const path = `/copy/${item.id}`;
+    if (window.location.pathname !== path) window.history.pushState({}, "", path);
     if (voiceEnabled) window.setTimeout(() => void narrate(item), 80);
   }
 
@@ -185,6 +190,7 @@ export function CopywritingPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     window.FACETEST?.stop();
     setSelected(null);
     setPlayback("idle");
+    if (window.location.pathname.startsWith("/copy/")) window.history.replaceState({}, "", "/copy");
   }
 
   async function togglePlayback() {
@@ -297,7 +303,7 @@ export function CopywritingPage({ voiceEnabled }: { voiceEnabled: boolean }) {
 
       {selected && createPortal(
         <div className="copy-client-detail-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && closeDetail()}>
-          <article className="copy-client-detail" role="dialog" aria-modal="true" aria-labelledby="copy-client-detail-title">
+          <article className="copy-client-detail" ref={detailDialogRef} role="dialog" aria-modal="true" aria-labelledby="copy-client-detail-title" tabIndex={-1}>
             <button className="copy-client-detail-close" onClick={closeDetail} type="button" aria-label="Close client details"><X size={23} /></button>
             <div className="copy-client-detail-marker">{selected.client} / {selected.category}</div>
             <h2 id="copy-client-detail-title">{selected.headline}</h2>
@@ -352,7 +358,7 @@ export function CopywritingPage({ voiceEnabled }: { voiceEnabled: boolean }) {
 
       {lightbox && createPortal(
         <div className="copy-lightbox" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setLightbox(null)}>
-          <figure role="dialog" aria-modal="true" aria-label={`${lightbox.item.client} work gallery`}>
+          <figure ref={lightboxDialogRef} role="dialog" aria-modal="true" aria-label={`${lightbox.item.client} work gallery`} tabIndex={-1}>
             <button className="copy-lightbox-close" onClick={() => setLightbox(null)} type="button" aria-label="Close image gallery"><X size={24} /></button>
             {lightbox.item.images.length > 1 && (
               <>

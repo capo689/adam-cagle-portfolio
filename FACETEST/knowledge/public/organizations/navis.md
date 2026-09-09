@@ -2,7 +2,7 @@
 id: organization.navis
 type: organization
 title: NAVIS
-summary: Hospitality CRM and revenue-technology client for naming, campaign, conversion, and product messaging.
+summary: Hospitality technology client whose platform Adam repositioned and renamed from CRM to GRM, Guest Relationship Management.
 status: verified
 confidence: 0.91
 public_safe: true
@@ -20,5 +20,4 @@ answerable_questions:
 
 # Organization Record
 
-NAVIS is documented as a hospitality CRM/revenue-technology client. Adam's campaign and naming work addressed call-center conversion, revenue, and hospitality technology, including the line “The phone is mightier than the mouse.” No project metrics are currently canonical.
-
+NAVIS built a hospitality platform connecting guest data, reservation sales, marketing, and human follow-up. Adam repositioned and renamed the category from CRM to GRM, Guest Relationship Management, making the guest relationship the product's defining idea. Campaign lines including “The phone is mightier than the mouse” supported the position with conversion evidence. The category name was the central strategic win.

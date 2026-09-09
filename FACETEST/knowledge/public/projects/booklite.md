@@ -18,7 +18,7 @@ aliases:
   - Book Agent
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.fodder.resume_v2
   - source.evidence.canonical_map
@@ -51,4 +51,3 @@ Demonstrates one agent adapting content to six platforms without removing editor
 ## Spoken Explanation
 
 BookLite shows how one governed agent can understand a book and generate native material for six different channels while keeping credentials server-side and a person in control of what actually gets published.
-

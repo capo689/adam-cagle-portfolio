@@ -20,7 +20,7 @@ aliases:
   - Single Stock Intelligence
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.fodder.resume_v2
   - source.evidence.canonical_map
@@ -59,4 +59,3 @@ Routine daily reviews may use Claude Haiku and advanced analysis Claude Sonnet. 
 - 15 seconds: VRT2 gathers market, filing, news, executive-transaction, and macro evidence into governed hypotheses for human decision support; it never trades automatically.
 - 30 seconds: Adam helped turn a small exploratory engagement into a structured single-stock intelligence system with 27 data streams, five verification states, auto-deactivation, and a kill switch. A paid test helped lead to ten additional agent purchases.
 - Technical: Explain the signal/hypothesis hierarchy, verification lifecycle, weights, backtests, scheduled ingest, audit history, and human-readable briefs.
-

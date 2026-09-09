@@ -8,6 +8,7 @@ import { ElectricShimmerTitle } from "@/components/electric-shimmer-title";
 import { figueroaBookPages } from "@/content/figueroa-book";
 import { showAceNarration } from "@/lib/ace-transcript";
 import { clientLogos } from "@/content/brand-clients";
+import { useModalAccessibility } from "@/lib/modal-accessibility";
 
 const agencyStory = "Agency689 is where Adam's full range becomes one practice. He co-founded the agency in 2001 and has spent twenty-five years helping clients find the strategic idea, shape the brand, write the language, direct the work, build the experience, and stay accountable for what happens after launch. He also built and wrote the current Agency689 site and created its generative AI introduction film. That is the point of the work: the person defining the idea stays close enough to make sure every expression of it still means the same thing.";
 
@@ -37,7 +38,7 @@ const brandRange = [
     client: "Traveler Guitar",
     kind: "Consumer products",
     line: "The World's Most Adventurous Guitars.",
-    proof: "A durable platform carried through fifteen years of product, ecommerce, retail, Amazon, trade shows, and five times direct-to-consumer growth.",
+    proof: "A durable platform carried through fifteen years of product, ecommerce, retail, Amazon, and trade shows as DTC revenue grew from roughly $1.1 million to $5 million during the broader engagement.",
     image: "/copywriting/traveler-force.webp",
   },
   {
@@ -80,6 +81,8 @@ export function BrandPage({ voiceEnabled }: { voiceEnabled: boolean }) {
   const [speaking, setSpeaking] = useState<"agency" | "figueroa" | null>(null);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [bookPage, setBookPage] = useState<number | null>(null);
+  const lightboxDialogRef = useModalAccessibility<HTMLElement>(lightbox !== null, () => setLightbox(null));
+  const bookDialogRef = useModalAccessibility<HTMLElement>(bookPage !== null, () => setBookPage(null));
 
   useEffect(() => {
     if (lightbox === null && bookPage === null) return;
@@ -128,8 +131,14 @@ export function BrandPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     };
     const openFeature = (event: Event) => {
       const target = (event as CustomEvent<{ id?: string }>).detail?.id;
-      if (target === "agency") scrollToTarget(".brand-agency-feature");
-      if (target === "figueroa") scrollToTarget(".brand-figueroa-feature");
+      if (target === "agency") {
+        if (window.location.pathname !== "/brand/agency") window.history.pushState({}, "", "/brand/agency");
+        scrollToTarget(".brand-agency-feature");
+      }
+      if (target === "figueroa") {
+        if (window.location.pathname !== "/brand/figueroa") window.history.pushState({}, "", "/brand/figueroa");
+        scrollToTarget(".brand-figueroa-feature");
+      }
     };
     const openClient = (event: Event) => {
       const name = (event as CustomEvent<{ name?: string }>).detail?.name;
@@ -286,7 +295,7 @@ export function BrandPage({ voiceEnabled }: { voiceEnabled: boolean }) {
 
       {lightbox !== null && createPortal(
         <div className="brand-lightbox" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setLightbox(null)}>
-          <figure role="dialog" aria-modal="true" aria-label="Hotel Figueroa brand gallery">
+          <figure ref={lightboxDialogRef} role="dialog" aria-modal="true" aria-label="Hotel Figueroa brand gallery" tabIndex={-1}>
             <button onClick={() => setLightbox(null)} type="button" aria-label="Close Hotel Figueroa image"><X size={24} /></button>
             <div><Image src={figueroaImages[lightbox].src} alt={figueroaImages[lightbox].alt} fill sizes="95vw" /></div>
             <figcaption><span>Hotel Figueroa</span><strong>{figueroaImages[lightbox].caption}</strong></figcaption>
@@ -297,7 +306,7 @@ export function BrandPage({ voiceEnabled }: { voiceEnabled: boolean }) {
 
       {bookPage !== null && createPortal(
         <div className="brand-book-reader" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setBookPage(null)}>
-          <section className="brand-book-shell" role="dialog" aria-modal="true" aria-label="Complete Hotel Figueroa brand book">
+          <section className="brand-book-shell" ref={bookDialogRef} role="dialog" aria-modal="true" aria-label="Complete Hotel Figueroa brand book" tabIndex={-1}>
             <header>
               <div>
                 <span>Hotel Figueroa</span>

@@ -19,7 +19,7 @@ aliases:
   - Singularity
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.fodder.resume_v2
   - source.evidence.canonical_map
@@ -89,4 +89,3 @@ Incorrect recommendations, stale search data, permission errors, unsafe bulk cha
   - Date or period: 2026
   - Public-safe: yes
   - Notes: No installation count is public.
-

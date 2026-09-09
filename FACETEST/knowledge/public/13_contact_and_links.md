@@ -35,7 +35,7 @@ answerable_questions:
 | Public résumé | https://adamcagle.com/Adam-R-Cagle-Resume.pdf | Public résumé PDF | person.adam_r_cagle | checked | 2026-07 |
 | LinkedIn | https://www.linkedin.com/in/adamcagle/ | Titles, experience, certificates, and professional profile | person.adam_r_cagle | audited | 2026-07-26 |
 | GitHub | https://github.com/capo689 | Public repositories and technical evidence | person.adam_r_cagle | audited | 2026-07-26 |
-| AI Systems | https://adamcagle.com/ai-systems.html | Project taxonomy and system summaries | organization.agentic689 | checked | 2026-07 |
+| AI Systems | https://adamcagle.com/ai-systems.html | Project taxonomy and system summaries | organization.agency689 | checked | 2026-07 |
 | Technical Writing | https://adamcagle.com/technical-writing.html | White papers and technical explanations | person.adam_r_cagle | checked | 2026-07 |
 | Copywriting | https://adamcagle.com/copywriting.html | Campaign and copy examples | person.adam_r_cagle | checked | 2026-07 |
 | Creative Direction | https://adamcagle.com/creative-direction.html | Creative leadership examples | person.adam_r_cagle | checked | 2026-07 |
@@ -57,4 +57,3 @@ The portfolio and LinkedIn are the preferred public contact routes. A profession
 ## Certifications
 
 Eight course certificates are reported as visible on LinkedIn. Safe language: “Completed eight courses across AI fluency, Claude, Claude Code, the Anthropic API, and the Claude platform.” One course displays CodePath as issuer, so do not say all eight were issued directly by Anthropic.
-

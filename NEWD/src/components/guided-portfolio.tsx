@@ -26,6 +26,23 @@ type Phase = "consent" | "forming" | "arrival" | "dissolving" | "reforming" | "d
 type Section = "Home" | "Copywriting" | "AI" | "Brand" | "Fun";
 
 const sections: Section[] = ["Home", "Copywriting", "AI", "Brand", "Fun"];
+const sectionPaths: Record<Section, string> = {
+  Home: "/",
+  AI: "/ai",
+  Brand: "/brand",
+  Copywriting: "/copy",
+  Fun: "/fun",
+};
+
+function routeFromPath(pathname: string) {
+  const [first = "", second, third] = pathname.split("/").filter(Boolean);
+  if (first === "resume") return { section: "Home" as Section, profile: "resume" as const };
+  if (first === "ai") return { section: "AI" as Section, ai: second, workflow: third === "workflow" };
+  if (first === "copy") return { section: "Copywriting" as Section, copy: second };
+  if (first === "brand") return { section: "Brand" as Section, brand: second };
+  if (first === "fun") return { section: "Fun" as Section };
+  return { section: "Home" as Section };
+}
 const headerSections: { label: string; section: Section }[] = [
   { label: "AI", section: "AI" },
   { label: "Brand", section: "Brand" },
@@ -129,6 +146,21 @@ export function GuidedPortfolio() {
     })();
 
     const searchParams = new URLSearchParams(window.location.search);
+    const initialRoute = routeFromPath(window.location.pathname);
+    const hasDeepRoute = window.location.pathname !== "/";
+    if (hasDeepRoute) {
+      window.setTimeout(() => {
+        setPhase("site");
+        setSection(initialRoute.section);
+        if (initialRoute.profile) setProfileOpen("resume");
+        window.setTimeout(() => {
+          if (initialRoute.ai) window.dispatchEvent(new CustomEvent(initialRoute.workflow ? "newd:open-ai-workflow" : "newd:open-ai-item", {detail: {id: initialRoute.ai}}));
+          if (initialRoute.copy) window.dispatchEvent(new CustomEvent("newd:open-copy-case", {detail: {id: initialRoute.copy}}));
+          if (initialRoute.brand) window.dispatchEvent(new CustomEvent("newd:open-brand-feature", {detail: {id: initialRoute.brand}}));
+          scrollContentToTop();
+        }, 220);
+      }, 0);
+    }
     const requestedSection = searchParams.get("section");
     const matchedSection = sections.find((item) => item.toLowerCase() === requestedSection?.toLowerCase());
     if (matchedSection) window.setTimeout(() => setSection(matchedSection), 0);
@@ -150,6 +182,24 @@ export function GuidedPortfolio() {
   }, []);
 
   useEffect(() => {
+    const restoreRoute = () => {
+      const route = routeFromPath(window.location.pathname);
+      suppressSectionIntro.current = true;
+      setPhase("site");
+      setProfileOpen(route.profile || null);
+      setSection(route.section);
+      window.setTimeout(() => {
+        if (route.ai) window.dispatchEvent(new CustomEvent(route.workflow ? "newd:open-ai-workflow" : "newd:open-ai-item", {detail: {id: route.ai}}));
+        if (route.copy) window.dispatchEvent(new CustomEvent("newd:open-copy-case", {detail: {id: route.copy}}));
+        if (route.brand) window.dispatchEvent(new CustomEvent("newd:open-brand-feature", {detail: {id: route.brand}}));
+        scrollContentToTop();
+      }, 160);
+    };
+    window.addEventListener("popstate", restoreRoute);
+    return () => window.removeEventListener("popstate", restoreRoute);
+  }, []);
+
+  useEffect(() => {
     const openProfile = (event: Event) => {
       const profile = (event as CustomEvent<{ profile?: string }>).detail?.profile;
       if (profile === "resume") setProfileOpen(profile);
@@ -166,6 +216,9 @@ export function GuidedPortfolio() {
       suppressSectionIntro.current = Boolean(detail?.suppressIntro);
       window.setTimeout(() => { suppressSectionIntro.current = false; }, 500);
       setSection(destination as Section);
+      if (window.location.pathname !== sectionPaths[destination as Section]) {
+        window.history.pushState({}, "", sectionPaths[destination as Section]);
+      }
       window.requestAnimationFrame(scrollContentToTop);
     };
     window.addEventListener("newd:navigate", navigate);
@@ -288,6 +341,9 @@ export function GuidedPortfolio() {
     setContactOpen(false);
     setProfileOpen(null);
     setSection(destination);
+    if (window.location.pathname !== sectionPaths[destination]) {
+      window.history.pushState({}, "", sectionPaths[destination]);
+    }
     window.requestAnimationFrame(scrollContentToTop);
   }
 
@@ -335,7 +391,7 @@ export function GuidedPortfolio() {
               <Volume2 size={21} aria-hidden="true" />
               <span>
                 <strong>Sound on or off, you won&apos;t miss a word.</strong>
-                <small>No signup. This site does not save your conversation or browsing history.</small>
+                <small>No signup. This site does not intentionally store your conversation or browsing history. Voice and text are processed by the services that power ACE.</small>
               </span>
             </div>
 
@@ -422,7 +478,7 @@ export function GuidedPortfolio() {
                     For twenty-five years I&apos;ve run Agency689 where ideas meet consequences. Sixty major accounts. Fixed price, variable cost, my name on the proposal. Everybody got paid, and what was left was ours, or it wasn&apos;t.
                   </p>
                   <p>
-                    That arithmetic teaches you quickly which ideas sound good and which ones work. A great line wins the account. Lifecycle, conversion, product, and retention keeps the account for decades. The clients we kept that long are the work I&apos;m most proud of.
+                    That arithmetic teaches you quickly which ideas sound good and which ones work. A great line wins the account. Lifecycle, conversion, product, and retention keep the account for decades. The clients we kept that long are the work I&apos;m most proud of.
                   </p>
                   <p>
                     Now I build AI into that same practice. People on the ideas, systems on the scale. Software nobody adopts is just cost. So I start with how a team actually works, build the smallest useful answer, and make it earn its way into production.
@@ -437,7 +493,7 @@ export function GuidedPortfolio() {
                       <h2>Résumé</h2>
                       <span>The complete story: creative leader, agency operator, technical translator, and hands-on builder of production AI systems.</span>
                     </div>
-                    <button onClick={() => setProfileOpen("resume")} type="button" aria-label="Open Adam Cagle's resume">
+                    <button onClick={() => { setProfileOpen("resume"); window.history.pushState({}, "", "/resume"); }} type="button" aria-label="Open Adam Cagle's resume">
                       Read the résumé <ArrowUpRight size={18} />
                     </button>
                   </article>
@@ -521,7 +577,7 @@ export function GuidedPortfolio() {
               </a>
             </footer>
           </aside>
-          <ProfileModals open={profileOpen} onClose={() => setProfileOpen(null)} />
+          <ProfileModals open={profileOpen} onClose={() => { setProfileOpen(null); window.history.replaceState({}, "", "/"); }} />
         </div>
     </main>
   );

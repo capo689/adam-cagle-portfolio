@@ -17,7 +17,7 @@ aliases:
   - Donkey
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.fodder.resume_v2
   - source.evidence.canonical_map
@@ -50,4 +50,3 @@ Demonstrates research persistence, curriculum architecture, technical writing, s
 ## Spoken Explanation
 
 Donkey on the Edge is Adam's attempt to learn a difficult scientific field in public. He built a structured curriculum, used multiple AI roles to challenge the writing, and documented how the ideas changed rather than pretending the project settled quantum gravity.
-

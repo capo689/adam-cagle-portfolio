@@ -23,16 +23,6 @@ export type CopyCase = {
   images: { src: string; alt: string; caption: string; description?: string }[];
 };
 
-export const copyFilters = ["All", "Hospitality", "Technology", "Consumer", "B2B", "Performance", "Brand Voice"] as const;
-export type CopyFilter = (typeof copyFilters)[number];
-
-export const favoriteLines = [
-  { client: "Killer Network", line: "Winning is Killer. Less Lag. More Frag.", fact: "Incorporation to Qualcomm acquisition in 36 months.", target: "killer" },
-  { client: "Sunset Marquis", line: "Legendary Nights Begin at Sunset.", fact: "Hotel brand and creative through 22 years of growth.", target: "sunset" },
-  { client: "Traveler Guitar", line: "The World's Most Adventurous Guitars.", fact: "Five times growth, taken direct to consumer.", target: "traveler" },
-  { client: "FileKeepers", line: "Space. The File Frontier.", fact: "The number one private record keeping firm in LA County.", target: "filekeepers" },
-];
-
 export const copyCases: CopyCase[] = [
   {
     id: "killer",
@@ -65,14 +55,14 @@ export const copyCases: CopyCase[] = [
     client: "Traveler Guitar",
     category: "Brand platform and campaign",
     headline: "THE WORLD'S MOST ADVENTUROUS GUITARS.",
-    resultLead: "Five times direct-to-consumer growth.",
+    resultLead: "DTC revenue grew from $1.1M to $5M.",
     overview: "A durable brand platform built on what the product makes possible, not merely what it weighs. The same promise carried products, commerce, retail, advertising, Amazon, and trade shows through sustained growth.",
-    presentation: "Traveler Guitar proves the difference between a product feature and a brand platform. Smaller was true, but it was not the story. The product gave musicians permission to take the instrument farther, so Adam built the brand around The World's Most Adventurous Guitars. That promise stretched across product pages, campaigns, email, Amazon, retail, dealer materials, and six trade show environments without wearing out. Direct-to-consumer revenue grew fivefold while the independent dealer relationships remained intact. One useful truth did the work of years of disconnected taglines.",
+    presentation: "Traveler Guitar proves the difference between a product feature and a brand platform. Smaller was true, but it was not the story. The product gave musicians permission to take the instrument farther, so Adam built the brand around The World's Most Adventurous Guitars. That promise stretched across product pages, campaigns, email, Amazon, retail, dealer materials, and six trade show environments without wearing out. During the broader engagement, direct-to-consumer revenue grew from roughly 1.1 million dollars to 5 million across Shopify and Amazon while the company protected its independent dealer relationships. One useful truth did the work of years of disconnected taglines.",
     context: "A campaign system built around one promise: a Traveler goes where a regular guitar cannot. One tagline and one visual grammar carried eight executions across campfires, subways, storm fronts, jungles, jet streams, and the open road. Agency689 has been at the helm for more than fifteen years.",
     problem: "A portable guitar brand needed a platform that could hold across products, players, retail, Amazon, trade shows, and advertising over years of growth. It needed more than a tagline. It needed a brand truth.",
     insight: "The product is not just smaller. It gives musicians permission to take the instrument farther. Adventure is the brand, not portability.",
     system: "Brand positioning, product copy, advertising, web copy, Amazon Store consulting, six NAMM trade show booths, print and promotional campaigns, dealer presentations, and speaker decks over more than fifteen years.",
-    outcome: "The line became a registered trademark. The company sustained steady year over year growth for a decade and grew direct to consumer sales by five times.",
+    outcome: "The line became a registered trademark. During the broader engagement, direct-to-consumer revenue grew from roughly $1.1 million to $5 million across Shopify and Amazon while the company protected its independent dealer relationships.",
     why: "A strong product line becomes a brand system when it is elastic enough to carry campaigns, commerce, and community.",
     lines: ["Sonic Bloom.", "Hey Jungle, Welcome to Me.", "Next Stop, Greatness.", "A Force of Nature.", "Flying Solo.", "Endless Strummer."],
     pullQuote: "Willie could not wait to get back on it. Roger was the king of it. And Sheryl found it winding every day.",
@@ -98,7 +88,7 @@ export const copyCases: CopyCase[] = [
     headline: "LEGENDARY NIGHTS BEGIN AT SUNSET.",
     resultLead: "Roughly $150K revenue per email.",
     overview: "More than two decades building one unmistakable voice across rooms, food, music, wellness, events, offers, and a family of hospitality brands without sanding away what made the property legendary.",
-    presentation: "Sunset Marquis is Adam's best proof that brand voice can be an operating system. For more than twenty years, the assignment has ranged from rooms and restaurant offers to concerts, spa, art, email, web, and out of home. Legendary Nights Begin at Sunset became the line every part of that world could ladder up to. The email program produces roughly one hundred fifty thousand dollars in attributed revenue per send, and performance-led banner iteration lifted return on ad spend by thirty percent. Adam later moved the judgment behind the voice into a governed copy file so designers could produce stronger first drafts without turning the property generic. The judgment lives in the system, and a person still owns the final line.",
+    presentation: "Sunset Marquis is Adam's best proof that brand voice can be an operating system. For more than twenty years, the assignment has ranged from rooms and restaurant offers to concerts, spa, art, email, web, and out of home. Legendary Nights Begin at Sunset became the line every part of that world could ladder up to. The email program produces roughly one hundred fifty thousand dollars in attributed revenue per email, and performance-led banner iteration lifted return on ad spend by thirty percent. Adam later moved the judgment behind the voice into a governed copy file so designers could produce stronger first drafts without turning the property generic. The judgment lives in the system, and a person still owns the final line.",
     context: "West Hollywood's rock and roll hotel. Campaigns, web, print, out of home, email, and in room work, plus the sub brands Cavatina, LIVE@SunsetMarquis, Bar 1200, The Spa, and The Morrison Gallery. Home away from home for rock stars, road dogs, and the occasional free radical.",
     problem: "A storied independent hotel had to grow without becoming ordinary. Every room offer, restaurant menu, concert announcement, trade sheet, and email needed to sell while belonging to the same unmistakable world.",
     insight: "The luxury is access without exposure. Sunset Marquis is both a sanctuary and part of music history, so the voice can be elegant, knowing, and willing to wink without ever trying too hard.",
@@ -152,7 +142,7 @@ export const copyCases: CopyCase[] = [
     headline: "MAKE THE BRAND PERFORM.",
     resultLead: "30% lift in banner return on ad spend.",
     overview: "High-volume email, display, and paid social work built as connected conversion paths, not isolated executions. Every campaign had to earn attention, protect the voice, and produce a measurable result.",
-    presentation: "Adam does not write copy for the sake of hearing himself say something clever. He writes it to make the numbers move. Performance marketing is where that discipline becomes visible. Banner, social, and email are different jobs: display has seconds to make one promise clear, social has to earn attention in the feed, and email carries the complete path from subject line to action. Across years of recurring campaign work, that approach produced a thirty percent lift in banner return on ad spend and roughly one hundred fifty thousand dollars in attributed revenue per Sunset Marquis email. Volume went up without allowing the brand voice to go flat.",
+    presentation: "Performance copy makes its case in the numbers while keeping the brand worth remembering. Banner, social, and email are different jobs: display has seconds to make one promise clear, social has to earn attention in the feed, and email carries the complete path from subject line to action. Across years of recurring campaign work, that discipline produced a thirty percent lift in banner return on ad spend and roughly one hundred fifty thousand dollars in attributed revenue per Sunset Marquis email. Volume went up without allowing the brand voice to go flat.",
     context: "For more than a decade, Adam created the strategy and wrote the copy for multiple email, banner, and social campaigns every month across clients and vertical markets. The assignment changes. The discipline does not: find the offer, protect the voice, make the click worth earning, and turn attention into measurable revenue.",
     problem: "High volume performance work can flatten a brand fast. Every campaign still has to sell without sounding like every other promotion in the inbox or feed.",
     insight: "Build the strategy around audience, offer, moment, and channel. Then write the subject line, headline, body copy, call to action, and variants as one connected conversion path.",

@@ -55,7 +55,7 @@ More than sixty accounts across technology, gaming, hospitality, entertainment, 
 
 ## Results
 
-- Sunset Marquis email program: approximately $150,000 per month in attributed revenue.
+- Sunset Marquis email program: approximately $150,000 in attributed revenue per email.
 - Traveler Guitar DTC: approximately $1.1 million to $5 million across Shopify and Amazon.
 - Banner return on ad spend: improved 30 percent.
 - Sunset Marquis Agency of Record relationship: since 2004.
@@ -77,4 +77,3 @@ Adam did not only run the creative. He helped win the work, scoped it, staffed i
 ## Unknowns
 
 Annual agency revenue, exact current team structure, client-by-client permissions, budget ranges, and any future transition date.
-

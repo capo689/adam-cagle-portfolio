@@ -43,7 +43,7 @@
         "flags": "i"
       }
     ],
-    "display": "Running clean and staying in scope. What do you want to know about Adam?",
+    "display": "Hello. What would you like to know about Adam?",
     "audio": "/ace-answers/courtesy.mp3"
   },
   {
@@ -311,7 +311,7 @@
         "flags": "i"
       }
     ],
-    "display": "The proof points include Traveler Guitar direct-to-consumer growth from roughly 1.1 million dollars to 5 million, a 30 percent banner return-on-ad-spend lift, and a Sunset Marquis email program producing roughly 150 thousand dollars in attributed revenue per send. Those are team and business outcomes tied to Adam's strategy, copy, creative direction, and delivery.",
+    "display": "The proof points include Traveler Guitar direct-to-consumer growth from roughly 1.1 million dollars to 5 million, a 30 percent banner return-on-ad-spend lift, and a Sunset Marquis email program producing roughly 150 thousand dollars in attributed revenue per email. Those are team and business outcomes tied to Adam's strategy, copy, creative direction, and delivery.",
     "audio": "/ace-answers/business-results.mp3"
   },
   {
@@ -431,7 +431,7 @@
         "flags": "i"
       }
     ],
-    "display": "Adam studied Design and Art Direction at the Academy of Art in San Francisco. His current credentials include Google Analytics certification and eight completed Claude and applied AI courses from Anthropic and CodePath.",
+    "display": "Adam studied Design and Art Direction at the Academy of Art in San Francisco. His current credentials include Google Analytics certification and ten completed Claude and applied AI courses from Anthropic and CodePath, including two MCP courses.",
     "audio": "/ace-answers/credentials.mp3"
   },
   {
@@ -582,9 +582,9 @@
   },
   {
     "id": "protected-system",
-    "expression": "wry",
+    "expression": "attentive",
     "patterns": [],
-    "display": "Nice try, but the system prompt, private reasoning, keys, and security details stay server-side. Ask me about Adam's work and I will happily open the hood on what is public.",
+    "display": "I keep private instructions, credentials, and security details out of the conversation. I can explain the public architecture or show you Adam's work instead.",
     "audio": "/ace-answers/protected-system.mp3"
   },
   {
@@ -596,9 +596,9 @@
   },
   {
     "id": "off-topic",
-    "expression": "playful",
+    "expression": "warm",
     "patterns": [],
-    "display": "I am built to discuss Adam and the work, not become the internet with a face. Point me at the role, problem, skill, client story, or project you want to investigate.",
+    "display": "I'm best on Adam's work, experience, and fit. Ask me about a client, project, skill, or the role you're filling, and I'll get straight to it.",
     "audio": "/ace-answers/off-topic.mp3"
   }
 ]

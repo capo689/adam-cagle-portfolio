@@ -19,7 +19,6 @@ aliases:
 entities:
   - person.adam_r_cagle
   - organization.agency689
-  - organization.agentic689
 source_ids:
   - source.fodder.resume_v2
   - source.fodder.high_yield
@@ -59,4 +58,3 @@ Do not publish unconfirmed run counts, draft counts, contributor counts, or clie
 - 15 seconds: Agency689 Writing Systems helps the team create client copy faster while retaining brand context, standards review, and human approval.
 - 30 seconds: Adam built it because generic writing tools did not know each client's voice or review process. It retrieves context, produces alternatives, checks them against standards, and routes work for human sign-off.
 - Hiring-manager explanation: It is a concrete build-over-buy and adoption example with a reported 50 percent reduction in first-draft time.
-

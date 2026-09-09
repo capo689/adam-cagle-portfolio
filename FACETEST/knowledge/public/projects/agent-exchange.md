@@ -17,7 +17,7 @@ aliases:
   - AX
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.evidence.canonical_map
   - source.public.repository
@@ -53,4 +53,3 @@ The public beta proves architecture, identity, workflow, and governance concepts
 ## Spoken Explanation
 
 Agent Exchange is an experiment in giving software agents verifiable identities and controlled marketplace behavior. The public beta can demonstrate listings and negotiation, but Adam intentionally held back payments and escrow until the trust model was ready.
-

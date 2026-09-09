@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { ExternalLink, Mail, Printer, X } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { ElectricShimmerTitle } from "@/components/electric-shimmer-title";
+import { useModalAccessibility } from "@/lib/modal-accessibility";
 
 type ProfileModalProps = {
   open: "resume" | null;
@@ -126,6 +127,8 @@ const toolkitGroups = [
 ];
 
 function ModalShell({ children, label, onClose }: { children: React.ReactNode; label: string; onClose: () => void }) {
+  const close = useCallback(() => onClose(), [onClose]);
+  const dialogRef = useModalAccessibility<HTMLElement>(true, close);
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -143,7 +146,7 @@ function ModalShell({ children, label, onClose }: { children: React.ReactNode; l
     <div className="profile-modal-backdrop" role="presentation" onMouseDown={(event) => {
       if (event.currentTarget === event.target) onClose();
     }}>
-      <section aria-label={label} aria-modal="true" className="profile-modal" role="dialog">
+      <section aria-label={label} aria-modal="true" className="profile-modal" ref={dialogRef} role="dialog" tabIndex={-1}>
         <button aria-label={`Close ${label}`} className="profile-modal-close" onClick={onClose} type="button">
           <X size={20} />
         </button>
@@ -161,7 +164,7 @@ function ResumeModal({ onClose }: { onClose: () => void }) {
         <ElectricShimmerTitle lines={["IDEAS.", "SYSTEMS.", "RESULTS."]} />
         <p className="profile-role">AI Systems Builder · Agency Founder · Brand and Copy Leader</p>
         <p className="profile-summary">
-          Adam Cagle is the rare leader who can find the idea, write the story, build the system, and run the team that ships it. For 25 years at Agency689, he has turned complicated products and ambitious companies into brands people understand and choose. Today, that same practice includes production AI: working products, governed workflows, model orchestration, retrieval, evaluation, and human approval systems.
+          For 25 years at Agency689, Adam Cagle has found the idea, written the story, built the system, and led the team responsible for shipping it. He has turned complicated products and ambitious companies into brands people understand and choose. The same practice includes working AI products, governed workflows, model orchestration, retrieval, evaluation, and human approval systems.
         </p>
         <div className="profile-actions">
           <a href="mailto:adamrcagle@gmail.com"><Mail size={16} /> Email Adam</a>
@@ -175,7 +178,7 @@ function ResumeModal({ onClose }: { onClose: () => void }) {
         <div><strong>25 years</strong><span>Building and leading Agency689</span></div>
         <div><strong>60+ accounts</strong><span>Won, led, and retained</span></div>
         <div><strong>Teams to 15</strong><span>Creative, technical, and client delivery</span></div>
-        <div><strong>Shipped AI</strong><span>Production systems, not concept decks</span></div>
+        <div><strong>Applied AI</strong><span>Production systems and governed prototypes</span></div>
       </div>
 
       <section className="resume-section">
@@ -206,7 +209,7 @@ function ResumeModal({ onClose }: { onClose: () => void }) {
             </div>
             <div>
               <span>Measured growth</span>
-              <p>Helped grow Traveler Guitar direct-to-consumer revenue from roughly $1.1 million to $5 million. Improved banner return on ad spend by 30 percent. Built a Sunset Marquis email program that produces roughly $150,000 in attributed revenue per send.</p>
+              <p>Helped grow Traveler Guitar direct-to-consumer revenue from roughly $1.1 million to $5 million. Improved banner return on ad spend by 30 percent. Built a Sunset Marquis email program that produces roughly $150,000 in attributed revenue per email.</p>
             </div>
             <div>
               <span>Enduring relationships</span>
@@ -293,7 +296,7 @@ function ResumeModal({ onClose }: { onClose: () => void }) {
 
         <div className="resume-toolkit-head">
           <p>Complete toolkit</p>
-          <h3>Every platform, language, framework, and production skill.</h3>
+          <h3>Selected platforms, languages, frameworks, and production tools.</h3>
         </div>
         <div className="resume-toolkit-grid">
           {toolkitGroups.map((group) => (

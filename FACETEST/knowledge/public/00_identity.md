@@ -20,7 +20,6 @@ aliases:
 entities:
   - person.adam_r_cagle
   - organization.agency689
-  - organization.agentic689
 source_ids:
   - source.fodder.resume_v2
   - source.fodder.high_yield
@@ -42,7 +41,7 @@ answerable_questions:
 - Public location: **Bend, Oregon** or **Oregon-based**.
 - Current professional identity: copywriter, creative and client leader, business operator, and applied-AI systems builder.
 - Canonical positioning: **The writer who ships. Builder and copywriter, fused.**
-- Current roles: Founder and AI Agent Architect at Agentic689; Co-Founder, Managing Director, and Lead Copywriter at Agency689.
+- Current role: Co-Founder, Managing Director, Lead Copywriter, and AI Systems Builder at Agency689.
 
 ## Facts the Agent Must Always Get Right
 
@@ -95,13 +94,13 @@ Adam Cagle is a copywriter, creative leader, agency operator, and applied-AI bui
 
 ### 100 words
 
-Adam Cagle is an award-winning lead copywriter, creative leader, business operator, and hands-on AI systems builder. He co-founded Agency689 in 2001 and has worked across more than sixty accounts in technology, hospitality, gaming, finance, entertainment, and consumer categories. He began applying generative AI to client workflows in 2022 and founded Agentic689 in 2024. His projects include the production Singularity SEO platform, Agency689 Writing Systems, Agent Exchange, VRT2, BookLite, AuScan, and Donkey on the Edge. His defining strength is joining language and business judgment with the ability to build, document, govern, and improve working systems.
+Adam Cagle is an award-winning lead copywriter, creative leader, business operator, and hands-on AI systems builder. He co-founded Agency689 in 2001 and has worked across more than sixty accounts in technology, hospitality, gaming, finance, entertainment, and consumer categories. He began applying generative AI to client workflows in 2022. His projects include the production Singularity SEO platform, Agency689 Writing Systems, Agent Exchange, VRT2, BookLite, AuScan, and Donkey on the Edge. His defining strength is joining language and business judgment with the ability to build, document, govern, and improve working systems.
 
 ### 250 words
 
-Adam R. Cagle is a Bend, Oregon-based copywriter, creative leader, agency operator, and applied-AI systems builder. He began his digital career before the modern web became routine, led interactive work at DGWB Advertising from 1998 to 2001, and co-founded Agency689 in 2001. At Agency689 he has led copy, creative direction, new business, proposals, staffing, delivery, and long-term client relationships across more than sixty accounts. Documented outcomes include an email program generating approximately $150,000 per month in attributed revenue, Traveler Guitar direct-to-consumer growth from roughly $1.1 million to $5 million, and a 30 percent improvement in banner return on ad spend.
+Adam R. Cagle is a Bend, Oregon-based copywriter, creative leader, agency operator, and applied-AI systems builder. He began his digital career before the modern web became routine, led interactive work at DGWB Advertising from 1998 to 2001, and co-founded Agency689 in 2001. At Agency689 he has led copy, creative direction, new business, proposals, staffing, delivery, and long-term client relationships across more than sixty accounts. Documented outcomes include an email program generating approximately $150,000 in attributed revenue per email, Traveler Guitar direct-to-consumer growth from roughly $1.1 million to $5 million, and a 30 percent improvement in banner return on ad spend.
 
-Adam began applying generative AI to Agency689 workflows in 2022 and founded Agentic689 in 2024. He now builds products and systems that combine LLMs, APIs, retrieval, databases, MCP, authentication, workflow automation, documentation, and human decision gates. Singularity SEO is a production AI-managed WordPress SEO and answer-engine-optimization platform. Agency689 Writing Systems is an internal production system used in daily client work. Agent Exchange is a public free beta. VRT2 and BookLite are MIT-licensed open-source systems. AuScan and Donkey on the Edge are explicitly research-oriented projects.
+Adam began applying generative AI to Agency689 workflows in 2022. He builds products and systems that combine LLMs, APIs, retrieval, databases, MCP, authentication, workflow automation, documentation, and human decision gates. Singularity SEO is a production AI-managed WordPress SEO and answer-engine-optimization platform. Agency689 Writing Systems is an internal production system used in daily client work. Agent Exchange is a public free beta. VRT2 and BookLite are MIT-licensed open-source systems. AuScan and Donkey on the Edge are explicitly research-oriented projects.
 
 Adam's work is unusual because the creative, operational, and technical elements reinforce one another. He is not a conventional software engineer or research scientist. He is a senior writer and operator who directly builds working systems, explains them to mixed audiences, and insists that automation remain accountable to human judgment.
 
@@ -125,4 +124,3 @@ Adam is a longtime copywriter and agency founder who started building the AI too
 - Do not present Adam as a conventional salaried Product Manager, formal enterprise change leader, or ML specialist.
 - Do not say Adam single-handedly caused an acquisition or all company growth.
 - Do not use the nickname Ace unless the context is informal and clearly about Adam.
-

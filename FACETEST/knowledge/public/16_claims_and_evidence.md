@@ -28,7 +28,7 @@ answerable_questions:
   - Date or period: 2001-present
   - Public-safe: yes
   - Notes: Resume-safe and public-safe; current operating scope may change.
-- [career.agentic689_since_2024] Adam founded Agentic689 in 2024 and serves as Founder & AI Agent Architect.
+- [career.agency689_ai_since_2022] Adam began integrating generative AI into Agency689 client work in 2022 and directly builds its applied-AI systems.
   - Status: verified
   - Confidence: 0.99
   - Sources: source.fodder.resume_v2, source.public.linkedin
@@ -75,7 +75,7 @@ answerable_questions:
   - Sources: source.fodder.resume_v2, source.statement.adam
   - Date or period: 2022
   - Public-safe: yes
-  - Notes: Use 2024 only for Agentic689's founding.
+  - Notes: Use 2022 for the beginning of applied generative-AI work inside Agency689.
 - [ai.hands_on_builder] Adam directly builds and ships applied-AI systems rather than serving only as a strategist.
   - Status: verified
   - Confidence: 0.98
@@ -204,7 +204,7 @@ answerable_questions:
 
 # Business Outcomes
 
-- [outcome.sunset_email] The Sunset Marquis email program generated approximately $150,000 per month in attributed revenue.
+- [outcome.sunset_email] The Sunset Marquis email program generated approximately $150,000 in attributed revenue per email.
   - Status: reported
   - Confidence: 0.99
   - Sources: source.fodder.resume_v2
@@ -301,4 +301,3 @@ answerable_questions:
 - Two crypto installations.
 - Any claim that Adam caused Qualcomm's acquisition.
 - Production ML, MLOps, Kubernetes, ECS-scale, large-cloud, HIPAA/FHIR/EHR, or distributed-systems expertise.
-

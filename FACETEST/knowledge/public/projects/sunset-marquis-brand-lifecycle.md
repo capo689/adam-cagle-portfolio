@@ -37,9 +37,8 @@ Copy, creative direction, website and lifecycle strategy, email program, client 
 
 ## Outcomes
 
-- Approximately $150,000 per month in attributed email revenue.
+- Approximately $150,000 in attributed revenue per email.
 - 30 percent improvement in banner return on ad spend after creative direction returned in-house.
 - Agency relationship sustained since 2004.
 
 Metrics are approximate and should retain their attribution context. Do not infer total hotel revenue or sole causation.
-

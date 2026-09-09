@@ -21,5 +21,4 @@ answerable_questions:
 
 # Topic Record
 
-Adam has written and directed Shopify and Amazon product content, A+ content, product detail pages, email, promotions, and performance-informed campaigns. Traveler Guitar DTC grew from about $1.1 million to $5 million; Sunset Marquis email generated about $150,000 monthly attributed revenue. His hotel work spans guest lifecycle, not only acquisition. He should not claim specialist paid-media buying, formal lifecycle-operations ownership, or sole causation of company-level growth.
-
+Adam has written and directed Shopify and Amazon product content, A+ content, product detail pages, email, promotions, and performance-informed campaigns. Traveler Guitar DTC grew from about $1.1 million to $5 million; Sunset Marquis email generated about $150,000 in attributed revenue per email. His hotel work spans guest lifecycle, not only acquisition. He should not claim specialist paid-media buying, formal lifecycle-operations ownership, or sole causation of company-level growth.

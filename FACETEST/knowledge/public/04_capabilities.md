@@ -45,7 +45,7 @@ answerable_questions:
 
 ## Prompt, Context, and Persona Architecture — advanced
 
-- Evidence: sole authorship of prompts, persona files, SKILL.md governance, workflow rules, brand-context systems, and white papers across the Agentic689 suite.
+- Evidence: sole authorship of prompts, persona files, SKILL.md governance, workflow rules, brand-context systems, and white papers across Agency689's AI systems.
 - Credible claim: Adam treats prompts as one layer in a broader context, tool, evaluation, and governance system.
 - Limit: do not infer formal model-training or fine-tuning expertise.
 
@@ -106,4 +106,3 @@ answerable_questions:
 
 - Evidence: client discovery, business cases, launch plans, competitive programs, project roadmaps, and prioritization across agency and product work.
 - Limit: distinguish entrepreneurial strategy from formal corporate strategy-department tenure.
-

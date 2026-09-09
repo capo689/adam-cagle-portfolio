@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 const FACETEST_ORIGIN = "https://adamcagle.com";
 
 const PASSTHROUGH_HEADERS = [
@@ -13,8 +15,14 @@ const PASSTHROUGH_HEADERS = [
   "x-facetest-provider",
   "x-facetest-voice",
   "x-facetest-voice-model",
-  "x-groq-key-slot",
 ];
+
+function clientId(request: Request) {
+  const address = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+  return createHash("sha256").update(address).digest("hex").slice(0, 24);
+}
 
 export async function proxyFacetest(request: Request, path: string, body: BodyInit) {
   const upstream = await fetch(`${FACETEST_ORIGIN}${path}`, {
@@ -22,6 +30,10 @@ export async function proxyFacetest(request: Request, path: string, body: BodyIn
     headers: {
       "Content-Type": request.headers.get("content-type") || "application/octet-stream",
       "User-Agent": "Adam-Cagle-NEWD/0.1",
+      "Origin": "https://newd-adam-cagle.vercel.app",
+      "Referer": "https://newd-adam-cagle.vercel.app/",
+      "X-FACETEST-Client-Id": clientId(request),
+      "X-FACETEST-Proxy-Token": process.env.FACETEST_PROXY_SECRET || "",
     },
     body,
     cache: "no-store",

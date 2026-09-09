@@ -102,7 +102,16 @@ function brandClientAction(query: string): SiteAction | undefined {
 
 export function resolveSiteAction(text: string): SiteAction | undefined {
   const query = normalize(text);
-  if (!query || !wantsNavigation(query)) return undefined;
+  if (!query) return undefined;
+
+  const namesAnEntity = Object.values(aliases).some((values) => includesAlias(query, values))
+    || clientLogos.some((client) => includesAlias(query, [client.name]));
+  const asksForEntity = namesAnEntity && (
+    wantsNavigation(query)
+    || /^(?:tell me about|what is|whats|explain|details? (?:on|about)|more (?:on|about))\b/.test(query)
+    || query.split(/\s+/).length <= 4
+  );
+  if (!wantsNavigation(query) && !asksForEntity) return undefined;
 
   const brandFeature = brandFeatureAction(query);
   if (brandFeature) return brandFeature;

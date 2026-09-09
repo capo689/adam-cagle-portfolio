@@ -71,7 +71,7 @@ const experiments = [
     kicker: "Comedy novel / writing sample",
     title: "Ship Happens",
     line: "A Chad Cruz Zombie Adventure.",
-    copy: "Chad Cruz is thirty-four, newly fired, and living in a studio apartment with a ceiling stain named Gary. When his estranged aunt dies and leaves him cruise tickets, he boards a seniors ship as the youngest passenger by four decades. The zombies start on day two.",
+    copy: "Chad Cruz is thirty-four, newly fired, and living in a studio apartment with a ceiling stain named Gary. When his estranged aunt dies and leaves him cruise tickets, he boards a cruise ship full of seniors as the youngest passenger by four decades. The zombies start on day two.",
     image: "/fun/ship-happens.webp",
     alt: "Ship Happens comedy novel artwork",
     href: "https://www.amazon.com/dp/B0H1J97VMM",

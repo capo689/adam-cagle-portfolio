@@ -17,7 +17,7 @@ aliases:
   - Au Scan
 entities:
   - person.adam_r_cagle
-  - organization.agentic689
+  - organization.agency689
 source_ids:
   - source.evidence.canonical_map
   - source.public.repository
@@ -45,4 +45,3 @@ The prototype demonstrates multimodal research, evidence assembly, geospatial UX
 ## Spoken Explanation
 
 AuScan is a research instrument Adam built to test whether Claude Vision and different satellite sensors could identify terrain patterns worth human investigation. It is evidence of multimodal prototyping, not a claim that AI can reliably discover mines.
-

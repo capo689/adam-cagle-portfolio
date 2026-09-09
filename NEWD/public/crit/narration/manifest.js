@@ -1,0 +1,33 @@
+window.WORKFLOW_NARRATION = {
+  model: 'fish-audio/s2.1-pro-free:free',
+  voice: 'ACE',
+  format: 'mp3',
+  rate: 1,
+  postRoll: 0.25,
+  intro: {id:'intro',src:'/crit/narration/audio/00-intro.mp3',duration:40.958},
+  segments: [
+    {id:'brief',src:'/crit/narration/audio/01-brief.mp3',duration:10.635},
+    {id:'brieflock',src:'/crit/narration/audio/02-brieflock.mp3',duration:6.455},
+    {id:'work',src:'/crit/narration/audio/03-work.mp3',duration:15.836},
+    {id:'registry',src:'/crit/narration/audio/04-registry.mp3',duration:11.471},
+    {id:'decompose',src:'/crit/narration/audio/05-decompose.mp3',duration:13.003},
+    {id:'strategy',src:'/crit/narration/audio/06-strategy.mp3',duration:15.093},
+    {id:'claims',src:'/crit/narration/audio/07-claims.mp3',duration:9.427},
+    {id:'implied',src:'/crit/narration/audio/08-implied.mp3',duration:13.886},
+    {id:'proof',src:'/crit/narration/audio/09-proof.mp3',duration:11.146},
+    {id:'substantiate',src:'/crit/narration/audio/10-substantiate.mp3',duration:14.489},
+    {id:'claimlog',src:'/crit/narration/audio/11-claimlog.mp3',duration:10.356},
+    {id:'voice',src:'/crit/narration/audio/12-voice.mp3',duration:15.882},
+    {id:'voicegate',src:'/crit/narration/audio/13-voicegate.mp3',duration:9.845},
+    {id:'partial',src:'/crit/narration/audio/14-partial.mp3',duration:8.916},
+    {id:'voicepass',src:'/crit/narration/audio/15-voicepass.mp3',duration:7.106},
+    {id:'craft',src:'/crit/narration/audio/16-craft.mp3',duration:13.282},
+    {id:'access',src:'/crit/narration/audio/17-access.mp3',duration:17.369},
+    {id:'rightsdetect',src:'/crit/narration/audio/18-rightsdetect.mp3',duration:6.269},
+    {id:'rightsowner',src:'/crit/narration/audio/19-rightsowner.mp3',duration:8.684},
+    {id:'rightsgate',src:'/crit/narration/audio/20-rightsgate.mp3',duration:6.084},
+    {id:'cd',src:'/crit/narration/audio/21-cd.mp3',duration:15.511},
+    {id:'record',src:'/crit/narration/audio/22-record.mp3',duration:16.478},
+    {id:'calibration',src:'/crit/narration/audio/23-calibration.mp3',duration:12.074}
+  ]
+};

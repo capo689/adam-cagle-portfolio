@@ -3,6 +3,29 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      { source: "/index.html", destination: "/", permanent: true },
+      { source: "/copywriting.html", destination: "/copy", permanent: true },
+      { source: "/technical-writing.html", destination: "/copy", permanent: true },
+      { source: "/managing-director.html", destination: "/brand", permanent: true },
+      { source: "/creative-direction.html", destination: "/brand", permanent: true },
+      { source: "/creative-writing.html", destination: "/fun", permanent: true },
+      { source: "/ux-ui.html", destination: "/ai", permanent: true },
+      { source: "/ai-systems.html", destination: "/ai", permanent: true },
+      { source: "/ai-systems_new.html", destination: "/ai", permanent: true },
+      { source: "/ai-enablement.html", destination: "/ai", permanent: true },
+      { source: "/mobile/resume.html", destination: "/resume", permanent: true },
+      { source: "/mobile/copywriting.html", destination: "/copy", permanent: true },
+      { source: "/mobile/managing-director.html", destination: "/brand", permanent: true },
+      { source: "/mobile/creative-direction.html", destination: "/brand", permanent: true },
+      { source: "/mobile/ai-systems.html", destination: "/ai", permanent: true },
+      { source: "/mobile/ai-enablement.html", destination: "/ai", permanent: true },
+      { source: "/writing-samples/:path*", destination: "/fun", permanent: true },
+      { source: "/wpaper/singularity-seo-white-paper-light.html", destination: "/ai/singularity", permanent: true },
+      { source: "/wpaper/:path*", destination: "/ai", permanent: true },
+    ];
+  },
   async headers() {
     return [{
       source: "/:path*",
@@ -34,12 +57,11 @@ const nextConfig: NextConfig = {
     ];
     return {
       beforeFiles: [
-        {source: "/workflows/:workflow", destination: "https://adamcagle.com/:workflow"},
-        {source: "/workflows/:workflow/:path*", destination: "https://adamcagle.com/:workflow/:path*"},
-        {source: "/guided-tools/:path*", destination: "https://adamcagle.com/guided-tools/:path*"},
+        {source: "/workflows/:workflow", destination: "/:workflow/index.html"},
+        {source: "/workflows/:workflow/:path*", destination: "/:workflow/:path*"},
         ...workflows.map((workflow) => ({
-          source: `/${workflow}/:path*`,
-          destination: `https://adamcagle.com/${workflow}/:path*`,
+          source: `/${workflow}`,
+          destination: `/${workflow}/index.html`,
         })),
       ],
     };

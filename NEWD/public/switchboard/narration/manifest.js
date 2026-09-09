@@ -1,0 +1,30 @@
+window.WORKFLOW_NARRATION = {
+  model: 'fish-audio/s2.1-pro-free:free',
+  voice: 'ACE',
+  format: 'mp3',
+  rate: 1,
+  postRoll: 0.25,
+  intro: {id:'intro',src:'/switchboard/narration/audio/00-intro.mp3',duration:37.103},
+  segments: [
+    {id:'request',src:'/switchboard/narration/audio/01-request.mp3',duration:13.886},
+    {id:'classify',src:'/switchboard/narration/audio/02-classify.mp3',duration:10.077},
+    {id:'registry',src:'/switchboard/narration/audio/03-registry.mp3',duration:11.192},
+    {id:'policy',src:'/switchboard/narration/audio/04-policy.mp3',duration:9.195},
+    {id:'router',src:'/switchboard/narration/audio/05-router.mp3',duration:11.842},
+    {id:'sensitivity',src:'/switchboard/narration/audio/06-sensitivity.mp3',duration:8.173},
+    {id:'local',src:'/switchboard/narration/audio/07-local.mp3',duration:9.520},
+    {id:'cachegate',src:'/switchboard/narration/audio/08-cachegate.mp3',duration:12.260},
+    {id:'cache',src:'/switchboard/narration/audio/09-cache.mp3',duration:9.056},
+    {id:'cheap',src:'/switchboard/narration/audio/10-cheap.mp3',duration:10.077},
+    {id:'signals',src:'/switchboard/narration/audio/11-signals.mp3',duration:12.307},
+    {id:'escalate',src:'/switchboard/narration/audio/12-escalate.mp3',duration:9.752},
+    {id:'repairgate',src:'/switchboard/narration/audio/13-repairgate.mp3',duration:8.081},
+    {id:'repair',src:'/switchboard/narration/audio/14-repair.mp3',duration:9.056},
+    {id:'revalidate',src:'/switchboard/narration/audio/15-revalidate.mp3',duration:8.638},
+    {id:'human',src:'/switchboard/narration/audio/16-human.mp3',duration:9.659},
+    {id:'result',src:'/switchboard/narration/audio/17-result.mp3',duration:6.780},
+    {id:'telemetry',src:'/switchboard/narration/audio/18-telemetry.mp3',duration:12.492},
+    {id:'budget',src:'/switchboard/narration/audio/19-budget.mp3',duration:7.245},
+    {id:'dashboard',src:'/switchboard/narration/audio/20-dashboard.mp3',duration:16.951}
+  ]
+};

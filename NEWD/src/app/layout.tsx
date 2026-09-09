@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 
@@ -28,13 +29,13 @@ export const metadata: Metadata = {
     url: "/",
     title: "Adam R. Cagle | AI, Brand and Copy",
     description: "Agency founder, copywriter, brand leader, and hands-on applied AI systems builder.",
-    images: [{ url: "/brand/agency689-site-frame.jpeg", width: 1536, height: 864, alt: "Agency689 generative AI film created by Adam Cagle" }],
+    images: [{ url: "/og/main", width: 1200, height: 630, alt: "Adam R. Cagle, AI systems, brand and copy" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Adam R. Cagle | AI, Brand and Copy",
     description: "Agency founder, copywriter, brand leader, and hands-on applied AI systems builder.",
-    images: ["/brand/agency689-site-frame.jpeg"],
+    images: ["/og/main"],
   },
 };
 
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${barlow.variable} ${barlowCondensed.variable}`}>
       <body>
         {children}
+        <Analytics />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profile).replace(/</g, "\\u003c") }} />
       </body>
     </html>

@@ -3,9 +3,7 @@ import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const repositoryRoot = resolve(root, "..");
 const failures = [];
-const { guardAceRequest } = await import(join(repositoryRoot, "api", "_ace-copy-system.mjs"));
 
 function walk(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -20,8 +18,6 @@ function check(condition, message) {
 
 const textFiles = [
   ...walk(join(root, "src")),
-  ...walk(join(repositoryRoot, "FACETEST", "knowledge", "public")),
-  join(repositoryRoot, "api", "_facetest-knowledge.generated.mjs"),
 ].filter((path) => [".ts", ".tsx", ".js", ".mjs", ".json", ".md"].includes(extname(path)));
 const corpus = textFiles.map((path) => readFileSync(path, "utf8")).join("\n");
 const truthCorpus = textFiles
@@ -32,20 +28,26 @@ const truthCorpus = textFiles
 check(!/per month|monthly attributed|monthly revenue|per send|a month/i.test(truthCorpus), "Sunset Marquis metric drifted away from per email.");
 check(!/face for the internet|internet with a face/i.test(corpus), "The retired snippy ACE line returned.");
 check(!/\bTroy\b/.test(readFileSync(join(root, "src", "lib", "facetest-voice-stream.ts"), "utf8")), "The retired Troy agent name returned to the voice runtime.");
-check(!/Agentic\s*689/i.test(readFileSync(join(repositoryRoot, "api", "_facetest-knowledge.generated.mjs"), "utf8")), "Agentic689 leaked into the public ACE index.");
-check(!guardAceRequest("Tell me about Sunset Marquis."), "ACE misclassified a named client as off-topic.");
+check(!/Agentic\s*689/i.test(readFileSync(join(root, "src", "content", "adam-knowledge.generated.ts"), "utf8")), "Agentic689 leaked into the public ACE index.");
 const chatRoute = readFileSync(join(root, "src", "app", "api", "facetest-next-chat", "route.ts"), "utf8");
 check(!/function scopeBoundary/.test(chatRoute), "The frontend API restored the brittle generic scope gate.");
-check(chatRoute.includes("X-FACETEST-Proxy-Token"), "The chat proxy is missing its private upstream credential.");
+check(chatRoute.includes("retrieveAdamKnowledge"), "ACE chat is missing its local reviewed knowledge retrieval.");
+check(!chatRoute.includes("https://adamcagle.com/api/"), "ACE chat still depends on the retired site backend.");
 check(chatRoute.includes("per send|per month|per campaign|a month"), "The Sunset Marquis output-unit lock is missing.");
 
 const siteActions = readFileSync(join(root, "src", "lib", "site-actions.ts"), "utf8");
 for (const alias of ["sunset marquis", "sunset marquess", "sunset marquee", "sunset market", "sunset"]) {
   check(siteActions.includes(`\"${alias}\"`), `ACE navigation is missing the Sunset Marquis alias: ${alias}.`);
 }
-const transcriptionRoute = readFileSync(join(repositoryRoot, "api", "facetest-transcribe.mjs"), "utf8");
+const transcriptionRoute = readFileSync(join(root, "src", "app", "api", "facetest-transcribe", "route.ts"), "utf8");
 check(transcriptionRoute.includes('form.append("model", "whisper-large-v3")'), "ACE transcription is not using the accuracy-first Whisper model.");
-check(transcriptionRoute.includes('form.append("prompt", PORTFOLIO_VOCABULARY)'), "ACE transcription is missing the portfolio vocabulary prompt.");
+check(transcriptionRoute.includes('form.append("prompt", portfolioVocabulary)'), "ACE transcription is missing the portfolio vocabulary prompt.");
+
+const workflows = ["proving-ground", "field-kit", "conversion-forge", "answer-field", "switchboard", "synthetic-audience-lab", "crit", "reading-room", "canon", "backlot", "migration_new"];
+for (const workflow of workflows) {
+  check(existsSync(join(root, "public", workflow, "index.html")), `Missing self-contained workflow ${workflow}.`);
+}
+check(existsSync(join(root, "public", "guided-tools", "lib", "guided-engine.js")), "Missing shared guided-workflow engine.");
 
 const figueroaPages = readdirSync(join(root, "public", "brand", "hotel-figueroa-book"))
   .filter((name) => /^HotelFigueroa \d+\.jpeg$/.test(name));

@@ -1,0 +1,32 @@
+window.WORKFLOW_NARRATION = {
+  model: 'fish-audio/s2.1-pro-free:free',
+  voice: 'ACE',
+  format: 'mp3',
+  rate: 1,
+  postRoll: 0.25,
+  intro: {id:'intro',src:'/reading-room/narration/audio/00-intro.mp3',duration:37.135},
+  segments: [
+    {id:'sources',src:'/reading-room/narration/audio/01-sources.mp3',duration:10.217},
+    {id:'chunk',src:'/reading-room/narration/audio/02-chunk.mp3',duration:10.913},
+    {id:'ingestgate',src:'/reading-room/narration/audio/03-ingestgate.mp3',duration:10.542},
+    {id:'index',src:'/reading-room/narration/audio/04-index.mp3',duration:12.818},
+    {id:'mcp',src:'/reading-room/narration/audio/05-mcp.mp3',duration:8.266},
+    {id:'question',src:'/reading-room/narration/audio/06-question.mp3',duration:11.703},
+    {id:'registry',src:'/reading-room/narration/audio/07-registry.mp3',duration:9.567},
+    {id:'classify',src:'/reading-room/narration/audio/08-classify.mp3',duration:11.006},
+    {id:'retrieve',src:'/reading-room/narration/audio/09-retrieve.mp3',duration:4.644},
+    {id:'rerank',src:'/reading-room/narration/audio/10-rerank.mp3',duration:6.966},
+    {id:'firewall',src:'/reading-room/narration/audio/11-firewall.mp3',duration:10.356},
+    {id:'retgate',src:'/reading-room/narration/audio/12-retgate.mp3',duration:10.217},
+    {id:'synthesis',src:'/reading-room/narration/audio/13-synthesis.mp3',duration:12.307},
+    {id:'verify',src:'/reading-room/narration/audio/14-verify.mp3',duration:10.635},
+    {id:'groundgate',src:'/reading-room/narration/audio/15-groundgate.mp3',duration:13.700},
+    {id:'authority',src:'/reading-room/narration/audio/16-authority.mp3',duration:16.672},
+    {id:'handoff',src:'/reading-room/narration/audio/17-handoff.mp3',duration:18.032},
+    {id:'gap',src:'/reading-room/narration/audio/18-gap.mp3',duration:7.941},
+    {id:'cluster',src:'/reading-room/narration/audio/19-cluster.mp3',duration:9.706},
+    {id:'draft',src:'/reading-room/narration/audio/20-draft.mp3',duration:11.982},
+    {id:'approve',src:'/reading-room/narration/audio/21-approve.mp3',duration:9.659},
+    {id:'grow',src:'/reading-room/narration/audio/22-grow.mp3',duration:20.570}
+  ]
+};

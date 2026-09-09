@@ -37,11 +37,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const brandTitle = section === "brand" && id === "agency" ? "Agency Six Eight Nine" : section === "brand" && id === "figueroa" ? "Hotel Figueroa" : undefined;
   const title = ai?.title || copy?.client || brandTitle || titles[section] || "Portfolio";
   const description = ai?.summary || copy?.overview || `Explore Adam Cagle's ${title.toLowerCase()} work.`;
+  const card = ["ai", "brand", "copy", "fun", "resume"].includes(section) ? section : "main";
   return {
     title,
     description,
     alternates: { canonical: `/${slug.join("/")}` },
-    openGraph: { title, description, url: `/${slug.join("/")}` },
+    openGraph: {
+      title,
+      description,
+      url: `/${slug.join("/")}`,
+      images: [{ url: `/og/${card}`, width: 1200, height: 630, alt: `${title} by Adam R. Cagle` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`/og/${card}`],
+    },
   };
 }
 

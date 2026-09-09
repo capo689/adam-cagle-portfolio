@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Play, Square, Volume2, X } from "lucide-react";
 import { ElectricShimmerTitle } from "@/components/electric-shimmer-title";
+import { BrandClientWall } from "@/components/brand-client-wall";
 import { figueroaBookPages } from "@/content/figueroa-book";
 import { showAceNarration } from "@/lib/ace-transcript";
-import { clientLogos } from "@/content/brand-clients";
 import { useModalAccessibility } from "@/lib/modal-accessibility";
 
 const agencyStory = "Agency689 is where Adam's full range becomes one practice. He co-founded the agency in 2001 and has spent twenty-five years helping clients find the strategic idea, shape the brand, write the language, direct the work, build the experience, and stay accountable for what happens after launch. He also built and wrote the current Agency689 site and created its generative AI introduction film. That is the point of the work: the person defining the idea stays close enough to make sure every expression of it still means the same thing.";
@@ -276,22 +276,7 @@ export function BrandPage({ voiceEnabled }: { voiceEnabled: boolean }) {
         </div>
       </section>
 
-      <section className="brand-client-wall">
-        <div className="brand-section-head split">
-          <div>
-            <p className="kicker">Selected client experience</p>
-            <h2>BRANDS I&apos;VE HELPED BUILD.</h2>
-          </div>
-          <p>My work spans technology, hospitality, entertainment, finance, consumer products, real estate, and professional services.</p>
-        </div>
-        <div className="brand-client-grid" aria-label="Selected client logos">
-          {clientLogos.map((logo) => (
-            <div className={`brand-client-mark${logo.treatment ? ` brand-client-mark-${logo.treatment}` : ""}`} data-client={logo.name} key={logo.name}>
-              <Image src={logo.src} alt={logo.name} fill sizes="(max-width: 640px) 50vw, (max-width: 980px) 33vw, 25vw" />
-            </div>
-          ))}
-        </div>
-      </section>
+      <BrandClientWall />
 
       {lightbox !== null && createPortal(
         <div className="brand-lightbox" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setLightbox(null)}>

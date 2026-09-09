@@ -17,6 +17,7 @@ import { EntryParticleField } from "@/components/entry-particle-field";
 import { AiPage } from "@/components/ai-page";
 import { CopywritingPage } from "@/components/copywriting-page";
 import { BrandPage } from "@/components/brand-page";
+import { BrandClientWall } from "@/components/brand-client-wall";
 import { FunPage } from "@/components/fun-page";
 import { ElectricShimmerTitle } from "@/components/electric-shimmer-title";
 import { ProfileModals } from "@/components/profile-modals";
@@ -102,9 +103,10 @@ const cards = [
   {
     section: "AI" as Section,
     eyebrow: "AI systems",
-    title: "Practical intelligence, built to ship",
+    title: "Intelligence, built to ship",
     copy: "Working AI products that turn content, research, creative development, and conversion strategy into usable systems.",
     facets: ["AI", "Product", "Workflow"],
+    cta: "Explore AI systems",
   },
   {
     section: "Brand" as Section,
@@ -112,6 +114,7 @@ const cards = [
     title: "Brands people can believe in",
     copy: "Positioning, identity, campaigns, and team leadership across hospitality, technology, entertainment, and consumer products.",
     facets: ["Brand", "Hospitality", "Leadership"],
+    cta: "See the brand work",
   },
   {
     section: "Copywriting" as Section,
@@ -119,6 +122,7 @@ const cards = [
     title: "Language with a job to do",
     copy: "Voice systems and conversion-minded writing that make complicated offers clear, distinct, and worth choosing.",
     facets: ["Copy", "Voice", "Growth"],
+    cta: "Read the copy work",
   },
 ];
 
@@ -510,7 +514,9 @@ export function GuidedPortfolio() {
                         <ul aria-label="Work categories">
                           {card.facets.map((facet) => <li key={facet}>{facet}</li>)}
                         </ul>
-                        <button onClick={() => openSection(card.section)} type="button" aria-label={`Open ${card.title}`}><ArrowUpRight size={18} /></button>
+                        <button onClick={() => openSection(card.section)} type="button" aria-label={`Open ${card.title}`}>
+                          {card.cta} <ArrowUpRight size={18} />
+                        </button>
                       </article>
                     ))}
                 </div>
@@ -526,6 +532,8 @@ export function GuidedPortfolio() {
                     Explore the side quests <ArrowUpRight size={18} />
                   </button>
                 </article>
+
+                <BrandClientWall placement="home" />
               </>
             )}
           </section>

@@ -92,6 +92,8 @@ function resetPlayback() {
 function stop() {
   speechSequence++;
   resetPlayback();
+  face()?.setState("listening");
+  announce("ready");
 }
 
 function speechPayload(text: string) {

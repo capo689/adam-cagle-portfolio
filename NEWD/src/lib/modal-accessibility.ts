@@ -4,7 +4,9 @@ import { useEffect, useRef } from "react";
 
 const dialogs: HTMLElement[] = [];
 const backgroundLocks = new Map<HTMLElement, { count: number; ariaHidden: string | null; inert: boolean }>();
-const backgroundSelector = ".site-header, .content-window, .voice-rail, .face-portal, .ace-rail-title";
+// Detail views intentionally leave ACE's rail available beside the modal.
+// Lock only the underlying site surface so STOP ACE and text chat remain usable.
+const backgroundSelector = ".site-header, .content-window";
 
 function lockBackground(dialog: HTMLElement) {
   const elements = Array.from(document.querySelectorAll<HTMLElement>(backgroundSelector));

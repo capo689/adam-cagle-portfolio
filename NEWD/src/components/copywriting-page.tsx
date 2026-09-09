@@ -126,6 +126,15 @@ export function CopywritingPage({ voiceEnabled }: { voiceEnabled: boolean }) {
   }, [selected]);
 
   useEffect(() => {
+    const onGlobalStop = () => {
+      playId.current += 1;
+      setPlayback("idle");
+    };
+    window.addEventListener("facetest:speech-stopped", onGlobalStop);
+    return () => window.removeEventListener("facetest:speech-stopped", onGlobalStop);
+  }, []);
+
+  useEffect(() => {
     if (!selected && !lightbox) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";

@@ -181,7 +181,17 @@ export const copyCases: CopyCase[] = [
     tags: ["Brand Voice", "Messaging Architecture", "Website Copy", "International", "Hospitality"],
     industries: ["Hospitality", "Travel", "Consumer"],
     channels: ["Web", "Property Pages", "Offers", "City Guides"],
-    images: [{ src: "/copywriting/clink-amsterdam.jpg", alt: "Clink Hostels Amsterdam website", caption: "One brand voice across four European cities." }],
+    images: [
+      { src: "/copywriting/clink-homepage.webp", alt: "Clink Hostels website homepage", caption: "The Clink Hostels homepage brings the brand voice and booking journey together." },
+      { src: "/copywriting/clink-clink78.webp", alt: "Clink78 property page", caption: "Clink78 property storytelling." },
+      { src: "/copywriting/clink-clink261.webp", alt: "Clink261 property page", caption: "Clink261 property storytelling." },
+      { src: "/copywriting/clink-london.webp", alt: "Clink Hostels London destination page", caption: "London destination copy." },
+      { src: "/copywriting/clink-amsterdam.webp", alt: "Clink Hostels Amsterdam destination page", caption: "Amsterdam destination copy." },
+      { src: "/copywriting/clink-dublin.webp", alt: "Clink Hostels Dublin destination page", caption: "Dublin destination copy." },
+      { src: "/copywriting/clink-groups.webp", alt: "Clink Hostels group travel page", caption: "Group travel messaging." },
+      { src: "/copywriting/clink-offers.webp", alt: "Clink Hostels offers page", caption: "Offers written in the same recognizable voice." },
+      { src: "/copywriting/clink-city-tips.webp", alt: "Clink Hostels city tips page", caption: "City guidance that keeps the brand in the journey." },
+    ],
   },
   {
     id: "filekeepers",

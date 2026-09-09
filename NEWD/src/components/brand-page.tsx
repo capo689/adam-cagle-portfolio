@@ -126,6 +126,12 @@ export function BrandPage({ voiceEnabled }: { voiceEnabled: boolean }) {
   }
 
   useEffect(() => {
+    const onGlobalStop = () => setSpeaking(null);
+    window.addEventListener("facetest:speech-stopped", onGlobalStop);
+    return () => window.removeEventListener("facetest:speech-stopped", onGlobalStop);
+  }, []);
+
+  useEffect(() => {
     const scrollToTarget = (selector: string) => {
       window.requestAnimationFrame(() => document.querySelector<HTMLElement>(selector)?.scrollIntoView({ block: "start", behavior: "smooth" }));
     };

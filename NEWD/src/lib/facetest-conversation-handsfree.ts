@@ -604,7 +604,7 @@ function siteIsReady() {
 
 async function startPress() {
   if (outOfCredits || !siteIsReady()) return;
-  if (busy || speaking) {
+  if (busy || speaking || mic.dataset.state === "thinking" || mic.dataset.state === "speaking") {
     hardStop();
     return;
   }
@@ -690,7 +690,7 @@ window.addEventListener("facetest:ready", () => {
 });
 
 window.addEventListener("facetest:voice-state", (event) => {
-  if (!sessionActive || outOfCredits) return;
+  if (outOfCredits) return;
   const state = (event as CustomEvent<{state?: string}>).detail?.state;
   if (state === "speaking") {
     speaking = true;
@@ -705,9 +705,11 @@ window.addEventListener("facetest:voice-state", (event) => {
     setControl("speaking", "Stop ACE");
   } else if (state === "ready") {
     speaking = false;
-    setControl("idle", "Hold to talk");
-    setStatus(`${agentName} · ready`);
-    window.FACE?.setState("idle");
+    if (siteIsReady()) {
+      setControl("idle", "Hold to talk");
+      setStatus(`${agentName} · ready`);
+      window.FACE?.setState("idle");
+    }
   }
 });
 

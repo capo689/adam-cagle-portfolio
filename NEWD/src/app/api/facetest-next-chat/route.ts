@@ -106,8 +106,8 @@ function sanitizeDynamicReply(raw: string) {
     .replace(/Agency\s*(?:six\s+hundred(?:\s+and)?\s+eighty[-\s]?nine|six[-\s]?eighty[-\s]?nine|689)/gi, "Agency689")
     .replace(/\bmonthly attributed revenue\b/gi, "attributed revenue per email")
     .replace(/\b(?:per send|per month|per campaign|a month)\b/gi, "per email")
-    .replace(/\s*[—–]\s*/g, ", ")
-    .replace(/,(?=\S)/g, ", ")
+    .replace(/\s*[—–]\s*/g, ". ")
+    .replace(/,([A-Za-z])/g, ", $1")
     .replace(/[*#`_]/g, "")
     .replace(/\s+/g, " ")
     .trim();

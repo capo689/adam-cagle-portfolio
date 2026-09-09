@@ -158,7 +158,13 @@ export async function POST(request: Request) {
 
   const upstream = await fetch(UPSTREAM, {
     method: "POST",
-    headers: {"Content-Type": "application/json", "User-Agent": "Adam-Cagle-NEWD-ACE/1.0"},
+    headers: {
+      "Content-Type": "application/json",
+      "User-Agent": "Adam-Cagle-NEWD-ACE/1.0",
+      "Origin": "https://newd-adam-cagle.vercel.app",
+      "Referer": "https://newd-adam-cagle.vercel.app/",
+      "X-FACETEST-Proxy-Token": process.env.FACETEST_PROXY_SECRET || "",
+    },
     body: JSON.stringify({messages: upstreamMessages}),
     cache: "no-store",
     signal: AbortSignal.timeout(45000),

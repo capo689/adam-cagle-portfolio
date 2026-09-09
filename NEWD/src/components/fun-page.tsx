@@ -50,7 +50,7 @@ const experiments = [
     title: "Donkey on the Edge",
     line: "From F = ma to quantum gravity.",
     copy: "An end-to-end physics course built from first principles, spanning thirty-eight documents from classical mechanics to quantum gravity. The work culminated in a research paper with original equations exploring how computational complexity changes the observer effect in quantum physics, with AI-assisted author, editor, and adversarial-review loops testing every step.",
-    image: "/fun/donkey-equations.png",
+    image: "/fun/donkey-equations.webp",
     alt: "Equation and research plate from Donkey on the Edge",
     href: "https://donkey-mauve.vercel.app/",
     action: "Enter the research site",

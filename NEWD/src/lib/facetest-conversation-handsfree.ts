@@ -418,12 +418,20 @@ async function performSiteAction(userText: string, action: SiteAction, generatio
   remember({role: "assistant", content: action.confirmation});
   showTranscript(userText, action.confirmation);
   window.FACE?.perform("warm", .68, 5.5);
-  await window.FACETEST?.speak(action.confirmation, {name: "warm", intensity: .68});
-  if (generation !== turnGeneration) return;
+  const confirmationSpeech = window.FACETEST?.speak(action.confirmation, {name: "warm", intensity: .68});
 
-  window.dispatchEvent(new CustomEvent("newd:navigate", {detail: {section: action.section, suppressIntro: action.kind !== "section"}}));
+  if (action.kind === "section") {
+    await confirmationSpeech?.catch(() => {});
+    if (generation !== turnGeneration) return;
+    window.dispatchEvent(new CustomEvent("newd:navigate", {detail: {section: action.section, suppressIntro: false}}));
+    return;
+  }
+
+  window.dispatchEvent(new CustomEvent("newd:navigate", {detail: {section: action.section, suppressIntro: true}}));
   const mounted = await waitForElement(sectionRoots[action.section], generation);
   if (!mounted || generation !== turnGeneration) return;
+  await confirmationSpeech?.catch(() => {});
+  if (generation !== turnGeneration) return;
   await new Promise((resolve) => window.setTimeout(resolve, 80));
   if (generation !== turnGeneration) return;
 

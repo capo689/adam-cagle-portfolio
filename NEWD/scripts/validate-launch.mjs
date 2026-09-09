@@ -39,6 +39,14 @@ check(!/function scopeBoundary/.test(chatRoute), "The frontend API restored the 
 check(chatRoute.includes("X-FACETEST-Proxy-Token"), "The chat proxy is missing its private upstream credential.");
 check(chatRoute.includes("per send|per month|per campaign|a month"), "The Sunset Marquis output-unit lock is missing.");
 
+const siteActions = readFileSync(join(root, "src", "lib", "site-actions.ts"), "utf8");
+for (const alias of ["sunset marquis", "sunset marquess", "sunset marquee", "sunset market", "sunset"]) {
+  check(siteActions.includes(`\"${alias}\"`), `ACE navigation is missing the Sunset Marquis alias: ${alias}.`);
+}
+const transcriptionRoute = readFileSync(join(repositoryRoot, "api", "facetest-transcribe.mjs"), "utf8");
+check(transcriptionRoute.includes('form.append("model", "whisper-large-v3")'), "ACE transcription is not using the accuracy-first Whisper model.");
+check(transcriptionRoute.includes('form.append("prompt", PORTFOLIO_VOCABULARY)'), "ACE transcription is missing the portfolio vocabulary prompt.");
+
 const figueroaPages = readdirSync(join(root, "public", "brand", "hotel-figueroa-book"))
   .filter((name) => /^HotelFigueroa \d+\.jpeg$/.test(name));
 check(figueroaPages.length === 61, `Expected 61 Figueroa brand-book pages; found ${figueroaPages.length}.`);

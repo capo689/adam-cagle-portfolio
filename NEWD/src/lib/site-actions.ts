@@ -15,7 +15,19 @@ export type SiteAction = {
 const aliases: Record<string, string[]> = {
   killer: ["killer network", "killer networks", "killer nic"],
   traveler: ["traveler guitar", "traveller guitar", "traveler"],
-  sunset: ["sunset marquis", "the sunset marquis"],
+  sunset: [
+    "sunset marquis",
+    "the sunset marquis",
+    "sunset marquis hotel",
+    "sunset marquess",
+    "sunset marquise",
+    "sunset marquee",
+    "sunset marquees",
+    "sunset marques",
+    "sunset market",
+    "sunset markets",
+    "sunset",
+  ],
   figueroa: ["hotel figueroa", "figueroa hotel", "figueroa"],
   performance: ["performance marketing", "performance work"],
   clink: ["clink hostels", "clink hostel", "clink"],
@@ -36,7 +48,16 @@ const aliases: Record<string, string[]> = {
 };
 
 function normalize(value: string) {
-  return value.toLowerCase().normalize("NFKD").replace(/[’']/g, "").replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
+  return value
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[’']/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\bsun\s+set\b/g, "sunset")
+    .replace(/\bsunset\s+(?:marquess|marquise|marquee|marquees|marques|market|markets)\b/g, "sunset marquis")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function includesAlias(query: string, values: string[]) {

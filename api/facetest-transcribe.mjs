@@ -5,6 +5,13 @@ export const config = {api: {bodyParser: false}};
 
 const GROQ_URL = "https://api.groq.com/openai/v1/audio/transcriptions";
 const MAX_AUDIO_BYTES = 12 * 1024 * 1024;
+const PORTFOLIO_VOCABULARY = [
+  "ACE and Adam Cagle portfolio navigation.",
+  "Agency689, pronounced Agency Six Eight Nine.",
+  "Sunset Marquis, Traveler Guitar, Killer Network, Hotel Figueroa, NAVIS, FileKeepers, Clink Hostels.",
+  "Singularity SEO, Legacy Content Migrator, Conversion Forge, Proving Ground, Field Kit, Switchboard, Synthetic Audience Lab, CRIT, Reading Room, Canon, Backlot, Answer Field.",
+  "The speaker may say open, show, load, launch, pull up, bring up, take me to, or walk me through.",
+].join(" ");
 
 function reject(res, status, error, code) {
   res.status(status).json(code ? {error, code} : {error});
@@ -38,8 +45,9 @@ export default async function handler(req, res) {
   const extension = mime.includes("ogg") ? "ogg" : mime.includes("mp4") ? "m4a" : "webm";
   const form = new FormData();
   form.append("file", new Blob([audio], {type: mime}), `voice.${extension}`);
-  form.append("model", "whisper-large-v3-turbo");
+  form.append("model", "whisper-large-v3");
   form.append("language", "en");
+  form.append("prompt", PORTFOLIO_VOCABULARY);
   form.append("response_format", "json");
   form.append("temperature", "0");
 

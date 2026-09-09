@@ -120,6 +120,8 @@ function sanitizeDynamicReply(raw: string) {
     .replace(/,([A-Za-z])/g, ", $1")
     .replace(/[*#`_]/g, "")
     .replace(/\s+/g, " ")
+    .trim()
+    .replace(/^["“”]+|["“”]+$/g, "")
     .trim();
 
   const words = visible.split(/\s+/);

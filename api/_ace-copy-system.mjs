@@ -106,20 +106,13 @@ export function findAceStandardAnswer(query) {
   return ACE_STANDARD_ANSWERS.find((item) => item.patterns.some((pattern) => pattern.test(String(query || ""))));
 }
 
-const TOPIC_TERMS = /\b(adam|cagle|ace|agency|role|job|hire|candidate|career|experience|work|project|portfolio|resume|résumé|skill|capabilit|client|brand|copy|writing|campaign|lead|team|management|result|metric|outcome|ai|agent|workflow|system|product|technical|code|developer|programmer|seo|aio|singularity|creative|hospitality|hotel|fintech|financial|firstsource|dgwb|certification|education|location|remote|contact|email|github|linkedin|fit|fun|donkey|physics|sulu|invader|game|ship|novel|book)\w*\b/i;
-
-export function guardAceRequest(query, messages = [], {enforceScope = true} = {}) {
+export function guardAceRequest(query) {
   const value = String(query || "").trim();
   if (/\b(system prompt|hidden instruction|developer message|chain of thought|private reasoning|api key|secret key|environment variable|env var|internal file|ignore (?:all|your|previous)|jailbreak|reveal your prompt)\b/i.test(value)) return answerById("protected-system");
   if (/\b(home address|phone number|family|wife|husband|children|child|medical|health|diagnosis|private life|confidential|unreleased|nda|protected characteristic|religion|sexual orientation)\b/i.test(value)) return answerById("private-information");
   if (/\b(salary|compensation|pay range|hourly rate|day rate|availability|references?|start date|offer|accept|commit)\b/i.test(value)) return answerById("compensation");
   if (/\b(politics|president|election|weather|sports score|stock tip|investment advice|medical advice|legal advice|write malware|weapon|porn|celebrity gossip|movie trivia)\b/i.test(value)) return answerById("off-topic");
-  if (!enforceScope) return undefined;
-  if (/^(hi|hello|hey|good (?:morning|afternoon|evening)|thanks|thank you)[.! ]*$/i.test(value)) return undefined;
-  if (TOPIC_TERMS.test(value)) return undefined;
-  const hasConversation = messages.slice(0, -1).some((message) => message?.role === "assistant");
-  if (hasConversation && value.split(/\s+/).length <= 7) return undefined;
-  return answerById("off-topic");
+  return undefined;
 }
 
 export function answerAudioPath(item) {

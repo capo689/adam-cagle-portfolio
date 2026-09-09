@@ -541,6 +541,9 @@ function hardStop() {
   pressActive = false;
   pressGeneration++;
   if (recording) finishUtterance(true);
+  // Invalidate presentation players before the voice promise resolves so an
+  // interrupted narration cannot report itself as successfully completed.
+  window.dispatchEvent(new CustomEvent("facetest:speech-stopped"));
   cancelCurrentTurn();
   releaseMicrophone();
   if (!sessionActive || outOfCredits) return;
@@ -548,7 +551,6 @@ function hardStop() {
   setControl("idle", "Hold to talk");
   setStatus(`${agentName} · ready`);
   window.FACE?.setState("idle");
-  window.dispatchEvent(new CustomEvent("facetest:speech-stopped"));
 }
 
 function stopConversation() {

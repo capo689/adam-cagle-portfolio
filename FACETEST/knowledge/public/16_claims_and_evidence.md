@@ -249,13 +249,13 @@ answerable_questions:
   - Date or period: unknown
   - Public-safe: yes
   - Notes: Credential and dates unknown.
-- [credential.anthropic_courses] Adam completed eight courses across AI fluency, Claude, Claude Code, the Anthropic API, and the Claude platform.
+- [credential.anthropic_courses] Adam completed ten courses across AI fluency, Claude, Claude Code, the Anthropic API, the Claude platform, and Model Context Protocol.
   - Status: verified
   - Confidence: 0.99
   - Sources: source.evidence.canonical_map, source.public.linkedin
   - Date or period: 2026-07
   - Public-safe: yes
-  - Notes: One course lists CodePath as issuer; do not call all eight Anthropic-issued.
+  - Notes: One course lists CodePath as issuer; do not call all ten Anthropic-issued.
 - [credential.awards] Adam's canonical recognition includes Ad Club and Webby awards for copywriting and a Netty Award for the Sunset Marquis website.
   - Status: verified
   - Confidence: 0.96

@@ -56,4 +56,4 @@ The portfolio and LinkedIn are the preferred public contact routes. A profession
 
 ## Certifications
 
-Eight course certificates are reported as visible on LinkedIn. Safe language: “Completed eight courses across AI fluency, Claude, Claude Code, the Anthropic API, and the Claude platform.” One course displays CodePath as issuer, so do not say all eight were issued directly by Anthropic.
+Ten course certificates are reported as visible on LinkedIn. Safe language: “Completed ten courses across AI fluency, Claude, Claude Code, the Anthropic API, the Claude platform, and Model Context Protocol.” One course displays CodePath as issuer, so do not say all ten were issued directly by Anthropic.

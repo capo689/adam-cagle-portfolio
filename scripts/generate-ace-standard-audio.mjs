@@ -15,7 +15,7 @@ async function generate(item) {
 
   const response = await fetch(endpoint, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/json", "Origin": new URL(endpoint).origin},
     body: JSON.stringify({text: item.spoken, expression: item.expression, intensity: .68}),
   });
   if (!response.ok) throw new Error(`${item.id}: ${response.status} ${(await response.text()).slice(0, 220)}`);

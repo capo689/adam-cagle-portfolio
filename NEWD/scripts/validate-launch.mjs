@@ -60,6 +60,28 @@ for (const answer of answers) {
   check(Boolean(audioPath) && existsSync(join(root, "public", audioPath)), `ACE answer ${answer.id} is missing audio ${audioPath}.`);
 }
 
+const answerFor = (query) => answers.find((answer) => answer.patterns.some((pattern) => new RegExp(pattern.source, pattern.flags).test(query)));
+const profileQueries = new Map([
+  ["Tell me about Adam's background", "background-overview"],
+  ["Could you summarize his experience?", "background-overview"],
+  ["Give me an overview of Adam's resume", "background-overview"],
+  ["Walk me through his career history", "career-history"],
+  ["What are Adam's skills?", "skills-overview"],
+  ["What skills does he bring?", "skills-overview"],
+  ["Which clients has Adam worked with?", "client-portfolio"],
+  ["Name some clients", "client-portfolio"],
+  ["What certifications does Adam have?", "credentials"],
+  ["What are his certs?", "credentials"],
+  ["What awards has Adam won?", "recognition"],
+]);
+for (const [query, expected] of profileQueries) {
+  check(answerFor(query)?.id === expected, `ACE profile query "${query}" did not resolve to ${expected}.`);
+}
+const backgroundAnswer = answers.find((answer) => answer.id === "background-overview")?.display || "";
+for (const drillDown of ["career history", "clients and results", "skills", "credentials", "awards"]) {
+  check(backgroundAnswer.toLowerCase().includes(drillDown), `ACE background overview is missing the ${drillDown} drill-down.`);
+}
+
 const sourceCorpus = walk(join(root, "src"))
   .filter((path) => [".ts", ".tsx", ".js", ".mjs", ".json"].includes(extname(path)))
   .map((path) => readFileSync(path, "utf8"))

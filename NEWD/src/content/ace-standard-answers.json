@@ -87,20 +87,72 @@
     "expression": "warm",
     "patterns": [
       {
-        "source": "\\bwho is adam(?: cagle)?\\b",
+        "source": "\\bwho is adam(?: cagle)?[.!? ]*$",
         "flags": "i"
       },
       {
-        "source": "\\btell me about adam\\b",
+        "source": "\\btell me about adam(?: cagle)?[.!? ]*$",
         "flags": "i"
       },
       {
-        "source": "\\bintroduce adam\\b",
+        "source": "\\bintroduce adam(?: cagle)?[.!? ]*$",
         "flags": "i"
       }
     ],
-    "display": "Adam Cagle is a copywriter, agency operator, brand leader, and hands-on AI systems builder. In plain English, he can find the signal, write the line, architect the workflow, and ship the thing.",
+    "display": "Adam Cagle is an award-winning copywriter, agency operator, brand leader, and hands-on AI systems builder. He can find the signal, write the line, lead the team, architect the workflow, and ship the thing. Ask about his background, clients, results, skills, credentials, or awards for the sharper cut.",
     "audio": "/ace-answers/who-is-adam.mp3"
+  },
+  {
+    "id": "background-overview",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\b(?:adam(?:'s)?|his|your)\\s+(?:(?:professional|work)\\s+)?(?:background|experience)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:adam(?:'s)?|his)\\s+career(?!\\s+history)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "^\\s*(?:background|experience|career (?:overview|summary))[.!? ]*$",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:summarize|overview of|walk me through)\\b.{0,30}\\badam(?:'s)? resume\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is an award-winning copywriter, agency founder, brand leader, and hands-on AI systems builder. His career spans early digital work and 25 years running Agency689 across more than 60 accounts, including Xbox, Toshiba, Sunset Marquis, and Traveler Guitar. He also holds current credentials from Google, Anthropic, and CodePath. Ask about career history, clients and results, skills, credentials, or awards.",
+    "audio": "/ace-answers/background-overview.mp3"
+  },
+  {
+    "id": "career-history",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bcareer history\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bemployment history\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhere (?:has|did) adam work\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bprevious (?:roles|jobs|experience)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat did (?:adam|he) do before Agency\\s*689\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam began in newspaper art direction, helped build early real-time ecommerce at Firstsource, led interactive work and copy at DGWB from 1998 to 2001, and co-founded Agency689 in 2001. There he has led more than 60 accounts, teams of up to 15, and applied AI systems since 2022.",
+    "audio": "/ace-answers/career-history.mp3"
   },
   {
     "id": "what-adam-does",
@@ -339,7 +391,7 @@
         "flags": "i"
       },
       {
-        "source": "\\btechnical (?:is adam|skills|depth)\\b",
+        "source": "\\btechnical (?:is adam|depth)\\b",
         "flags": "i"
       },
       {
@@ -349,6 +401,58 @@
     ],
     "display": "Adam is not selling himself as a conventional software engineer. He does write code, integrate APIs, design architectures, deploy products, test failure modes, and debug the ugly middle, with senior creative and business judgment deciding what is worth building.",
     "audio": "/ace-answers/technical-depth.mp3"
+  },
+  {
+    "id": "skills-overview",
+    "expression": "curious",
+    "patterns": [
+      {
+        "source": "\\b(?:adam(?:'s)?|his)\\s+(?:key |core |professional |technical |creative |ai )?(?:skills|skill set|capabilities|strengths|toolkit)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat (?:skills|capabilities|strengths) does (?:adam|he) (?:have|bring)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bskills overview\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat is adam good at\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's skill set crosses four lanes: brand and copy, agency leadership and growth, product and delivery, and applied AI systems. That includes positioning, campaigns, client leadership, product definition, UX, APIs, React, TypeScript, Python, MCP, RAG, model routing, evaluation, governance, deployment, and analytics. Pick a lane and I'll drill down without reading you a parts catalog.",
+    "audio": "/ace-answers/skills-overview.mp3"
+  },
+  {
+    "id": "client-portfolio",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\b(?:adam(?:'s)?|his)\\s+(?:clients|client list|accounts|brands)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:what|which) (?:clients|brands|companies) (?:has|did) adam work(?:ed)? (?:with|on|for)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwho (?:has|did) adam work(?:ed)? (?:with|for)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:name|list|show me) (?:some |his |adam's )?(?:clients|brands)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bclient (?:portfolio|experience|list)\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Across more than 60 Agency689 accounts and earlier work at DGWB, Adam's clients include Xbox, AMD, Microsoft, Toshiba, Yamaha Music, Avery Dennison, Wienerschnitzel, Sunset Marquis, Hotel Figueroa, Traveler Guitar, Killer Network, NAVIS, Clink Hostels, IndyMac Bank, LoanWorks, and CreditCards.com. Ask for a sector or client and I'll pull the sharpest proof.",
+    "audio": "/ace-answers/client-portfolio.mp3"
   },
   {
     "id": "firstsource",
@@ -427,12 +531,48 @@
     "expression": "attentive",
     "patterns": [
       {
-        "source": "\\bcertification|certifications|credentials|education\\b",
+        "source": "\\bcertification|certifications|credentials|education|certs\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\banthropic (?:courses?|certificates?|certifications?)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bgoogle (?:course|certificate|certification)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bmcp (?:course|certificate|certification)\\b",
         "flags": "i"
       }
     ],
-    "display": "Adam studied Design and Art Direction at the Academy of Art in San Francisco. His current credentials include Google Analytics certification and ten completed Claude and applied AI courses from Anthropic and CodePath, including two MCP courses.",
+    "display": "Adam holds a current Google Analytics certification and has completed ten Claude and applied AI courses from Anthropic and CodePath, including Introduction to Model Context Protocol and Model Context Protocol: Advanced Topics. He also studied Design and Art Direction at the Academy of Art in San Francisco.",
     "audio": "/ace-answers/credentials.mp3"
+  },
+  {
+    "id": "recognition",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bawards?\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\brecognition\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bhonors?\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\baccolades?\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's recognition includes Ad Club and Webby awards for copywriting, plus a Netty Award for the Sunset Marquis website. His award-winning digital work at DGWB included LoanWorks, Toshiba, Avery Dennison, and Wienerschnitzel. The record supports the honors, not every category and year, so I won't decorate the trophy case with guesses.",
+    "audio": "/ace-answers/recognition.mp3"
   },
   {
     "id": "location",

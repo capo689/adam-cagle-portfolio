@@ -99,8 +99,32 @@
         "flags": "i"
       }
     ],
-    "display": "Adam Cagle is an award-winning copywriter, agency operator, brand leader, and hands-on AI systems builder. He can find the signal, write the line, lead the team, architect the workflow, and ship the thing. Ask about his background, clients, results, skills, credentials, or awards for the sharper cut.",
+    "display": "Adam Cagle is an agency founder and operator who finds the problem, shapes the strategy, writes the story, builds the system, leads the people, and stays accountable for the result. His work spans brand, growth, digital products, and applied AI, but it is one practice, not four personalities.",
     "audio": "/ace-answers/who-is-adam.mp3"
+  },
+  {
+    "id": "unified-positioning",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\b(?:is|was) adam (?:an? )?(?:ai|creative|copy|brand|technical)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bcareer (?:change|pivot|transition)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bhow do (?:adam'?s|his) (?:skills|disciplines|capabilities) fit together\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bcomplete (?:picture|candidate|professional)\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is one operator, not a set of career lanes. AI was not a pivot; it became part of the toolkit he needed to keep solving the same end-to-end problems at modern scale, from strategy and language through systems, teams, adoption, and results.",
+    "audio": "/ace-answers/unified-positioning.mp3"
   },
   {
     "id": "background-overview",
@@ -123,7 +147,7 @@
         "flags": "i"
       }
     ],
-    "display": "Adam is an award-winning copywriter, agency founder, brand leader, and hands-on AI systems builder. His career spans early digital work and 25 years running Agency689 across more than 60 accounts, including Xbox, Toshiba, Sunset Marquis, and Traveler Guitar. He also holds current credentials from Google, Anthropic, and CodePath. Ask about career history, clients and results, skills, credentials, or awards.",
+    "display": "Adam is an award-winning agency founder, copywriter, brand leader, digital operator, and hands-on AI systems builder. His career spans newspaper art direction, early real-time ecommerce, major-account interactive leadership, and 25 years running Agency689 across more than 60 accounts. He holds current credentials from Google, Anthropic, and CodePath. Ask me for career history, clients and results, skills, credentials, or awards.",
     "audio": "/ace-answers/background-overview.mp3"
   },
   {
@@ -151,7 +175,7 @@
         "flags": "i"
       }
     ],
-    "display": "Adam began in newspaper art direction, helped build early real-time ecommerce at Firstsource, led interactive work and copy at DGWB from 1998 to 2001, and co-founded Agency689 in 2001. There he has led more than 60 accounts, teams of up to 15, and applied AI systems since 2022.",
+    "display": "Adam began in newspaper art direction, helped pioneer real-time ecommerce at Firstsource from 1997 to 1998, led interactive work and copy at DGWB from 1998 to 2001, and co-founded Agency689 in 2001. There he led more than 60 accounts, teams of up to 15, and applied AI systems beginning in 2022.",
     "audio": "/ace-answers/career-history.mp3"
   },
   {
@@ -187,8 +211,36 @@
         "flags": "i"
       }
     ],
-    "display": "Most candidates hand you one layer of the solution. Adam can diagnose the business problem, find the creative throughline, win the room, and build enough of the technical answer to get it out of the deck and into use.",
+    "display": "Most candidates hand you one layer of the solution. Adam can diagnose the business problem, find the creative throughline, lead the people, and build enough of the technical answer to get it out of the deck and into use. He brings founder-level accountability without needing founder-level theater.",
     "audio": "/ace-answers/why-hire-adam.mp3"
+  },
+  {
+    "id": "why-now",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\bwhy (?:is adam|is he) (?:leaving|looking|job hunting)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhy (?:leave|leaving) (?:the )?agency\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhy (?:a )?full[- ]time role\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhy now\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat does adam want next\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "After 25 years running Agency689, Adam wants to bring his full range to one organization and go deep on problems worth solving. He wants a capable team, ambitious work, big unsolved problems, and room to build useful things with AI. He is looking for somewhere he can do that for the long haul.",
+    "audio": "/ace-answers/why-now.mp3?v=recruiter-1"
   },
   {
     "id": "current-role",
@@ -205,10 +257,42 @@
       {
         "source": "\\bwhere does adam work\\b",
         "flags": "i"
+      },
+      {
+        "source": "\\bcurrent (?:agency|employment) status\\b",
+        "flags": "i"
       }
     ],
-    "display": "Adam's current and latest role is at Agency689, the company he co-founded in 2001. His brand, copy, leadership, digital product, and applied AI work all live inside that one continuous practice.",
-    "audio": "/ace-answers/current-role.mp3?v=agency-name-2"
+    "display": "Adam retains passive ownership in Agency689 and currently consults with the agency while seeking a full-time role. His brand, copy, leadership, digital product, and applied AI work are one continuous 25-year practice.",
+    "audio": "/ace-answers/current-role.mp3?v=recruiter-1"
+  },
+  {
+    "id": "agency-commitment",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\b(?:keep|continue|still) (?:running|working|consulting|freelancing)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:side|outside) work\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bconflict of interest\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat happens to (?:the )?agency\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bfull[- ]time commitment\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam retains passive ownership in Agency689, but once hired he will not continue agency work, freelance work, or outside consulting. He is looking for one full-time role, and his professional focus will belong to his new company.",
+    "audio": "/ace-answers/agency-commitment.mp3?v=recruiter-1"
   },
   {
     "id": "agency689",
@@ -237,6 +321,330 @@
     ],
     "display": "That was an earlier label for Adam's dedicated AI work. The current story is cleaner and more accurate: those products, agents, and workflows are part of his Agency689 practice.",
     "audio": "/ace-answers/old-ai-label.mp3?v=agency-name-2"
+  },
+  {
+    "id": "role-target",
+    "expression": "curious",
+    "patterns": [
+      {
+        "source": "\\bwhat (?:kind of )?role (?:does|is) (?:adam|he)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat (?:job|position) (?:does|is) (?:adam|he) (?:want|seeking|looking for)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat should (?:we|i) hire adam (?:to do|for)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btarget role\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is looking for a senior full-time mandate where he can own consequential problems from strategy through adoption and results. His full range is the point: founder-level judgment, brand and growth craft, product thinking, team leadership, and hands-on applied AI. Give me the role, and I will map the evidence.",
+    "audio": "/ace-answers/role-target.mp3?v=recruiter-1"
+  },
+  {
+    "id": "first-90-days",
+    "expression": "thinking",
+    "patterns": [
+      {
+        "source": "\\b(?:first|initial) (?:30|60|90|ninety) days\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b30[\\/-]60[\\/-]90\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bfirst three months\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bonboard(?:ing)? plan\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's first month is for learning the business, people, systems, and real constraints. The next is for choosing and prototyping one valuable problem with the team. By 90 days, the goal is a measured result, a clear production path, and a reusable operating rhythm, not a pile of speculative demos.",
+    "audio": "/ace-answers/first-90-days.mp3?v=recruiter-1"
+  },
+  {
+    "id": "greatest-strength",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\bgreatest strength\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bbiggest strength\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bcore strength\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bstrongest skill\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam's greatest strength is turning judgment into something a team can use repeatedly. He can find the throughline, explain why it works, encode the useful parts into a brief, standard, workflow, or product, and still know where human taste and accountability must stay in the loop.",
+    "audio": "/ace-answers/greatest-strength.mp3?v=recruiter-1"
+  },
+  {
+    "id": "development-area",
+    "expression": "thinking",
+    "patterns": [
+      {
+        "source": "\\b(?:weakness|weaknesses|development area|growth area|area to improve)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhere is adam less experienced\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwhat does adam need to learn\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btechnical gaps?\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam has not spent his career owning enterprise-scale cloud infrastructure inside a large company. He has built and deployed applied systems, learned the relevant AWS and cloud patterns, and knows how to partner with platform and security owners. The gap is organizational scale, not an inability to make the jump.",
+    "audio": "/ace-answers/development-area.mp3?v=recruiter-1"
+  },
+  {
+    "id": "project-failure",
+    "expression": "concerned",
+    "patterns": [
+      {
+        "source": "\\b(?:failed|failure|mistake|went wrong|did not go well|didn't go well)\\b.{0,35}\\b(?:project|decision|example|time)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btell me about a (?:failure|mistake)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bproject that (?:failed|went wrong)\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam once approved a commercial CMS that passed review but failed badly in the real build. He added engineers, bought the needed hardware, worked the recovery, and delivered within 72 hours of the original deadline while the agency absorbed the loss. The lesson was to test the riskiest assumption before committing to the architecture.",
+    "audio": "/ace-answers/project-failure.mp3?v=recruiter-1"
+  },
+  {
+    "id": "changing-direction",
+    "expression": "empathetic",
+    "patterns": [
+      {
+        "source": "\\b(?:changed?|change) (?:your|his|the) (?:mind|direction|approach)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:disagree|disagreement|conflict|difficult stakeholder|pushback)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bget it right.{0,20}be right\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\brework\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "When three sibling owners brought in a design-school daughter and the approved brand was rebuilt, Adam made the strategic case once, then executed the new direction without sulking. The revised work eventually sold the brand. His rule is simple: get it right, not be right, and remember whose money is at risk.",
+    "audio": "/ace-answers/changing-direction.mp3?v=recruiter-1"
+  },
+  {
+    "id": "adoption-resistance",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\b(?:resistance|resistant|skeptical|reluctant)\\b.{0,35}\\b(?:adoption|change|ai|tool|system)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:adoption|change management) stor(?:y|ies)\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "When a senior copywriter resisted AI, Adam did not sell the technology. He worked beside her on real assignments, kept her judgment in control, and let useful results make the case. The system became support for her craft rather than a threat to it. That is his adoption model: proof, agency, and respect.",
+    "audio": "/ace-answers/adoption-resistance.mp3?v=recruiter-1"
+  },
+  {
+    "id": "production-incident",
+    "expression": "concerned",
+    "patterns": [
+      {
+        "source": "\\bproduction (?:incident|failure|problem|bug)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\brollback\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bsystem broke\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "When a Singularity change created a production problem, Adam used the audit trail and rollback controls built into the system, restored the prior state, and tightened the release checks. That is why he treats monitoring, approval, and reversal as product features rather than cleanup after the clever part.",
+    "audio": "/ace-answers/production-incident.mp3?v=recruiter-1"
+  },
+  {
+    "id": "ambiguous-request",
+    "expression": "thinking",
+    "patterns": [
+      {
+        "source": "\\bambiguous (?:request|brief|problem|project)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bunclear (?:request|brief|requirements?)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bvague (?:request|brief|requirements?)\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam does not start by polishing an unclear request. He identifies the decision underneath it, maps the people and workflow, names the constraint, and proposes the smallest test that can produce evidence. That turns ambiguity into a sequence of choices instead of a larger document full of confident guesses.",
+    "audio": "/ace-answers/ambiguous-request.mp3?v=recruiter-1"
+  },
+  {
+    "id": "budget-scope",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\b(?:budget|financial) (?:scope|responsibility|scale)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bhow much (?:budget|business)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\blargest budget\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bbudget\\b.{0,24}\\bmanaged?\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bmanaged?\\b.{0,24}\\b(?:budget|portfolio)\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "At DGWB, Adam managed an estimated 15 to 17 million dollars a year in interactive business across major accounts, with individual interactive programs often reaching several million. That is an estimate of the portfolio he led, not DGWB's total billings, and he does not disclose Agency689 revenue or client account sizes.",
+    "audio": "/ace-answers/budget-scope.mp3?v=recruiter-1"
+  },
+  {
+    "id": "people-leadership",
+    "expression": "proud",
+    "patterns": [
+      {
+        "source": "\\b(?:develop|developed|mentor|mentored|grow|grew|promote|promoted)\\b.{0,35}\\b(?:people|team|employee|staff|talent)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bpeople management\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bteam development\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bleadership legacy\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam built a culture where research, coaching, and room to stretch were part of the work. Former Agency689 art directors have gone on to lead agencies, and his first intern now runs marketing for a major global fitness company. He measures people leadership by what people become, not how many boxes sat beneath him.",
+    "audio": "/ace-answers/people-leadership.mp3?v=recruiter-1"
+  },
+  {
+    "id": "performance-management",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\bunderperform(?:ing|ance|ed)?\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bpoor performer\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bperformance problem\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwrong hire\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bmanage poor performance\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Agency689 reduced hiring mistakes by working with people freelance for about a month before making a permanent offer. Once hired, clear standards, coaching, and a collaborative bullpen made support immediate. Adam sees chronic underperformance as a work-system signal first: fix the expectations, environment, and help before blaming the person.",
+    "audio": "/ace-answers/performance-management.mp3?v=recruiter-1"
+  },
+  {
+    "id": "work-authorization",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bauthori[sz]ed to work\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bwork authori[sz]ation\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bsponsorship\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bvisa\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is authorized to work in the United States without sponsorship.",
+    "audio": "/ace-answers/work-authorization.mp3?v=recruiter-1"
+  },
+  {
+    "id": "availability",
+    "expression": "warm",
+    "patterns": [
+      {
+        "source": "\\bwhen can (?:adam|he) start\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:adam(?:'s)?|his) availability\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bavailable to start\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\bis (?:adam|he) available\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Adam is available now and is specifically seeking full-time employment. He wants the right company, difficult and worthwhile problems, and a place where he can stay long enough to do great work.",
+    "audio": "/ace-answers/availability.mp3?v=recruiter-1"
   },
   {
     "id": "ai-philosophy",
@@ -375,7 +783,7 @@
         "flags": "i"
       }
     ],
-    "display": "Adam has led multidisciplinary teams of up to 15 and owned relationships from working teams through founders, boards, and the C-suite. His style is clear brief, visible standard, honest feedback, accountable owner, and enough room for good people to improve the answer.",
+    "display": "Adam has led multidisciplinary teams of up to 15 and owned relationships from working teams through founders, boards, and the C-suite. His style is clear expectations, visible standards, honest feedback, practical support, and enough room for good people to research, stretch, and improve the answer.",
     "audio": "/ace-answers/leadership.mp3"
   },
   {
@@ -423,7 +831,7 @@
         "flags": "i"
       }
     ],
-    "display": "Adam's skill set crosses four lanes: brand and copy, agency leadership and growth, product and delivery, and applied AI systems. That includes positioning, campaigns, client leadership, product definition, UX, APIs, React, TypeScript, Python, MCP, RAG, model routing, evaluation, governance, deployment, and analytics. Pick a lane and I'll drill down without reading you a parts catalog.",
+    "display": "Adam combines positioning, copy, campaigns, client leadership, team development, product definition, UX, APIs, React, TypeScript, Python, MCP, RAG, model routing, evaluation, governance, deployment, and analytics. The useful distinction is not a lane; it is his ability to carry one problem from business context through language, systems, adoption, and results.",
     "audio": "/ace-answers/skills-overview.mp3"
   },
   {
@@ -475,7 +883,7 @@
         "flags": "i"
       }
     ],
-    "display": "At DGWB, Adam led the first-wave interactive practice while remaining a lead copywriter. He translated emerging technology into usable client work, ran delivery, and helped win business for finance, technology, music, consumer, and restaurant brands.",
+    "display": "At DGWB, Adam led the first-wave interactive practice while remaining a lead copywriter. He managed an estimated 15 to 17 million dollars a year in interactive work, translated emerging technology into usable client programs, ran delivery, and helped win business across finance, technology, music, consumer, and restaurant brands.",
     "audio": "/ace-answers/dgwb.mp3"
   },
   {
@@ -523,7 +931,7 @@
         "flags": "i"
       }
     ],
-    "display": "Adam is strongest where the job crosses applied AI, product thinking, creative or marketing systems, technical communication, and meaningful ownership. Give me the mandate and success measure, and I can map the most relevant proof without sanding him down into a generic title.",
+    "display": "Adam is strongest when the mandate is consequential and crosses boundaries: business, customer, brand, product, people, and technology. Give me the role and its success measure, and I will map the relevant evidence without dividing him into artificial lanes or sanding him down into a generic title.",
     "audio": "/ace-answers/role-fit.mp3"
   },
   {

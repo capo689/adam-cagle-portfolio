@@ -1,13 +1,13 @@
 ---
 id: profile.current_goals
 type: profile
-title: Current Goals as of August 2026
+title: Current Goals as of September 2026
 summary: Time-sensitive account of Adam's career, product, creative, learning, and job-search goals and constraints.
 status: reported
 confidence: 0.96
 public_safe: true
-last_updated: 2026-08-04
-date_start: 2026-08-04
+last_updated: 2026-09-12
+date_start: 2026-09-12
 date_end: unknown
 tags:
   - current-goals
@@ -23,24 +23,27 @@ source_ids:
 answerable_questions:
   - What role is Adam seeking?
   - Is Adam open to remote work?
-  - What compensation and travel constraints matter?
+  - What does Adam want from his next role?
 ---
 
 # Current Goals
 
-**Time-sensitive:** This file describes Adam's position on August 4, 2026. Review no later than November 4, 2026 and whenever Adam accepts a role or changes his search.
+**Time-sensitive:** This file describes Adam's position on September 12, 2026. Review no later than December 12, 2026 and whenever Adam accepts a role or changes his search.
 
 ## Career Goal
 
-Adam is seeking senior work that uses his combined writing, business, client, and applied-AI capabilities. Highest-priority roles include hands-on AI enablement, applied-AI building, AI workflow or agent ownership, agentic product work, AI content systems, AI search/SEO/AEO, technical communication, and hybrid marketing/creative technology roles.
+Adam is seeking one senior full-time role where he can own consequential problems from strategy through adoption and results. He does not want to be divided into artificial career lanes. His complete value is the combination of founder-level judgment, brand and growth craft, product thinking, team leadership, client experience, and hands-on applied AI.
+
+AI was not a career change. It became part of the toolkit Adam needed to continue solving the same end-to-end business, creative, and operating problems at modern scale.
 
 ## Role Shape
 
 - Senior, lead, principal, manager, director, head-of-function, founder-like, or senior individual-contributor scope.
 - Meaningful ownership matters more than direct reports.
 - Adam wants to remain close to building, writing, decision-making, and delivery.
-- A role that uses both creative/business judgment and technical implementation is especially attractive.
-- Pure creative-director or senior-copywriter roles are opportunistic unless unusually aligned.
+- A role that values the complete operator, rather than isolating one discipline, is especially attractive.
+- Adam wants a capable team, ambitious and unsolved problems, and room to build useful things with AI.
+- He is looking for a company where he can stay and do great work for the long haul.
 
 ## Geography and Work Arrangement
 
@@ -57,25 +60,14 @@ Adam is seeking senior work that uses his combined writing, business, client, an
 - 20–25 percent requires an unusually strong role.
 - More than 25 percent is generally unsuitable.
 
-## Compensation
-
-- Full-time base floor: $100,000.
-- Target base: $110,000 or more.
-- Strong senior AI, product, or enablement roles commonly target $140,000–$200,000 or more.
-- Contract target: at least $60 per hour.
-- Undisclosed compensation is not an automatic rejection, but should be confirmed early.
-
 ## Employment Forms
 
-Full-time, contract, contract-to-hire, W-2, and 1099 work are possible when scope and compensation fit. Internships, volunteer roles, commodity part-time work, and expert-call networks presented as employment are not targets.
+Full-time employment is the priority and the intended outcome. Adam is available now and authorized to work in the United States without sponsorship. He retains passive ownership in Agency689 and currently consults with the agency, but once hired he will not continue agency work, freelance work, or outside consulting.
 
 ## Product and Portfolio Goals
 
-- Continue improving and documenting Agency689's AI systems.
-- Strengthen public demonstrations of useful, governed agents and workflows.
 - Keep portfolio, LinkedIn, GitHub, and résumé claims consistent with canonical evidence.
-- Improve Agent Exchange beyond its current free-beta utility when priorities permit.
-- Develop Singularity SEO and its direct approach to SEO/AEO/GEO.
+- Continue demonstrating useful, governed AI products and workflows as evidence of what Adam can build and lead.
 
 ## Learning and Experimentation
 
@@ -86,8 +78,8 @@ Adam actively experiments with frontier models, agent harnesses, APIs, MCP, retr
 - No four-year degree; roles requiring one without an equivalent-experience path may present an ATS problem.
 - Adam is not seeking conventional deep-software-engineering, MLOps, data-science, or infrastructure roles.
 - He will consider less-than-perfect title alignment when the actual work is strong.
-- Time-intensive applications should be reserved for credible fits with viable compensation.
+- Compensation, references, interview scheduling, and offers should be discussed directly with Adam rather than through ACE.
 
 ## Desired Future State
 
-A well-paid role on a capable team where Adam can turn ambiguous business and creative problems into useful AI-enabled products, workflows, content, or customer experiences—without being pushed into pure management or asked to pretend adjacent experience is something it is not.
+A senior full-time role on a capable team where Adam can turn ambiguous business and creative problems into useful products, workflows, content, or customer experiences, solve problems that have not been solved yet, and remain accountable from idea through adoption and results.

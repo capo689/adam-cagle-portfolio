@@ -6,7 +6,7 @@ summary: Chronological account of Adam Cagle's documented professional roles, re
 status: mixed
 confidence: 0.94
 public_safe: true
-last_updated: 2026-08-04
+last_updated: 2026-09-12
 date_start: unknown
 date_end: present
 tags:
@@ -41,23 +41,24 @@ answerable_questions:
 - Unknowns: exact dates, employment type, reporting relationships, team size, budgets, and reason for transition.
 - Sources: source.fodder.resume_v2, source.fodder.high_yield.
 
-## Firstsource — dates unknown
+## Firstsource — September 1997 to September 1998
 
 - Formal title: Lead Project Programmer / Content Architect.
-- Known work: front-end interfaces and early real-time ecommerce.
+- Known work: front-end interfaces in HTML and ASP, early live-chat systems in an online shopping experience, and pioneering real-time product availability and pricing models.
 - Interpretation: This role helps explain why Adam's later creative and content work remained connected to software and interface behavior.
-- Unknowns: exact dates, location, employer identity details, project names, team structure, and transition reason.
+- Unknowns: location, detailed project names, team structure, and transition reason.
 - Sources: source.fodder.resume_v2, source.evidence.canonical_map.
 
-## DGWB Advertising — 1998 to 2001
+## DGWB Advertising — July 1998 to July 2001
 
 - Formal title: Director of Interactive & Lead Copywriter.
 - Location: Orange County, California.
-- Employment type: full-time is likely but not explicitly documented in the canonical source; treat as unknown if precision is required.
+- Employment type: full-time.
 - Responsibilities: led interactive copy, creative direction, emerging-digital delivery, technology translation, and new-business pitches.
 - Clients: IndyMac Bank, LoanWorks, CreditCards.com, Toshiba Computers, Toshiba Copiers, Yamaha Music, Avery Dennison, Clarion, and Wienerschnitzel.
 - Skills: copywriting, interactive strategy, client presentations, digital campaigns, technical translation, and team leadership.
-- Unknowns: exact start/end months, direct manager, team size, budget scope, and reason for leaving.
+- Budget scope: managed an estimated $15 million to $17 million per year in interactive business across major accounts. Individual interactive programs were often several million dollars. This is an estimate of the portfolio Adam led, not total agency billings.
+- Unknowns: direct manager, exact team size, and public reason for leaving.
 - Sources: source.fodder.resume_v2, source.evidence.canonical_map, source.public.linkedin.
 
 ## Agency689, Inc. — 2001 to present
@@ -74,6 +75,6 @@ answerable_questions:
 - AI transition: began integrating generative AI into client workflows in 2022.
 - Sources: source.fodder.resume_v2, source.fodder.high_yield, source.evidence.canonical_map, source.public.linkedin.
 
-## Current chapter — August 2026
+## Current chapter — September 2026
 
-Adam continues to operate Agency689 while pursuing a senior remote U.S. role. His preferred work combines hands-on AI building or enablement with business, marketing, content, product, or creative judgment. This is time-sensitive and should be reviewed by November 2026.
+Adam retains passive ownership in Agency689 and currently consults with the agency while seeking one full-time role. Once hired, he will not continue agency work, freelance work, or outside consulting. He wants a capable team, ambitious and unsolved problems, meaningful ownership, and room to build useful things with AI. He is authorized to work in the United States without sponsorship and is available now. This is time-sensitive and should be reviewed by December 2026.

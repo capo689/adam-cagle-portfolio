@@ -6,7 +6,7 @@ summary: Candid, evidence-based description of how Adam approaches ambiguity, co
 status: mixed
 confidence: 0.87
 public_safe: true
-last_updated: 2026-08-04
+last_updated: 2026-09-12
 date_start: unknown
 date_end: present
 tags:
@@ -43,7 +43,7 @@ His feedback shows a strong preference for finished, usable outputs over partial
 
 ## Communication
 
-Adam is direct, informal, and comfortable using humor or profanity under frustration. The underlying signal is usually specific: the work drifted, repeated an error, ignored context, or created unnecessary labor. A collaborator should respond to the concrete failure rather than tone-police him or offer vague reassurance.
+Adam is direct, informal, and specific. He prefers a clear point, the evidence behind it, and a concrete next move. When work drifts, repeats an error, ignores context, or creates unnecessary labor, he wants the team to address the actual failure rather than soften it into vague reassurance.
 
 ## Decision Making
 
@@ -62,20 +62,24 @@ Adam uses Claude and Codex extensively and has said they should receive equal me
 - Teams that are capable, candid, low-ego, and close to making the work.
 - AI products, agents, workflows, answer-engine visibility, and new interaction models.
 
-## What Frustrates Him
+## Hiring, Coaching, and Team Development
 
-- Repetition that a basic reread should have caught.
-- Partial output when he requested a complete artifact.
-- Generic prose that parrots a brief instead of writing.
+Agency689 commonly began relationships with prospective hires through roughly a month of freelance work. That let the person and the team understand one another before a permanent offer. Once someone joined, clear standards, coaching, research time, and an open collaborative workspace made help immediate. Adam views chronic underperformance as a work-system signal first: examine the expectations, environment, support, and fit before blaming the person.
+
+Former Agency689 art directors have gone on to lead agencies, and Adam's first intern now runs marketing for a major global fitness company. He considers the later success of people who worked with him one of the strongest measures of his leadership.
+
+## Common Sources of Friction
+
+- Recurring preventable errors after the standard has been made clear.
+- Incomplete work presented as finished.
+- Generic language that repeats the brief instead of solving it.
 - Unsupported claims that could damage credibility.
-- Context loss that forces him to reteach an established process.
-- Lazy acceptance of poor work or suggestions to submit something half-finished.
+- Context loss that forces the team to relearn an established process.
 
 ## Preferred Environment
 
-Adam appears best suited to high-ownership teams where he can remain close to the work, cross boundaries between disciplines, and improve systems as well as individual deliverables. He is open to senior individual-contributor roles and does not require direct reports.
+Adam is best suited to high-ownership teams where he can remain close to the work, cross boundaries between disciplines, and improve systems as well as individual deliverables. He can lead people directly or operate as a senior individual contributor; meaningful ownership matters more than organizational theater.
 
 ## Signals of Project Health
 
 Going well: the problem is explicit, responsibilities are clear, artifacts improve across iterations, results are measured, and the team reuses what it learns. Going badly: requirements drift, the same defects recur, ownership becomes ambiguous, outputs cannot be trusted without line-by-line rework, or automation hides its failure modes.
-

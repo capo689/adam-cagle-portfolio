@@ -6,7 +6,7 @@ summary: Eighty grounded questions and answers about Adam's identity, career, AI
 status: mixed
 confidence: 0.92
 public_safe: true
-last_updated: 2026-08-04
+last_updated: 2026-09-12
 date_start: unknown
 date_end: present
 tags: [faq, retrieval, voice-agent]
@@ -52,12 +52,12 @@ answerable_questions:
 **Confidence:** 0.99
 **Expression suggestion:** neutral
 
-### 5. Is Ace the same person as Adam Cagle?
-**Short answer:** Yes; Ace is a reported nickname.
-**Detailed answer:** Use Adam by default and Ace only in an informal context.
-**Supporting claims:** identity.name
-**Sources:** source.fodder.resume_v2
-**Confidence:** 0.98
+### 5. Is ACE the same person as Adam Cagle?
+**Short answer:** No. ACE is the AI guide for Adam's portfolio.
+**Detailed answer:** ACE explains reviewed information about Adam and navigates the site. It speaks about Adam, never as Adam, and cannot make commitments on his behalf.
+**Supporting claims:** agent.non_impersonation
+**Sources:** source.statement.adam
+**Confidence:** 1.00
 **Expression suggestion:** playful
 
 ### 6. Is Adam primarily creative or technical?
@@ -95,8 +95,8 @@ answerable_questions:
 **Expression suggestion:** proud
 
 ### 10. What is Adam's role at Agency689?
-**Short answer:** Co-Founder, Managing Director & Lead Copywriter.
-**Detailed answer:** He has owned new business, proposals, client relationships, staffing, delivery, copy, and creative direction since 2001.
+**Short answer:** He retains passive ownership and currently consults with the agency while seeking a full-time role.
+**Detailed answer:** Adam co-founded Agency689 in 2001 and spent 25 years leading new business, proposals, client relationships, staffing, delivery, copy, creative direction, digital products, and applied AI. Once hired full-time, he will not continue agency work, freelance work, or outside consulting.
 **Supporting claims:** role.agency689.managing_director
 **Sources:** source.public.linkedin, source.fodder.resume_v2
 **Confidence:** 0.99
@@ -159,8 +159,8 @@ answerable_questions:
 **Expression suggestion:** neutral
 
 ### 18. Why is Adam leaving agency ownership?
-**Short answer:** He has said he is ready to invest more deeply in one company and team while staying close to meaningful work.
-**Detailed answer:** That is a current job-search motivation, not a documented closure or sale of Agency689.
+**Short answer:** He wants to bring his full range to one organization and go deep on ambitious problems worth solving.
+**Detailed answer:** Adam retains passive ownership in Agency689 and currently consults, but is seeking one full-time role. He wants a capable team, big unsolved problems, room to build useful things with AI, and a long-term home. Once hired, he will not continue outside work.
 **Supporting claims:** goal.current_role
 **Sources:** source.statement.adam, source.conversation.job_search_2026
 **Confidence:** 0.91
@@ -390,7 +390,7 @@ answerable_questions:
 
 ### 46. Has Adam hired and mentored people?
 **Short answer:** Yes, within multidisciplinary agency teams up to fifteen.
-**Detailed answer:** Exact hiring counts and formal reporting lines are not public, so the safe claim is led and mentored teams.
+**Detailed answer:** Agency689 often used a month of freelance collaboration before hiring, then supported people with clear standards, coaching, research time, and immediate peer access. Former art directors have gone on to lead agencies, and Adam's first intern now runs marketing for a major global fitness company.
 **Supporting claims:** leadership.team_15
 **Sources:** source.fodder.resume_v2
 **Confidence:** 0.96
@@ -406,7 +406,7 @@ answerable_questions:
 
 ### 48. Has Adam managed budgets and vendors?
 **Short answer:** Yes, as part of running Agency689.
-**Detailed answer:** Canonical evidence supports pricing, scopes, budgets, vendors, casting, and production logistics, but not public budget amounts.
+**Detailed answer:** At DGWB he managed an estimated $15 million to $17 million per year in interactive business across major accounts. Agency689 revenue, annual billings, and client account sizes remain private.
 **Supporting claims:** leadership.delivery
 **Sources:** source.fodder.high_yield
 **Confidence:** 0.95
@@ -422,7 +422,7 @@ answerable_questions:
 
 ### 50. Does Adam need direct reports?
 **Short answer:** No; he is open to senior individual-contributor roles.
-**Detailed answer:** He wants meaningful ownership and compensation more than organizational status.
+**Detailed answer:** He can lead a team or operate as a senior individual contributor. He wants meaningful ownership and proximity to the work more than organizational status.
 **Supporting claims:** goal.senior_ic
 **Sources:** source.fodder.high_yield
 **Confidence:** 0.99
@@ -431,8 +431,8 @@ answerable_questions:
 # Creative Work
 
 ### 51. What is Adam's strongest skill?
-**Short answer:** Copywriting informed by business and technical understanding.
-**Detailed answer:** The precise advantage is not copy alone; it is the ability to carry language from strategy through systems and delivery.
+**Short answer:** Turning judgment into something a team can use repeatedly.
+**Detailed answer:** Adam can find the throughline, explain why it works, encode the useful parts into language, standards, workflows, or products, and identify where human taste and accountability must remain.
 **Supporting claims:** creative.copywriting
 **Sources:** source.fodder.resume_v2
 **Confidence:** 0.95
@@ -529,8 +529,8 @@ answerable_questions:
 **Expression suggestion:** neutral
 
 ### 63. What technical areas are less deep?
-**Short answer:** Production ML, MLOps, Kubernetes, distributed systems, GPU infrastructure, formal data science, and large-cloud administration.
-**Detailed answer:** Adam's technical strength is applied product and workflow construction at the boundary of AI, business, content, and users.
+**Short answer:** Adam has not spent his career owning enterprise-scale cloud infrastructure inside a large company.
+**Detailed answer:** He has built and deployed applied systems, learned relevant AWS and cloud patterns, and knows how to partner with platform and security owners. The gap is experience at enterprise organizational scale, not an inability to make the jump.
 **Supporting claims:** boundary.technical_depth
 **Sources:** source.evidence.canonical_map
 **Confidence:** 1.00
@@ -548,15 +548,15 @@ answerable_questions:
 
 ### 65. How does Adam give feedback?
 **Short answer:** Directly and specifically.
-**Detailed answer:** He focuses on concrete failures—repetition, unsupported claims, drift, incomplete output, or lack of verification—though frustration may make the delivery forceful.
+**Detailed answer:** He focuses on the standard, the concrete gap, and the next useful move. He values honest debate before a decision and committed execution after it.
 **Supporting claims:** working.feedback
 **Sources:** source.statement.adam
 **Confidence:** 0.90
 **Expression suggestion:** neutral
 
 ### 66. What frustrates Adam most?
-**Short answer:** Preventable errors that recur after explicit correction.
-**Detailed answer:** He expects collaborators to reread their own changes and not transfer quality control back to him.
+**Short answer:** Preventable errors that recur after the standard is clear.
+**Detailed answer:** He expects collaborators to own quality, preserve context, verify their work, and raise a constraint early rather than transfer avoidable cleanup to the next person.
 **Supporting claims:** working.quality
 **Sources:** source.statement.adam
 **Confidence:** 0.94
@@ -581,16 +581,16 @@ answerable_questions:
 # Hiring and Collaboration
 
 ### 69. What kind of role is Adam seeking?
-**Short answer:** Senior remote work combining applied AI, enablement, product, content, marketing, search, or technical communication.
-**Detailed answer:** He is especially strong where writing and business judgment meet hands-on AI implementation.
+**Short answer:** A senior full-time mandate with meaningful ownership from strategy through adoption and results.
+**Detailed answer:** His full range is the point: founder-level judgment, brand and growth craft, product thinking, team leadership, client experience, and hands-on applied AI. A specific role should be evaluated as a complete mandate, not forced into a predetermined lane.
 **Supporting claims:** goal.current_role
 **Sources:** source.fodder.high_yield
 **Confidence:** 0.99
 **Expression suggestion:** excited
 
 ### 70. What compensation is Adam targeting?
-**Short answer:** His documented full-time floor is $100,000 base, with a target of at least $110,000.
-**Detailed answer:** Strong senior AI and enablement roles may appropriately fall in the $140,000–$200,000-plus range; this is time-sensitive.
+**Short answer:** Compensation should be discussed directly with Adam.
+**Detailed answer:** ACE can explain Adam's experience, scope, and results, but does not negotiate compensation or disclose private search parameters.
 **Supporting claims:** goal.compensation
 **Sources:** source.fodder.high_yield
 **Confidence:** 0.99
@@ -613,8 +613,8 @@ answerable_questions:
 **Expression suggestion:** proud
 
 ### 73. Where might Adam be the wrong hire?
-**Short answer:** Roles centered on deep conventional engineering, production ML, narrow UX microcopy, formal PMO, or status-only management.
-**Detailed answer:** He is strongest as a cross-functional builder/operator, not as a substitute for a specialist whose career has been entirely inside one of those disciplines.
+**Short answer:** A role needing a career infrastructure engineer, production ML researcher, narrow UX microcopy specialist, or status-only executive.
+**Detailed answer:** Adam is strongest as a senior operator connecting business, customer, language, product, people, and technology while staying accountable for adoption and results.
 **Supporting claims:** boundary.technical_depth, boundary.not_ux_specialist
 **Sources:** source.evidence.canonical_map
 **Confidence:** 0.98

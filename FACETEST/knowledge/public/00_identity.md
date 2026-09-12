@@ -6,7 +6,7 @@ summary: Canonical identity, positioning, introductions, and boundaries for desc
 status: mixed
 confidence: 0.98
 public_safe: true
-last_updated: 2026-08-04
+last_updated: 2026-09-12
 date_start: unknown
 date_end: present
 tags:
@@ -16,7 +16,6 @@ tags:
 aliases:
   - Adam Cagle
   - Adam R. Cagle
-  - Ace
 entities:
   - person.adam_r_cagle
   - organization.agency689
@@ -36,12 +35,11 @@ answerable_questions:
 
 - Canonical full name: **Adam R. Cagle**.
 - Preferred public name: **Adam Cagle**.
-- Known nickname: **Ace**. Use only in informal contexts; default to Adam.
 - Pronouns: unknown; ask Adam before encoding pronouns as fact.
 - Public location: **Bend, Oregon** or **Oregon-based**.
-- Current professional identity: copywriter, creative and client leader, business operator, and applied-AI systems builder.
-- Canonical positioning: **The writer who ships. Builder and copywriter, fused.**
-- Current role: Co-Founder, Managing Director, Lead Copywriter, and AI Systems Builder at Agency689.
+- Current professional identity: agency founder and operator, copywriter, creative and client leader, digital product builder, and applied-AI systems builder.
+- Canonical positioning: Adam finds the problem, shapes the strategy, writes the story, builds the system, leads the people, and stays accountable for the result.
+- Current status: retains passive ownership in Agency689 and currently consults while seeking one full-time role. Once hired, he will not continue agency work, freelance work, or outside consulting.
 
 ## Facts the Agent Must Always Get Right
 
@@ -59,13 +57,13 @@ answerable_questions:
   - Date or period: 2026
   - Public-safe: yes
   - Notes: Do not imply residence in another city for job eligibility.
-- [identity.hybrid] Adam combines twenty-five years of writing, creative, client, and agency leadership with hands-on applied-AI system building.
+- [identity.hybrid] Adam combines twenty-five years of writing, creative, client, agency, and digital product leadership with hands-on applied-AI system building.
   - Status: verified
   - Confidence: 0.97
   - Sources: source.fodder.resume_v2, source.evidence.canonical_map, source.public.linkedin
   - Date or period: 1998-present; applied GenAI since 2022
   - Public-safe: yes
-  - Notes: This is a career progression, not three unrelated careers.
+  - Notes: This is one continuous professional practice, not separate career lanes. AI was not a career change.
 - [identity.boundary.engineer] Adam should not be described as a conventional software engineer, ML engineer, data scientist, research scientist, or enterprise architect.
   - Status: verified
   - Confidence: 1.00
@@ -86,11 +84,11 @@ The unusual element is not simply that a copywriter uses AI or that a builder ca
 
 ### 25 words
 
-Adam Cagle is a veteran copywriter and agency operator who builds governed AI products, content systems, workflows, and search tools for real business use.
+Adam Cagle is an agency founder and operator who joins strategy, language, people, digital products, and applied AI to solve consequential business problems.
 
 ### 50 words
 
-Adam Cagle is a copywriter, creative leader, agency operator, and applied-AI builder based in Bend, Oregon. After twenty-five years creating brands, campaigns, websites, and client systems, he began building AI products that combine strong language, practical automation, retrieval, governance, and human approval.
+Adam Cagle is an agency founder and operator, copywriter, brand leader, digital product builder, and hands-on applied-AI builder based in Bend, Oregon. He carries problems from strategy and language through people, systems, adoption, and results. AI became part of that same practice when modern scale demanded it.
 
 ### 100 words
 
@@ -123,4 +121,4 @@ Adam is a longtime copywriter and agency founder who started building the AI too
 - Do not treat creative direction as traditional hands-on visual design.
 - Do not present Adam as a conventional salaried Product Manager, formal enterprise change leader, or ML specialist.
 - Do not say Adam single-handedly caused an acquisition or all company growth.
-- Do not use the nickname Ace unless the context is informal and clearly about Adam.
+- ACE is the portfolio's AI guide, not Adam's nickname and not a person.

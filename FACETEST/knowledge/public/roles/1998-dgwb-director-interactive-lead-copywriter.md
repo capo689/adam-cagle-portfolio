@@ -6,9 +6,9 @@ summary: Adam's 1998–2001 role leading interactive copy, creative work, digita
 status: verified
 confidence: 0.95
 public_safe: true
-last_updated: 2026-08-04
-date_start: 1998
-date_end: 2001
+last_updated: 2026-09-12
+date_start: 1998-07
+date_end: 2001-07
 tags:
   - dgwb
   - interactive
@@ -32,17 +32,18 @@ answerable_questions:
 - Organization: DGWB Advertising.
 - Formal title: Director of Interactive & Lead Copywriter.
 - Creative-context variant: Creative Director & Lead Copywriter, Interactive.
-- Dates: 1998–2001; exact months unknown.
+- Dates: July 1998–July 2001.
 - Location: Orange County, California.
-- Employment type, reporting structure, budget responsibility, and exact team size: unknown.
+- Employment type: full-time.
+- Reporting structure and exact team size: unknown.
 
 ## Responsibilities and Contributions
 
-Adam led interactive copy and creative work during the first major agency transition to digital. He wrote and led new-business pitches, translated emerging technology for clients, and contributed to websites, digital campaigns, content, and delivery. Clients included IndyMac Bank, LoanWorks, CreditCards.com, Toshiba Computers, Toshiba Copiers, Yamaha Music, Avery Dennison, Clarion, and Wienerschnitzel.
+Adam led interactive copy and creative work during the first major agency transition to digital. He wrote and led new-business pitches, translated emerging technology for clients, created an internal ASP content-management system for client sites, and led websites, digital campaigns, content, and delivery. Clients included IndyMac Bank, LoanWorks, CreditCards.com, Toshiba Computers, Toshiba Copiers, Yamaha Music, Avery Dennison, Clarion, and Wienerschnitzel.
 
 ## Results and Evidence
 
-No canonical role-specific revenue or growth metric is available. The role is strong evidence of early digital leadership, copywriting, technical translation, financial-services exposure, and national-brand client work.
+Adam managed an estimated $15 million to $17 million per year in interactive business across major accounts, with individual interactive programs often reaching several million dollars. This is an estimate of the interactive portfolio he led, not total DGWB billings. The role is strong evidence of early digital leadership, copywriting, technical translation, financial-services exposure, and national-brand client work.
 
 ## Resume-Ready Description
 
@@ -54,5 +55,4 @@ Before Agency689, Adam helped an established advertising agency figure out inter
 
 ## Unknowns
 
-Exact months, manager, team structure, budget, flagship project names, and public reason for leaving.
-
+Manager, exact team structure, some flagship project details, and public reason for leaving.

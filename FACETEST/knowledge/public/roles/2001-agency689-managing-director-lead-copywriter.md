@@ -6,7 +6,7 @@ summary: Adam's long-running founder role combining agency operations, client le
 status: verified
 confidence: 0.98
 public_safe: true
-last_updated: 2026-08-04
+last_updated: 2026-09-12
 date_start: 2001
 date_end: present
 tags:
@@ -36,10 +36,10 @@ answerable_questions:
 - Creative-context title: Co-Founder, Creative Director & Lead Copywriter.
 - Dates: 2001–present.
 - Location: California and Bend, Oregon.
-- Employment type: founder/operator.
+- Current status: retains passive ownership and currently consults with the agency while seeking a full-time role. Once hired, he will not continue agency work, freelance work, or outside consulting.
 - Reporting structure: founder-level; co-founder relationship documented, further structure unknown.
 - Team size: led and mentored multidisciplinary teams up to fifteen.
-- Budget responsibility: scoped and managed budgets, but amounts are not documented.
+- Budget responsibility: scoped and managed budgets. Agency revenue, annual billings, and typical client account sizes are private and should not be disclosed.
 
 ## Responsibilities
 
@@ -76,4 +76,4 @@ Adam did not only run the creative. He helped win the work, scoped it, staffed i
 
 ## Unknowns
 
-Annual agency revenue, exact current team structure, client-by-client permissions, budget ranges, and any future transition date.
+Annual agency revenue, exact current team structure, client-by-client permissions, and private client account sizes.

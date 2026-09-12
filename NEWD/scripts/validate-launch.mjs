@@ -33,6 +33,7 @@ const chatRoute = readFileSync(join(root, "src", "app", "api", "facetest-next-ch
 check(!/function scopeBoundary/.test(chatRoute), "The frontend API restored the brittle generic scope gate.");
 check(chatRoute.includes("retrieveAdamKnowledge"), "ACE chat is missing its local reviewed knowledge retrieval.");
 check(chatRoute.includes("requestsRoleSpecificEvaluation"), "ACE chat is missing role-specific evidence mapping.");
+check(chatRoute.includes("name two concrete proof points"), "ACE role evaluation is missing its proof-and-gap answer structure.");
 check(!chatRoute.includes("https://adamcagle.com/api/"), "ACE chat still depends on the retired site backend.");
 check(chatRoute.includes("per send|per month|per campaign|a month"), "The Sunset Marquis output-unit lock is missing.");
 

@@ -78,6 +78,8 @@ const profileQueries = new Map([
   ["What kind of role is Adam looking for?", "role-target"],
   ["What kind of role does he want?", "role-target"],
   ["Will he keep consulting after he is hired?", "agency-commitment"],
+  ["What was Agency689's annual revenue?", "private-financials"],
+  ["What was the typical Agency689 client account size?", "private-financials"],
   ["What is his greatest strength?", "greatest-strength"],
   ["What is Adam's weakness?", "development-area"],
   ["Tell me about a failed project", "project-failure"],

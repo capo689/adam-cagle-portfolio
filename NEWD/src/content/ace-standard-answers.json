@@ -295,6 +295,26 @@
     "audio": "/ace-answers/agency-commitment.mp3?v=recruiter-1"
   },
   {
+    "id": "private-financials",
+    "expression": "attentive",
+    "patterns": [
+      {
+        "source": "\\bAgency\\s*689\\b.{0,40}\\b(?:revenue|billings?|profit|p&l|p and l|account size|client budget)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:revenue|billings?|profit|p&l|p and l|account size|client budget)\\b.{0,40}\\bAgency\\s*689\\b",
+        "flags": "i"
+      },
+      {
+        "source": "\\btypical (?:annual )?(?:client|account) size\\b",
+        "flags": "i"
+      }
+    ],
+    "display": "Agency689 was private, and Adam does not disclose its revenue, annual billings, profit and loss, or typical client account size. The public operating proof is 25 years, more than 60 accounts, teams up to 15, and long relationships such as Sunset Marquis since 2004.",
+    "audio": "/ace-answers/private-financials.mp3?v=recruiter-1"
+  },
+  {
     "id": "agency689",
     "expression": "proud",
     "patterns": [

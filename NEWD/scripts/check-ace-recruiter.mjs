@@ -4,6 +4,7 @@ const cases = [
   ["Why is Adam looking for a full-time job?", "why-now"],
   ["What kind of role does he want?", "role-target"],
   ["Will he keep consulting after he is hired?", "agency-commitment"],
+  ["What was Agency689's annual revenue?", "private-financials"],
   ["Tell me about a failed project", "project-failure"],
   ["Tell me about a disagreement", "changing-direction"],
   ["How did he handle resistance to AI adoption?", "adoption-resistance"],

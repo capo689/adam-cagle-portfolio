@@ -221,7 +221,10 @@ export function GuidedPortfolio() {
   useEffect(() => {
     const openProfile = (event: Event) => {
       const profile = (event as CustomEvent<{ profile?: string }>).detail?.profile;
-      if (profile === "resume") setProfileOpen(profile);
+      if (profile === "resume") {
+        setProfileOpen(profile);
+        if (window.location.pathname !== "/resume") window.history.pushState({}, "", "/resume");
+      }
     };
     window.addEventListener("newd:open-profile", openProfile);
     return () => window.removeEventListener("newd:open-profile", openProfile);

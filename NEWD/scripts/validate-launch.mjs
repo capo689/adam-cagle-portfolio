@@ -32,6 +32,7 @@ check(!/Agentic\s*689/i.test(readFileSync(join(root, "src", "content", "adam-kno
 const chatRoute = readFileSync(join(root, "src", "app", "api", "facetest-next-chat", "route.ts"), "utf8");
 check(!/function scopeBoundary/.test(chatRoute), "The frontend API restored the brittle generic scope gate.");
 check(chatRoute.includes("retrieveAdamKnowledge"), "ACE chat is missing its local reviewed knowledge retrieval.");
+check(chatRoute.includes("requestsRoleSpecificEvaluation"), "ACE chat is missing role-specific evidence mapping.");
 check(!chatRoute.includes("https://adamcagle.com/api/"), "ACE chat still depends on the retired site backend.");
 check(chatRoute.includes("per send|per month|per campaign|a month"), "The Sunset Marquis output-unit lock is missing.");
 

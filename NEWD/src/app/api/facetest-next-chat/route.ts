@@ -77,6 +77,12 @@ function standardAnswer(query: string) {
   return compiledAnswers.find((answer) => answer.patterns.some((pattern) => pattern.test(query)));
 }
 
+function requestsRoleSpecificEvaluation(query: string) {
+  return query.length >= 80
+    && /\b(?:role|position|job description|mandate|responsibilit(?:y|ies)|requirements?|we are hiring|we're hiring)\b/i.test(query)
+    && /\b(?:fit|match|candidate|hire|evaluate|assess|map|evidence|gap)\b/i.test(query);
+}
+
 function directResponse(answer: AceAnswer) {
   return new Response(`[[face:${answer.expression}:0.68]]${answer.display}`, {
     status: 200,
@@ -174,7 +180,7 @@ export async function POST(request: Request) {
   }
 
   const userText = messages.at(-1)!.content;
-  const direct = hardBoundary(userText) || standardAnswer(userText);
+  const direct = hardBoundary(userText) || (requestsRoleSpecificEvaluation(userText) ? undefined : standardAnswer(userText));
   if (direct) return directResponse(direct);
 
   if (!facetestModelConfigured()) {

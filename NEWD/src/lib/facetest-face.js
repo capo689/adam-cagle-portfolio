@@ -21,10 +21,11 @@ renderer.setSize(stageWidth(), stageHeight());
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 stage.append(renderer.domElement);
 
-// FACE moves from a full-screen stage into a 220px rail in NEWD. Keep the
-// retina canvas sharp there without letting fixed-size additive eye particles
-// overlap into a solid white mass.
-const pointRatio = () => renderer.getPixelRatio() * Math.min(1, Math.max(.30, stageWidth() / 720));
+// FACE moves from a full-screen stage into a compact rail. Surface particles
+// need enough physical pixels to stay crisp after that move, while the additive
+// eye particles need a lower ceiling so they do not merge into white discs.
+const surfacePointRatio = () => renderer.getPixelRatio() * Math.min(1, Math.max(.72, stageWidth() / 360));
+const eyePointRatio = () => renderer.getPixelRatio() * Math.min(1, Math.max(.30, stageWidth() / 720));
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(39, stageWidth() / stageHeight(), 0.1, 50);
@@ -47,7 +48,7 @@ const fieldUniforms = {
   uTime: { value: 0 },
   uPointer: { value: new THREE.Vector2() },
   uView: { value: new THREE.Vector2(viewWidth, viewHeight) },
-  uPixelRatio: { value: pointRatio() },
+  uPixelRatio: { value: surfacePointRatio() },
   uPlatinum: { value: 0 }
 };
 
@@ -109,7 +110,7 @@ const fieldMaterial = new THREE.ShaderMaterial({
 
 const faceUniforms = {
   uTime: { value: 0 },
-  uPixelRatio: { value: pointRatio() },
+  uPixelRatio: { value: surfacePointRatio() },
   uOpacity: { value: 0 },
   uSpeaking: { value: 0 },
   uHumanity: { value: 0 },
@@ -349,7 +350,7 @@ const veilMaterial = new THREE.ShaderMaterial({
 
 const eyeUniforms = {
   uTime: {value: 0},
-  uPixelRatio: {value: pointRatio()},
+  uPixelRatio: {value: eyePointRatio()},
   uOpacity: {value: 0},
   uSpeaking: {value: 0},
   uNatural: {value: 0},
@@ -769,9 +770,13 @@ function currentControls(elapsed,delta) {
   if (expressionExpires && elapsed > expressionExpires) { externalExpression=null; expressionExpires=0; }
   blendLayer(expressionCurrent,externalExpression||{},delta,6.5,2.6);
   blendLayer(speechCurrent,externalState==="speaking"?speechTarget:{},delta,22,14);
+  // Docked ACE is only 220px wide, so subtle full-screen changes disappear.
+  // Strengthen the expressive features without amplifying head rotation.
+  const expressionGain=stageWidth()<320?1.34:1.05;
   for(const [key,value] of Object.entries(expressionCurrent)) {
     const mouthScale=externalState==="speaking"&&["open","wide","pucker"].includes(key) ? .32 : 1;
-    base[key]=Number(base[key]||0)+value*mouthScale;
+    const spatial=["yaw","pitch","roll","gazeX","gazeY"].includes(key)?1:expressionGain;
+    base[key]=Number(base[key]||0)+value*mouthScale*spatial;
   }
   base.open+=Number(speechCurrent.open||0);
   base.wide+=Number(speechCurrent.wide||0);
@@ -781,10 +786,16 @@ function currentControls(elapsed,delta) {
   base.brow+=emotionalLife;
   base.smile+=emotionalLife*.7;
   if (externalState === "speaking") {
-    base.brow+=speechEnergy*.035;
-    base.cheek+=speechEnergy*.055;
-    base.eyeSquint+=speechEnergy*.018;
+    const speechBeat=elapsed-speechStarted;
+    base.brow+=speechEnergy*.060+Math.sin(speechBeat*1.35)*.010;
+    base.browLeft+=Math.sin(speechBeat*.83)*.012;
+    base.browRight-=Math.sin(speechBeat*.83)*.010;
+    base.cheek+=speechEnergy*.085;
+    base.eyeSquint+=speechEnergy*.028;
     base.pupil+=speechEnergy*.035;
+    base.pitch+=Math.sin(speechBeat*2.15)*(.004+speechEnergy*.010);
+    base.yaw+=Math.sin(speechBeat*.62)*(.004+speechEnergy*.006);
+    base.roll+=Math.sin(speechBeat*.47)*.0035;
   }
   return base;
 }
@@ -911,8 +922,8 @@ function updateEyes(c,time) {
   const scleraPos=scleraCloud.geometry.attributes.position.array,scleraAlpha=scleraCloud.geometry.attributes.aAlpha.array;
   const pos=eyesCloud.geometry.attributes.position.array,light=eyesCloud.geometry.attributes.aLight.array,alpha=eyesCloud.geometry.attributes.aAlpha.array;
   const naturalPos=naturalEyesCloud.geometry.attributes.position.array,naturalLight=naturalEyesCloud.geometry.attributes.aLight.array,naturalAlpha=naturalEyesCloud.geometry.attributes.aAlpha.array;
-  const saccadeX=Math.sin(time*.83)*.012+Math.sin(time*2.31)*.005;
-  const saccadeY=Math.cos(time*.67)*.008;
+  const saccadeX=Math.sin(time*.83)*.004+Math.sin(time*2.31)*.002;
+  const saccadeY=Math.cos(time*.67)*.003;
   for(let i=0;i<1600;i++){
     const side=i<800?left:right,local=i%800,q=(local+.5)/800,a=local*2.399963,rn=Math.sqrt(q);
     const isLeft=i<800;
@@ -969,12 +980,20 @@ function animate() {
 // or its particle field; conversational expressions provide the motion.
 
 let resizeTimer;
-addEventListener("resize",()=>{
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(stageWidth(),stageHeight());fitCamera();
-  fieldUniforms.uPixelRatio.value=pointRatio();faceUniforms.uPixelRatio.value=pointRatio();
-  eyeUniforms.uPixelRatio.value=pointRatio();
+let lastStageWidth=stageWidth();
+let lastStageHeight=stageHeight();
+function resizeRenderer(){
+  const width=stageWidth(),height=stageHeight();
+  if(width===lastStageWidth&&height===lastStageHeight)return;
+  lastStageWidth=width;lastStageHeight=height;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(width,height);fitCamera();
+  fieldUniforms.uPixelRatio.value=surfacePointRatio();faceUniforms.uPixelRatio.value=surfacePointRatio();
+  eyeUniforms.uPixelRatio.value=eyePointRatio();
   clearTimeout(resizeTimer);resizeTimer=setTimeout(createField,140);
-},{passive:true});
+}
+addEventListener("resize",resizeRenderer,{passive:true});
+const stageResizeObserver=new ResizeObserver(resizeRenderer);
+stageResizeObserver.observe(stage);
 
 window.FACE={
   setState(state){externalState=state;speechStarted=clock.getElapsedTime();},

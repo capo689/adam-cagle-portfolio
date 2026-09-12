@@ -128,7 +128,7 @@ export function FunPage() {
       <section className="fun-experiments" aria-labelledby="fun-experiments-title">
         <header className="fun-section-head">
           <div>
-            <p>Experiments worth finishing</p>
+            <p>Built beyond the brief</p>
             <h2 id="fun-experiments-title">THE REST OF THE LAB.</h2>
           </div>
           <p>

@@ -74,7 +74,7 @@ const toolkitGroups = [
   },
   {
     title: "RAG and retrieval",
-    skills: ["Qdrant", "Pinecone", "Cohere Rerank", "RAGAS", "LlamaIndex", "Embeddings", "Semantic retrieval", "OCR", "Multimodal extraction"],
+    skills: ["Qdrant", "Cohere Rerank", "RAGAS", "LlamaIndex", "Embeddings", "Semantic retrieval", "OCR", "Multimodal extraction"],
   },
   {
     title: "Workflow visualization",
@@ -166,6 +166,9 @@ function ResumeModal({ onClose }: { onClose: () => void }) {
         <p className="profile-summary">
           For 25 years at Agency689, Adam Cagle has found the idea, written the story, built the system, and led the team responsible for shipping it. He has turned complicated products and ambitious companies into brands people understand and choose. The same practice includes working AI products, governed workflows, model orchestration, retrieval, evaluation, and human approval systems.
         </p>
+        <p className="profile-status">
+          Adam retains passive ownership in Agency689 and currently consults with the agency while seeking one full-time role. Once hired, he will not continue agency, freelance, or outside consulting work.
+        </p>
         <div className="profile-actions">
           <a href="mailto:adamrcagle@gmail.com"><Mail size={16} /> Email Adam</a>
           <a href="https://www.linkedin.com/in/adamcagle/" rel="noreferrer" target="_blank"><FaLinkedinIn size={15} /> LinkedIn</a>
@@ -190,7 +193,7 @@ function ResumeModal({ onClose }: { onClose: () => void }) {
         <article className="resume-role featured">
           <div className="resume-role-head">
             <div>
-              <p>2001 to present · Bend, Oregon and California</p>
+              <p>2001 to present · Founder through 2026; passive owner and consultant today</p>
               <h3>Agency689, Inc.</h3>
             </div>
             <strong>Co-Founder, Managing Director, Lead Copywriter & AI Systems Builder</strong>

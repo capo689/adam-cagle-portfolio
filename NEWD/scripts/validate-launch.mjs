@@ -27,6 +27,8 @@ const truthCorpus = textFiles
 
 check(!/(?:attributed revenue|Sunset Marquis.{0,100}revenue).{0,24}(?:per month|monthly|per send|per campaign|a month)/i.test(truthCorpus), "Sunset Marquis metric drifted away from per email.");
 check(!/face for the internet|internet with a face/i.test(corpus), "The retired snippy ACE line returned.");
+check(!/NEXT_PUBLIC_[A-Z0-9_]*(?:KEY|TOKEN|SECRET)/.test(corpus), "A secret-like environment variable is exposed to the browser bundle.");
+check(!/(?:sk-or-v1-|gsk_)[A-Za-z0-9_-]{20,}/.test(corpus), "An API credential appears in public source.");
 check(!/\bTroy\b/.test(readFileSync(join(root, "src", "lib", "facetest-voice-stream.ts"), "utf8")), "The retired Troy agent name returned to the voice runtime.");
 check(!/Agentic\s*689/i.test(readFileSync(join(root, "src", "content", "adam-knowledge.generated.ts"), "utf8")), "Agentic689 leaked into the public ACE index.");
 const chatRoute = readFileSync(join(root, "src", "app", "api", "facetest-next-chat", "route.ts"), "utf8");
@@ -50,6 +52,26 @@ for (const workflow of workflows) {
   check(existsSync(join(root, "public", workflow, "index.html")), `Missing self-contained workflow ${workflow}.`);
 }
 check(existsSync(join(root, "public", "guided-tools", "lib", "guided-engine.js")), "Missing shared guided-workflow engine.");
+for (const card of ["main", "ai", "brand", "copy", "fun", "resume"]) {
+  const cardPath = join(root, "public", "og", "cards", `${card}.png`);
+  check(existsSync(cardPath), `Missing deterministic OG card ${card}.`);
+  if (existsSync(cardPath)) {
+    const image = readFileSync(cardPath);
+    check(image.length > 20_000, `OG card ${card} is unexpectedly small.`);
+    check(image.readUInt32BE(16) === 1200 && image.readUInt32BE(20) === 630, `OG card ${card} is not 1200 by 630.`);
+  }
+}
+const workflowViewer = readFileSync(join(root, "src", "components", "guided-workflow-viewer.tsx"), "utf8");
+check(workflowViewer.includes("srcDoc={workflowHtml}"), "Guided workflows are not using the security-compatible embedded document loader.");
+check(!/\bsrc=\{`\/workflows\//.test(workflowViewer), "Guided workflows reverted to a framed URL that production security headers block.");
+const profileModals = readFileSync(join(root, "src", "components", "profile-modals.tsx"), "utf8");
+check(!/\bPinecone\b/.test(profileModals), "The resume claims Pinecone despite the reviewed skills record excluding it.");
+check(profileModals.includes("retains passive ownership in Agency689"), "The resume does not state Adam's current Agency689 status.");
+for (const workflow of workflows.filter((name) => name !== "migration_new")) {
+  const html = readFileSync(join(root, "public", workflow, "index.html"), "utf8");
+  check(html.includes("ACE · guided narration"), `${workflow} still identifies an obsolete workflow voice.`);
+  check(!/Gemini 3\.1 Flash TTS/.test(html), `${workflow} exposes obsolete narration technology.`);
+}
 
 const figueroaPages = readdirSync(join(root, "public", "brand", "hotel-figueroa-book"))
   .filter((name) => /^HotelFigueroa \d+\.jpeg$/.test(name));

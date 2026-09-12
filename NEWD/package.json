@@ -10,7 +10,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "verify": "node scripts/validate-launch.mjs && eslint . && next build --webpack"
+    "og:generate": "python3 scripts/generate-og-cards.py",
+    "audit:audio": "node scripts/audit-audio.mjs",
+    "audit:live": "node scripts/audit-live.mjs",
+    "verify": "node scripts/validate-launch.mjs && node scripts/audit-audio.mjs && eslint . && next build --webpack"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

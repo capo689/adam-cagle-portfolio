@@ -45,8 +45,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     "@type": "Person",
     name: "Adam R. Cagle",
     url: "https://adamcagle.com",
-    jobTitle: "Co-Founder, Managing Director, Lead Copywriter and AI Systems Builder",
-    worksFor: { "@type": "Organization", name: "Agency689" },
+    jobTitle: "Agency Founder, Brand and Copy Leader, Applied AI Systems Builder",
+    affiliation: { "@type": "Organization", name: "Agency689" },
     sameAs: ["https://www.linkedin.com/in/adamcagle/", "https://github.com/capo689"],
     knowsAbout: ["Applied AI", "Copywriting", "Brand strategy", "Creative direction", "AI workflows", "MCP", "Retrieval-augmented generation"],
   };

@@ -46,6 +46,7 @@ export function GuidedWorkflowViewer({item, voiceEnabled, onClose}: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const runRef = useRef(0);
   const replayCleanup = useRef<(() => void) | null>(null);
+  const [workflowHtml, setWorkflowHtml] = useState("");
   const [ready, setReady] = useState(false);
   const [running, setRunning] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -228,6 +229,24 @@ export function GuidedWorkflowViewer({item, voiceEnabled, onClose}: Props) {
 
   const workflowSlug = item.url?.split("/").filter(Boolean).at(-1);
 
+  useEffect(() => {
+    const controller = new AbortController();
+    if (!workflowSlug) return () => controller.abort();
+
+    void fetch(`/workflows/${workflowSlug}?newd=1`, {signal: controller.signal})
+      .then((response) => {
+        if (!response.ok) throw new Error(`Workflow request failed with ${response.status}`);
+        return response.text();
+      })
+      .then((html) => setWorkflowHtml(html))
+      .catch((requestError: unknown) => {
+        if (requestError instanceof DOMException && requestError.name === "AbortError") return;
+        setError("The workflow could not be loaded inside the site.");
+      });
+
+    return () => controller.abort();
+  }, [workflowSlug]);
+
   return (
     <section className="guided-workflow-viewer" aria-label={`${item.title} guided workflow`}>
       <header className="guided-workflow-bar">
@@ -247,14 +266,16 @@ export function GuidedWorkflowViewer({item, voiceEnabled, onClose}: Props) {
       </header>
       {!ready && !error && <div className="guided-workflow-loading"><span />Loading the working system</div>}
       {error && <div className="guided-workflow-error"><p>{error}</p><button onClick={close} type="button">Return to Intelligence</button></div>}
-      <iframe
-        allow="autoplay"
-        className={ready ? "ready" : ""}
-        onLoad={prepareFrame}
-        ref={iframeRef}
-        src={`/workflows/${workflowSlug}?newd=1`}
-        title={`${item.title} interactive workflow`}
-      />
+      {workflowHtml && (
+        <iframe
+          allow="autoplay"
+          className={ready ? "ready" : ""}
+          onLoad={prepareFrame}
+          ref={iframeRef}
+          srcDoc={workflowHtml}
+          title={`${item.title} interactive workflow`}
+        />
+      )}
     </section>
   );
 }

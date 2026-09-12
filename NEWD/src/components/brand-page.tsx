@@ -158,9 +158,11 @@ export function BrandPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     };
     window.addEventListener("newd:open-brand-feature", openFeature);
     window.addEventListener("newd:open-brand-client", openClient);
+    document.documentElement.dataset.newdActionsReady = "Brand";
     return () => {
       window.removeEventListener("newd:open-brand-feature", openFeature);
       window.removeEventListener("newd:open-brand-client", openClient);
+      if (document.documentElement.dataset.newdActionsReady === "Brand") delete document.documentElement.dataset.newdActionsReady;
     };
   }, []);
 

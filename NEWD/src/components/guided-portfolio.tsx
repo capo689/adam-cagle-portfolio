@@ -153,17 +153,32 @@ export function GuidedPortfolio() {
     const initialRoute = routeFromPath(window.location.pathname);
     const hasDeepRoute = window.location.pathname !== "/";
     if (hasDeepRoute) {
-      window.setTimeout(() => {
+      void (async () => {
+        suppressSectionIntro.current = true;
         setPhase("site");
         setSection(initialRoute.section);
         if (initialRoute.profile) setProfileOpen("resume");
-        window.setTimeout(() => {
-          if (initialRoute.ai) window.dispatchEvent(new CustomEvent(initialRoute.workflow ? "newd:open-ai-workflow" : "newd:open-ai-item", {detail: {id: initialRoute.ai}}));
-          if (initialRoute.copy) window.dispatchEvent(new CustomEvent("newd:open-copy-case", {detail: {id: initialRoute.copy}}));
-          if (initialRoute.brand) window.dispatchEvent(new CustomEvent("newd:open-brand-feature", {detail: {id: initialRoute.brand}}));
-          scrollContentToTop();
-        }, 220);
-      }, 0);
+        const rootSelector = initialRoute.section === "AI"
+          ? ".ai-page"
+          : initialRoute.section === "Copywriting"
+            ? ".copy-editorial"
+            : initialRoute.section === "Brand"
+              ? ".brand-page"
+              : ".hero-copy";
+        const needsActionReady = Boolean(initialRoute.ai || initialRoute.copy || initialRoute.brand);
+        const deadline = performance.now() + 5000;
+        while (
+          (!document.querySelector(rootSelector)
+            || (needsActionReady && document.documentElement.dataset.newdActionsReady !== initialRoute.section))
+          && performance.now() < deadline
+        ) {
+          await new Promise((resolve) => window.requestAnimationFrame(resolve));
+        }
+        if (initialRoute.ai) window.dispatchEvent(new CustomEvent(initialRoute.workflow ? "newd:open-ai-workflow" : "newd:open-ai-item", {detail: {id: initialRoute.ai}}));
+        if (initialRoute.copy) window.dispatchEvent(new CustomEvent("newd:open-copy-case", {detail: {id: initialRoute.copy}}));
+        if (initialRoute.brand) window.dispatchEvent(new CustomEvent("newd:open-brand-feature", {detail: {id: initialRoute.brand}}));
+        scrollContentToTop();
+      })();
     }
     const requestedSection = searchParams.get("section");
     const matchedSection = sections.find((item) => item.toLowerCase() === requestedSection?.toLowerCase());

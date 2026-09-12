@@ -230,7 +230,11 @@ export function CopywritingPage({ voiceEnabled }: { voiceEnabled: boolean }) {
       if (item) openDetail(item);
     };
     window.addEventListener("newd:open-copy-case", openRequestedClient);
-    return () => window.removeEventListener("newd:open-copy-case", openRequestedClient);
+    document.documentElement.dataset.newdActionsReady = "Copywriting";
+    return () => {
+      window.removeEventListener("newd:open-copy-case", openRequestedClient);
+      if (document.documentElement.dataset.newdActionsReady === "Copywriting") delete document.documentElement.dataset.newdActionsReady;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voiceEnabled]);
 

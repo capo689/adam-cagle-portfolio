@@ -190,9 +190,11 @@ export function AiPage({ voiceEnabled }: { voiceEnabled: boolean }) {
     };
     window.addEventListener("newd:open-ai-item", openRequestedItem);
     window.addEventListener("newd:open-ai-workflow", openRequestedWorkflow);
+    document.documentElement.dataset.newdActionsReady = "AI";
     return () => {
       window.removeEventListener("newd:open-ai-item", openRequestedItem);
       window.removeEventListener("newd:open-ai-workflow", openRequestedWorkflow);
+      if (document.documentElement.dataset.newdActionsReady === "AI") delete document.documentElement.dataset.newdActionsReady;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voiceEnabled]);

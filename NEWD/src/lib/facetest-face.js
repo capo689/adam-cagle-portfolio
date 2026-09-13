@@ -516,19 +516,19 @@ let lookCurrent = {...LOOK_PRESETS.original};
 
 const EXPRESSION_PRESETS = {
   neutral: {},
-  attentive: {brow:.16,browInner:.11,eyeWide:.11,smile:.04,pitch:-.012},
-  curious: {browLeft:.48,browRight:.08,browInner:.22,eyeWide:.14,smileLeft:.18,yaw:-.09,roll:-.04,gazeX:-.08},
-  warm: {smile:.55,eyeSquint:.18,brow:.11,cheek:.22,pitch:.018},
-  amused: {smile:.74,smileLeft:.24,eyeSquint:.36,browLeft:.20,jawSide:.06,yaw:.035},
-  delighted: {smile:.98,open:.22,eyeSquint:.42,brow:.32,cheek:.72,pupil:.12,pitch:.025},
-  skeptical: {browLeft:.54,browRight:-.24,eyeSquintRight:.46,lipPress:.31,smileLeft:-.12,yaw:.10,roll:.042,gazeX:.07},
-  surprised: {open:.48,wide:-.18,brow:.90,browInner:.42,eyeWide:.78,pupil:.48,pitch:-.025},
-  concerned: {browInner:.68,browLeft:.16,browRight:.16,frown:.48,eyeSquint:.12,pitch:-.018},
-  empathetic: {browInner:.54,brow:.11,smile:.14,eyeSquint:.15,yaw:-.055,roll:-.028,pitch:.018},
-  thinking: {browLeft:.46,browRight:.03,eyeSquintRight:.34,pucker:.18,gazeX:.27,gazeY:.11,yaw:-.11,roll:-.02},
-  wry: {smileLeft:.58,smileRight:-.14,browLeft:.31,browRight:-.15,eyeSquintRight:.38,jawSide:.065,yaw:.045},
-  playful: {smile:.68,smileLeft:.27,browLeft:.46,eyeSquintRight:.43,jawSide:.08,roll:-.04,pupil:.10},
-  proud: {smile:.42,brow:.22,eyeSquint:.12,cheek:.16,pitch:.052}
+  attentive: {brow:.22,browInner:.15,eyeWide:.16,smile:.07,pupil:.05,pitch:-.014},
+  curious: {browLeft:.62,browRight:.06,browInner:.28,eyeWide:.20,smileLeft:.24,yaw:-.10,roll:-.045,gazeX:-.09,pupil:.08},
+  warm: {smile:.70,eyeSquint:.25,brow:.15,cheek:.34,pitch:.022},
+  amused: {smile:.88,smileLeft:.31,eyeSquint:.46,browLeft:.27,jawSide:.07,yaw:.040,cheek:.38},
+  delighted: {smile:1.0,open:.26,eyeSquint:.49,brow:.40,cheek:.82,pupil:.17,pitch:.030},
+  skeptical: {browLeft:.68,browRight:-.30,eyeSquintRight:.58,lipPress:.38,smileLeft:-.16,yaw:.11,roll:.048,gazeX:.08},
+  surprised: {open:.54,wide:-.20,brow:1.0,browInner:.50,eyeWide:.90,pupil:.58,pitch:-.030},
+  concerned: {browInner:.82,browLeft:.20,browRight:.20,frown:.58,eyeSquint:.16,pitch:-.022},
+  empathetic: {browInner:.66,brow:.15,smile:.18,eyeSquint:.20,yaw:-.060,roll:-.032,pitch:.022},
+  thinking: {browLeft:.60,browRight:.02,eyeSquintRight:.44,pucker:.22,gazeX:.29,gazeY:.12,yaw:-.12,roll:-.024},
+  wry: {smileLeft:.72,smileRight:-.18,browLeft:.40,browRight:-.19,eyeSquintRight:.48,jawSide:.075,yaw:.052},
+  playful: {smile:.82,smileLeft:.34,browLeft:.58,eyeSquintRight:.54,jawSide:.09,roll:-.047,pupil:.14},
+  proud: {smile:.55,brow:.29,eyeSquint:.17,cheek:.25,pitch:.062}
 };
 
 function parseOBJ(text) {
@@ -784,6 +784,7 @@ function blendLayer(current,target,delta,inSpeed,outSpeed) {
 
 function currentControls(elapsed,delta) {
   const base=baseExpression(elapsed,delta);
+  const docked=stageWidth()<320;
   const microAsymmetry=Math.sin(elapsed*.19)*.025;
   if (externalState === "listening") Object.assign(base,{open:.012,smile:.07+Math.sin(elapsed*.45)*.012,brow:.11+Math.sin(elapsed*.31)*.018,browLeft:microAsymmetry,browRight:-microAsymmetry,gazeX:naturalGaze.x+pointer.x*.25,gazeY:naturalGaze.y+pointer.y*.13});
   if (externalState === "thinking") Object.assign(base,{open:.01,pucker:.035,brow:.14+Math.sin(elapsed*.8)*.018,browLeft:.13,browRight:-.035,eyeSquintRight:.09,yaw:-.06+Math.sin(elapsed*.25)*.018,gazeX:.13+naturalGaze.x*.35,gazeY:.055+Math.cos(elapsed*.37)*.018});
@@ -792,10 +793,10 @@ function currentControls(elapsed,delta) {
   blendLayer(speechCurrent,externalState==="speaking"?speechTarget:{},delta,22,14);
   // Docked ACE is only 220px wide, so subtle full-screen changes disappear.
   // Strengthen the expressive features without amplifying head rotation.
-  const expressionGain=stageWidth()<320?1.34:1.05;
+  const expressionGain=docked?1.58:1.06;
   for(const [key,value] of Object.entries(expressionCurrent)) {
     const mouthScale=externalState==="speaking"&&["open","wide","pucker"].includes(key) ? .32 : 1;
-    const spatial=["yaw","pitch","roll","gazeX","gazeY"].includes(key)?1:expressionGain;
+    const spatial=["yaw","pitch","roll","gazeX","gazeY"].includes(key)?(docked?1.10:1):expressionGain;
     base[key]=Number(base[key]||0)+value*mouthScale*spatial;
   }
   base.open+=Number(speechCurrent.open||0);
@@ -807,15 +808,18 @@ function currentControls(elapsed,delta) {
   base.smile+=emotionalLife*.7;
   if (externalState === "speaking") {
     const speechBeat=elapsed-speechStarted;
-    base.brow+=speechEnergy*.060+Math.sin(speechBeat*1.35)*.010;
-    base.browLeft+=Math.sin(speechBeat*.83)*.012;
-    base.browRight-=Math.sin(speechBeat*.83)*.010;
-    base.cheek+=speechEnergy*.085;
-    base.eyeSquint+=speechEnergy*.028;
-    base.pupil+=speechEnergy*.035;
-    base.pitch+=Math.sin(speechBeat*2.15)*(.004+speechEnergy*.010);
-    base.yaw+=Math.sin(speechBeat*.62)*(.004+speechEnergy*.006);
-    base.roll+=Math.sin(speechBeat*.47)*.0035;
+    const speechFeatureGain=docked?1.62:1;
+    const phraseLift=Math.sin(speechBeat*.76)*(docked?.020:.010);
+    base.brow+=speechEnergy*.060*speechFeatureGain+Math.sin(speechBeat*1.35)*.010*speechFeatureGain+phraseLift;
+    base.browLeft+=Math.sin(speechBeat*.83)*.012*speechFeatureGain;
+    base.browRight-=Math.sin(speechBeat*.83)*.010*speechFeatureGain;
+    base.cheek+=speechEnergy*.085*speechFeatureGain+Math.max(0,phraseLift)*.8;
+    base.eyeSquint+=speechEnergy*.028*speechFeatureGain;
+    base.pupil+=speechEnergy*.035*speechFeatureGain;
+    base.smile+=phraseLift*.42;
+    base.pitch+=Math.sin(speechBeat*2.15)*(.004+speechEnergy*(docked?.014:.010));
+    base.yaw+=Math.sin(speechBeat*.62)*(.004+speechEnergy*(docked?.008:.006));
+    base.roll+=Math.sin(speechBeat*.47)*(docked?.0045:.0035);
   }
   return base;
 }

@@ -98,11 +98,13 @@ const fieldMaterial = new THREE.ShaderMaterial({
       float core = smoothstep(.5, .06, d);
       float glow = smoothstep(.5, .18, d) * .30;
       float pulse = .84 + .16 * sin(uTime * 1.34 + vSeed * 8.0);
-      vec3 midnight = vec3(.018,.026,.075);
-      vec3 bronze = mix(vec3(.43,.20,.045),vec3(.24,.29,.37),uPlatinum);
-      vec3 gold = mix(vec3(1.0,.67,.20),vec3(.76,.84,.94),uPlatinum);
-      vec3 color = mix(midnight, bronze, smoothstep(.08,.31,vLight));
-      color = mix(color, gold, smoothstep(.28,.55,vLight));
+      // The atmospheric field belongs to ACE's electric-blue environment.
+      // His facial mesh uses a separate material and remains gold.
+      vec3 midnight = vec3(.004,.020,.075);
+      vec3 cobalt = vec3(.018,.20,.58);
+      vec3 electricBlue = vec3(.145,.55,1.0);
+      vec3 color = mix(midnight, cobalt, smoothstep(.08,.31,vLight));
+      color = mix(color, electricBlue, smoothstep(.28,.55,vLight));
       gl_FragColor = vec4(color * (core * 1.55 + glow) * pulse, (core + glow) * (.62 + vLight));
     }
   `

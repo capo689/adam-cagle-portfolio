@@ -456,6 +456,18 @@ const scleraMaterial = new THREE.ShaderMaterial({
   `
 });
 
+// A shallow, feather-free mouth cavity keeps the lip separation readable when
+// ACE is reduced to the rail. It renders behind the facial particles, so the
+// existing gold lips remain the visible contour instead of becoming an outline.
+const mouthInteriorMaterial = new THREE.MeshBasicMaterial({
+  color: 0x12050b,
+  transparent: true,
+  opacity: 0,
+  depthTest: false,
+  depthWrite: false,
+  blending: THREE.NormalBlending
+});
+
 const LIPS = new Set([0,13,14,17,37,39,40,61,78,80,81,82,84,87,88,91,95,146,178,181,185,191,267,269,270,291,308,310,311,312,314,317,318,321,324,375,402,405,409,415]);
 const LEFT_EYE = new Set([7,33,133,144,145,153,154,155,157,158,159,160,161,163,173,246]);
 const RIGHT_EYE = new Set([249,263,362,373,374,380,381,382,384,385,386,387,388,390,398,466]);
@@ -469,6 +481,7 @@ let skirtCloud;
 let eyesCloud;
 let naturalEyesCloud;
 let scleraCloud;
+let mouthInterior;
 let faceSamples;
 let skirtSamples;
 let deformed;
@@ -660,6 +673,11 @@ function buildScene(data) {
   faceCloud=new THREE.Points(faceGeometry,faceMaterial);
   faceCloud.renderOrder=1;
   scene.add(faceCloud);
+
+  mouthInterior=new THREE.Mesh(new THREE.CircleGeometry(1,40),mouthInteriorMaterial);
+  mouthInterior.renderOrder=.6;
+  mouthInterior.visible=false;
+  scene.add(mouthInterior);
 
   const skirtGeometry=attributeSet(skirtSamples.length,1.0);
   skirtCloud=new THREE.Points(skirtGeometry,veilMaterial);
@@ -919,6 +937,23 @@ function updateSkirt(c,time) {
   skirtCloud.geometry.attributes.position.needsUpdate=true;skirtCloud.geometry.attributes.aLight.needsUpdate=true;skirtCloud.geometry.attributes.aAlpha.needsUpdate=true;
 }
 
+function updateMouthInterior(c) {
+  if(!mouthInterior)return;
+  const center=averageIndices(deformed,LIPS);
+  const open=THREE.MathUtils.clamp(Number(c.open||0),0,1);
+  const docked=stageWidth()<320;
+  const reveal=smoothstep(docked?.022:.055,docked?.17:.26,open);
+  mouthInterior.visible=c.emerge>.58&&reveal>.012;
+  mouthInterior.position.set(center[0],center[1]-.025,center[2]-.045);
+  mouthInterior.rotation.set(c.pitch,c.yaw,c.roll);
+  mouthInterior.scale.set(
+    Math.max(.34,.57+c.wide*.10-c.pucker*.12),
+    Math.max(.035,.038+open*(docked?.38:.32)),
+    1
+  );
+  mouthInteriorMaterial.opacity=reveal*(docked?.76:.10)*c.emerge;
+}
+
 function updateEyes(c,time) {
   const left=averageIndices(deformed,LEFT_EYE),right=averageIndices(deformed,RIGHT_EYE);
   const scleraPos=scleraCloud.geometry.attributes.position.array,scleraAlpha=scleraCloud.geometry.attributes.aAlpha.array;
@@ -974,7 +1009,7 @@ function animate() {
   fieldUniforms.uTime.value=elapsed;fieldUniforms.uPointer.value.copy(pointer);
   faceUniforms.uTime.value=elapsed;faceUniforms.uOpacity.value=c.emerge;faceUniforms.uSpeaking.value=externalState==="speaking"?1:0;
   eyeUniforms.uTime.value=elapsed;eyeUniforms.uOpacity.value=c.emerge;eyeUniforms.uSpeaking.value=externalState==="speaking"?1:0;
-  if(meshData){updateFace(c,elapsed);updateSkirt(c,elapsed);updateEyes(c,elapsed);}
+  if(meshData){updateFace(c,elapsed);updateMouthInterior(c);updateSkirt(c,elapsed);updateEyes(c,elapsed);}
   renderer.render(scene,camera);requestAnimationFrame(animate);
 }
 

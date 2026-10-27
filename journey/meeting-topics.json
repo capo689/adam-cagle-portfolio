@@ -1,0 +1,250 @@
+[
+  {
+    "id": "website",
+    "tag": "THE WEBSITE",
+    "title": "What could Journey become?",
+    "text": "Start with the new homepage. Follow the conversation into the experience.",
+    "image": "journey-home-preview.png",
+    "links": [
+      [
+        "Show the homepage",
+        "journey-home-comp.html"
+      ],
+      [
+        "Website structure",
+        "journey-presentation.html#site-build"
+      ],
+      [
+        "First visit",
+        "journey-presentation.html#visit"
+      ]
+    ],
+    "why": "Make the new site concrete before discussing its machinery.",
+    "show": "Open the homepage. Explore visit information, featured teaching, groups, and care.",
+    "decision": "Which priorities should lead the homepage? This is a design sample, not a live Journey replacement."
+  },
+  {
+    "id": "discovery",
+    "tag": "SEO + AEO",
+    "title": "Help more people find Journey.",
+    "text": "The strategy, the changes, and how leadership would see the results.",
+    "image": "journey-discovery-preview.png",
+    "links": [
+      [
+        "Show discovery reporting",
+        "journey-dashboard-comp.html#discovery"
+      ],
+      [
+        "SEO strategy",
+        "journey-presentation.html#seo"
+      ],
+      [
+        "AEO strategy",
+        "journey-presentation.html#aeo"
+      ]
+    ],
+    "why": "Connect useful official pages to local discovery and accurate answers about Journey.",
+    "show": "Start with the relevant strategy. Switch to Google/local results or AI answers in the dashboard.",
+    "decision": "Account access is needed for real reporting. Sample performance is fictional; dated public observations are separate."
+  },
+  {
+    "id": "teaching",
+    "tag": "SERMONS + PODCAST",
+    "title": "Make the message last all week.",
+    "text": "Watch, listen, read, study, and return to the source.",
+    "image": "journey-sermon-preview.jpg",
+    "links": [
+      [
+        "Show sermon page",
+        "journey-sermon-comp.html"
+      ],
+      [
+        "Show podcast",
+        "journey-podcast-comp.html"
+      ],
+      [
+        "Teaching strategy",
+        "journey-presentation.html#teaching"
+      ],
+      [
+        "AI search proposal",
+        "journey-presentation.html#ask-journey"
+      ]
+    ],
+    "why": "Give existing teaching a useful home on Journey and a destination for shared clips.",
+    "show": "Open the sermon player, overview and study. Then show the podcast archive and working audio.",
+    "decision": "Transcript completion and connected RAG remain proposed. Confirm archive depth and source access."
+  },
+  {
+    "id": "community",
+    "tag": "GROUPS + CONNECTION",
+    "title": "Find the group. Meet the people.",
+    "text": "Real meeting details, visible leaders, and a calendar people can use.",
+    "image": "journey-groups-directory.jpg",
+    "links": [
+      [
+        "Show groups & calendar",
+        "journey-groups-comp.html"
+      ],
+      [
+        "Meet Patrick’s group",
+        "journey-groups-comp.html#patrick"
+      ],
+      [
+        "Group attendance",
+        "journey-dashboard-comp.html#groups"
+      ],
+      [
+        "Community proposal",
+        "journey-presentation.html#community"
+      ]
+    ],
+    "why": "Help people decide whether a group fits and understand how to join.",
+    "show": "Explore the directory and calendar, then Patrick’s Friday 6–7 AM men’s study in the Journey lobby.",
+    "decision": "Patrick’s details were supplied for the comp. Confirm the full group roster and available signup connections."
+  },
+  {
+    "id": "agents",
+    "tag": "AGENTS + APPROVAL",
+    "title": "An email becomes a prepared update.",
+    "text": "Show exactly what an agent prepares and what a human approves.",
+    "image": "journey-proposal-agents.jpg",
+    "links": [
+      [
+        "Show leader inbox",
+        "journey-dashboard-comp.html#inbox"
+      ],
+      [
+        "Agent capabilities",
+        "journey-presentation.html#site-care"
+      ],
+      [
+        "Content approach",
+        "journey-presentation.html#content"
+      ],
+      [
+        "Integrations",
+        "journey-presentation.html#integrations"
+      ]
+    ],
+    "why": "Reduce copying and checking while keeping Journey in control of public information.",
+    "show": "Review Patrick’s sample email next to the proposed changes; approve it and show the attendance charts update.",
+    "decision": "No real inbox or accounts are connected. Agree authorized senders, reviewers and publishing permissions."
+  },
+  {
+    "id": "superheroes",
+    "tag": "SERVING TEAMS",
+    "title": "The right people. A covered Sunday.",
+    "text": "Move from the coordinator’s board to the volunteer’s phone.",
+    "image": "journey-superhero-phone-preview.png",
+    "links": [
+      [
+        "Show scheduling board",
+        "journey-dashboard-comp.html#superheroes"
+      ],
+      [
+        "Show phone invitation",
+        "journey-superhero-phone.html"
+      ]
+    ],
+    "why": "Make open positions, confirmations and backups visible; make responding easy.",
+    "show": "Drag a volunteer into a position, then open the phone sample. Accept, decline, or type a question.",
+    "decision": "Fictional volunteers; replies stay in the separate demo. Confirm whether production connects to their existing scheduler."
+  },
+  {
+    "id": "leadership",
+    "tag": "LEADERSHIP INSIGHTS",
+    "title": "Know what is connecting.",
+    "text": "Participation, content, questions, and the details behind the charts.",
+    "image": "journey-dashboard-graphs-preview.png",
+    "links": [
+      [
+        "Show leadership overview",
+        "journey-dashboard-comp.html#overview"
+      ],
+      [
+        "Content & channels",
+        "journey-dashboard-comp.html#channels"
+      ],
+      [
+        "Website & questions",
+        "journey-dashboard-comp.html#search"
+      ],
+      [
+        "Leadership brief",
+        "journey-dashboard-comp.html#brief"
+      ]
+    ],
+    "why": "Help leadership spot useful patterns, reporting gaps and decisions needing attention.",
+    "show": "Open an attendance trend, missing reports, or channel results based on what they ask. Use the brief for a concise summary.",
+    "decision": "Private performance and attendance are illustrative. Real public facts are labeled. Headcounts do not establish individual retention."
+  },
+  {
+    "id": "build",
+    "tag": "SCOPE + DELIVERY",
+    "title": "What would it take to build?",
+    "text": "The website, connections, launch scope, and decisions still to make.",
+    "image": "journey-presentation-preview.jpg",
+    "links": [
+      [
+        "Build & scope",
+        "journey-presentation.html#delivery"
+      ],
+      [
+        "Integrations",
+        "journey-presentation.html#integrations"
+      ],
+      [
+        "Accessibility & care",
+        "journey-presentation.html#trust"
+      ],
+      [
+        "Full proposal",
+        "journey-presentation.html#vision"
+      ]
+    ],
+    "why": "Turn interest in the examples into a concrete discussion of the production build.",
+    "show": "Open scope when asked. Connect the selected capabilities to the required access, content and implementation.",
+    "decision": "No fixed price or launch date is established. The reading library is optional; verify integration access before promising automatic imports."
+  },
+  {
+    "id": "library",
+    "tag": "OPTIONAL CONCEPT",
+    "title": "A library worth exploring.",
+    "text": "A curated reading shelf using the supplied book list and cover art.",
+    "image": "journey-library-real-covers.jpg",
+    "links": [
+      [
+        "Show reading library",
+        "journey-library-comp.html"
+      ]
+    ],
+    "why": "Illustrate a possible reading resource for the Journey community.",
+    "show": "Browse covers and individual books. This is separate from the core website scope.",
+    "decision": "Optional only. No affiliate program is included. Links go to individual books, not the original wishlist."
+  },
+  {
+    "id": "conference",
+    "tag": "FINAL MARKETING EXAMPLE",
+    "title": "Make the invitation something people feel.",
+    "text": "Kingdom Conference: a visual event page and the finished social ad.",
+    "image": "journey-kingdom-hero-russell-updated.png",
+    "links": [
+      [
+        "Show conference page",
+        "journey-kingdom-comp.html"
+      ],
+      [
+        "Play social ad",
+        "journey-ad.html"
+      ],
+      [
+        "Event-page approach",
+        "journey-presentation.html#events"
+      ]
+    ],
+    "why": "Use the familiar conference as an example of stronger event marketing within the broader site proposal.",
+    "show": "Show guests, inline music video and the day-by-day schedule. Play the conference ad from the proposal’s sample section.",
+    "decision": "The event page and ad are comps. Past speaker videos do not promise conference topics. Keep this as the final example, not the opening pitch."
+  }
+]
